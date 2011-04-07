@@ -25,14 +25,15 @@
 
 package joptsimple;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import joptsimple.internal.ColumnarData;
+
 import static joptsimple.ParserRules.*;
 import static joptsimple.internal.Classes.*;
 import static joptsimple.internal.Strings.*;
@@ -50,7 +51,7 @@ class HelpFormatter implements OptionSpecVisitor {
         grid = new ColumnarData( "Option", "Description" );
     }
 
-    String format( Map<String, AbstractOptionSpec<?>> options ) {
+    String format( Collection<AbstractOptionSpec<?>> options ) {
         if ( options.isEmpty() )
             return "No options specified";
 
@@ -64,7 +65,7 @@ class HelpFormatter implements OptionSpecVisitor {
             };
 
         Set<AbstractOptionSpec<?>> sorted = new TreeSet<AbstractOptionSpec<?>>( comparator );
-        sorted.addAll( options.values() );
+        sorted.addAll( options );
 
         for ( AbstractOptionSpec<?> each : sorted )
             each.accept( this );

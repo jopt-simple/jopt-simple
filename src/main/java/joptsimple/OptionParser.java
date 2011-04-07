@@ -34,10 +34,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Collections.*;
-
 import joptsimple.internal.AbbreviationMap;
 import joptsimple.util.KeyValuePair;
+
+import static java.util.Collections.*;
 import static joptsimple.OptionException.*;
 import static joptsimple.OptionParserState.*;
 import static joptsimple.ParserRules.*;
@@ -370,7 +370,7 @@ public class OptionParser {
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( new HelpFormatter().format( recognizedOptions.toJavaUtilMap() ) );
+        sink.write( new HelpFormatter().format( recognizedOptions.toJavaUtilMap().values() ) );
         sink.flush();
     }
 
