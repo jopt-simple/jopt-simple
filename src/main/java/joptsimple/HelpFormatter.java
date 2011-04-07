@@ -42,7 +42,6 @@ import static joptsimple.internal.Strings.*;
  * <p>Produces text for a help screen given a set of options.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: HelpFormatter.java,v 1.23 2010/11/21 05:04:05 pholser Exp $
  */
 class HelpFormatter implements OptionSpecVisitor {
     private final ColumnarData grid;

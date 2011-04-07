@@ -47,7 +47,6 @@ import java.util.List;
  *
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionSpec.java,v 1.29 2010/11/21 05:04:05 pholser Exp $
  */
 public interface OptionSpec<V> {
     /**

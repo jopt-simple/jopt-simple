@@ -39,7 +39,6 @@ import static joptsimple.internal.Strings.*;
  * <p>A means to display data in a text grid.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ColumnarData.java,v 1.21 2010/11/21 05:04:05 pholser Exp $
  */
 public class ColumnarData {
     private static final String LINE_SEPARATOR = getProperty( "line.separator" );

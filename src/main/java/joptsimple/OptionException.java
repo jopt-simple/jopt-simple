@@ -37,7 +37,6 @@ import static joptsimple.internal.Strings.*;
  * <p>Thrown when a problem occurs during option parsing.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionException.java,v 1.25 2010/11/21 05:04:05 pholser Exp $
  */
 public abstract class OptionException extends RuntimeException {
     private static final long serialVersionUID = -1L;

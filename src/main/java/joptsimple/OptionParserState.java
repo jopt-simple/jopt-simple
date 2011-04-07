@@ -32,7 +32,6 @@ import static joptsimple.ParserRules.*;
  * on whether end-of-options has been detected.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionParserState.java,v 1.12 2010/11/21 05:04:05 pholser Exp $
  */
 abstract class OptionParserState {
     static OptionParserState noMoreOptions() {

@@ -32,7 +32,6 @@ import static java.util.Arrays.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: Strings.java,v 1.20 2010/11/21 05:04:05 pholser Exp $
  */
 public final class Strings {
     public static final String EMPTY = "";

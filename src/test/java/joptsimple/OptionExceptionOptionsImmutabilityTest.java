@@ -31,6 +31,9 @@ import java.util.Collection;
 
 import org.infinitest.toolkit.UnmodifiableCollectionTestSupport;
 
+/**
+ * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
+ */
 public class OptionExceptionOptionsImmutabilityTest extends UnmodifiableCollectionTestSupport<String> {
     @Override
     protected Collection<String> newCollection() {

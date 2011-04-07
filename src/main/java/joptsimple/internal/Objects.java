@@ -27,7 +27,6 @@ package joptsimple.internal;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: Objects.java,v 1.6 2010/11/21 05:04:05 pholser Exp $
  */
 public final class Objects {
     static {

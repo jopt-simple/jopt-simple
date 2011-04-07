@@ -34,7 +34,6 @@ import static joptsimple.internal.Strings.*;
  * <kbd>key=value</kbd>, such as JVM command line system properties.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: KeyValuePair.java,v 1.14 2010/11/21 05:04:05 pholser Exp $
  */
 public final class KeyValuePair {
     public final String key;

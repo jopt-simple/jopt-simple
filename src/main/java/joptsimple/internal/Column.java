@@ -37,7 +37,6 @@ import static joptsimple.internal.Strings.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: Column.java,v 1.20 2010/11/21 05:04:05 pholser Exp $
  */
 public class Column {
     static final Comparator<Column> BY_HEIGHT = new Comparator<Column>() {

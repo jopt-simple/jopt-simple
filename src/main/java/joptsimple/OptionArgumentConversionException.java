@@ -32,7 +32,6 @@ import java.util.Collection;
  * to another type.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionArgumentConversionException.java,v 1.20 2010/11/21 05:04:05 pholser Exp $
  */
 class OptionArgumentConversionException extends OptionException {
     private static final long serialVersionUID = -1L;

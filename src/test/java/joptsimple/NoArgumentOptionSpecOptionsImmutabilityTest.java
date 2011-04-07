@@ -27,7 +27,6 @@ package joptsimple;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: NoArgumentOptionSpecOptionsImmutabilityTest.java,v 1.8 2010/11/21 05:04:05 pholser Exp $
  */
 public class NoArgumentOptionSpecOptionsImmutabilityTest extends AbstractOptionSpecOptionsImmutabilityTestCase {
     @Override

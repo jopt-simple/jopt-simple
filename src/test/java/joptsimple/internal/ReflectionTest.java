@@ -34,7 +34,6 @@ import static org.junit.matchers.JUnitMatchers.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ReflectionTest.java,v 1.15 2010/11/21 05:04:05 pholser Exp $
  */
 public class ReflectionTest {
     @Test

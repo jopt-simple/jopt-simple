@@ -29,7 +29,6 @@ import static java.util.Arrays.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionSpecBuilderOptionsImmutabilityTest.java,v 1.9 2010/11/21 05:04:05 pholser Exp $
  */
 public class OptionSpecBuilderOptionsImmutabilityTest extends AbstractOptionSpecOptionsImmutabilityTestCase {
     @Override

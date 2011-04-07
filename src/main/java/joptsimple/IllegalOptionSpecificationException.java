@@ -32,7 +32,6 @@ import static java.util.Collections.*;
  * characters in it.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: IllegalOptionSpecificationException.java,v 1.15 2010/11/21 05:04:05 pholser Exp $
  */
 class IllegalOptionSpecificationException extends OptionException {
     private static final long serialVersionUID = -1L;

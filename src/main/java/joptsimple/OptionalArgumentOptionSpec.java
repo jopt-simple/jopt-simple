@@ -32,7 +32,6 @@ import java.util.Collection;
  *
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionalArgumentOptionSpec.java,v 1.21 2010/11/21 05:04:05 pholser Exp $
  */
 class OptionalArgumentOptionSpec<V> extends ArgumentAcceptingOptionSpec<V> {
     OptionalArgumentOptionSpec( String option ) {

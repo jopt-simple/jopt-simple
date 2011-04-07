@@ -33,7 +33,6 @@ import static joptsimple.internal.Reflection.*;
 /**
  * @param <V> constraint on the type of values being converted to
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ConstructorInvokingValueConverter.java,v 1.8 2010/11/21 05:04:05 pholser Exp $
  */
 class ConstructorInvokingValueConverter<V> implements ValueConverter<V> {
     private final Constructor<V> ctor;

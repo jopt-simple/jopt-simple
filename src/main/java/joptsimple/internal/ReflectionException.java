@@ -29,7 +29,6 @@ package joptsimple.internal;
  * <p>This unchecked exception wraps reflection-oriented exceptions.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ReflectionException.java,v 1.9 2010/11/21 05:04:05 pholser Exp $
  */
 public class ReflectionException extends RuntimeException {
     private static final long serialVersionUID = -2L;

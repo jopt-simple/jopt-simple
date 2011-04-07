@@ -31,7 +31,6 @@ import static java.util.Collections.*;
  * <p>Thrown when the option parser encounters an unrecognized option.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: UnrecognizedOptionException.java,v 1.14 2010/11/21 05:04:05 pholser Exp $
  */
 class UnrecognizedOptionException extends OptionException {
     private static final long serialVersionUID = -1L;

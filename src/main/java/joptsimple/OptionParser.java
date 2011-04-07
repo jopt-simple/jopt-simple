@@ -197,8 +197,7 @@ import static joptsimple.ParserRules.*;
  * </ol>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionParser.java,v 1.43 2010/11/21 05:04:05 pholser Exp $
- * @see <a href="http://www.gnu.org/software/libc/manual">The GNU C Library </a>
+ * @see <a href="http://www.gnu.org/software/libc/manual">The GNU C Library</a>
  */
 public class OptionParser {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;

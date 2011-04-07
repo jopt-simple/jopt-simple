@@ -32,7 +32,6 @@ import java.util.Collection;
  * but that argument is missing.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionMissingRequiredArgumentException.java,v 1.16 2010/11/21 05:04:05 pholser Exp $
  */
 class OptionMissingRequiredArgumentException extends OptionException {
     private static final long serialVersionUID = -1L;

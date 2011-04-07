@@ -54,7 +54,6 @@ import static joptsimple.internal.Strings.*;
  *
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ArgumentAcceptingOptionSpec.java,v 1.47 2010/11/21 05:04:05 pholser Exp $
  */
 public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<V> {
     private static final char NIL_VALUE_SEPARATOR = '\u0000';

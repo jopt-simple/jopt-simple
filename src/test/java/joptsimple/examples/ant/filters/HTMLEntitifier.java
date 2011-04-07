@@ -13,7 +13,6 @@ import org.apache.tools.ant.filters.ChainableReader;
  * entities.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: HTMLEntitifier.java,v 1.4 2010/11/21 05:04:05 pholser Exp $
  */
 public class HTMLEntitifier extends BaseFilterReader implements ChainableReader {
     private static final Map<Integer, String> ENTITIES = new HashMap<Integer, String>();

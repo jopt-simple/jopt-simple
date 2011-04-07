@@ -30,7 +30,6 @@ package joptsimple;
  * other Java types.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ValueConversionException.java,v 1.9 2010/11/21 05:04:05 pholser Exp $
  */
 public class ValueConversionException extends RuntimeException {
     private static final long serialVersionUID = -1L;

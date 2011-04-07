@@ -34,7 +34,6 @@ import static java.util.Collections.*;
  * <p>A specification for an option that does not accept arguments.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: NoArgumentOptionSpec.java,v 1.20 2010/11/21 05:04:05 pholser Exp $
  */
 class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     NoArgumentOptionSpec( String option ) {

@@ -31,7 +31,6 @@ import static joptsimple.ParserRules.*;
  * <p>Wrapper for an array of command line arguments.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ArgumentList.java,v 1.11 2010/11/21 05:04:05 pholser Exp $
  */
 class ArgumentList {
     private final String[] arguments;

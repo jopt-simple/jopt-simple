@@ -25,19 +25,19 @@
 
 package joptsimple;
 
-import static java.lang.Boolean.*;
 import java.math.BigInteger;
 import java.sql.Time;
 import java.sql.Timestamp;
+
+import org.junit.Test;
+
+import static java.lang.Boolean.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
-
 import static org.junit.Assert.*;
-import org.junit.Test;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionParserNewDeclarationTest.java,v 1.11 2010/11/21 05:04:05 pholser Exp $
  */
 public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture {
     @Test( expected = IllegalOptionSpecificationException.class )

@@ -29,7 +29,6 @@ package joptsimple;
  * <p>Visitor interface for option specifications.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionSpecVisitor.java,v 1.10 2010/11/21 05:04:05 pholser Exp $
  */
 interface OptionSpecVisitor {
     void visit( NoArgumentOptionSpec spec );

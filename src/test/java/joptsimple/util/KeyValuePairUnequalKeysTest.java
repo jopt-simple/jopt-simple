@@ -29,7 +29,6 @@ import org.infinitest.toolkit.EqualsHashCodeTestSupport;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: KeyValuePairUnequalKeysTest.java,v 1.5 2010/11/21 05:04:05 pholser Exp $
  */
 public class KeyValuePairUnequalKeysTest extends EqualsHashCodeTestSupport {
     @Override

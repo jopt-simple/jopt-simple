@@ -32,7 +32,6 @@ import java.util.Collection;
  * many have been specified.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: MultipleArgumentsForOptionException.java,v 1.18 2010/11/21 05:04:05 pholser Exp $
  */
 class MultipleArgumentsForOptionException extends OptionException {
     private static final long serialVersionUID = -1L;

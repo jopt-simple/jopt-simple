@@ -32,7 +32,6 @@ import static java.util.Collections.*;
  * at least one of the short options can accept arguments.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: IllegalOptionClusterException.java,v 1.15 2010/11/21 05:04:05 pholser Exp $
  */
 class IllegalOptionClusterException extends OptionException {
     private static final long serialVersionUID = -1L;

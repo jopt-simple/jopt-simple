@@ -45,7 +45,6 @@ import org.junit.Test;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionParserHelpTest.java,v 1.24 2010/11/21 05:04:05 pholser Exp $
  */
 public class OptionParserHelpTest extends AbstractOptionParserFixture {
     private static final String EXPECTED_HEADER =

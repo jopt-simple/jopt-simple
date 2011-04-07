@@ -36,7 +36,6 @@ import org.junit.runners.Parameterized;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: OptionExceptionMessageTest.java,v 1.15 2010/11/21 05:04:05 pholser Exp $
  */
 @RunWith( Parameterized.class )
 public class OptionExceptionMessageTest {

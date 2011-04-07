@@ -33,7 +33,6 @@ import org.junit.Test;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- * @version $Id: ArgumentAcceptingOptionSpecTest.java,v 1.19 2010/11/21 05:04:05 pholser Exp $
  */
 public class ArgumentAcceptingOptionSpecTest {
     @Test( expected = NullPointerException.class )
