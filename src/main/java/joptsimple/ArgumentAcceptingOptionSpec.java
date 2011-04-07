@@ -29,9 +29,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
-import static java.util.Collections.*;
 
 import joptsimple.internal.ReflectionException;
+
+import static java.util.Collections.*;
 import static joptsimple.internal.Objects.*;
 import static joptsimple.internal.Reflection.*;
 import static joptsimple.internal.Strings.*;
@@ -257,21 +258,19 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
         return converter != null && Number.class.isAssignableFrom( converter.valueType() );
     }
 
-    @Override
-    boolean acceptsArguments() {
+    public boolean acceptsArguments() {
         return true;
     }
 
-    @Override
-    boolean requiresArgument() {
+    public boolean requiresArgument() {
         return argumentRequired;
     }
 
-    String argumentDescription() {
+    public String argumentDescription() {
         return argumentDescription;
     }
 
-    String typeIndicator() {
+    public String argumentTypeIndicator() {
         if ( converter == null )
             return null;
 
@@ -279,8 +278,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
         return pattern == null ? converter.valueType().getName() : pattern;
     }
 
-    @Override
-    List<V> defaultValues() {
+    public List<V> defaultValues() {
         return unmodifiableList( defaultValues );
     }
 

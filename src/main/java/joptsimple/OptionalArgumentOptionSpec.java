@@ -66,9 +66,4 @@ class OptionalArgumentOptionSpec<V> extends ArgumentAcceptingOptionSpec<V> {
         else
             addArguments( detectedOptions, arguments.next() );
     }
-
-    @Override
-    void accept( OptionSpecVisitor visitor ) {
-        visitor.visit( this );
-    }
 }

@@ -37,11 +37,11 @@ import static java.util.Collections.*;
  */
 class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     NoArgumentOptionSpec( String option ) {
-        this( singletonList( option ), "" );
+        this(singletonList(option), "");
     }
 
     NoArgumentOptionSpec( Collection<String> options, String description ) {
-        super( options, description );
+        super(options, description);
     }
 
     @Override
@@ -51,19 +51,20 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
         detectedOptions.add( this );
     }
 
-    @Override
-    boolean acceptsArguments() {
+    public boolean acceptsArguments() {
         return false;
     }
 
-    @Override
-    boolean requiresArgument() {
+    public boolean requiresArgument() {
         return false;
     }
 
-    @Override
-    void accept( OptionSpecVisitor visitor ) {
-        visitor.visit( this );
+    public String argumentDescription() {
+        return "";
+    }
+
+    public String argumentTypeIndicator() {
+        return "";
     }
 
     @Override
@@ -71,8 +72,7 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
         return null;
     }
 
-    @Override
-    List<Void> defaultValues() {
+    public List<Void> defaultValues() {
         return emptyList();
     }
 }

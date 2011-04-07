@@ -369,7 +369,7 @@ public class OptionParser {
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( new HelpFormatter().format( recognizedOptions.toJavaUtilMap().values() ) );
+        sink.write( new BuiltinHelpFormatter().format( recognizedOptions.toJavaUtilMap().values() ) );
         sink.flush();
     }
 
