@@ -1,0 +1,192 @@
+                                       ----------
+                                       Change Log
+                                       ----------
+
+Changes in version 3.2
+
+    * Added method <<<defaultsTo()>>> to class <<<ArgumentAcceptingOptionSpec>>>, to allow
+    callers to specify default values for arguments of options.  These influence the return
+    values of <<<OptionSpec.value(s)()>>> and <<<OptionSet.value(s)Of()>>>.  Default values
+    also show up in the help screen entries for their options.  This serves to resolve
+    {{{https://sourceforge.net/tracker/?func=detail&aid=2484524&group_id=125731&atid=703508} feature
+    request 2484524}}.
+    
+    * Fixed a problem whereby the empty string, a string consisting solely of whitespace, or a
+    string with embedded whitespace weren't being properly recognized as arguments of options
+    when they should have.
+    
+    * Resolved {{{https://sourceforge.net/tracker/?func=detail&aid=2793762&group_id=125731&atid=703508} feature
+    request 2793762}}, having to do with improving the behavior of embedded newlines in option
+    descriptions in help screens.
+
+Changes in version 3.1
+
+    * Added method <<<withValuesConvertedBy()>>> to class <<<ArgumentAcceptingOptionSpec>>>,
+    to allow callers to specify converters or validators that transform arguments of
+    options into instances of specific Java types.  This is useful for types which do not
+    meet the requirements of <<<ofType()>>>.
+    
+    * Added classes <<<DateConverter>>> and <<<RegexMatcher>>> as examples of useful
+    argument converters.
+
+Changes in version 3.0.1
+
+    * Dependency on {{{http://ant.apache.org} Ant}} more appropriately test-scoped in the
+    {{{http://maven.apache.org} Maven}} POM.  That way, if you use JOpt Simple with Maven,
+    you don't download Ant unnecessarily.
+
+Changes in version 3.0
+
+    * Version 3.0 supports Java 5 and greater only.  If you need to use JOpt Simple in a
+    pre-Java-5 environment, use the latest 2.x release.
+
+    * Where appropriate, existing API calls have been updated to use Java generics.
+
+    * Extracted and surfaced interface <<<OptionSpec>>>.  <<<OptionSpec>>>s returned by
+    the fluent interface methods can be used to retrieve arguments of the options they
+    represent in a type-safe manner.
+
+    * Removed all previously deprecated methods.
+
+    * Added methods to <<<OptionSet>>> to allow detection of options and retrieval of
+    option arguments using instances of <<<OptionSpec>>>.
+
+    * Converted tests to JUnit 4.
+
+    * Switched to MIT License.
+
+    * Relaxing some <<<List>>> parameter types and return types of methods to
+    <<<Collection>>>.
+
+    * <<<OptionArgumentConversionException>>> no longer drops the original cause on the
+    floor; hence <<<OptionException>>> can now be created with a cause.
+
+    * {{{http://maven.apache.org} Maven}}-ized the project web site.
+
+    * Overhauled the examples page.
+
+Changes in version 2.4.1
+
+    * Fixed {{{https://sourceforge.net/tracker/index.php?func=detail&aid=2018262&group_id=125731&atid=703505} bug 2018262}}.
+
+Changes in version 2.4
+
+    * Added the <<<acceptsAll()>>> method to class <<<OptionParser>>>.  Options passed to
+    a given invocation of this method are treated as synonymous, so that each gives the
+    same answer when given as the argument to the methods <<<has()>>>, <<<valuesOf()>>>,
+    etc. on <<<OptionSet>>>.
+
+    * Surfaced the class <<<KeyValuePair>>>.  This class can be very handy as a value
+    type for arguments whose values take on the form <<<key=value>>>, such as the <<<-D>>>
+    arguments to JVMs.
+
+    * Fixed {{{https://sourceforge.net/tracker/index.php?func=detail&aid=1932577&group_id=125731&atid=703505} bug 1932577}}.
+
+    * Added method <<<withValuesSeparatedBy()>>> to class <<<ArgumentAcceptingOptionSpec>>>,
+    to allow callers to specify multiple values for an option as a single argument with
+    values separated by a given character.
+
+    * Method <<<ofType()>>> on class <<<ArgumentAcceptingOptionSpec>>> now returns self
+    rather than <<<void>>>.
+
+    * Deprecated another "gets for gets' sake": <<<OptionParser.setPosixlyCorrect()>>>
+    It is replaced with a less Java-beany-looking method.
+
+    * Cleaned up the help screens produced by <<<OptionParser.printHelpOn()>>> so they are
+    rendered as two 40-character columns, with long space-broken values split across lines
+    as needed.
+
+    * Fixed {{{https://sourceforge.net/tracker/index.php?func=detail&aid=1956418&group_id=125731&atid=703505} bug 1956418}}.
+
+Changes in version 2.3.6
+
+    * No changes to code; just getting {{{http://maven.apache.org} Maven}} to do releases
+    with its plugins.
+
+Changes in version 2.3.3
+
+    * Deprecated method <<<OptionSet.wasDetected()>>> in favor of <<<OptionSet.has()>>> --
+    the new name seems to read better.
+                
+    * <<<OptionException>>>s now override <<<getMessage()>>> sensibly, so that if a caller
+    wants to handle the exception by catching it and displaying a message from the
+    exception, she can do so and get satisfactory results.
+
+    * {{{http://maven.apache.org} Maven}}-ized project's build.
+
+    * Minor internal changes.
+
+Changes in version 2.3.2
+
+    * Minor internal changes.
+
+Changes in version 2.3.1
+
+    * Fixed a bug with POSIX-ly correct parsers.  It was previously thought that POSIX-ly
+    correct parsers should signal end of options when they detect an argument that does
+    not lexically look like an option and could not be an argument of a previous option,
+    required or optional.  Such parsers now signal end of options when they detect an
+    argument that does not lexically look like an option, and is not an argument of a
+    previous option with a required argument.  If you want such an argument to be treated
+    as the argument of a preceding option whose argument is optional, you can still get
+    this behavior by appending the argument to the option, either with abutting syntax
+    (<<<-d/tmp>>>) or key-value syntax (<<<-d=/tmp>>>).
+
+Changes in version 2.3
+
+    * No feature changes in this release; but this release can now be used with JDK 1.3.
+    Previous releases could be used only with JDK 1.4 or newer.
+
+Changes in version 2.2
+
+    * Removed all previously deprecated methods.
+
+    * Re-clarified the contract of the one-arg <<<String>>> constructor of
+    <<<OptionParser>>>: the constructor now raises <<<NullPointerException>>> if its
+    argument is <<<null>>>.  This is the convention for Java library methods which receive
+    illegal <<<null>>> parameters.
+
+Changes in version 2.1
+
+    * Introduced a facility for <<<OptionParser>>>s to print a help screen, which
+    describes the options they accept.
+
+    * Added the ability to provide descriptions of options and their arguments when
+    configuring an <<<OptionParser>>>. These descriptions are printed in the
+    aforementioned help screens.
+
+    * Clarified the contract of the one-arg <<<String>>> constructor of <<<OptionParser>>>:
+    the constructor raises <<<IllegalArgumentException>>> if its argument is <<<null>>>.
+
+    * Deprecated <<<OptionParser.noArg()>>>, <<<OptionParser.requiredArg()>>>, and
+    <<<OptionParser.optionalArg()>>>.
+
+    * Deprecated some "gets for gets' sake": <<<OptionException.getOption()>>>,
+    <<<OptionSet.getNonOptionArguments()>>>.  They are replaced with less
+    Java-beany-looking methods.
+
+Changes in version 2.0
+
+    * Introduced a "fluent interface" API for specifying options for an <<<OptionParser>>>
+    to recognize.  The old methods for option specification still work--you need not
+    convert to the new methods.
+
+    * Added the ability to specify that option arguments should be converted to specific
+    types.  You can do this either with the old option specification methods or with the
+    new fluent interface API.
+
+    * Deprecated <<<OptionParser.requiresArg()>>> in favor of
+    <<<OptionParser.requiredArg()>>> -- the new name seems to read better.
+
+Version 1.0
+
+    * First major release.
+
+    * Includes concrete classes <<<OptionParser>>> and <<<OptionSet>>>.
+
+    * Supports POSIX <<<getopt()>>> and GNU <<<getopt_long()>>> command line syntax.
+
+    * No type conversion on option arguments, they are all treated as <<<String>>>s.
+
+    * Methods <<<noArg()>>>, <<<requiredArg()>>>, and <<<optionalArg()>>> tell an
+    <<<OptionParser>>> what options to recognize.
