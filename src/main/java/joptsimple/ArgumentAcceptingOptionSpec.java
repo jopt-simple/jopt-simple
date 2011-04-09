@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2009 Paul R. Holser, Jr.
+ Copyright (c) 2004-2011 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -29,9 +29,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
-import static java.util.Collections.*;
 
 import joptsimple.internal.ReflectionException;
+
+import static java.util.Collections.*;
 import static joptsimple.internal.Objects.*;
 import static joptsimple.internal.Reflection.*;
 import static joptsimple.internal.Strings.*;

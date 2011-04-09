@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2009 Paul R. Holser, Jr.
+ Copyright (c) 2004-2011 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -26,10 +26,11 @@
 package joptsimple.util;
 
 import java.util.regex.Pattern;
-import static java.util.regex.Pattern.*;
 
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
+
+import static java.util.regex.Pattern.*;
 
 /**
  * Ensures that values entirely match a regular expression.
@@ -66,6 +67,7 @@ public class RegexMatcher implements ValueConverter<String> {
         return new RegexMatcher( pattern, 0 );
     }
 
+    /** {@inheritDoc} */
     public String convert( String value ) {
         if ( !pattern.matcher( value ).matches() ) {
             throw new ValueConversionException(
@@ -75,10 +77,12 @@ public class RegexMatcher implements ValueConverter<String> {
         return value;
     }
 
+    /** {@inheritDoc} */
     public Class<String> valueType() {
         return String.class;
     }
 
+    /** {@inheritDoc} */
     public String valuePattern() {
         return pattern.pattern();
     }

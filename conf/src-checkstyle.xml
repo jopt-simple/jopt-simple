@@ -44,8 +44,12 @@
         </module>
         <module name="AnonInnerLength"/>
         <module name="ParameterNumber"/>
-        <module name="EmptyForInitializerPad"/>
-        <module name="EmptyForIteratorPad"/>
+        <module name="EmptyForInitializerPad">
+            <property name="option" value="space"/>
+        </module>
+        <module name="EmptyForIteratorPad">
+            <property name="option" value="space"/>
+        </module>
         <module name="MethodParamPad"/>
         <module name="NoWhitespaceAfter">
             <property name="tokens" value="BNOT,DEC,DOT,INC,LNOT,UNARY_MINUS,UNARY_PLUS"/>
@@ -103,6 +107,7 @@
         <module name="VisibilityModifier">
             <property name="packageAllowed" value="true"/>
             <property name="protectedAllowed" value="true"/>
+            <property name="publicMemberPattern" value="^(key|value)$"/>
         </module>
         <module name="FinalClass"/>
         <module name="InterfaceIsType"/>
@@ -135,9 +140,6 @@
         <module name="DescendantToken"/>
         <module name="Indentation"/>
         <module name="TrailingComment"/>
-    </module>
-    <module name="StrictDuplicateCode">
-        <property name="min" value="30"/>
     </module>
     <module name="NewlineAtEndOfFile"/>
 </module>
