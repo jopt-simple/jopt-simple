@@ -15,9 +15,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:cvs:pserver:anonymous@jopt-simple.cvs.sourceforge.net:/cvsroot/jopt-simple:.</connection>
-        <developerConnection>scm:cvs:ext:pholser@jopt-simple.cvs.sourceforge.net:/cvsroot/jopt-simple:.</developerConnection>
-        <url>http://jopt-simple.cvs.sourceforge.net/jopt-simple</url>
+        <connection>scm:git:git://github.com/pholser/jopt-simple.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/pholser/jopt-simple.git</developerConnection>
+        <url>http://github.com/pholser/jopt-simple</url>
     </scm>
     <developers>
         <developer>
@@ -56,8 +56,19 @@
     <build>
         <extensions>
             <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh-external</artifactId>
+                <groupId>org.apache.maven.scm</groupId>
+                <artifactId>maven-scm-provider-gitexe</artifactId>
+                <version>1.3</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.scm</groupId>
+                <artifactId>maven-scm-manager-plexus</artifactId>
+                <version>1.3</version>
+            </extension>
+            <extension>
+                <groupId>org.kathrynhuxtable.maven.wagon</groupId>
+                <artifactId>wagon-gitsite</artifactId>
+                <version>0.3.1</version>
             </extension>
         </extensions>
         <plugins>
@@ -248,8 +259,8 @@
             <layout>default</layout>
         </snapshotRepository>
         <site>
-          <id>jopt-simple.sf.net</id>
-          <url>scp://shell.sourceforge.net/home/groups/j/jo/jopt-simple/htdocs/</url>
+          <id>github-project-site</id>
+          <url>gitsite:git@github.com/pholser/jopt-simple.git</url>
         </site>
     </distributionManagement>
 </project>
