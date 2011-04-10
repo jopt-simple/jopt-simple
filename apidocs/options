@@ -1,0 +1,24 @@
+-classpath
+'/Users/pholser/java/jopt-simple/target/classes'
+-encoding
+'MacRoman'
+-public
+-source
+'1.5'
+-sourcepath
+'/Users/pholser/java/jopt-simple/src/main/java'
+-author
+-bottom
+'<i>&copy; Copyright 2004-2011 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License. pholser@alumni.rice.edu</i>'
+-charset
+'UTF-8'
+-d
+'/Users/pholser/java/jopt-simple/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'JOpt Simple 3.3-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'JOpt Simple 3.3-SNAPSHOT API'
