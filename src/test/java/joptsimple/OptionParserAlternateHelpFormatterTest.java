@@ -1,11 +1,10 @@
 package joptsimple;
 
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.infinitest.toolkit.CollectionMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,17 +14,17 @@ import static org.junit.Assert.*;
 
 public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParserFixture {
     private StringWriter sink;
-    private Collection<OptionDescriptor> captured;
+    private Map<String, ? extends OptionDescriptor> captured;
 
     @Before
     public void primeParser() throws Exception {
-        captured = new ArrayList<OptionDescriptor>();
+        captured = new HashMap<String, OptionDescriptor>();
 
         parser.accepts("b", "boo");
 
         parser.formatsHelpWith(new HelpFormatter() {
-            public String format(Collection<? extends OptionDescriptor> options) {
-                captured.addAll(options);
+            public String format(Map<String, ? extends OptionDescriptor> options) {
+                captured = options;
                 return "some help you are";
             }
         });
@@ -43,13 +42,15 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
     @Test
     public void getsFedOptionDescriptorsForRecognizedOptions() {
         assertEquals(1, captured.size());
-        OptionDescriptor only = captured.iterator().next();
-        assertThat(only.options(), hasSameContentsAs(asList("b")));
-        assertEquals("boo", only.description());
-        assertFalse(only.acceptsArguments());
-        assertFalse(only.requiresArgument());
-        assertEquals("", only.argumentDescription());
-        assertEquals("", only.argumentTypeIndicator());
-        assertEquals(Collections.<Object> emptyList(), only.defaultValues());
+        Map.Entry<String, ? extends OptionDescriptor> only = captured.entrySet().iterator().next();
+        assertEquals("b", only.getKey());
+        OptionDescriptor descriptor = only.getValue();
+        assertThat(descriptor.options(), hasSameContentsAs(asList("b")));
+        assertEquals("boo", descriptor.description());
+        assertFalse(descriptor.acceptsArguments());
+        assertFalse(descriptor.requiresArgument());
+        assertEquals("", descriptor.argumentDescription());
+        assertEquals("", descriptor.argumentTypeIndicator());
+        assertEquals(Collections.<Object> emptyList(), descriptor.defaultValues());
     }
 }

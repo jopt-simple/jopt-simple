@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -50,7 +51,7 @@ class BuiltinHelpFormatter implements HelpFormatter {
         grid = new ColumnarData( "Option", "Description" );
     }
 
-    public String format( Collection<? extends OptionDescriptor> options ) {
+    public String format( Map<String, ? extends OptionDescriptor> options ) {
         if ( options.isEmpty() )
             return "No options specified";
 
@@ -64,7 +65,7 @@ class BuiltinHelpFormatter implements HelpFormatter {
             };
 
         Set<OptionDescriptor> sorted = new TreeSet<OptionDescriptor>( comparator );
-        sorted.addAll( options );
+        sorted.addAll( options.values() );
 
         for ( OptionDescriptor each : sorted )
             addHelpLineFor(each);
