@@ -39,6 +39,8 @@
 
     * {{{http://code.google.com/p/parse-cmd/} parse-cmd}}
 
+    * {{{http://jcommander.org} JCommander}}
+
     []  
 
     I hope you'll agree that JOpt Simple tops them all in ease of use and cleanliness of
