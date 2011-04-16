@@ -203,6 +203,7 @@ public class OptionParser {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
     private OptionParserState state;
     private boolean posixlyCorrect;
+    private HelpFormatter helpFormatter;
 
     /**
      * <p>Creates an option parser that initially recognizes no options, and does not
@@ -211,6 +212,7 @@ public class OptionParser {
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
         state = moreOptions( false );
+        helpFormatter = new BuiltinHelpFormatter();
     }
 
     /**
@@ -339,7 +341,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll( spec.options(), spec );
+        recognizedOptions.putAll(spec.options(), spec);
     }
 
     /**
@@ -354,7 +356,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn( new OutputStreamWriter( sink ) );
+        printHelpOn(new OutputStreamWriter(sink));
     }
 
     /**
@@ -369,8 +371,12 @@ public class OptionParser {
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( new BuiltinHelpFormatter().format( recognizedOptions.toJavaUtilMap().values() ) );
+        sink.write( helpFormatter.format( recognizedOptions.toJavaUtilMap().values() ) );
         sink.flush();
+    }
+
+    public void formatsHelpWith(HelpFormatter formatter) {
+        helpFormatter = formatter;
     }
 
     /**
@@ -395,7 +401,7 @@ public class OptionParser {
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseLongOptionWithArgument( candidate );
+        KeyValuePair optionAndArgument = parseLongOptionWithArgument(candidate);
 
         if ( !isRecognized( optionAndArgument.key ) )
             throw unrecognizedOption( optionAndArgument.key );
@@ -405,10 +411,10 @@ public class OptionParser {
     }
 
     void handleShortOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseShortOptionWithArgument( candidate );
+        KeyValuePair optionAndArgument = parseShortOptionWithArgument(candidate);
 
         if ( isRecognized( optionAndArgument.key ) ) {
-            specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );
+            specFor( optionAndArgument.key ).handleOption(this, arguments, detected, optionAndArgument.value);
         }
         else
             handleShortOptionCluster( candidate, arguments, detected );
@@ -439,11 +445,11 @@ public class OptionParser {
     }
 
     private boolean isRecognized( String option ) {
-        return recognizedOptions.contains( option );
+        return recognizedOptions.contains(option);
     }
 
     private AbstractOptionSpec<?> specFor( char option ) {
-        return specFor( String.valueOf( option ) );
+        return specFor(String.valueOf(option));
     }
 
     private AbstractOptionSpec<?> specFor( String option ) {
