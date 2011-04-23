@@ -76,6 +76,8 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V> {
     abstract boolean acceptsArguments();
 
     abstract boolean requiresArgument();
+    
+    abstract boolean isRequired();
 
     abstract void accept( OptionSpecVisitor visitor );
 

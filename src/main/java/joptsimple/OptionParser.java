@@ -25,22 +25,28 @@
 
 package joptsimple;
 
+import static java.util.Collections.singletonList;
+import static joptsimple.OptionException.illegalOptionCluster;
+import static joptsimple.OptionException.unrecognizedOption;
+import static joptsimple.OptionParserState.moreOptions;
+import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
+import static joptsimple.ParserRules.ensureLegalOptions;
+import static joptsimple.ParserRules.isLongOptionToken;
+import static joptsimple.ParserRules.isShortOptionToken;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import joptsimple.internal.AbbreviationMap;
 import joptsimple.util.KeyValuePair;
-
-import static java.util.Collections.*;
-import static joptsimple.OptionException.*;
-import static joptsimple.OptionParserState.*;
-import static joptsimple.ParserRules.*;
 
 /**
  * <p>Parses command line arguments, using a syntax that attempts to take from the best of POSIX {@code getopt()}
@@ -362,7 +368,26 @@ public class OptionParser {
             state.handleArgument( this, argumentList, detected );
 
         reset();
+        
+        ensureRequiredOptions(detected);
+        
         return detected;
+    }
+    
+    private void ensureRequiredOptions(OptionSet options) {
+    	Collection<AbstractOptionSpec<?>> recognizedSpecs = recognizedOptions.toJavaUtilMap().values();
+    	Iterator<AbstractOptionSpec<?>> itRecognizedSpecs = recognizedSpecs.iterator();
+    	Collection<String> notFoundOptionsSet = new HashSet<String>();
+    	
+    	while (itRecognizedSpecs.hasNext()) {
+    		AbstractOptionSpec<?> curr = itRecognizedSpecs.next();
+    		if (curr.isRequired() && !options.has(curr)) {
+    			notFoundOptionsSet.addAll(curr.options());
+    		}
+    	}
+    	if (!notFoundOptionsSet.isEmpty()) {
+    		throw new OptionRequiredException(notFoundOptionsSet);
+    	}
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
