@@ -199,7 +199,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     
     /**
      * <p>Marks this option as required. An {@link OptionRequiredException} will be thrown when 
-     * {@link OptionParser.parse()} is called, if an option is marked as required and not specified
+     * {@link OptionParser#parse(java.lang.String...)} is called, if an option is marked as required and not specified
      * on the command line.</p>
      * 
      * @return self, so that the caller can add clauses to the fluent interface sentence
