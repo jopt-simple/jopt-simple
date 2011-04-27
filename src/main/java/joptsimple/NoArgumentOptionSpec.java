@@ -57,6 +57,11 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     }
 
     @Override
+    boolean isRequired() {
+    	return false; //don't see any use to ever require a flag-type option...
+    }
+    
+    @Override
     boolean requiresArgument() {
         return false;
     }
@@ -70,7 +75,7 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     protected Void convert( String argument ) {
         return null;
     }
-
+    
     @Override
     List<Void> defaultValues() {
         return emptyList();
