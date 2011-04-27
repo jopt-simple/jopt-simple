@@ -251,4 +251,11 @@ public class OptionParserTest extends AbstractOptionParserFixture {
         assertOptionDetected( options, "j" );
         assertEquals( embeddedWhitespace, optionJ.value( options ) );
     }
+    
+    @Test(expected = OptionRequiredException.class)
+    public void requiredOptionWithArgMissing() {
+    	OptionSpec<String> option = parser.accepts("t").withOptionalArg().required();
+    	OptionSet options = parser.parse("");
+    }
+   
 }

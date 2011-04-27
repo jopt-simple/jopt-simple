@@ -58,7 +58,8 @@ import static joptsimple.internal.Strings.*;
  */
 public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<V> {
     private static final char NIL_VALUE_SEPARATOR = '\u0000';
-
+    
+    private boolean optionRequired = false;
     private final boolean argumentRequired;
     private ValueConverter<V> converter;
     private String argumentDescription = "";
@@ -194,6 +195,22 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
             addDefaultValue( each );
 
         return this;
+    }
+    
+    /**
+     * <p>Marks this option as required. An {@link OptionRequiredException} will be thrown when 
+     * {@link OptionParser#parse(java.lang.String...)} is called, if an option is marked as required and not specified
+     * on the command line.</p>
+     * 
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     */ 
+    public ArgumentAcceptingOptionSpec<V> required() {
+    	optionRequired = true;
+    	return this;
+    }
+    
+    protected boolean isRequired() {
+    	return this.optionRequired;
     }
 
     private void addDefaultValue( V value ) {
