@@ -369,25 +369,20 @@ public class OptionParser {
 
         reset();
         
-        ensureRequiredOptions(detected);
+        ensureRequiredOptions( detected );
         
         return detected;
     }
     
-    private void ensureRequiredOptions(OptionSet options) {
-    	Collection<AbstractOptionSpec<?>> recognizedSpecs = recognizedOptions.toJavaUtilMap().values();
-    	Iterator<AbstractOptionSpec<?>> itRecognizedSpecs = recognizedSpecs.iterator();
-    	Collection<String> notFoundOptionsSet = new HashSet<String>();
-    	
-    	while (itRecognizedSpecs.hasNext()) {
-    		AbstractOptionSpec<?> curr = itRecognizedSpecs.next();
-    		if (curr.isRequired() && !options.has(curr)) {
-    			notFoundOptionsSet.addAll(curr.options());
-    		}
-    	}
-    	if (!notFoundOptionsSet.isEmpty()) {
-    		throw new MissingRequiredOptionException(notFoundOptionsSet);
-    	}
+    private void ensureRequiredOptions( OptionSet options ) {
+    	Collection<String> missingRequiredOptions = new HashSet<String>();
+        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+            if ( each.isRequired() && !options.has( each ) )
+                missingRequiredOptions.addAll( each.options() );
+        }
+
+    	if ( !missingRequiredOptions.isEmpty() )
+    		throw new MissingRequiredOptionException( missingRequiredOptions );
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
