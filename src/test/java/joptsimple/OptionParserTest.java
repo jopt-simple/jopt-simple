@@ -243,19 +243,24 @@ public class OptionParserTest extends AbstractOptionParserFixture {
 
     @Test
     public void shouldAllowEmbeddedWhitespaceInArgumentOfOption() {
-        String embeddedWhitespace = "   look at me, I'm flaunting the rules!   ";
+        String withEmbeddedWhitespace = "   look at me, I'm flaunting the rules!   ";
         OptionSpec<String> optionJ = parser.accepts( "j" ).withRequiredArg();
 
-        OptionSet options = parser.parse( "-j", embeddedWhitespace );
+        OptionSet options = parser.parse( "-j", withEmbeddedWhitespace );
 
         assertOptionDetected( options, "j" );
-        assertEquals( embeddedWhitespace, optionJ.value( options ) );
+        assertEquals( withEmbeddedWhitespace, optionJ.value( options ) );
     }
     
-    @Test(expected = OptionRequiredException.class)
+    @Test
     public void requiredOptionWithArgMissing() {
-    	OptionSpec<String> option = parser.accepts("t").withOptionalArg().required();
-    	OptionSet options = parser.parse("");
+    	parser.accepts( "t" ).withOptionalArg().required();
+
+        try {
+            parser.parse();
+        }
+        catch ( MissingRequiredOptionException expected ) {
+            assertThat( expected.options(), hasSameContentsAs( singleton( "t" ) ) );
+        }
     }
-   
 }

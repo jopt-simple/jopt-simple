@@ -59,7 +59,10 @@ public class OptionExceptionMessageTest {
                 "Cannot convert argument 'd' of option ['c', 'number'] to class java.lang.Integer" },
             new Object[] { new OptionMissingRequiredArgumentException( asList( "e", "honest" ) ),
                 "Option ['e', 'honest'] requires an argument" },
-            new Object[] { new UnrecognizedOptionException( "f" ), "'f' is not a recognized option" } );
+            new Object[] { new UnrecognizedOptionException( "f" ), "'f' is not a recognized option" },
+            new Object[] { new MissingRequiredOptionException( asList( "g", "h" ) ),
+                "Missing required option ['g', 'h']" }
+        );
     }
 
     @Test

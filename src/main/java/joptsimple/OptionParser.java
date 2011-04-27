@@ -320,7 +320,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll( spec.options(), spec );
+        recognizedOptions.putAll(spec.options(), spec);
     }
 
     /**
@@ -334,7 +334,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn( new OutputStreamWriter( sink ) );
+        printHelpOn(new OutputStreamWriter(sink));
     }
 
     /**
@@ -386,7 +386,7 @@ public class OptionParser {
     		}
     	}
     	if (!notFoundOptionsSet.isEmpty()) {
-    		throw new OptionRequiredException(notFoundOptionsSet);
+    		throw new MissingRequiredOptionException(notFoundOptionsSet);
     	}
     }
 
