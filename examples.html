@@ -23,7 +23,7 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="" id="bannerLeft"  >
+                  <a href="http://jopt-simple.sourceforge.net" id="bannerLeft"  >
     
                                             <img src="images/jopt-simple-logo.png" alt="JOpt Simple" />
     
@@ -146,7 +146,7 @@
   
     
             <div id="lastPublished">
-        <span id="publishDate">Last Published: April 10, 2011</span>
+        <span id="publishDate">Last Published: May 08, 2011</span>
               </div>
             </div>
     </div>
@@ -157,7 +157,7 @@
 <ul><li>Stick as often as possible to supporting conventional Unix option syntaxes.</li>
 <li>Keep the surface area of the published API as small and simple as possible.</li>
 </ul>
-<p>To the first principle: You will not see support in JOpt Simple for option &quot;groups&quot;, &quot;options&quot; that must be present on the command line, alternative option prefixes (<tt>+</tt>, <tt>/</tt>), enforced multiplicity of option arguments, etc. JOpt Simple believes you can create a useful and understandable CLI without all that stuff. If you feel as though you need any of that, there are lots of other choices out there. But the author of JOpt Simple believes you'll want to leverage its easy configuration, parsing, and option interrogation APIs instead of using more feature-laden, but perhaps more confusing libraries.</p>
+<p>To the first principle: You will not see support in JOpt Simple for option &quot;groups&quot;, alternative option prefixes (<tt>+</tt>, <tt>/</tt>), enforced multiplicity of option arguments, etc. JOpt Simple believes you can create a useful and understandable CLI without all that stuff. If you feel as though you need any of those features, there are lots of other choices out there. The author of JOpt Simple believes you'll want to leverage its easy configuration, parsing, and option interrogation APIs instead of using more feature-laden, but perhaps more confusing libraries.</p>
 <p>To the second principle: JOpt Simple will make every attempt to keep the API free of clutter. The API is well factored, making it intuitive to use, and the entire library is well tested, making it more reliable and predictable. If you cannot look at the Javadoc and quickly get a sense of what you need to do to use JOpt Simple, then JOpt Simple has failed. So by all means, let the author know what needs improved.</p>
 <p>With that said, let's take a tour through JOpt Simple's features.</p>
 </div>
@@ -630,6 +630,30 @@ public class DefaultValuesForOptionArgumentsTest {
 <p>You can see that <tt>defaultsTo()</tt> should relieve you of the burden of having to check <tt>has()</tt> and/or <tt>hasArgument()</tt> on an <tt>OptionSet</tt> for a given option, and has no bearing on the return values of those methods. Specifying a default value for an option with a required argument does not mean that you can elide an argument for the option on the command line, as the <tt>try-catch</tt> block demonstrates.</p>
 <p>The type of values <tt>defaultsTo()</tt> expects is dictated by the class given by a previous call to <tt>ofType()</tt> or <tt>withValuesConvertedBy()</tt>; if no such call has been made, the type is <tt>String</tt>.</p>
 </div>
+<div class="section"><h4>&quot;Required&quot; Options</h4>
+<p>You can indicate that a given option must be present on the command line via the <tt>&lt;required()</tt> method. Only options that accept arguments can be made &quot;required&quot;.</p>
+<div class="source"><pre>package joptsimple.examples;
+
+import joptsimple.OptionException;
+import joptsimple.OptionParser;
+import org.junit.Test;
+
+public class RequiredOptionsTest {
+    @Test( expected = OptionException.class )
+    public void shouldAllowSpecificationOfRequiredOptions() throws Exception {
+        OptionParser parser = new OptionParser() {
+            {
+                accepts( &quot;userid&quot; ).withRequiredArg().required();
+                accepts( &quot;password&quot; ).withRequiredArg().required();
+            }
+        };
+
+        parser.parse( &quot;--userid&quot;, &quot;bob&quot; );
+    }
+}
+</pre>
+</div>
+</div>
 <div class="section"><h4>Synonyms of Options</h4>
 <p>Sometimes it is useful to allow many different options to share the same meaning in the program that uses them. To specify that options are to be treated as synonymous, use the <tt>acceptsAll()</tt> method of <tt>OptionParser</tt>.</p>
 <div class="source"><pre>package joptsimple.examples;
@@ -837,7 +861,7 @@ public class HelpScreenExample {
                     .describedAs( &quot;count&quot; ).defaultsTo( 1 );
                 accepts( &quot;q&quot; ).withOptionalArg().ofType( Double.class )
                     .describedAs( &quot;quantity&quot; );
-                accepts( &quot;d&quot;, &quot;some date&quot; ).withRequiredArg()
+                accepts( &quot;d&quot;, &quot;some date&quot; ).withRequiredArg().required()
                     .withValuesConvertedBy( datePattern( &quot;MM/dd/yy&quot; ) );
                 acceptsAll( asList( &quot;v&quot;, &quot;talkative&quot;, &quot;chatty&quot; ), &quot;be more verbose&quot; );
                 accepts( &quot;output-file&quot; ).withOptionalArg().ofType( File.class )
@@ -859,16 +883,10 @@ public class HelpScreenExample {
 </pre>
 </div>
 <p>Here is what the help screen looks like for the example above:</p>
-<div class="source"><pre>Option                                  Description                            
-------                                  -----------                            
--?, -h                                  show help                              
--c &lt;Integer: count&gt;                     (default: 1)                           
---classpath, --cp &lt;File: path1:                                                
-  path2:...&gt;                                                                   
--d &lt;MM/dd/yy&gt;                           some date                              
---output-file [File: file]                                                     
--q [Double: quantity]                                                          
--v, --chatty, --talkative               be more verbose                        
+<div class="source"><pre>Exception in thread &quot;main&quot; joptsimple.MissingRequiredOptionException: Missing required option ['d']
+	at joptsimple.OptionParser.ensureRequiredOptions(OptionParser.java:385)
+	at joptsimple.OptionParser.parse(OptionParser.java:372)
+	at joptsimple.examples.HelpScreenExample.main(HelpScreenExample.java:33)
 </pre>
 </div>
 </div>
@@ -876,11 +894,11 @@ public class HelpScreenExample {
 <p>JOpt Simple's classes raise some derivative of <tt>OptionException</tt> if they encounter problems during parsing. These exceptions are unchecked, so you don't have to do anything with such an exception if you don't want to. The rationale behind this decision is that you will most likely be invoking JOpt Simple's functionality from a <tt>main()</tt> method or very near to it, where a failure such as unrecognized arguments can just stop down the JVM and yield a stack trace without much user or programmer inconvenience. So, without any exception handling at all, a user would see something like this:</p>
 <div class="source"><pre>Exception in thread &quot;main&quot; joptsimple.UnrecognizedOptionException: 'x' is not a recognized option
 	at joptsimple.OptionException.unrecognizedOption(OptionException.java:92)
-	at joptsimple.OptionParser.validateOptionCharacters(OptionParser.java:440)
-	at joptsimple.OptionParser.handleShortOptionCluster(OptionParser.java:390)
-	at joptsimple.OptionParser.handleShortOptionToken(OptionParser.java:385)
+	at joptsimple.OptionParser.validateOptionCharacters(OptionParser.java:460)
+	at joptsimple.OptionParser.handleShortOptionCluster(OptionParser.java:410)
+	at joptsimple.OptionParser.handleShortOptionToken(OptionParser.java:405)
 	at joptsimple.OptionParserState$2.handleArgument(OptionParserState.java:56)
-	at joptsimple.OptionParser.parse(OptionParser.java:362)
+	at joptsimple.OptionParser.parse(OptionParser.java:368)
 	at joptsimple.examples.HelpScreenExample.main(HelpScreenExample.java:33)
 </pre>
 </div>
