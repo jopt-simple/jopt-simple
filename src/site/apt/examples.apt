@@ -13,13 +13,12 @@ Preamble
     []
 
     To the first principle: You will not see support in JOpt Simple for option "groups",
-    "options" that must be present on the command line, alternative option prefixes
-    (<<<+>>>, <<</>>>), enforced multiplicity of option arguments, etc.  JOpt Simple
-    believes you can create a useful and understandable CLI without all that stuff.
-    If you feel as though you need any of that, there are lots of other choices out there.
-    But the author of JOpt Simple believes you'll want to leverage its easy configuration,
-    parsing, and option interrogation APIs instead of using more feature-laden, but
-    perhaps more confusing libraries.
+    alternative option prefixes (<<<+>>>, <<</>>>), enforced multiplicity of option
+    arguments, etc.  JOpt Simple believes you can create a useful and understandable CLI
+    without all that stuff.  If you feel as though you need any of those features, there
+    are lots of other choices out there.  The author of JOpt Simple believes you'll want
+    to leverage its easy configuration, parsing, and option interrogation APIs instead of
+    using more feature-laden, but perhaps more confusing libraries.
 
     To the second principle: JOpt Simple will make every attempt to keep the API free
     of clutter.  The API is well factored, making it intuitive to use, and the entire
@@ -242,7 +241,16 @@ Options
     The type of values <<<defaultsTo()>>> expects is dictated by the class given by a
     previous call to <<<ofType()>>> or <<<withValuesConvertedBy()>>>; if no such call has
     been made, the type is <<<String>>>.
-    
+
+** "Required" Options
+
+    You can indicate that a given option must be present on the command line via the
+    <<<<required()>>> method.  Only options that accept arguments can be made "required".
+
++----------------------------------------------------------------------------------------
+@REQUIRED_OPTIONS_EXAMPLE@
++----------------------------------------------------------------------------------------
+
 ** Synonyms of Options
 
     Sometimes it is useful to allow many different options to share the same meaning in

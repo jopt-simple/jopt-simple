@@ -44,16 +44,13 @@ import static joptsimple.internal.Strings.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 class HelpFormatter implements OptionSpecVisitor {
-    private final ColumnarData grid;
-
-    HelpFormatter() {
-        grid = new ColumnarData( "Option", "Description" );
-    }
+    private ColumnarData grid;
 
     String format( Collection<AbstractOptionSpec<?>> options ) {
         if ( options.isEmpty() )
             return "No options specified";
 
+        grid = new ColumnarData( optionHeader( options ), "Description" );
         grid.clear();
 
         Comparator<AbstractOptionSpec<?>> comparator =
@@ -70,6 +67,15 @@ class HelpFormatter implements OptionSpecVisitor {
             each.accept( this );
 
         return grid.format();
+    }
+
+    private String optionHeader( Collection<AbstractOptionSpec<?>> options ) {
+        for ( AbstractOptionSpec<?> each : options ) {
+            if ( each.isRequired() )
+                return "Option (* = required)";
+        }
+
+        return "Option";
     }
 
     void addHelpLineFor( AbstractOptionSpec<?> spec, String additionalInfo ) {
@@ -117,6 +123,8 @@ class HelpFormatter implements OptionSpecVisitor {
 
         for ( Iterator<String> iter = spec.options().iterator(); iter.hasNext(); ) {
             String option = iter.next();
+            if ( spec.isRequired() )
+                buffer.append("* ");
             buffer.append( option.length() > 1 ? DOUBLE_HYPHEN : HYPHEN );
             buffer.append( option );
 

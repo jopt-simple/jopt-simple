@@ -17,7 +17,7 @@ public class HelpScreenExample {
                     .describedAs( "count" ).defaultsTo( 1 );
                 accepts( "q" ).withOptionalArg().ofType( Double.class )
                     .describedAs( "quantity" );
-                accepts( "d", "some date" ).withRequiredArg()
+                accepts( "d", "some date" ).withRequiredArg().required()
                     .withValuesConvertedBy( datePattern( "MM/dd/yy" ) );
                 acceptsAll( asList( "v", "talkative", "chatty" ), "be more verbose" );
                 accepts( "output-file" ).withOptionalArg().ofType( File.class )

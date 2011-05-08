@@ -36,7 +36,7 @@ class MissingRequiredOptionException extends OptionException {
 	private static final long serialVersionUID = -1L;
 	
 	protected MissingRequiredOptionException( Collection<String> options ) {
-		super(options);
+		super( options );
 	}
 
     @Override

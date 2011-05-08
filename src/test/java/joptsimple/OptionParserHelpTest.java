@@ -49,8 +49,12 @@ import org.junit.Test;
 public class OptionParserHelpTest extends AbstractOptionParserFixture {
     private static final String EXPECTED_HEADER =
         "Option                                  Description                            ";
+    private static final String EXPECTED_HEADER_WITH_REQUIRED_INDICATOR =
+        "Option (* = required)                   Description                            ";
     private static final String EXPECTED_SEPARATOR =
         "------                                  -----------                            ";
+    private static final String EXPECTED_SEPARATOR_WITH_REQUIRED_INDICATOR =
+        "---------------------                   -----------                            ";
 
     private StringWriter sink;
 
@@ -457,10 +461,30 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
             "-d [Integer: double dizzle]             dizzle (default: [2, 3, 5, 7])         " );
     }
 
+    @Test
+    public void shouldMarkRequiredOptionsSpecially() throws Exception {
+        parser.accepts( "e" ).withRequiredArg().required();
+
+        parser.printHelpOn( sink );
+
+        assertStandardHelpLinesWithRequiredIndicator(
+            "* -e                                                                           " );
+    }
+
     private void assertStandardHelpLines( String... expectedLines ) {
         List<String> lines = new ArrayList<String>();
         lines.add( EXPECTED_HEADER );
         lines.add( EXPECTED_SEPARATOR );
+        addAll( lines, expectedLines );
+        lines.add( EMPTY );
+
+        assertHelpLines( lines.toArray( new String[ lines.size() ] ) );
+    }
+
+    private void assertStandardHelpLinesWithRequiredIndicator( String... expectedLines ) {
+        List<String> lines = new ArrayList<String>();
+        lines.add( EXPECTED_HEADER_WITH_REQUIRED_INDICATOR );
+        lines.add( EXPECTED_SEPARATOR_WITH_REQUIRED_INDICATOR );
         addAll( lines, expectedLines );
         lines.add( EMPTY );
 

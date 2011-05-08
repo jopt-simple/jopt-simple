@@ -2,6 +2,12 @@
                                        Change Log
                                        ----------
 
+Changes in version 3.3
+
+    * Added method <<<required()>>> to class <<<ArgumentAcceptingOptionSpec>>>, to allow callers
+    to indicate that a given option must be present on the command line.  Thanks to Emils Solmanis
+    for adding this.
+
 Changes in version 3.2
 
     * Added method <<<defaultsTo()>>> to class <<<ArgumentAcceptingOptionSpec>>>, to allow
