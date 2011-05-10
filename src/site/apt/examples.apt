@@ -245,7 +245,7 @@ Options
 ** "Required" Options
 
     You can indicate that a given option must be present on the command line via the
-    <<<<required()>>> method.  Only options that accept arguments can be made "required".
+    <<<required()>>> method.  Only options that accept arguments can be made "required".
 
 +----------------------------------------------------------------------------------------
 @REQUIRED_OPTIONS_EXAMPLE@
