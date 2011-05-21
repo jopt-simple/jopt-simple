@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2011-05-09T20:30:53.137">
-<file name="/Users/pholser/java/jopt-simple/src/main/java/joptsimple/OptionParser.java">
+<pmd version="4.2.5" timestamp="2011-05-21T18:45:27.735">
+<file name="/Users/pholser/java/jopt-simple/target/checkout/src/main/java/joptsimple/OptionParser.java">
 <violation beginline="26" endline="486" begincolumn="1" endcolumn="2" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="joptsimple" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
 Too many static imports may lead to messy code
 </violation>
@@ -8,7 +8,7 @@ Too many static imports may lead to messy code
 Avoid unused imports such as 'java.util.Iterator'
 </violation>
 </file>
-<file name="/Users/pholser/java/jopt-simple/src/main/java/joptsimple/internal/ColumnarData.java">
+<file name="/Users/pholser/java/jopt-simple/target/checkout/src/main/java/joptsimple/internal/ColumnarData.java">
 <violation beginline="26" endline="161" begincolumn="1" endcolumn="2" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="joptsimple.internal" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
 Too many static imports may lead to messy code
 </violation>
