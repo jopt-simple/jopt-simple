@@ -25,15 +25,6 @@
 
 package joptsimple;
 
-import static java.util.Collections.singletonList;
-import static joptsimple.OptionException.illegalOptionCluster;
-import static joptsimple.OptionException.unrecognizedOption;
-import static joptsimple.OptionParserState.moreOptions;
-import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
-import static joptsimple.ParserRules.ensureLegalOptions;
-import static joptsimple.ParserRules.isLongOptionToken;
-import static joptsimple.ParserRules.isShortOptionToken;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -41,12 +32,17 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.*;
+
 import joptsimple.internal.AbbreviationMap;
 import joptsimple.util.KeyValuePair;
+
+import static joptsimple.OptionException.*;
+import static joptsimple.OptionParserState.*;
+import static joptsimple.ParserRules.*;
 
 /**
  * <p>Parses command line arguments, using a syntax that attempts to take from the best of POSIX {@code getopt()}
@@ -375,14 +371,14 @@ public class OptionParser {
     }
     
     private void ensureRequiredOptions( OptionSet options ) {
-    	Collection<String> missingRequiredOptions = new HashSet<String>();
+        Collection<String> missingRequiredOptions = new HashSet<String>();
         for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
             if ( each.isRequired() && !options.has( each ) )
                 missingRequiredOptions.addAll( each.options() );
         }
 
-    	if ( !missingRequiredOptions.isEmpty() )
-    		throw new MissingRequiredOptionException( missingRequiredOptions );
+        if ( !missingRequiredOptions.isEmpty() )
+            throw new MissingRequiredOptionException( missingRequiredOptions );
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {

@@ -58,7 +58,7 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
 
     @Override
     boolean isRequired() {
-    	return false; //don't see any use to ever require a flag-type option...
+        return false;
     }
     
     @Override

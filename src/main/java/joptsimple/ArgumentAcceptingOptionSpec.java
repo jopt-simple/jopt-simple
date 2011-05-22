@@ -59,7 +59,7 @@ import static joptsimple.internal.Strings.*;
 public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<V> {
     private static final char NIL_VALUE_SEPARATOR = '\u0000';
     
-    private boolean optionRequired = false;
+    private boolean optionRequired;
     private final boolean argumentRequired;
     private ValueConverter<V> converter;
     private String argumentDescription = "";
@@ -205,12 +205,12 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */ 
     public ArgumentAcceptingOptionSpec<V> required() {
-    	optionRequired = true;
-    	return this;
+        optionRequired = true;
+        return this;
     }
     
     protected boolean isRequired() {
-    	return this.optionRequired;
+        return this.optionRequired;
     }
 
     private void addDefaultValue( V value ) {
