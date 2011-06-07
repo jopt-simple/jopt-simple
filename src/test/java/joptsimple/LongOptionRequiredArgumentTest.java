@@ -25,12 +25,12 @@
 
 package joptsimple;
 
-import static java.util.Collections.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static java.util.Collections.*;
+import static org.infinitest.toolkit.CollectionMatchers.hasSameContentsAs;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -85,5 +85,15 @@ public class LongOptionRequiredArgumentTest extends AbstractOptionParserFixture 
         assertOptionDetected( options, "y" );
         assertEquals( singletonList( "bar" ), options.valuesOf( "y" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
+    }
+
+    @Test
+    public void argumentMissingBeforeDoubleDash() {
+        try {
+            parser.parse("--quiet", "--", "some", "more", "arguments");
+            fail();
+        } catch (OptionMissingRequiredArgumentException expected) {
+            assertThat(expected.options(), hasSameContentsAs(singleton("quiet")));
+        }
     }
 }
