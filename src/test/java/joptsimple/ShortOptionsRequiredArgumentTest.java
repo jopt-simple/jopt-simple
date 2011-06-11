@@ -103,4 +103,13 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
         assertEquals( singletonList( "foo" ), options.valuesOf( "d" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
+
+    @Test
+    public void whenEndOfOptionsMarkerIsInPlaceOfRequiredArgument() {
+        OptionSet options = parser.parse( "-d", "--", "foo", "bar" );
+
+        assertOptionDetected( options, "d" );
+        assertEquals( singletonList( "--" ), options.valuesOf( "d" ) );
+        assertEquals( asList( "foo", "bar" ), options.nonOptionArguments() );
+    }
 }

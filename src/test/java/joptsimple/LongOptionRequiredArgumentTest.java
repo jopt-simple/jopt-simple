@@ -25,12 +25,16 @@
 
 package joptsimple;
 
+import java.util.Collections;
+
+import static java.util.Arrays.*;
 import static java.util.Collections.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.infinitest.toolkit.CollectionMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -46,6 +50,7 @@ public class LongOptionRequiredArgumentTest extends AbstractOptionParserFixture 
     @Test
     public void argumentSeparate() {
         OptionSet options = parser.parse( "--quiet", "23" );
+
         assertOptionDetected( options, "quiet" );
         assertEquals( singletonList( "23" ), options.valuesOf( "quiet" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
@@ -54,6 +59,7 @@ public class LongOptionRequiredArgumentTest extends AbstractOptionParserFixture 
     @Test
     public void argumentFollowedByLegalOption() {
         OptionSet options = parser.parse( "--quiet", "-a" );
+
         assertOptionDetected( options, "quiet" );
         assertOptionNotDetected( options, "a" );
         assertEquals( singletonList( "-a" ), options.valuesOf( "quiet" ) );
@@ -63,6 +69,7 @@ public class LongOptionRequiredArgumentTest extends AbstractOptionParserFixture 
     @Test
     public void argumentTogether() {
         OptionSet options = parser.parse( "--quiet=23" );
+
         assertOptionDetected( options, "quiet" );
         assertEquals( singletonList( "23" ), options.valuesOf( "quiet" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
@@ -82,8 +89,21 @@ public class LongOptionRequiredArgumentTest extends AbstractOptionParserFixture 
     @Test
     public void shortOptionSpecifiedAsLongOptionWithArgument() {
         OptionSet options = parser.parse( "--y=bar" );
+
         assertOptionDetected( options, "y" );
         assertEquals( singletonList( "bar" ), options.valuesOf( "y" ) );
+        assertEquals( emptyList(), options.nonOptionArguments() );
+    }
+
+    @Test
+    public void whenEndOfOptionsMarkerIsInPlaceOfRequiredArgument() {
+        OptionSet options = parser.parse( "--quiet", "--", "-y", "foo", "-a" );
+
+        assertOptionDetected( options, "quiet" );
+        assertOptionDetected( options, "y" );
+        assertOptionDetected( options, "a" );
+        assertEquals( singletonList( "--" ), options.valuesOf( "quiet" ) );
+        assertEquals( singletonList( "foo" ), options.valuesOf( "y" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }
