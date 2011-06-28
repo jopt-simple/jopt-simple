@@ -30,9 +30,6 @@ public class HelpScreenExample {
             }
         };
 
-        OptionSet options = parser.parse( args );
-
-        if ( options.has( "?" ) )
-            parser.printHelpOn( System.out );
+        parser.printHelpOn( System.out );
     }
 }
