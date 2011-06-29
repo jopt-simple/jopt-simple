@@ -89,14 +89,14 @@ public class DateConverter implements ValueConverter<Date> {
     /** {@inheritDoc} */
     public String valuePattern() {
         return formatter instanceof SimpleDateFormat
-            ? ( (SimpleDateFormat) formatter ).toLocalizedPattern()
+            ? ( (SimpleDateFormat) formatter ).toPattern()
             : "";
     }
 
     private String message( String value ) {
         String message = "Value [" + value + "] does not match date/time pattern";
         if ( formatter instanceof SimpleDateFormat )
-            message += " [" + ( (SimpleDateFormat) formatter ).toLocalizedPattern() + ']';
+            message += " [" + ( (SimpleDateFormat) formatter ).toPattern() + ']';
 
         return message;
     }
