@@ -56,6 +56,16 @@ public class OptionSet {
         defaultValues = new HashMap<String, List<?>>( defaults );
     }
 
+    
+    /**
+     * <p>Tells whether any options were detected.</p>
+     * 
+     * @return {@code true} if any options were detected
+     */
+    public boolean hasOptions() {
+    	return !detectedOptions.isEmpty();
+    }
+    
     /**
      * <p>Tells whether the given option was detected.</p>
      *
@@ -232,6 +242,15 @@ public class OptionSet {
      */
     public List<String> nonOptionArguments() {
         return unmodifiableList( nonOptionArguments );
+    }
+    
+    /**
+     * <p>Tells whether any non-option arguments were passed.</p>
+     * 
+     * @return {@code true} if any non-option arguments were passed
+     */
+    public boolean hasNonOptionArguments() {
+        return !nonOptionArguments.isEmpty();
     }
 
     void add( AbstractOptionSpec<?> option ) {

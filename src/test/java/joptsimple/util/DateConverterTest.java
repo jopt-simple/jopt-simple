@@ -113,7 +113,7 @@ public class DateConverterTest {
         }
         catch ( ValueConversionException expected ) {
             assertThat( expected.getMessage(), containsString( "qwe" ) );
-            assertThat( expected.getMessage(), containsString( monthDayYear.toLocalizedPattern() ) );
+            assertThat( expected.getMessage(), containsString( monthDayYear.toPattern() ) );
         }
     }
 
@@ -142,7 +142,7 @@ public class DateConverterTest {
     @Test
     public void shouldGiveValuePatternIfFormatterIsASimpleDateFormat() {
         assertEquals(
-            monthDayYear.toLocalizedPattern(),
-            datePattern( monthDayYear.toLocalizedPattern() ).valuePattern() );
+            monthDayYear.toPattern(),
+            datePattern( monthDayYear.toPattern() ).valuePattern() );
     }
 }
