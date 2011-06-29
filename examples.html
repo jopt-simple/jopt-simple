@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        <span id="projectVersion">Version: 3.3</span>
+        <span id="projectVersion">Version: 3.4-SNAPSHOT</span>
               </div>
             <div class="xright">      
   
@@ -146,7 +146,7 @@
   
     
             <div id="lastPublished">
-        <span id="publishDate">Last Published: May 21, 2011</span>
+        <span id="publishDate">Last Published: June 28, 2011</span>
               </div>
             </div>
     </div>
@@ -874,32 +874,37 @@ public class HelpScreenExample {
             }
         };
 
-        OptionSet options = parser.parse( args );
-
-        if ( options.has( &quot;?&quot; ) )
-            parser.printHelpOn( System.out );
+        parser.printHelpOn( System.out );
     }
 }
 </pre>
 </div>
 <p>Here is what the help screen looks like for the example above:</p>
-<div class="source"><pre>Exception in thread &quot;main&quot; joptsimple.MissingRequiredOptionException: Missing required option ['d']
-	at joptsimple.OptionParser.ensureRequiredOptions(OptionParser.java:385)
-	at joptsimple.OptionParser.parse(OptionParser.java:372)
-	at joptsimple.examples.HelpScreenExample.main(HelpScreenExample.java:33)
+<div class="source"><pre>Option (* = required)                   Description                            
+---------------------                   -----------                            
+-?, -h                                  show help                              
+-c &lt;Integer: count&gt;                     (default: 1)                           
+--classpath, --cp &lt;File: path1:                                                
+  path2:...&gt;                                                                   
+* -d &lt;MM/dd/yy&gt;                         some date                              
+--output-file [File: file]                                                     
+-q [Double: quantity]                                                          
+-v, --chatty, --talkative               be more verbose                        
 </pre>
 </div>
 </div>
 <div class="section"><h2>Handling Exceptions</h2>
 <p>JOpt Simple's classes raise some derivative of <tt>OptionException</tt> if they encounter problems during parsing. These exceptions are unchecked, so you don't have to do anything with such an exception if you don't want to. The rationale behind this decision is that you will most likely be invoking JOpt Simple's functionality from a <tt>main()</tt> method or very near to it, where a failure such as unrecognized arguments can just stop down the JVM and yield a stack trace without much user or programmer inconvenience. So, without any exception handling at all, a user would see something like this:</p>
-<div class="source"><pre>Exception in thread &quot;main&quot; joptsimple.UnrecognizedOptionException: 'x' is not a recognized option
-	at joptsimple.OptionException.unrecognizedOption(OptionException.java:92)
-	at joptsimple.OptionParser.validateOptionCharacters(OptionParser.java:460)
-	at joptsimple.OptionParser.handleShortOptionCluster(OptionParser.java:410)
-	at joptsimple.OptionParser.handleShortOptionToken(OptionParser.java:405)
-	at joptsimple.OptionParserState$2.handleArgument(OptionParserState.java:56)
-	at joptsimple.OptionParser.parse(OptionParser.java:368)
-	at joptsimple.examples.HelpScreenExample.main(HelpScreenExample.java:33)
+<div class="source"><pre>Option (* = required)                   Description                            
+---------------------                   -----------                            
+-?, -h                                  show help                              
+-c &lt;Integer: count&gt;                     (default: 1)                           
+--classpath, --cp &lt;File: path1:                                                
+  path2:...&gt;                                                                   
+* -d &lt;MM/dd/yy&gt;                         some date                              
+--output-file [File: file]                                                     
+-q [Double: quantity]                                                          
+-v, --chatty, --talkative               be more verbose                        
 </pre>
 </div>
 <p>If you want to handle the exception yourself, you can just catch <tt>OptionException</tt> in your code, and do whatever you please with the contents of the exception, perhaps using the help generation facility.</p>
