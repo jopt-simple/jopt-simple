@@ -243,6 +243,15 @@ public class OptionSet {
     public List<String> nonOptionArguments() {
         return unmodifiableList( nonOptionArguments );
     }
+    
+    /**
+     * <p>Tells whether any non-option arguments were passed.</p>
+     * 
+     * @return {@code true} if any non-option arguments were passed
+     */
+    public boolean hasNonOptionArguments() {
+        return !nonOptionArguments.isEmpty();
+    }
 
     void add( AbstractOptionSpec<?> option ) {
         addWithArgument( option, null );
