@@ -92,17 +92,15 @@
             fork="yes"
             output="${java.io.tmpdir}/help-output.txt"
             classpath="${example.class.path}">
-            <arg value="-?"/>
         </java>
         <loadfile property="help.screen.example.help"
             srcfile="${java.io.tmpdir}/help-output.txt">
             <filterchain refid="htmlFilter"/>
         </loadfile>
-        <java classname="joptsimple.examples.HelpScreenExample"
+        <java classname="joptsimple.examples.ExceptionExample"
             fork="yes"
             output="${java.io.tmpdir}/stack-trace-output.txt"
             classpath="${example.class.path}">
-            <arg value="-x"/>
         </java>
         <loadfile property="example.stack.trace"
             srcfile="${java.io.tmpdir}/stack-trace-output.txt">
