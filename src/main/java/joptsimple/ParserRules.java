@@ -40,12 +40,8 @@ final class ParserRules {
     static final String OPTION_TERMINATOR = DOUBLE_HYPHEN;
     static final String RESERVED_FOR_EXTENSIONS = "W";
 
-    static {
-        new ParserRules();
-    }
-
     private ParserRules() {
-        // nothing to do here
+        throw new UnsupportedOperationException();
     }
 
     static boolean isShortOptionToken( String argument ) {

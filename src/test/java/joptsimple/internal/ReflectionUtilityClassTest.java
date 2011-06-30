@@ -25,22 +25,13 @@
 
 package joptsimple.internal;
 
+import joptsimple.UtilityClassesUninstantiabilityHarness;
+
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-public final class Classes {
-    private Classes() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Gives the "short version" of the given class name.  Somewhat naive to inner
-     * classes.
-     *
-     * @param className class name to chew on
-     * @return the short name of the class
-     */
-    public static String shortNameOf( String className ) {
-        return className.substring( className.lastIndexOf( '.' ) + 1 );
+public class ReflectionUtilityClassTest extends UtilityClassesUninstantiabilityHarness {
+    public ReflectionUtilityClassTest() {
+        super( Reflection.class );
     }
 }

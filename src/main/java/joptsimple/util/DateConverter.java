@@ -54,9 +54,8 @@ public class DateConverter implements ValueConverter<Date> {
     }
 
     /**
-     * Creates a converter that uses a {@link SimpleDateFormat} with the given date/time
-     * pattern.  The date formatter created is not
-     * {@link SimpleDateFormat#setLenient(boolean) lenient}.
+     * Creates a converter that uses a {@link SimpleDateFormat} with the given date/time pattern.  The date formatter
+     * created is not {@link SimpleDateFormat#setLenient(boolean) lenient}.
      *
      * @param pattern expected date/time pattern
      * @return the new converter

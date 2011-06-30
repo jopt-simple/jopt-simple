@@ -30,7 +30,7 @@ import static java.util.Collections.*;
 import static joptsimple.ParserRules.*;
 
 /**
- * <p>Represents the <kbd>"-W"</kbd> form of long option specification.</p>
+ * Represents the <kbd>"-W"</kbd> form of long option specification.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

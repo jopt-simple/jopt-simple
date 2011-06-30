@@ -193,8 +193,8 @@ public class OptionParser {
     private boolean posixlyCorrect;
 
     /**
-     * <p>Creates an option parser that initially recognizes no options, and does not exhibit "POSIX-ly correct"
-     * behavior.</p>
+     * Creates an option parser that initially recognizes no options, and does not exhibit "POSIX-ly correct"
+     * behavior.
      */
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
@@ -202,12 +202,12 @@ public class OptionParser {
     }
 
     /**
-     * <p>Creates an option parser and configures it to recognize the short options specified in the given string.</p>
+     * Creates an option parser and configures it to recognize the short options specified in the given string.
      *
-     * <p>Arguments of options specified this way will be of type {@link String}.</p>
+     * Arguments of options specified this way will be of type {@link String}.
      *
      * @param optionSpecification an option specification
-     * @throws NullPointerException if <em>optionSpecification</em> is {@code null}
+     * @throws NullPointerException if {@code optionSpecification} is {@code null}
      * @throws OptionException if the option specification contains illegal characters or otherwise cannot be
      * recognized
      */
@@ -241,7 +241,7 @@ public class OptionParser {
     }
 
     /**
-     * <p>Tells the parser to recognize the given option.</p>
+     * Tells the parser to recognize the given option.
      *
      * @see #accepts(String)
      * @param option the option to recognize
@@ -256,7 +256,7 @@ public class OptionParser {
     }
 
     /**
-     * <p>Tells the parser to recognize the given options, and treat them as synonymous.</p>
+     * Tells the parser to recognize the given options, and treat them as synonymous.
      *
      * @see #accepts(String)
      * @param options the options to recognize and treat as synonymous
@@ -269,7 +269,7 @@ public class OptionParser {
     }
 
     /**
-     * <p>Tells the parser to recognize the given options, and treat them as synonymous.</p>
+     * Tells the parser to recognize the given options, and treat them as synonymous.
      *
      * @see #acceptsAll(Collection)
      * @param options the options to recognize and treat as synonymous
@@ -290,7 +290,7 @@ public class OptionParser {
     }
 
     /**
-     * <p>Tells the parser whether or not to behave "POSIX-ly correct"-ly.</p>
+     * Tells the parser whether or not to behave "POSIX-ly correct"-ly.
      *
      * @param setting {@code true} if the parser should behave "POSIX-ly correct"-ly
      */
@@ -304,7 +304,7 @@ public class OptionParser {
     }
 
     /**
-     * <p>Tells the parser either to recognize or ignore <kbd>"-W"</kbd>-style long options.</p>
+     * Tells the parser either to recognize or ignore <kbd>"-W"</kbd>-style long options.
      *
      * @param recognize {@code true} if the parser is to recognize the special style of long options
      */
@@ -320,13 +320,13 @@ public class OptionParser {
     }
 
     /**
-     * <p>Writes information about the options this parser recognizes to the given output sink.</p>
+     * Writes information about the options this parser recognizes to the given output sink.
      *
-     * <p>The output sink is flushed, but not closed.</p>
+     * The output sink is flushed, but not closed.
      *
      * @param sink the sink to write information to
      * @throws IOException if there is a problem writing to the sink
-     * @throws NullPointerException if <em>sink</em> is {@code null}
+     * @throws NullPointerException if {@code sink} is {@code null}
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
@@ -334,13 +334,13 @@ public class OptionParser {
     }
 
     /**
-     * <p>Writes information about the options this parser recognizes to the given output sink.</p>
+     * Writes information about the options this parser recognizes to the given output sink.
      *
-     * <p>The output sink is flushed, but not closed.</p>
+     * The output sink is flushed, but not closed.
      *
      * @param sink the sink to write information to
      * @throws IOException if there is a problem writing to the sink
-     * @throws NullPointerException if <em>sink</em> is {@code null}
+     * @throws NullPointerException if {@code sink} is {@code null}
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
@@ -349,7 +349,7 @@ public class OptionParser {
     }
 
     /**
-     * <p>Parses the given command line arguments according to the option specifications given to the parser.</p>
+     * Parses the given command line arguments according to the option specifications given to the parser.
      *
      * @param arguments arguments to parse
      * @return an {@link OptionSet} describing the parsed options, their arguments, and any non-option arguments found

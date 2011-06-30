@@ -29,12 +29,8 @@ package joptsimple.internal;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public final class Objects {
-    static {
-        new Objects();
-    }
-
     private Objects() {
-        // nothing to do here
+        throw new UnsupportedOperationException();
     }
 
     /**

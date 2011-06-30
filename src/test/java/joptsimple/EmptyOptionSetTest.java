@@ -60,6 +60,11 @@ public class EmptyOptionSetTest {
         assertFalse( empty.hasArgument( "a" ) );
     }
 
+    @Test
+    public void hasOptions() {
+        assertFalse( empty.hasOptions() );
+    }
+
     @Test( expected = NullPointerException.class )
     public void valueOfWithNullString() {
         empty.valueOf( (String) null );

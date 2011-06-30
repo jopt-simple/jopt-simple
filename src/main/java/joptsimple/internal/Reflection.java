@@ -38,12 +38,8 @@ import joptsimple.ValueConverter;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public final class Reflection {
-    static {
-        new Reflection();
-    }
-
     private Reflection() {
-        // nothing to do here
+        throw new UnsupportedOperationException();
     }
 
     /**

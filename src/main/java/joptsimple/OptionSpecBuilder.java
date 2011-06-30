@@ -28,23 +28,20 @@ package joptsimple;
 import java.util.Collection;
 
 /**
- * <p>Allows callers to specify whether a given option accepts arguments (required or
- * optional).</p>
+ * Allows callers to specify whether a given option accepts arguments (required or optional).
  *
- * <p>Instances are returned from {@link OptionParser#accepts(String)} to allow the
- * formation of parser directives as sentences in a "fluent interface" language.  For
- * example:</p>
+ * <p>Instances are returned from {@link OptionParser#accepts(String)} to allow the formation of parser directives as
+ * sentences in a "fluent interface" language.  For example:</p>
  *
  * <pre><code>
  *   OptionParser parser = new OptionParser();
  *   parser.accepts( "c" ).<strong>withRequiredArg()</strong>.ofType( Integer.class );
  * </code></pre>
  *
- * <p>If no methods are invoked on an instance of this class, then that instance's option
- * will accept no argument.</p>
+ * <p>If no methods are invoked on an instance of this class, then that instance's option will accept no argument.</p>
  *
- * <p>Note that you should not use the fluent interface clauses in a way that would
- * defeat the typing of option arguments:</p>
+ * <p>Note that you should not use the fluent interface clauses in a way that would defeat the typing of option
+ * arguments:</p>
  *
  * <pre><code>
  *   OptionParser parser = new OptionParser();
@@ -72,7 +69,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
     }
 
     /**
-     * <p>Informs an option parser that this builder's option requires an argument.</p>
+     * Informs an option parser that this builder's option requires an argument.
      *
      * @return a specification for the option
      */
@@ -85,8 +82,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
     }
 
     /**
-     * <p>Informs an option parser that this builder's option accepts an optional
-     * argument.</p>
+     * Informs an option parser that this builder's option accepts an optional argument.
      *
      * @return a specification for the option
      */

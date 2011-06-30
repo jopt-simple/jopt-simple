@@ -40,8 +40,8 @@ import static joptsimple.internal.Strings.*;
 /**
  * <p>Specification of an option that accepts an argument.</p>
  *
- * <p>Instances are returned from {@link OptionSpecBuilder} methods to allow the formation
- * of parser directives as sentences in a "fluent interface" language.  For example:</p>
+ * <p>Instances are returned from {@link OptionSpecBuilder} methods to allow the formation of parser directives as
+ * sentences in a "fluent interface" language.  For example:</p>
  *
  * <pre>
  *   <code>
@@ -50,8 +50,8 @@ import static joptsimple.internal.Strings.*;
  *   </code>
  * </pre>
  *
- * <p>If no methods are invoked on an instance of this class, then that instance's option
- * will treat its argument as a {@link String}.</p>
+ * <p>If no methods are invoked on an instance of this class, then that instance's option will treat its argument as
+ * a {@link String}.</p>
  *
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -79,24 +79,20 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     /**
-     * <p>Specifies a type to which arguments of this spec's option are to be
-     * converted.</p>
+     * <p>Specifies a type to which arguments of this spec's option are to be converted.</p>
      *
      * <p>JOpt Simple accepts types that have either:</p>
      *
      * <ol>
-     *   <li>a public static method called {@code valueOf} which accepts a single
-     *   argument of type {@link String} and whose return type is the same as the class
-     *   on which the method is declared.  The {@code java.lang} primitive wrapper
-     *   classes have such methods.</li>
+     *   <li>a public static method called {@code valueOf} which accepts a single argument of type {@link String}
+     *   and whose return type is the same as the class on which the method is declared.  The {@code java.lang}
+     *   primitive wrapper classes have such methods.</li>
      *
-     *   <li>a public constructor which accepts a single argument of type
-     *   {@link String}.</li>
+     *   <li>a public constructor which accepts a single argument of type {@link String}.</li>
      * </ol>
      *
-     * <p>This class converts arguments using those methods in that order; that is,
-     * {@code valueOf} would be invoked before a one-{@link String}-arg constructor
-     * would.</p>
+     * <p>This class converts arguments using those methods in that order; that is, {@code valueOf} would be invoked
+     * before a one-{@link String}-arg constructor would.</p>
      *
      * <p>Invoking this method will trump any previous calls to this method or to
      * {@link #withValuesConvertedBy(ValueConverter)}.
@@ -105,20 +101,18 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
      * @param argumentType desired type of arguments to this spec's option
      * @return self, so that the caller can add clauses to the fluent interface sentence
      * @throws NullPointerException if the type is {@code null}
-     * @throws IllegalArgumentException if the type does not have the standard conversion
-     * methods
+     * @throws IllegalArgumentException if the type does not have the standard conversion methods
      */
     public final <T> ArgumentAcceptingOptionSpec<T> ofType( Class<T> argumentType ) {
         return withValuesConvertedBy( findConverter( argumentType ) );
     }
 
     /**
-     * <p>Specifies a converter to use to translate arguments of this spec's option into
-     * Java objects.  This is useful when converting to types that do not have the
-     * requisite factory method or constructor for {@link #ofType(Class)}.</p>
+     * <p>Specifies a converter to use to translate arguments of this spec's option into Java objects.  This is useful
+     * when converting to types that do not have the requisite factory method or constructor for
+     * {@link #ofType(Class)}.</p>
      *
-     * <p>Invoking this method will trump any previous calls to this method or to
-     * {@link #ofType(Class)}.
+     * <p>Invoking this method will trump any previous calls to this method or to {@link #ofType(Class)}.
      *
      * @param <T> represents the runtime class of the desired option argument type
      * @param aConverter the converter to use
@@ -135,12 +129,10 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     /**
-     * <p>Specifies a description for the argument of the option that this spec
-     * represents.  This description is used when generating help information about
-     * the parser.</p>
+     * <p>Specifies a description for the argument of the option that this spec represents.  This description is used
+     * when generating help information about the parser.</p>
      *
-     * @param description describes the nature of the argument of this spec's
-     * option
+     * @param description describes the nature of the argument of this spec's option
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
     public final ArgumentAcceptingOptionSpec<V> describedAs( String description ) {
@@ -149,9 +141,8 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     /**
-     * <p>Specifies a value separator for the argument of the option that this spec
-     * represents.  This allows a single option argument to represent multiple values
-     * for the option.  For example:</p>
+     * <p>Specifies a value separator for the argument of the option that this spec represents.  This allows a single
+     * option argument to represent multiple values for the option.  For example:</p>
      *
      * <pre>
      *   <code>
@@ -162,8 +153,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
      *   </code>
      * </pre>
      *
-     * <p>Then {@code options.valuesOf( "z" )} would yield the list {@code [foo, bar,
-     * baz, fizz, buzz]}.</p>
+     * <p>Then {@code options.valuesOf( "z" )} would yield the list {@code [foo, bar, baz, fizz, buzz]}.</p>
      *
      * <p>You cannot use Unicode U+0000 as the separator.</p>
      *
@@ -180,8 +170,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     /**
-     * <p>Specifies a set of default values for the argument of the option that this spec
-     * represents.</p>
+     * Specifies a set of default values for the argument of the option that this spec represents.
      *
      * @param value the first in the set of default argument values for this spec's option
      * @param values the (optional) remainder of the set of default argument values for this spec's option
@@ -198,9 +187,9 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
     
     /**
-     * <p>Marks this option as required. An {@link OptionException} will be thrown when
+     * Marks this option as required. An {@link OptionException} will be thrown when
      * {@link OptionParser#parse(java.lang.String...)} is called, if an option is marked as required and not specified
-     * on the command line.</p>
+     * on the command line.
      * 
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */ 

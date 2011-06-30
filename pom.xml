@@ -104,7 +104,7 @@
                     <check>
                         <haltOnFailure>true</haltOnFailure>
                         <branchRate>83</branchRate>
-                        <totalBranchRate>95</totalBranchRate>
+                        <totalBranchRate>96</totalBranchRate>
                         <totalLineRate>99</totalLineRate>
                     </check>
                 </configuration>
@@ -198,6 +198,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <formats>
                         <format>xml</format>

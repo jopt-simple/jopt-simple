@@ -35,8 +35,7 @@ import static java.util.Collections.*;
 import static joptsimple.internal.Objects.*;
 
 /**
- * <p>Representation of a group of detected command line options, their arguments, and
- * non-option arguments.</p>
+ * Representation of a group of detected command line options, their arguments, and non-option arguments.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
@@ -46,7 +45,7 @@ public class OptionSet {
     private final List<String> nonOptionArguments;
     private final Map<String, List<?>> defaultValues;
 
-    /**
+    /*
      * Package-private because clients don't create these.
      */
     OptionSet( Map<String, List<?>> defaults ) {
@@ -58,7 +57,7 @@ public class OptionSet {
 
     
     /**
-     * <p>Tells whether any options were detected.</p>
+     * Tells whether any options were detected.
      * 
      * @return {@code true} if any options were detected
      */
@@ -67,7 +66,7 @@ public class OptionSet {
     }
     
     /**
-     * <p>Tells whether the given option was detected.</p>
+     * Tells whether the given option was detected.
      *
      * @param option the option to search for
      * @return {@code true} if the option was detected
@@ -78,10 +77,9 @@ public class OptionSet {
     }
 
     /**
-     * <p>Tells whether the given option was detected.</p>
+     * Tells whether the given option was detected.
      *
-     * <p>This method recognizes only instances of options returned from the fluent
-     * interface methods.</p>
+     * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
      *
      * <p>Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[])} default argument value}
      * for an option does not cause this method to return {@code true} if the option was not detected on the command
@@ -96,11 +94,10 @@ public class OptionSet {
     }
 
     /**
-     * <p>Tells whether there are any arguments associated with the given option.</p>
+     * Tells whether there are any arguments associated with the given option.
      *
      * @param option the option to search for
-     * @return {@code true} if the option was detected and at least one argument was
-     * detected for the option
+     * @return {@code true} if the option was detected and at least one argument was detected for the option
      * @see #hasArgument(OptionSpec)
      */
     public boolean hasArgument( String option ) {
@@ -109,18 +106,16 @@ public class OptionSet {
     }
 
     /**
-     * <p>Tells whether there are any arguments associated with the given option.</p>
+     * Tells whether there are any arguments associated with the given option.
      *
-     * <p>This method recognizes only instances of options returned from the fluent
-     * interface methods.</p>
+     * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
      *
      * <p>Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
      * for an option does not cause this method to return {@code true} if the option was not detected on the command
      * line, or if the option can take an optional argument but did not have one on the command line.</p>
      *
      * @param option the option to search for
-     * @return {@code true} if the option was detected and at least one argument was
-     * detected for the option
+     * @return {@code true} if the option was detected and at least one argument was detected for the option
      * @throws NullPointerException if {@code option} is {@code null}
      * @see #hasArgument(String)
      */
@@ -132,17 +127,16 @@ public class OptionSet {
     }
 
     /**
-     * <p>Gives the argument associated with the given option.  If the option was given
-     * an argument type, the argument will take on that type; otherwise, it will be a
-     * {@link String}.</p>
+     * Gives the argument associated with the given option.  If the option was given an argument type, the argument
+     * will take on that type; otherwise, it will be a {@link String}.
      *
      * <p>Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
      * for an option will cause this method to return that default value even if the option was not detected on the
      * command line, or if the option can take an optional argument but did not have one on the command line.</p>
      *
      * @param option the option to search for
-     * @return the argument of the given option; {@code null} if no argument is
-     * present, or that option was not detected
+     * @return the argument of the given option; {@code null} if no argument is present, or that option was not
+     * detected
      * @throws NullPointerException if {@code option} is {@code null}
      * @throws OptionException if more than one argument was detected for the option
      */
@@ -159,19 +153,17 @@ public class OptionSet {
     }
 
     /**
-     * <p>Gives the argument associated with the given option.</p>
+     * Gives the argument associated with the given option.
      *
-     * <p>This method recognizes only instances of options returned from the fluent
-     * interface methods.</p>
+     * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
      *
      * @param <V> represents the type of the arguments the given option accepts
      * @param option the option to search for
-     * @return the argument of the given option; {@code null} if no argument is
-     * present, or that option was not detected
+     * @return the argument of the given option; {@code null} if no argument is present, or that option was not
+     * detected
      * @throws OptionException if more than one argument was detected for the option
      * @throws NullPointerException if {@code option} is {@code null}
-     * @throws ClassCastException if the arguments of this option are not of the
-     * expected type
+     * @throws ClassCastException if the arguments of this option are not of the expected type
      */
     public <V> V valueOf( OptionSpec<V> option ) {
         ensureNotNull( option );
@@ -188,14 +180,12 @@ public class OptionSet {
     }
 
     /**
-     * <p>Gives any arguments associated with the given option.  If the option was given
-     * an argument type, the arguments will take on that type; otherwise, they will be
-     * {@link String}s.</p>
+     * <p>Gives any arguments associated with the given option.  If the option was given an argument type, the
+     * arguments will take on that type; otherwise, they will be {@link String}s.</p>
      *
      * @param option the option to search for
-     * @return the arguments associated with the option, as a list of objects of the
-     * type given to the arguments; an empty list if no such arguments are present, or if
-     * the option was not detected
+     * @return the arguments associated with the option, as a list of objects of the type given to the arguments; an
+     * empty list if no such arguments are present, or if the option was not detected
      * @throws NullPointerException if {@code option} is {@code null}
      */
     public List<?> valuesOf( String option ) {
@@ -206,21 +196,18 @@ public class OptionSet {
     }
 
     /**
-     * <p>Gives any arguments associated with the given option.  If the option was given
-     * an argument type, the arguments will take on that type; otherwise, they will be
-     * {@link String}s.</p>
+     * <p>Gives any arguments associated with the given option.  If the option was given an argument type, the
+     * arguments will take on that type; otherwise, they will be {@link String}s.</p>
      *
-     * <p>This method recognizes only instances of options returned from the fluent
-     * interface methods.</p>
+     * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
      *
      * @param <V> represents the type of the arguments the given option accepts
      * @param option the option to search for
-     * @return the arguments associated with the option; an empty list if no such
-     * arguments are present, or if the option was not detected
+     * @return the arguments associated with the option; an empty list if no such arguments are present, or if the
+     * option was not detected
      * @throws NullPointerException if {@code option} is {@code null}
-     * @throws OptionException if there is a problem converting the option's arguments to
-     * the desired type; for example, if the type does not implement a correct conversion
-     * constructor or method
+     * @throws OptionException if there is a problem converting the option's arguments to the desired type; for
+     * example, if the type does not implement a correct conversion constructor or method
      */
     public <V> List<V> valuesOf( OptionSpec<V> option ) {
         ensureNotNull( option );
@@ -244,15 +231,6 @@ public class OptionSet {
         return unmodifiableList( nonOptionArguments );
     }
     
-    /**
-     * <p>Tells whether any non-option arguments were passed.</p>
-     * 
-     * @return {@code true} if any non-option arguments were passed
-     */
-    public boolean hasNonOptionArguments() {
-        return !nonOptionArguments.isEmpty();
-    }
-
     void add( AbstractOptionSpec<?> option ) {
         addWithArgument( option, null );
     }

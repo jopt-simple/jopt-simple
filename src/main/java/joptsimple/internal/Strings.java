@@ -38,12 +38,8 @@ public final class Strings {
     public static final String SINGLE_QUOTE = "'";
     public static final String LINE_SEPARATOR = getProperty( "line.separator" );
 
-    static {
-        new Strings();
-    }
-
     private Strings() {
-        // nothing to do here
+        throw new UnsupportedOperationException();
     }
 
     /**

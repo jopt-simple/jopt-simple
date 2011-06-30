@@ -64,4 +64,9 @@ public class PopulatedOptionSetTest {
         assertEquals( emptyList(), populated.valuesOf( "a" ) );
         assertEquals( singletonList( "arg-of-b" ), populated.valuesOf( "b" ) );
     }
+
+    @Test
+    public void hasOptions() {
+        assertTrue( populated.hasOptions() );
+    }
 }

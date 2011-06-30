@@ -28,7 +28,7 @@ package joptsimple.util;
 import static joptsimple.internal.Strings.*;
 
 /**
- * <p>A simple string key/string value pair.</p>
+ * A simple string key/string value pair.
  *
  * <p>This is useful as an argument type for options whose values take on the form
  * <kbd>key=value</kbd>, such as JVM command line system properties.</p>

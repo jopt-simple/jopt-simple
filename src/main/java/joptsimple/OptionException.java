@@ -34,7 +34,7 @@ import static java.util.Collections.*;
 import static joptsimple.internal.Strings.*;
 
 /**
- * <p>Thrown when a problem occurs during option parsing.</p>
+ * Thrown when a problem occurs during option parsing.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
@@ -54,7 +54,7 @@ public abstract class OptionException extends RuntimeException {
     }
 
     /**
-     * <p>Gives the option being considered when the exception was created.</p>
+     * Gives the option being considered when the exception was created.
      *
      * @return the option being considered when the exception was created
      */

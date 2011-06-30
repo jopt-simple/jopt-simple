@@ -29,10 +29,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * <p>Describes options that an option parser recognizes.</p>
+ * Describes options that an option parser recognizes.
  *
- * <p>Instances of this interface are returned by the "fluent interface" methods to allow
- * retrieval of option arguments in a type-safe manner.  Here's an example:</p>
+ * <p>Instances of this interface are returned by the "fluent interface" methods to allow retrieval of option arguments
+ * in a type-safe manner.  Here's an example:</p>
+ * 
  * <pre><code>
  *     OptionParser parser = new OptionParser();
  *     <strong>OptionSpec&lt;Integer&gt;</strong> count =
@@ -50,39 +51,34 @@ import java.util.List;
  */
 public interface OptionSpec<V> {
     /**
-     * <p>Gives any arguments associated with the given option in the given set of
-     * detected options.</p>
+     * Gives any arguments associated with the given option in the given set of detected options.
      *
      * <p>Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
      * for this option will cause this method to return that default value even if this option was not detected on the
      * command line, or if this option can take an optional argument but did not have one on the command line.</p>
      *
      * @param detectedOptions the detected options to search in
-     * @return the arguments associated with this option; an empty list if no such
-     * arguments are present, or if this option was not detected
-     * @throws OptionException if there is a problem converting this option's arguments
-     * to the desired type; for example, if the type does not implement a correct
-     * conversion constructor or method
+     * @return the arguments associated with this option; an empty list if no such arguments are present, or if this
+     * option was not detected
+     * @throws OptionException if there is a problem converting this option's arguments to the desired type; for
+     * example, if the type does not implement a correct conversion constructor or method
      * @throws NullPointerException if {@code detectedOptions} is {@code null}
      * @see OptionSet#valuesOf(OptionSpec)
      */
     List<V> values( OptionSet detectedOptions );
 
     /**
-     * <p>Gives the argument associated with the given option in the given set of
-     * detected options.</p>
+     * Gives the argument associated with the given option in the given set of detected options.
      *
      * <p>Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
      * for this option will cause this method to return that default value even if this option was not detected on the
      * command line, or if this option can take an optional argument but did not have one on the command line.</p>
      *
      * @param detectedOptions the detected options to search in
-     * @return the argument of the this option; {@code null} if no argument is present,
-     * or that option was not detected
+     * @return the argument of the this option; {@code null} if no argument is present, or that option was not detected
      * @throws OptionException if more than one argument was detected for the option
      * @throws NullPointerException if {@code detectedOptions} is {@code null}
-     * @throws ClassCastException if the arguments of this option are not of the
-     * expected type
+     * @throws ClassCastException if the arguments of this option are not of the expected type
      * @see OptionSet#valueOf(OptionSpec)
      */
     V value( OptionSet detectedOptions );
