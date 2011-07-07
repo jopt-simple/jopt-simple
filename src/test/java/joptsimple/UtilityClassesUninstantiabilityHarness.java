@@ -52,11 +52,12 @@ public abstract class UtilityClassesUninstantiabilityHarness {
 
     @Test
     public final void attemptToInstantiate() throws Exception {
+        Constructor<?> constructor = utility.getDeclaredConstructor();
+        constructor.setAccessible( true );
+
         thrown.expect( InvocationTargetException.class );
         thrown.expect( causeOfType( UnsupportedOperationException.class ) );
 
-        Constructor<?> constructor = utility.getDeclaredConstructor();
-        constructor.setAccessible( true );
         constructor.newInstance();
     }
 
