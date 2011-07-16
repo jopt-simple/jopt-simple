@@ -25,15 +25,12 @@
 
 package joptsimple;
 
-import java.util.Collections;
-
-import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.infinitest.toolkit.CollectionMatchers.*;
+import static joptsimple.OptionExceptionMatchers.*;
 import static org.junit.Assert.*;
 
 /**
@@ -77,13 +74,10 @@ public class LongOptionRequiredArgumentTest extends AbstractOptionParserFixture 
 
     @Test
     public void argumentMissing() {
-        try {
-            parser.parse( "--quiet" );
-            fail();
-        }
-        catch ( OptionMissingRequiredArgumentException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "quiet" ) ) );
-        }
+        thrown.expect( OptionMissingRequiredArgumentException.class );
+        thrown.expect( withOption( "quiet" ) );
+
+        parser.parse( "--quiet" );
     }
 
     @Test

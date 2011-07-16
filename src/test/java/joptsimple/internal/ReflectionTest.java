@@ -25,91 +25,83 @@
 
 package joptsimple.internal;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static joptsimple.internal.Reflection.*;
 import static org.junit.Assert.*;
-import org.junit.Test;
 import static org.junit.matchers.JUnitMatchers.*;
+import static org.junit.rules.ExpectedException.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class ReflectionTest {
+    @Rule
+    public final ExpectedException thrown = none();
+
     @Test
     public void invokingConstructorQuietlyWrapsInstantiationException() throws Exception {
-        try {
-            instantiate( AbstractProblematic.class.getDeclaredConstructor() );
-            fail();
-        }
-        catch ( ReflectionException expected ) {
-            String causeName = InstantiationException.class.getName();
-            assertThat( expected.getMessage(), containsString( causeName ) );
-        }
+        Constructor<AbstractProblematic> constructor = AbstractProblematic.class.getDeclaredConstructor();
+
+        thrown.expect( ReflectionException.class );
+        thrown.expectMessage( InstantiationException.class.getName() );
+
+        instantiate( constructor );
     }
 
     @Test
     public void invokingConstructorQuietlyWrapsIllegalAccessException() throws Exception {
-        try {
-            instantiate( Problematic.class.getDeclaredConstructor() );
-            fail();
-        }
-        catch ( ReflectionException expected ) {
-            String causeName = IllegalAccessException.class.getName();
-            assertThat( expected.getMessage(), containsString( causeName ) );
-        }
+        Constructor<Problematic> constructor = Problematic.class.getDeclaredConstructor();
+
+        thrown.expect( ReflectionException.class );
+        thrown.expectMessage( IllegalAccessException.class.getName() );
+
+        instantiate( constructor );
     }
 
     @Test
     public void invokingConstructorQuietlyWrapsCauseOfInvocationTargetException() throws Exception {
-        try {
-            instantiate( Problematic.class.getDeclaredConstructor( String.class ), "arg" );
-            fail();
-        }
-        catch ( ReflectionException expected ) {
-            String causeName = IllegalStateException.class.getName();
-            assertThat( expected.getMessage(), containsString( causeName ) );
-        }
+        Constructor<Problematic> constructor = Problematic.class.getDeclaredConstructor( String.class );
+
+        thrown.expect( ReflectionException.class );
+        thrown.expectMessage( IllegalStateException.class.getName() );
+
+        instantiate( constructor, "arg" );
     }
 
     @Test
     public void invokingConstructorQuietlyWrapsIllegalArgumentException() throws Exception {
-        try {
-            instantiate( Problematic.class.getDeclaredConstructor( String.class ) );
-            fail();
-        }
-        catch ( ReflectionException expected ) {
-            String causeName = IllegalArgumentException.class.getName();
-            assertThat( expected.getMessage(), containsString( causeName ) );
-        }
+        Constructor<Problematic> constructor = Problematic.class.getDeclaredConstructor(String.class);
+
+        thrown.expect( ReflectionException.class );
+        thrown.expectMessage( IllegalArgumentException.class.getName() );
+
+        instantiate( constructor );
     }
 
     @Test
     public void invokingStaticMethodQuietlyWrapsIllegalAccessException() throws Exception {
         Method method = Problematic.class.getDeclaredMethod( "boo" );
 
-        try {
-            invoke( method );
-            fail();
-        }
-        catch ( ReflectionException expected ) {
-            String causeName = IllegalAccessException.class.getName();
-            assertThat( expected.getMessage(), containsString( causeName ) );
-        }
+        thrown.expect( ReflectionException.class );
+        thrown.expectMessage( IllegalAccessException.class.getName() );
+
+        invoke( method );
     }
 
     @Test
     public void invokingStaticMethodQuietlyWrapsIllegalArgumentException() throws Exception {
         Method method = Problematic.class.getDeclaredMethod( "mute" );
 
-        try {
-            invoke( method, new Object() );
-            fail();
-        }
-        catch ( ReflectionException expected ) {
-            String causeName = IllegalArgumentException.class.getName();
-            assertThat( expected.getMessage(), containsString( causeName ) );
-        }
+        thrown.expect( ReflectionException.class );
+        thrown.expectMessage( IllegalArgumentException.class.getName() );
+
+        invoke( method, new Object() );
     }
 
     private abstract static class AbstractProblematic {

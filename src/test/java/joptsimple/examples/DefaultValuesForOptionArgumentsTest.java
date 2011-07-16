@@ -1,18 +1,23 @@
 package joptsimple.examples;
 
-import static joptsimple.examples.Level.*;
-import static org.junit.Assert.*;
-
 import java.io.File;
 
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import static joptsimple.examples.Level.*;
+import static org.junit.Assert.*;
+import static org.junit.rules.ExpectedException.*;
 
 public class DefaultValuesForOptionArgumentsTest {
+    @Rule
+    public final ExpectedException thrown = none();
+
     @Test
     public void allowsSpecificationOfDefaultValues() throws Exception {
         File tempDir = new File( System.getProperty( "java.io.tmpdir" ) );
@@ -47,12 +52,8 @@ public class DefaultValuesForOptionArgumentsTest {
         assertTrue( options.has( count ) );
         assertFalse( options.hasArgument( count ) );
 
-        try {
-            parser.parse( "--outdir" );
-            fail();
-        }
-        catch ( OptionException expected ) {
-            // because you still must specify an argument if you give the option on the command line
-        }
+        thrown.expect( OptionException.class );
+
+        parser.parse( "--outdir" );
     }
 }

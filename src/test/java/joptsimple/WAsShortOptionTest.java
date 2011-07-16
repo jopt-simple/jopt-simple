@@ -26,6 +26,7 @@
 package joptsimple;
 
 import static java.util.Collections.*;
+import static joptsimple.OptionExceptionMatchers.*;
 import static org.infinitest.toolkit.CollectionMatchers.*;
 import static org.junit.Assert.*;
 
@@ -54,12 +55,9 @@ public class WAsShortOptionTest extends AbstractOptionParserFixture {
     public void recognizeLongOptionsTrumpsShortOptionW() {
         parser.recognizeAlternativeLongOptions( true );
 
-        try {
-            parser.parse( "-W", "silent" );
-            fail();
-        }
-        catch ( UnrecognizedOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "silent" ) ) );
-        }
+        thrown.expect( UnrecognizedOptionException.class );
+        thrown.expect( withOption( "silent" ) );
+
+        parser.parse( "-W", "silent" );
     }
 }

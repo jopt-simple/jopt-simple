@@ -25,13 +25,14 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+import static joptsimple.OptionExceptionMatchers.*;
+import static org.infinitest.toolkit.CollectionMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -48,7 +49,7 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
     public void optionWithOptionalArgumentNotPresent() {
         OptionSet options = parser.parse( "-f" );
 
-        assertOptionDetected( options, "f" );
+        assertOptionDetected(options, "f");
         assertEquals( emptyList(), options.valuesOf( "f" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
@@ -57,20 +58,17 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
     public void optionWithOptionalArgumentPresent() {
         OptionSet options = parser.parse( "-f", "bar" );
 
-        assertOptionDetected( options, "f" );
-        assertEquals( singletonList( "bar" ), options.valuesOf( "f" ) );
+        assertOptionDetected(options, "f");
+        assertEquals( singletonList("bar"), options.valuesOf( "f" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
     @Test
     public void optionWithOptionalArgumentThatLooksLikeAnInvalidOption() {
-        try {
-            parser.parse( "-f", "--biz" );
-            fail();
-        }
-        catch ( UnrecognizedOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "biz" ) ) );
-        }
+        thrown.expect( UnrecognizedOptionException.class );
+        thrown.expect( withOption( "biz" ) );
+
+        parser.parse( "-f", "--biz" );
     }
 
     @Test
@@ -79,8 +77,8 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
 
         assertOptionDetected( options, "f" );
         assertOptionDetected( options, "bar" );
-        assertEquals( emptyList(), options.valuesOf( "f" ) );
-        assertEquals( emptyList(), options.valuesOf( "bar" ) );
+        assertEquals(emptyList(), options.valuesOf("f"));
+        assertEquals(emptyList(), options.valuesOf("bar"));
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -99,7 +97,7 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
     public void multipleOfSameOptionSomeWithArgsAndSomeWithout() {
         OptionSet options = parser.parse( "-f", "-f", "foo", "-f", "-f", "bar", "-f" );
 
-        assertEquals( asList( "foo", "bar" ), options.valuesOf( "f" ) );
+        assertEquals( asList( "foo", "bar" ), options.valuesOf("f") );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }

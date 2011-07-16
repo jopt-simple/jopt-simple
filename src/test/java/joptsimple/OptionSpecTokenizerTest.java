@@ -25,18 +25,25 @@
 
 package joptsimple;
 
-import static java.util.Collections.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
-
 import java.util.NoSuchElementException;
 
+import static java.util.Collections.*;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import static org.infinitest.toolkit.CollectionMatchers.*;
+import static org.junit.Assert.*;
+import static org.junit.rules.ExpectedException.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class OptionSpecTokenizerTest {
+    @Rule
+    public final ExpectedException thrown = none();
+
     @Test
     public void tokenizeEmpty() {
         assertNoMoreTokens( new OptionSpecTokenizer( "" ) );
@@ -104,16 +111,11 @@ public class OptionSpecTokenizerTest {
         assertNoMoreTokens( lexer );
     }
 
-    private static void assertNoMoreTokens( OptionSpecTokenizer lexer ) {
+    private void assertNoMoreTokens( OptionSpecTokenizer lexer ) {
         assertFalse( lexer.hasMore() );
 
-        try {
-            lexer.next();
-            fail();
-        }
-        catch ( NoSuchElementException expected ) {
-            assertTrue( expected.getMessage(), true );
-        }
+        thrown.expect( NoSuchElementException.class );
+        lexer.next();
     }
 
     private static void assertNextTokenTakesNoArgument( OptionSpecTokenizer lexer, char option ) {

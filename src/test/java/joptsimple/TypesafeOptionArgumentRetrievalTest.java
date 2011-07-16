@@ -28,6 +28,7 @@ package joptsimple;
 import static java.lang.Short.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+import static joptsimple.OptionExceptionMatchers.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
@@ -211,13 +212,10 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
 
         OptionSet options = parser.parse( "-m", "a" );
 
-        try {
-            optionM.value( options );
-            fail();
-        }
-        catch ( OptionArgumentConversionException expected ) {
-            assertThat( expected.getCause(), is( ValueConversionException.class ) );
-        }
+        thrown.expect( OptionArgumentConversionException.class );
+        thrown.expect( withCauseOfType( ValueConversionException.class ) );
+
+        optionM.value( options );
     }
 
     private static class FakeOptionSpec<V> implements OptionSpec<V> {

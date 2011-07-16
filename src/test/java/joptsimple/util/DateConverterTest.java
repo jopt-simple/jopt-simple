@@ -26,7 +26,6 @@
 package joptsimple.util;
 
 import java.text.DateFormat;
-import static java.text.DateFormat.*;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
@@ -35,18 +34,26 @@ import java.util.Date;
 
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
+import org.joda.time.DateMidnight;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import static java.text.DateFormat.*;
 import static joptsimple.util.DateConverter.*;
 import static org.hamcrest.CoreMatchers.*;
-import org.joda.time.DateMidnight;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
 import static org.junit.matchers.JUnitMatchers.*;
+import static org.junit.rules.ExpectedException.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class DateConverterTest {
+    @Rule
+    public final ExpectedException thrown = none();
+
     private DateFormat notASimpleDateFormat;
     private SimpleDateFormat monthDayYear;
 
@@ -85,13 +92,17 @@ public class DateConverterTest {
         assertEquals( new DateMidnight( 2009, 1, 24 ).toDate(), converter.convert( "01/24/2009" ) );
     }
 
-    @Test( expected = ValueConversionException.class )
+    @Test
     public void rejectsNonParsableValues() {
+        thrown.expect( ValueConversionException.class );
+
         new DateConverter( getDateInstance() ).convert( "@(#*^" );
     }
 
-    @Test( expected = ValueConversionException.class )
+    @Test
     public void rejectsValuesThatDoNotEntirelyMatch() {
+        thrown.expect( ValueConversionException.class );
+
         new DateConverter( monthDayYear ).convert( "12/25/09 00:00:00" );
     }
 
@@ -100,33 +111,29 @@ public class DateConverterTest {
         assertEquals( new DateMidnight( 2009, 7, 4 ).toDate(), datePattern( "MM/dd/yyyy" ).convert( "07/04/2009" ) );
     }
 
-    @Test( expected = NullPointerException.class )
+    @Test
     public void rejectsNullDatePattern() {
+        thrown.expect( NullPointerException.class );
+
         datePattern( null );
     }
 
     @Test
     public void shouldRaiseExceptionThatContainsDatePatternAndValue() {
-        try {
-            new DateConverter( monthDayYear ).convert( "qwe" );
-            fail();
-        }
-        catch ( ValueConversionException expected ) {
-            assertThat( expected.getMessage(), containsString( "qwe" ) );
-            assertThat( expected.getMessage(), containsString( monthDayYear.toPattern() ) );
-        }
+        thrown.expect( ValueConversionException.class );
+        thrown.expectMessage( "qwe" );
+        thrown.expectMessage( monthDayYear.toPattern() );
+
+        new DateConverter( monthDayYear ).convert( "qwe" );
     }
 
     @Test
     public void shouldRaiseExceptionThatContainsValueOnlyIfNotASimpleDateFormat() {
-        try {
-            new DateConverter( notASimpleDateFormat ).convert( "asdf" );
-            fail();
-        }
-        catch ( ValueConversionException expected ) {
-            assertThat( expected.getMessage(), containsString( "asdf" ) );
-            assertThat( expected.getMessage(), not( containsString( notASimpleDateFormat.toString() ) ) );
-        }
+        thrown.expect( ValueConversionException.class );
+        thrown.expectMessage( "asdf" );
+        thrown.expectMessage( not( containsString( notASimpleDateFormat.toString() ) ) );
+
+        new DateConverter( notASimpleDateFormat ).convert( "asdf" );
     }
 
     @Test

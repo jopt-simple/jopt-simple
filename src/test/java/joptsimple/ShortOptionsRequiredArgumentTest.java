@@ -27,6 +27,7 @@ package joptsimple;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+import static joptsimple.OptionExceptionMatchers.*;
 import static org.infinitest.toolkit.CollectionMatchers.*;
 import static org.junit.Assert.*;
 
@@ -40,20 +41,17 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
     @Before
     public final void initializeParser() {
         parser.accepts( "d" ).withRequiredArg();
-        parser.accepts( "e" );
-        parser.accepts( "f" );
+        parser.accepts("e");
+        parser.accepts("f");
         parser.accepts( "infile" ).withOptionalArg();
     }
 
     @Test
     public void argumentNotPresent() {
-        try {
-            parser.parse( "-d" );
-            fail();
-        }
-        catch ( OptionMissingRequiredArgumentException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "d" ) ) );
-        }
+        thrown.expect( OptionMissingRequiredArgumentException.class );
+        thrown.expect( withOption( "d" ) );
+
+        parser.parse( "-d" );
     }
 
     @Test
@@ -67,13 +65,10 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
 
     @Test
     public void clusteredOptionsWithOneAcceptingAnArgument() {
-        try {
-            parser.parse( "-fed" );
-            fail();
-        }
-        catch ( IllegalOptionClusterException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "d" ) ) );
-        }
+        thrown.expect( IllegalOptionClusterException.class );
+        thrown.expect( withOption( "d" ) );
+
+        parser.parse( "-fed" );
     }
 
     @Test

@@ -28,10 +28,11 @@ package joptsimple;
 import static java.lang.Boolean.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import static joptsimple.OptionExceptionMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -80,14 +81,10 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     public void longOptionLeadsWithSingleDashAmbiguous() {
         parser.accepts( "quiet" );
         parser.accepts( "queen" );
+        thrown.expect( UnrecognizedOptionException.class );
+        thrown.expect( withOption( "q" ) );
 
-        try {
-            parser.parse( "-q" );
-            fail();
-        }
-        catch ( UnrecognizedOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "q" ) ) );
-        }
+        parser.parse( "-q" );
     }
 
     @Test
@@ -112,14 +109,10 @@ public class OptionParserTest extends AbstractOptionParserFixture {
         parser.accepts( "quiet" );
         parser.accepts( "queen" );
         parser.accepts( "q" );
+        thrown.expect( UnrecognizedOptionException.class );
+        thrown.expect( withOption( "u" ) );
 
-        try {
-            parser.parse( "-qu" );
-            fail();
-        }
-        catch ( UnrecognizedOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "u" ) ) );
-        }
+        parser.parse( "-qu" );
     }
 
     @Test
@@ -255,12 +248,9 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     @Test
     public void requiredOptionWithArgMissing() {
     	parser.accepts( "t" ).withOptionalArg().required();
+        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( withOption( "t" ) );
 
-        try {
-            parser.parse();
-        }
-        catch ( MissingRequiredOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "t" ) ) );
-        }
+        parser.parse();
     }
 }

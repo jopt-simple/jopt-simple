@@ -25,18 +25,24 @@
 
 package joptsimple.util;
 
+import joptsimple.ValueConversionException;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import static joptsimple.util.RegexMatcher.*;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.*;
-import joptsimple.ValueConversionException;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.rules.ExpectedException.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class RegexMatcherTest {
+    @Rule
+    public final ExpectedException thrown = none();
+
     private RegexMatcher abc;
 
     @Before
@@ -56,14 +62,11 @@ public class RegexMatcherTest {
 
     @Test
     public void raisesExceptionContainingValueAndPattern() {
-        try {
-            new RegexMatcher( "\\d+", 0 ).convert( "asdf" );
-            fail();
-        }
-        catch ( ValueConversionException expected ) {
-            assertThat( expected.getMessage(), containsString( "\\d+" ) );
-            assertThat( expected.getMessage(), containsString( "asdf" ) );
-        }
+        thrown.expect( ValueConversionException.class );
+        thrown.expectMessage( "\\d+" );
+        thrown.expectMessage( "asdf" );
+
+        new RegexMatcher( "\\d+", 0 ).convert( "asdf" );
     }
 
     @Test

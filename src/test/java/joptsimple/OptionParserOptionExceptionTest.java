@@ -26,10 +26,12 @@
 package joptsimple;
 
 import static java.util.Collections.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import static joptsimple.OptionExceptionMatchers.*;
+import static org.infinitest.toolkit.CollectionMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -37,51 +39,36 @@ import org.junit.Test;
 public class OptionParserOptionExceptionTest extends AbstractOptionParserFixture {
     @Test
     public void unrecognizedOption() {
-        try {
-            parser.parse( "-a" );
-            fail();
-        }
-        catch ( UnrecognizedOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "a" ) ) );
-        }
+        thrown.expect( UnrecognizedOptionException.class );
+        thrown.expect( withOption( "a" ) );
+
+        parser.parse( "-a" );
     }
 
     @Test
     public void illegalOptionCharacter() {
-        try {
-            parser.accepts( "%" );
-            fail();
-        }
-        catch ( IllegalOptionSpecificationException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "%" ) ) );
-        }
+        thrown.expect( IllegalOptionSpecificationException.class );
+        thrown.expect( withOption( "%" ) );
+
+        parser.accepts( "%" );
     }
 
     @Test
     public void tooManyHyphens() {
         parser.accepts( "b" );
+        thrown.expect( UnrecognizedOptionException.class );
+        thrown.expect( withOption( "-b" ) );
 
-        try {
-            parser.parse( "---b" );
-            fail();
-        }
-        catch ( UnrecognizedOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "-b" ) ) );
-        }
+        parser.parse( "---b" );
     }
 
     @Test
     public void valueOfWhenMultiples() {
         parser.accepts( "e" ).withRequiredArg();
-
         OptionSet options = parser.parse( "-e", "foo", "-e", "bar" );
+        thrown.expect( MultipleArgumentsForOptionException.class );
+        thrown.expect( withOption( "e" ) );
 
-        try {
-            options.valueOf( "e" );
-            fail();
-        }
-        catch ( MultipleArgumentsForOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "e" ) ) );
-        }
+        options.valueOf( "e" );
     }
 }

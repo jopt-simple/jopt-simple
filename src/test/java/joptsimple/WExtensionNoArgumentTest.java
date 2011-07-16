@@ -26,6 +26,7 @@
 package joptsimple;
 
 import static java.util.Collections.*;
+import static joptsimple.OptionExceptionMatchers.*;
 import static org.infinitest.toolkit.CollectionMatchers.*;
 import static org.junit.Assert.*;
 
@@ -46,13 +47,10 @@ public class WExtensionNoArgumentTest extends AbstractOptionParserFixture {
     public void turnOffWExtension() {
         parser.recognizeAlternativeLongOptions( false );
 
-        try {
-            parser.parse( "-W", "silent" );
-            fail();
-        }
-        catch ( UnrecognizedOptionException expected ) {
-            assertThat( expected.options(), hasSameContentsAs( singleton( "W" ) ) );
-        }
+        thrown.expect( UnrecognizedOptionException.class );
+        thrown.expect( withOption( "W" ) );
+
+        parser.parse( "-W", "silent" );
     }
 
     @Test
