@@ -38,7 +38,7 @@ import org.junit.Test;
  */
 public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionParserFixture {
     @Test
-    public void requiredArgOptionWithDefaultShouldGiveArgIfArgSpecifiedOnCommandLine() {
+    public void requiredArgOptionWithDefaultGivesArgIfArgSpecifiedOnCommandLine() {
         OptionSpec<Integer> optionA =
             parser.accepts( "a" ).withRequiredArg().ofType( Integer.class ).defaultsTo( 2 );
 
@@ -58,14 +58,14 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
     }
 
     @Test( expected = OptionMissingRequiredArgumentException.class )
-    public void requiredArgOptionWithDefaultShouldStillFailToParseIfArgNotSpecifiedOnCommandLine() {
+    public void requiredArgOptionWithDefaultStillsFailToParseIfArgNotSpecifiedOnCommandLine() {
         parser.accepts( "a" ).withRequiredArg().defaultsTo( "boo" );
 
         parser.parse( "-a" );
     }
 
     @Test
-    public void optionalArgOptionWithDefaultShouldGiveDefaultIfArgNotSpecifiedOnCommandLine() {
+    public void optionalArgOptionWithDefaultGivesDefaultIfArgNotSpecifiedOnCommandLine() {
         OptionSpec<Long> optionA =
             parser.accepts( "a" ).withOptionalArg().ofType( Long.class ).defaultsTo( -1L );
 
@@ -85,7 +85,7 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
     }
 
     @Test
-    public void optionalArgOptionWithDefaultShouldGiveArgIfSpecifiedOnCommandLine() {
+    public void optionalArgOptionWithDefaultGivesArgIfSpecifiedOnCommandLine() {
         OptionSpec<Long> optionA =
             parser.accepts( "a" ).withOptionalArg().ofType( Long.class ).defaultsTo( -1L );
 
@@ -105,7 +105,7 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
     }
 
     @Test
-    public void requiredArgOptionWithDefaultShouldGiveDefaultIfOptionNotOnCommandLine() {
+    public void requiredArgOptionWithDefaultGivesDefaultIfOptionNotOnCommandLine() {
         OptionSpec<BigDecimal> optionA =
             parser.accepts( "a" ).withRequiredArg().ofType( BigDecimal.class ).defaultsTo( TEN );
 
@@ -124,7 +124,7 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
     }
 
     @Test
-    public void optionalArgOptionWithDefaultShouldGiveDefaultIfOptionNotOnCommandLine() {
+    public void optionalArgOptionWithDefaultGivesDefaultIfOptionNotOnCommandLine() {
         OptionSpec<BigDecimal> optionA =
             parser.accepts( "a" ).withOptionalArg().ofType( BigDecimal.class ).defaultsTo( TEN );
 
@@ -143,7 +143,7 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
     }
 
     @Test
-    public void shouldAllowListOfDefaults() {
+    public void allowsListOfDefaults() {
         OptionSpec<Integer> optionC =
             parser.accepts( "c" ).withOptionalArg().ofType( Integer.class ).defaultsTo( 1, 2, 3 );
 
@@ -155,7 +155,7 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
     }
 
     @Test
-    public void specifiedOptionArgumentsShouldTrumpListOfDefaults() {
+    public void specifiedOptionArgumentsTrumpsListOfDefaults() {
         OptionSpec<Integer> optionC =
             parser.accepts( "c" ).withRequiredArg().ofType( Integer.class )
                 .defaultsTo( 1, 2, 3 ).withValuesSeparatedBy( ',' );

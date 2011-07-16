@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class SignallingEndOfOptionsTest {
     @Test
-    public void doubleHyphenShouldSignalEndOfOptions() {
+    public void doubleHyphenSignalsEndOfOptions() {
         OptionParser parser = new OptionParser( "ab:c::de:f::" );
 
         OptionSet options = parser.parse( "-a", "-b=foo", "-c=bar", "--", "-d", "-e", "baz", "-f", "biz" );

@@ -33,7 +33,7 @@ import org.junit.Test;
  */
 public class CreateWithOptionSpecificationStringTest {
     @Test
-    public void shouldCreateParserWithOptionSpecificationString() {
+    public void createsParserWithOptionSpecificationString() {
         OptionParser first = new OptionParser() {
             {
                 accepts( "i" ).withOptionalArg();

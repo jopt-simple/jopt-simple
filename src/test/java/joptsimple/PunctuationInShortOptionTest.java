@@ -33,17 +33,17 @@ import org.junit.Test;
  */
 public class PunctuationInShortOptionTest {
     @Test( expected = IllegalOptionSpecificationException.class )
-    public void shouldDisallowHyphenAsShortOption() {
+    public void disallowsHyphenAsShortOption() {
         new OptionParser( "-" );
     }
 
     @Test
-    public void shouldAllowQuestionMarkAsShortOption() {
+    public void allowsQuestionMarkAsShortOption() {
         assertOptionAllowed( "?" );
     }
 
     @Test
-    public void shouldAllowDotAsShortOption() {
+    public void allowsDotAsShortOption() {
         assertOptionAllowed( "." );
     }
 

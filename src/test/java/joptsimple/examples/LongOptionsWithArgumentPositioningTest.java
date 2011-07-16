@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class LongOptionsWithArgumentPositioningTest {
     @Test
-    public void shouldAllowDifferentFormsOfPairingArgumentWithOption() {
+    public void allowsDifferentFormsOfPairingArgumentWithOption() {
         OptionParser parser = new OptionParser();
         parser.accepts( "count" ).withRequiredArg();
         parser.accepts( "level" ).withOptionalArg();

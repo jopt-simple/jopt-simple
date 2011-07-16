@@ -26,13 +26,19 @@
 package joptsimple;
 
 import static org.junit.Assert.*;
+import static org.junit.rules.ExpectedException.*;
 
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public abstract class AbstractOptionParserFixture {
+    @Rule
+    public final ExpectedException thrown = none();
+
     protected OptionParser parser;
 
     @Before

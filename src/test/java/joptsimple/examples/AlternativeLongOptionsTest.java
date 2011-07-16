@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class AlternativeLongOptionsTest {
     @Test
-    public void shouldHandleAlternativeLongOptions() {
+    public void handlesAlternativeLongOptions() {
         OptionParser parser = new OptionParser( "W;" );
         parser.recognizeAlternativeLongOptions( true );  // same effect as above
         parser.accepts( "level" ).withRequiredArg();

@@ -252,7 +252,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
 
     // Bug 1956418
     @Test
-    public void outputStreamShouldBeFlushedButNotClosedWhenPrintingHelp()
+    public void outputStreamFlushedButNotClosedWhenPrintingHelp()
         throws Exception {
 
         FakeOutputStream fake = new FakeOutputStream();
@@ -381,7 +381,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void dateConverterShouldShowDatePattern() throws Exception {
+    public void dateConverterShowsDatePattern() throws Exception {
         parser.accepts( "date", "a date" ).withRequiredArg()
             .withValuesConvertedBy( datePattern( "MM/dd/yy" ) );
 
@@ -392,7 +392,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void dateConverterShouldShowDatePatternInCombinationWithDescription()
+    public void dateConverterShowsDatePatternInCombinationWithDescription()
         throws Exception {
         parser.accepts( "date", "a date" ).withOptionalArg()
             .describedAs( "your basic date pattern" )
@@ -406,7 +406,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldLeaveEmbeddedNewlinesInDescriptionsAlone() throws Exception {
+    public void leavesEmbeddedNewlinesInDescriptionsAlone() throws Exception {
         List<String> descriptionPieces =
             asList( "Specify the output type.", "'raw' = raw data.", "'java' = java class" );
         parser.accepts( "type", join( descriptionPieces, getProperty( "line.separator" ) ) );
@@ -420,7 +420,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldIncludeDefaultValueForRequiredOptionArgument() throws Exception {
+    public void includesDefaultValueForRequiredOptionArgument() throws Exception {
         parser.accepts( "a" ).withRequiredArg().defaultsTo( "boo" );
 
         parser.printHelpOn( sink );
@@ -430,7 +430,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldIncludeDefaultValueForOptionalOptionArgument() throws Exception {
+    public void includesDefaultValueForOptionalOptionArgument() throws Exception {
         parser.accepts( "b" ).withOptionalArg().ofType( Integer.class ).defaultsTo( 5 );
 
         parser.printHelpOn( sink );
@@ -440,7 +440,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldIncludeDefaultValueForArgumentWithDescription() throws Exception {
+    public void includesDefaultValueForArgumentWithDescription() throws Exception {
         parser.accepts( "c", "a quantity" ).withOptionalArg().ofType( BigDecimal.class )
             .describedAs( "quantity" ).defaultsTo( TEN );
 
@@ -451,7 +451,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldIncludeListOfDefaultsForArgumentWithDescription() throws Exception {
+    public void includesListOfDefaultsForArgumentWithDescription() throws Exception {
         parser.accepts( "d", "dizzle" ).withOptionalArg().ofType( Integer.class )
             .describedAs( "double dizzle" ).defaultsTo( 2, 3, 5, 7 );
 
@@ -462,7 +462,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldMarkRequiredOptionsSpecially() throws Exception {
+    public void marksRequiredOptionsSpecially() throws Exception {
         parser.accepts( "e" ).withRequiredArg().required();
 
         parser.printHelpOn( sink );

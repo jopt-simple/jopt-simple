@@ -37,7 +37,7 @@ import static org.junit.matchers.JUnitMatchers.*;
  */
 public class ReflectionTest {
     @Test
-    public void invokingConstructorQuietlyShouldWrapInstantiationException() throws Exception {
+    public void invokingConstructorQuietlyWrapsInstantiationException() throws Exception {
         try {
             instantiate( AbstractProblematic.class.getDeclaredConstructor() );
             fail();
@@ -49,7 +49,7 @@ public class ReflectionTest {
     }
 
     @Test
-    public void invokingConstructorQuietlyShouldWrapIllegalAccessException() throws Exception {
+    public void invokingConstructorQuietlyWrapsIllegalAccessException() throws Exception {
         try {
             instantiate( Problematic.class.getDeclaredConstructor() );
             fail();
@@ -61,7 +61,7 @@ public class ReflectionTest {
     }
 
     @Test
-    public void invokingConstructorQuietlyShouldWrapCauseOfInvocationTargetException() throws Exception {
+    public void invokingConstructorQuietlyWrapsCauseOfInvocationTargetException() throws Exception {
         try {
             instantiate( Problematic.class.getDeclaredConstructor( String.class ), "arg" );
             fail();
@@ -73,7 +73,7 @@ public class ReflectionTest {
     }
 
     @Test
-    public void invokingConstructorQuietlyShouldWrapIllegalArgumentException() throws Exception {
+    public void invokingConstructorQuietlyWrapsIllegalArgumentException() throws Exception {
         try {
             instantiate( Problematic.class.getDeclaredConstructor( String.class ) );
             fail();
@@ -85,7 +85,7 @@ public class ReflectionTest {
     }
 
     @Test
-    public void invokingStaticMethodQuietlyShouldWrapIllegalAccessException() throws Exception {
+    public void invokingStaticMethodQuietlyWrapsIllegalAccessException() throws Exception {
         Method method = Problematic.class.getDeclaredMethod( "boo" );
 
         try {
@@ -99,7 +99,7 @@ public class ReflectionTest {
     }
 
     @Test
-    public void invokingStaticMethodQuietlyShouldWrapIllegalArgumentException() throws Exception {
+    public void invokingStaticMethodQuietlyWrapsIllegalArgumentException() throws Exception {
         Method method = Problematic.class.getDeclaredMethod( "mute" );
 
         try {

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class ShortOptionsWithArgumentsTest {
     @Test
-    public void shouldAllowOptionsToAcceptArguments() {
+    public void allowsOptionsToAcceptArguments() {
         OptionParser parser = new OptionParser( "fc:q::" );
 
         OptionSet options = parser.parse( "-f", "-c", "foo", "-q" );

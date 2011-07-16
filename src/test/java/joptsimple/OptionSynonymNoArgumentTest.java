@@ -42,17 +42,17 @@ public class OptionSynonymNoArgumentTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenFirstSynonymParsed() {
+    public void hasAllSynonymsWhenFirstSynonymParsed() {
         assertDetections( "-N" );
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenSecondSynonymParsed() {
+    public void hasAllSynonymsWhenSecondSynonymParsed() {
         assertDetections( "--after-d" );
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenThirdSynonymParsed() {
+    public void hasAllSynonymsWhenThirdSynonymParsed() {
         assertDetections( "--n" );
     }
 

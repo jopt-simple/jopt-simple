@@ -46,26 +46,26 @@ public class OptionSynonymRequiredArgumentTest extends AbstractOptionParserFixtu
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenFirstSynonymParsed() {
+    public void hasAllSynonymsWhenFirstSynonymParsed() {
         assertDetections( new String[] { "-N", optionArgument }, singletonList( Integer.valueOf( optionArgument ) ) );
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenSecondSynonymParsed() {
+    public void hasAllSynonymsWhenSecondSynonymParsed() {
         assertDetections(
             new String[] { "--after-date", optionArgument },
             singletonList( Integer.valueOf( optionArgument ) ) );
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenThirdSynonymParsed() {
+    public void hasAllSynonymsWhenThirdSynonymParsed() {
         assertDetections(
             new String[] { "--newer", optionArgument },
             singletonList( Integer.valueOf( optionArgument ) ) );
     }
 
     @Test
-    public void shouldReportSameListOfArgumentsForEverySynonymOption() {
+    public void reportsSameListOfArgumentsForEverySynonymOption() {
         assertDetections( new String[] { "-N", "1", "-aft", "2", "--ne", "3" }, asList( 1, 2, 3 ) );
     }
 

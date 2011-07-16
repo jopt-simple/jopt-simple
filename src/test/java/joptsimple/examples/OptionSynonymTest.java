@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class OptionSynonymTest {
     @Test
-    public void shouldSupportOptionSynonyms() {
+    public void supportsOptionSynonyms() {
         OptionParser parser = new OptionParser();
         List<String> synonyms = asList( "message", "blurb", "greeting" );
         parser.acceptsAll( synonyms ).withRequiredArg();

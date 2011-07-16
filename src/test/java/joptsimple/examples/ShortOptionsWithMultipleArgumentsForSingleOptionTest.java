@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class ShortOptionsWithMultipleArgumentsForSingleOptionTest {
     @Test
-    public void shouldAllowMultipleValuesForAnOption() {
+    public void allowsMultipleValuesForAnOption() {
         OptionParser parser = new OptionParser( "a:" );
 
         OptionSet options = parser.parse( "-a", "foo", "-abar", "-a=baz" );

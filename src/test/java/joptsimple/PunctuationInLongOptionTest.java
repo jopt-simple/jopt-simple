@@ -33,27 +33,27 @@ import org.junit.Test;
  */
 public class PunctuationInLongOptionTest extends AbstractOptionParserFixture {
     @Test
-    public void shouldAllowHyphensInTheMiddleOfOptionNames() {
+    public void allowsHyphensInTheMiddleOfOptionNames() {
         assertOptionAllowed( "hyphenated-option" );
     }
 
     @Test
-    public void shouldAllowHyphensPrettyMuchAnywhereButTheFront() {
+    public void allowsHyphensPrettyMuchAnywhereButTheFront() {
         assertOptionAllowed( "a-cra-zy-but-le--gal---o-p-t-i-o--n-----" );
     }
 
     @Test( expected = IllegalOptionSpecificationException.class )
-    public void shouldDisallowHyphensAtFrontOfOptionName() {
+    public void disallowsHyphensAtFrontOfOptionName() {
         parser.accepts( "-weird-option" );
     }
 
     @Test
-    public void shouldAllowDotInOptionNames() {
+    public void allowsDotInOptionNames() {
         assertOptionAllowed( "..what.is.the.d..e...a....l..." );
     }
 
     @Test
-    public void shouldAllowQuestionMarkInOptionNames() {
+    public void allowsQuestionMarkInOptionNames() {
         assertOptionAllowed( "??who?k??n???e????w?" );
     }
 

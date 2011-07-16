@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class OptionArgumentConverterTest {
     @Test
-    public void shouldUseConvertersOnOptionArgumentsWhenTold() {
+    public void usesConvertersOnOptionArgumentsWhenTold() {
         OptionParser parser = new OptionParser();
         parser.accepts( "birthdate" ).withRequiredArg().withValuesConvertedBy( datePattern( "MM/dd/yy" ) );
         parser.accepts( "ssn" ).withRequiredArg().withValuesConvertedBy( regex( "\\d{3}-\\d{2}-\\d{4}" ));

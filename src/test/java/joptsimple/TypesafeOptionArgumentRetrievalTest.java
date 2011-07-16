@@ -171,7 +171,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
     }
 
     @Test
-    public void shouldUseConverterIfProvided() {
+    public void usesConverterIfProvided() {
         OptionSpec<Short> optionL = parser.accepts( "L" ).withRequiredArg().withValuesConvertedBy(
             new ValueConverter<Short>() {
                 public Short convert( String value ) {
@@ -193,7 +193,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
     }
 
     @Test
-    public void shouldWrapValueConversionExceptionsRaisedByConverter() {
+    public void wrapsValueConversionExceptionsRaisedByConverter() {
         OptionSpec<Character> optionM = parser.accepts( "m" ).withRequiredArg().withValuesConvertedBy(
             new ValueConverter<Character>() {
                 public Character convert( String value ) {

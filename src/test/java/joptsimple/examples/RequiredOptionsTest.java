@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class RequiredOptionsTest {
     @Test( expected = OptionException.class )
-    public void shouldAllowSpecificationOfRequiredOptions() throws Exception {
+    public void allowsSpecificationOfRequiredOptions() throws Exception {
         OptionParser parser = new OptionParser() {
             {
                 accepts( "userid" ).withRequiredArg().required();

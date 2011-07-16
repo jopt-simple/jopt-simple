@@ -42,7 +42,7 @@ public class ClusterVersusLongOptionTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldResolveToLongOptionEvenWithMatchingShortOptions() {
+    public void resolvesToLongOptionEvenWithMatchingShortOptions() {
         OptionSet options = parser.parse( "--fox" );
         assertTrue( options.has( "fox" ) );
         assertFalse( options.has( "f" ) );
@@ -51,7 +51,7 @@ public class ClusterVersusLongOptionTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldResolveToLongOptionWithSingleDashEvenWithMatchingShortOptions() {
+    public void resolvesToLongOptionWithSingleDashEvenWithMatchingShortOptions() {
         OptionSet options = parser.parse( "-fox" );
         assertTrue( options.has( "fox" ) );
         assertFalse( options.has( "f" ) );
@@ -60,7 +60,7 @@ public class ClusterVersusLongOptionTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldResolveAbbreviationToLongOption() {
+    public void resolvesAbbreviationToLongOption() {
         OptionSet options = parser.parse( "-fo" );
         assertTrue( options.has( "fox" ) );
         assertFalse( options.has( "f" ) );
@@ -68,14 +68,14 @@ public class ClusterVersusLongOptionTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldResolveShortOptionToShortOption() {
+    public void resolvesShortOptionToShortOption() {
         OptionSet options = parser.parse( "-f" );
         assertFalse( options.has( "fox" ) );
         assertTrue( options.has( "f" ) );
     }
 
     @Test
-    public void shouldResolveShortOptionToShortOptionEvenWithDoubleHyphen() {
+    public void resolvesShortOptionToShortOptionEvenWithDoubleHyphen() {
         OptionSet options = parser.parse( "--f" );
         assertFalse( options.has( "fox" ) );
         assertTrue( options.has( "f" ) );

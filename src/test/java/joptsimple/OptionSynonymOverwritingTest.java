@@ -41,7 +41,7 @@ public class OptionSynonymOverwritingTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldTreatHAsThoughItWereLastDefinedSynonymOfH() {
+    public void treatsHAsThoughItWereLastDefinedSynonymOfH() {
         OptionSet options = parser.parse( "-h" );
 
         assertOptionDetected( options, "h" );

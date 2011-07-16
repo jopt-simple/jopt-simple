@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class ShortOptionsWithArgumentPositioningTest {
     @Test
-    public void shouldAllowDifferentFormsOfPairingArgumentWithOption() {
+    public void allowsDifferentFormsOfPairingArgumentWithOption() {
         OptionParser parser = new OptionParser( "a:b:c::" );
 
         OptionSet options = parser.parse( "-a", "foo", "-bbar", "-c=baz" );

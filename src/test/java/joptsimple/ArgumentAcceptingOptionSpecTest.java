@@ -96,32 +96,32 @@ public class ArgumentAcceptingOptionSpecTest {
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void shouldRejectUnicodeZeroAsValueSeparatorForRequiredArgument() {
+    public void rejectsUnicodeZeroAsValueSeparatorForRequiredArgument() {
         new RequiredArgumentOptionSpec<Void>( "a" ).withValuesSeparatedBy( '\u0000' );
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void shouldRejectUnicodeZeroAsValueSeparatorForOptionalArgument() {
+    public void rejectsUnicodeZeroAsValueSeparatorForOptionalArgument() {
         new OptionalArgumentOptionSpec<Void>( "b" ).withValuesSeparatedBy( '\u0000' );
     }
 
     @Test( expected = NullPointerException.class )
-    public void shouldRejectNullConverter() {
+    public void rejectsNullConverter() {
         new RequiredArgumentOptionSpec<Void>( "c" ).withValuesConvertedBy( null );
     }
 
     @Test( expected = NullPointerException.class )
-    public void shouldRejectNullDefaultValue() {
+    public void rejectsNullDefaultValue() {
         new RequiredArgumentOptionSpec<Integer>( "d" ).defaultsTo( null );
     }
 
     @Test( expected = NullPointerException.class )
-    public void shouldRejectNullDefaultValueRemainder() {
+    public void rejectsNullDefaultValueRemainder() {
         new RequiredArgumentOptionSpec<Integer>( "d" ).defaultsTo( 2, (Integer[]) null );
     }
 
     @Test( expected = NullPointerException.class )
-    public void shouldRejectNullInDefaultValueRemainder() {
+    public void rejectsNullInDefaultValueRemainder() {
         new RequiredArgumentOptionSpec<Integer>( "d" ).defaultsTo( 2, 3, null );
     }
 }

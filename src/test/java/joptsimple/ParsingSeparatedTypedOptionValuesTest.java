@@ -36,22 +36,22 @@ import org.junit.Test;
  */
 public class ParsingSeparatedTypedOptionValuesTest extends AbstractOptionParserFixture {
     @Test
-    public void shouldParseSeparatedValuesAsSeparateArgument() {
+    public void parsesSeparatedValuesAsSeparateArgument() {
         assertCorrectParse( "classpath", ':', "--classpath", "/usr:/opt:/var" );
     }
 
     @Test
-    public void shouldParseSeparatedValuesWhenArgumentAbuttedWithEquals() {
+    public void parsesSeparatedValuesWhenArgumentAbuttedWithEquals() {
         assertCorrectParse( "classpath", ':', "--classpath=/usr:/opt:/var" );
     }
 
     @Test
-    public void shouldParseEqualsSeparatedValuesWhenArgumentAbuttedWithEquals() {
+    public void parsesEqualsSeparatedValuesWhenArgumentAbuttedWithEquals() {
         assertCorrectParse( "classpath", '=', "--classpath=/usr=/opt=/var" );
     }
 
     @Test
-    public void shouldParseSeparatedValuesAbutting() {
+    public void parsesSeparatedValuesAbutting() {
         assertCorrectParse( "c", ':', "-c/usr:/opt:/var" );
     }
 

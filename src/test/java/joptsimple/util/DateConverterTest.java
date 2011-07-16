@@ -74,7 +74,7 @@ public class DateConverterTest {
     }
 
     @Test( expected = NullPointerException.class )
-    public void shouldRejectNullDateFormatter() {
+    public void rejectsNullDateFormatter() {
         new DateConverter( null );
     }
 
@@ -86,12 +86,12 @@ public class DateConverterTest {
     }
 
     @Test( expected = ValueConversionException.class )
-    public void shouldRejectNonParsableValues() {
+    public void rejectsNonParsableValues() {
         new DateConverter( getDateInstance() ).convert( "@(#*^" );
     }
 
     @Test( expected = ValueConversionException.class )
-    public void shouldRejectValuesThatDoNotEntirelyMatch() {
+    public void rejectsValuesThatDoNotEntirelyMatch() {
         new DateConverter( monthDayYear ).convert( "12/25/09 00:00:00" );
     }
 
@@ -101,7 +101,7 @@ public class DateConverterTest {
     }
 
     @Test( expected = NullPointerException.class )
-    public void shouldRejectNullDatePattern() {
+    public void rejectsNullDatePattern() {
         datePattern( null );
     }
 

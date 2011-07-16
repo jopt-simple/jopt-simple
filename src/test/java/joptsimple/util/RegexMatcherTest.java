@@ -50,7 +50,7 @@ public class RegexMatcherTest {
     }
 
     @Test( expected = ValueConversionException.class )
-    public void shouldRejectValueThatDoesNotMatchRegex() {
+    public void rejectsValueThatDoesNotMatchRegex() {
         abc.convert( "abcd" );
     }
 

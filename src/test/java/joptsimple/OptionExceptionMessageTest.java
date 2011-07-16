@@ -66,7 +66,7 @@ public class OptionExceptionMessageTest {
     }
 
     @Test
-    public void shouldGiveCorrectExceptionMessage() {
+    public void givesCorrectExceptionMessage() {
         assertEquals( expectedMessage, subject.getLocalizedMessage() );
         assertEquals( expectedMessage, subject.getMessage() );
         assertEquals( subject.getClass().getName() + ": " + expectedMessage, subject.toString() );

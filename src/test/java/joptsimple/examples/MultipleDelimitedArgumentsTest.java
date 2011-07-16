@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class MultipleDelimitedArgumentsTest {
     @Test
-    public void shouldSupportMultipleDelimitedArguments() {
+    public void supportsMultipleDelimitedArguments() {
         OptionParser parser = new OptionParser();
         OptionSpec<File> path = parser.accepts( "path" ).withRequiredArg().ofType( File.class )
             .withValuesSeparatedBy( pathSeparatorChar );

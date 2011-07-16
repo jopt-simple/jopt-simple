@@ -165,7 +165,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldAllowMixingOfOptionsAndNonOptions() {
+    public void allowsMixingOfOptionsAndNonOptions() {
         parser.accepts( "i" ).withRequiredArg();
         parser.accepts( "j" ).withOptionalArg();
         parser.accepts( "k" );
@@ -182,7 +182,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldNotAllowMixingOfOptionsAndNonOptionsUnderPosixlyCorrect() {
+    public void disallowsMixingOfOptionsAndNonOptionsUnderPosixlyCorrect() {
         parser.accepts( "i" ).withRequiredArg();
         parser.accepts( "j" ).withOptionalArg();
         parser.accepts( "k" );
@@ -221,7 +221,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldAllowEmptyStringAsArgumentOfOption() {
+    public void allowsEmptyStringAsArgumentOfOption() {
         OptionSpec<String> optionI = parser.accepts( "i" ).withOptionalArg();
 
         OptionSet options = parser.parse( "-i", "" );
@@ -231,7 +231,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldAllowWhitespaceyStringAsArgumentOfOption() {
+    public void allowsWhitespaceyStringAsArgumentOfOption() {
         String whitespace = "     \t\t\n\n\f\f     \r\r   ";
         OptionSpec<String> optionJ = parser.accepts( "j" ).withRequiredArg();
 
@@ -242,7 +242,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void shouldAllowEmbeddedWhitespaceInArgumentOfOption() {
+    public void allowsEmbeddedWhitespaceInArgumentOfOption() {
         String withEmbeddedWhitespace = "   look at me, I'm flaunting the rules!   ";
         OptionSpec<String> optionJ = parser.accepts( "j" ).withRequiredArg();
 

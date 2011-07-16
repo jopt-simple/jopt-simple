@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class OptionArgumentValueTypeTest {
     @Test
-    public void shouldConvertArgumentsToJavaValueTypes() {
+    public void convertsArgumentsToJavaValueTypes() {
         OptionParser parser = new OptionParser();
         parser.accepts( "flag" );
         parser.accepts( "count" ).withRequiredArg().ofType( Integer.class );

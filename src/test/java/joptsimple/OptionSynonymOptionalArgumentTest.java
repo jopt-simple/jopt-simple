@@ -47,22 +47,22 @@ public class OptionSynonymOptionalArgumentTest extends AbstractOptionParserFixtu
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenFirstSynonymParsed() {
+    public void hasAllSynonymsWhenFirstSynonymParsed() {
         assertDetections( new String[] { "-d", optionArgument }, singletonList( new File( optionArgument ) ) );
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenSecondSynonymParsed() {
+    public void hasAllSynonymsWhenSecondSynonymParsed() {
         assertDetections( new String[] { "--ou", optionArgument }, singletonList( new File( optionArgument ) ) );
     }
 
     @Test
-    public void shouldHaveAllSynonymsWhenThirdSynonymParsed() {
+    public void hasAllSynonymsWhenThirdSynonymParsed() {
         assertDetections( new String[] { "--fold", optionArgument }, singletonList( new File( optionArgument ) ) );
     }
 
     @Test
-    public void shouldReportSameListOfArgumentsForEverySynonymOption() {
+    public void reportsSameListOfArgumentsForEverySynonymOption() {
         assertDetections(
             new String[] { "-d", "opt", "--output-dir", "tmp", "--folder", "usr" },
             asList( new File( "opt" ), new File( "tmp" ), new File( "usr" ) ) );

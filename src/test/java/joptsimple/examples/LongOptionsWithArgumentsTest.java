@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class LongOptionsWithArgumentsTest {
     @Test
-    public void shouldSupportLongOptionsWithArgumentsAndAbbreviations() {
+    public void supportsLongOptionsWithArgumentsAndAbbreviations() {
         OptionParser parser = new OptionParser();
         parser.accepts( "flag" );
         parser.accepts( "count" ).withRequiredArg();

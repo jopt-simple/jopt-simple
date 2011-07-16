@@ -58,7 +58,7 @@ public class ToStringTest {
     }
 
     @Test
-    public void shouldGiveUsefulStringRepresentations() {
+    public void givesUsefulStringRepresentations() {
         String stringRepresentation = subject.toString();
 
         for ( String each : substrings )

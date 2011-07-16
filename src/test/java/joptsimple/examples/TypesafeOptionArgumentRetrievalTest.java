@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class TypesafeOptionArgumentRetrievalTest {
     @Test
-    public void shouldAllowTypesafeRetrievalOfOptionArguments() {
+    public void allowsTypesafeRetrievalOfOptionArguments() {
         OptionParser parser = new OptionParser();
         OptionSpec<Integer> count = parser.accepts( "count" ).withRequiredArg().ofType( Integer.class );
         OptionSpec<File> file = parser.accepts( "file" ).withOptionalArg().ofType( File.class );

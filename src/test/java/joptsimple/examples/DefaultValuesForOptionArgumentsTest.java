@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class DefaultValuesForOptionArgumentsTest {
     @Test
-    public void shouldAllowSpecificationOfDefaultValues() throws Exception {
+    public void allowsSpecificationOfDefaultValues() throws Exception {
         File tempDir = new File( System.getProperty( "java.io.tmpdir" ) );
         File tempFile = File.createTempFile( "aFile", ".txt" );
         OptionParser parser = new OptionParser();

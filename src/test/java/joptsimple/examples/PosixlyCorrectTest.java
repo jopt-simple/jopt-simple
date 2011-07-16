@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class PosixlyCorrectTest {
     @Test
-    public void shouldSupportPosixlyCorrectBehavior() {
+    public void supportsPosixlyCorrectBehavior() {
         OptionParser parser = new OptionParser( "i:j::k" );
         String[] arguments = { "-ibar", "-i", "junk", "xyz", "-jixnay", "foo", "-k", "blah", "--", "bah" };
 
