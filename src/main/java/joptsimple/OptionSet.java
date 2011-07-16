@@ -62,7 +62,7 @@ public class OptionSet {
      * @return {@code true} if any options were detected
      */
     public boolean hasOptions() {
-    	return !detectedOptions.isEmpty();
+        return !detectedOptions.isEmpty();
     }
     
     /**
