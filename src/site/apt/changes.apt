@@ -2,6 +2,14 @@
                                        Change Log
                                        ----------
 
+
+Changes in version 3.4
+
+    * Added method <<<OptionSet.hasOptions()>>>. Thanks to Michael Osipov for this.
+
+    * Using <<<SimpleDateFormat.toPattern()>>> rather than <<<SimpleDateFormat.toLocalizedPattern()>>> in
+      <<<DateConverter>>>. Thanks to Michael Osipov for this.
+
 Changes in version 3.3
 
     * Added method <<<required()>>> to class <<<ArgumentAcceptingOptionSpec>>>, to allow callers
