@@ -8,9 +8,9 @@
     <language>en-us</language>
     <copyright>&#169;2011</copyright>
     <item>
-      <title>File: 40,
+      <title>File: 42,
              Errors: 0,
-             Warnings: 4,
+             Warnings: 11,
              Infos: 0
       </title>
             <link>http://pholser.github.com/jopt-simple/checkstyle.html</link>
@@ -183,6 +183,20 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.OptionDescriptor.java">joptsimple/OptionDescriptor.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.Strings.java">joptsimple/internal/Strings.java</a>
                 </td>
                 <td>
@@ -323,13 +337,27 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.BuiltinHelpFormatter.java">joptsimple/BuiltinHelpFormatter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.ArgumentAcceptingOptionSpec.java">joptsimple/ArgumentAcceptingOptionSpec.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  0
+                  6
                 </td>
                 <td>
                   0
@@ -553,7 +581,7 @@
                   0
                 </td>
                 <td>
-                  1
+                  2
                 </td>
                 <td>
                   0

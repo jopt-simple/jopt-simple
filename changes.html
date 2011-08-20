@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        <span id="projectVersion">Version: 3.4-SNAPSHOT</span>
+        <span id="projectVersion">Version: 4.0-beta1</span>
               </div>
             <div class="xright">      
   
@@ -146,13 +146,19 @@
   
     
             <div id="lastPublished">
-        <span id="publishDate">Last Published: June 28, 2011</span>
+        <span id="publishDate">Last Published: August 20, 2011</span>
               </div>
             </div>
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Changes in version 3.3</h2>
+        <div class="section"><h2>Changes in version 4.0</h2>
+<ul><li>Added method <tt>OptionParser.formatHelpWith(HelpFormatter)</tt> to allow programmers to influence what help is printed with <tt>OptionParser.printHelpOn()</tt>. A <tt>HelpFormatter</tt> is handed a map, keyed by option text, whose values are <tt>OptionDescriptor</tt>s that describe the options the parser has been configured with.</li>
+<li>Added method <tt>OptionSet.hasOptions()</tt>. Thanks to Michael Osipov for this.</li>
+<li>Using <tt>SimpleDateFormat.toPattern()</tt> rather than <tt>SimpleDateFormat.toLocalizedPattern()</tt> in <tt>DateConverter</tt>. Thanks to Michael Osipov for this.</li>
+</ul>
+</div>
+<div class="section"><h2>Changes in version 3.3</h2>
 <ul><li>Added method <tt>required()</tt> to class <tt>ArgumentAcceptingOptionSpec</tt>, to allow callers to indicate that a given option must be present on the command line. Thanks to Emils Solmanis for adding this.</li>
 </ul>
 </div>
