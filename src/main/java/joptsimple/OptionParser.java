@@ -191,6 +191,7 @@ public class OptionParser {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
     private OptionParserState state;
     private boolean posixlyCorrect;
+    private HelpFormatter helpFormatter = new BuiltinHelpFormatter();
 
     /**
      * Creates an option parser that initially recognizes no options, and does not exhibit "POSIX-ly correct"
@@ -330,7 +331,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn( new OutputStreamWriter(sink) );
+        printHelpOn( new OutputStreamWriter( sink ) );
     }
 
     /**
@@ -344,8 +345,21 @@ public class OptionParser {
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( new HelpFormatter().format( recognizedOptions.toJavaUtilMap().values() ) );
+        sink.write( helpFormatter.format( recognizedOptions.toJavaUtilMap() ) );
         sink.flush();
+    }
+
+    /**
+     * Tells the parser to use the given formatter when asked to {@linkplain #printHelpOn(java.io.Writer)} print help}.
+     *
+     * @param formatter the formatter to use for printing help
+     * @throws NullPointerException if the formatter is {@code null}
+     */
+    public void formatHelpWith( HelpFormatter formatter ) {
+        if ( formatter == null )
+            throw new NullPointerException();
+
+        helpFormatter = formatter;
     }
 
     /**

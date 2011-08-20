@@ -49,9 +49,4 @@ class RequiredArgumentOptionSpec<V> extends ArgumentAcceptingOptionSpec<V> {
 
         addArguments( detectedOptions, arguments.next() );
     }
-
-    @Override
-    void accept( OptionSpecVisitor visitor ) {
-        visitor.visit( this );
-    }
 }

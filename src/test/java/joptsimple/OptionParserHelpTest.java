@@ -25,23 +25,26 @@
 
 package joptsimple;
 
-import static java.lang.System.*;
-import static java.math.BigDecimal.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-import static joptsimple.internal.Strings.*;
-import static joptsimple.util.DateConverter.*;
-import static org.junit.Assert.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import static java.lang.System.*;
+import static java.math.BigDecimal.*;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static joptsimple.internal.Strings.*;
+import static joptsimple.util.DateConverter.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -469,6 +472,32 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
 
         assertStandardHelpLinesWithRequiredIndicator(
             "* -e                                                                           " );
+    }
+
+    @Test
+    public void canUseCustomHelpFormatter() {
+        parser.accepts( "f" );
+
+        parser.formatHelpWith( new HelpFormatter() {
+            public String format( Map<String, ? extends OptionDescriptor> options ) {
+                assertEquals( 1, options.size() );
+                OptionDescriptor only = options.get( "f" );
+                assertEquals( asList( "f" ), new ArrayList<String>( only.options() ) );
+                assertFalse( only.acceptsArguments() );
+                assertEquals( "", only.argumentDescription() );
+                assertEquals( "", only.argumentTypeIndicator() );
+                assertEquals( emptyList(), only.defaultValues() );
+                assertEquals( "", only.description() );
+                assertFalse( only.isRequired() );
+                assertFalse( only.requiresArgument() );
+                return null;
+            }
+        } );
+    }
+
+    @Test( expected = NullPointerException.class )
+    public void rejectsNullHelpFormatter() {
+        parser.formatHelpWith( null );
     }
 
     private void assertStandardHelpLines( String... expectedLines ) {

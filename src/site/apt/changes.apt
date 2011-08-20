@@ -2,8 +2,11 @@
                                        Change Log
                                        ----------
 
+Changes in version 4.0
 
-Changes in version 3.4
+    * Added method <<<OptionParser.formatHelpWith(HelpFormatter)>>> to allow programmers to influence what help
+      is printed with <<<OptionParser.printHelpOn()>>>. A <<<HelpFormatter>>> is handed a map, keyed by option text,
+      whose values are <<<OptionDescriptor>>>s that describe the options the parser has been configured with.
 
     * Added method <<<OptionSet.hasOptions()>>>. Thanks to Michael Osipov for this.
 

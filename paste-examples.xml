@@ -97,6 +97,19 @@
             srcfile="${java.io.tmpdir}/help-output.txt">
             <filterchain refid="htmlFilter"/>
         </loadfile>
+        <loadfile property="help.formatter.example"
+            srcfile="${example.src.dir}/joptsimple/examples/HelpFormatterExample.java">
+            <filterchain refid="htmlFilter"/>
+        </loadfile>
+        <java classname="joptsimple.examples.HelpFormatterExample"
+            fork="yes"
+            output="${java.io.tmpdir}/help-formatter-output.txt"
+            classpath="${example.class.path}">
+        </java>
+        <loadfile property="help.formatter.example.output"
+            srcfile="${java.io.tmpdir}/help-formatter-output.txt">
+            <filterchain refid="htmlFilter"/>
+        </loadfile>
         <java classname="joptsimple.examples.ExceptionExample"
             fork="yes"
             output="${java.io.tmpdir}/stack-trace-output.txt"
@@ -151,6 +164,10 @@
                 value="${help.screen.example}"/>
             <replacefilter token="@HELP_SCREEN_EXAMPLE_HELP@"
                 value="${help.screen.example.help}"/>
+            <replacefilter token="@HELP_FORMATTER_EXAMPLE@"
+                value="${help.formatter.example}"/>
+            <replacefilter token="@HELP_FORMATTER_EXAMPLE_OUTPUT@"
+                value="${help.formatter.example.output}"/>
             <replacefilter token="@EXAMPLE_STACK_TRACE@"
                 value="${example.stack.trace}"/>
         </replace>

@@ -346,6 +346,23 @@ Generating Command Line Help
 @HELP_SCREEN_EXAMPLE_HELP@
 +----------------------------------------------------------------------------------------
 
+    If you want to create your own help screen, give method
+    <<<OptionParser.formatHelpWith()>>> a <<<HelpFormatter>>> that builds the help screen
+    as a String. When you call <<<OptionParser.printHelpOn()>>>, JOpt Simple will use
+    your <<<HelpFormatter>>> to produce the help and write it to the given stream.
+
+    For example, this program:
+
++----------------------------------------------------------------------------------------
+@HELP_FORMATTER_EXAMPLE@
++----------------------------------------------------------------------------------------
+
+    yields the following output:
+
++----------------------------------------------------------------------------------------
+@HELP_FORMATTER_EXAMPLE_OUTPUT@
++----------------------------------------------------------------------------------------
+
 Handling Exceptions
 
     JOpt Simple's classes raise some derivative of <<<OptionException>>> if they encounter

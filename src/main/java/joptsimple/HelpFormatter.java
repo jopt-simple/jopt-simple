@@ -25,133 +25,21 @@
 
 package joptsimple;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
-import joptsimple.internal.ColumnarData;
-
-import static joptsimple.ParserRules.*;
-import static joptsimple.internal.Classes.*;
-import static joptsimple.internal.Strings.*;
+import java.util.Map;
 
 /**
- * <p>Produces text for a help screen given a set of options.</p>
+ * <p>Represents objects charged with taking a set of option descriptions and producing some help text from them.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-class HelpFormatter implements OptionSpecVisitor {
-    private ColumnarData grid;
-
-    String format( Collection<AbstractOptionSpec<?>> options ) {
-        if ( options.isEmpty() )
-            return "No options specified";
-
-        grid = new ColumnarData( optionHeader( options ), "Description" );
-        grid.clear();
-
-        Comparator<AbstractOptionSpec<?>> comparator =
-            new Comparator<AbstractOptionSpec<?>>() {
-                public int compare( AbstractOptionSpec<?> first, AbstractOptionSpec<?> second ) {
-                    return first.options().iterator().next().compareTo( second.options().iterator().next() );
-                }
-            };
-
-        Set<AbstractOptionSpec<?>> sorted = new TreeSet<AbstractOptionSpec<?>>( comparator );
-        sorted.addAll( options );
-
-        for ( AbstractOptionSpec<?> each : sorted )
-            each.accept( this );
-
-        return grid.format();
-    }
-
-    private String optionHeader( Collection<AbstractOptionSpec<?>> options ) {
-        for ( AbstractOptionSpec<?> each : options ) {
-            if ( each.isRequired() )
-                return "Option (* = required)";
-        }
-
-        return "Option";
-    }
-
-    void addHelpLineFor( AbstractOptionSpec<?> spec, String additionalInfo ) {
-        grid.addRow( createOptionDisplay( spec ) + additionalInfo, createDescriptionDisplay( spec ) );
-    }
-
-    public void visit( NoArgumentOptionSpec spec ) {
-        addHelpLineFor( spec, "" );
-    }
-
-    public void visit( RequiredArgumentOptionSpec<?> spec ) {
-        visit( spec, '<', '>' );
-    }
-
-    public void visit( OptionalArgumentOptionSpec<?> spec ) {
-        visit( spec, '[', ']' );
-    }
-
-    public void visit( AlternativeLongOptionSpec spec ) {
-        addHelpLineFor( spec, ' ' + surround( spec.argumentDescription(), '<', '>' ) );
-    }
-
-    private void visit( ArgumentAcceptingOptionSpec<?> spec, char begin, char end ) {
-        String argDescription = spec.argumentDescription();
-        String typeIndicator = typeIndicator( spec );
-        StringBuilder collector = new StringBuilder();
-
-        if ( typeIndicator.length() > 0 ) {
-            collector.append( typeIndicator );
-
-            if ( argDescription.length() > 0 )
-                collector.append( ": " ).append( argDescription );
-        }
-        else if ( argDescription.length() > 0 )
-            collector.append( argDescription );
-
-        String helpLine = collector.length() == 0
-            ? ""
-            : ' ' + surround( collector.toString(), begin, end );
-        addHelpLineFor( spec, helpLine );
-    }
-
-    private String createOptionDisplay( AbstractOptionSpec<?> spec ) {
-        StringBuilder buffer = new StringBuilder();
-
-        for ( Iterator<String> iter = spec.options().iterator(); iter.hasNext(); ) {
-            String option = iter.next();
-            if ( spec.isRequired() )
-                buffer.append("* ");
-            buffer.append( option.length() > 1 ? DOUBLE_HYPHEN : HYPHEN );
-            buffer.append( option );
-
-            if ( iter.hasNext() )
-                buffer.append( ", " );
-        }
-
-        return buffer.toString();
-    }
-
-    private String createDescriptionDisplay( AbstractOptionSpec<?> spec ) {
-        List<?> defaultValues = spec.defaultValues();
-        if ( defaultValues.isEmpty() )
-            return spec.description();
-
-        String defaultValuesDisplay = createDefaultValuesDisplay( defaultValues );
-        return spec.description() + ' ' + surround( "default: " + defaultValuesDisplay, '(', ')' );
-    }
-
-    private String createDefaultValuesDisplay( List<?> defaultValues ) {
-        return defaultValues.size() == 1 ? defaultValues.get( 0 ).toString() : defaultValues.toString();
-    }
-
-    private static String typeIndicator( ArgumentAcceptingOptionSpec<?> spec ) {
-        String indicator = spec.typeIndicator();
-        return indicator == null || String.class.getName().equals( indicator )
-            ? ""
-            : shortNameOf( indicator );
-    }
+public interface HelpFormatter {
+    /**
+     * Produces help text, given a set of option descriptors.
+     *
+     * @param options descriptors for the configured options of a parser
+     * @return text to be used as help
+     * @see OptionParser#printHelpOn(java.io.Writer)
+     * @see OptionParser#formatHelpWith(HelpFormatter)
+     */
+    String format( Map<String, ? extends OptionDescriptor> options );
 }

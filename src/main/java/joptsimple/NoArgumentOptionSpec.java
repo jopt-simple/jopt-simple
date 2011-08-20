@@ -41,43 +41,42 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     }
 
     NoArgumentOptionSpec( Collection<String> options, String description ) {
-        super( options, description );
+        super(options, description);
     }
 
     @Override
     void handleOption( OptionParser parser, ArgumentList arguments,
         OptionSet detectedOptions, String detectedArgument ) {
 
-        detectedOptions.add( this );
+        detectedOptions.add(this);
     }
 
-    @Override
-    boolean acceptsArguments() {
+    public boolean acceptsArguments() {
         return false;
     }
 
-    @Override
-    boolean isRequired() {
-        return false;
-    }
-    
-    @Override
-    boolean requiresArgument() {
+    public boolean requiresArgument() {
         return false;
     }
 
-    @Override
-    void accept( OptionSpecVisitor visitor ) {
-        visitor.visit( this );
+    public boolean isRequired() {
+        return false;
+    }
+
+    public String argumentDescription() {
+        return "";
+    }
+
+    public String argumentTypeIndicator() {
+        return "";
     }
 
     @Override
     protected Void convert( String argument ) {
         return null;
     }
-    
-    @Override
-    List<Void> defaultValues() {
+
+    public List<Void> defaultValues() {
         return emptyList();
     }
 }

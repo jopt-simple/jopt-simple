@@ -36,7 +36,7 @@ import static joptsimple.internal.Strings.*;
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-abstract class AbstractOptionSpec<V> implements OptionSpec<V> {
+abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor {
     private final List<String> options = new ArrayList<String>();
     private final String description;
 
@@ -51,20 +51,18 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V> {
     }
 
     public final Collection<String> options() {
-        return unmodifiableCollection( options );
+        return unmodifiableCollection(options);
     }
 
     public final List<V> values( OptionSet detectedOptions ) {
-        return detectedOptions.valuesOf( this );
+        return detectedOptions.valuesOf(this);
     }
 
     public final V value( OptionSet detectedOptions ) {
         return detectedOptions.valueOf( this );
     }
 
-    abstract List<V> defaultValues();
-
-    String description() {
+    public String description() {
         return description;
     }
 
@@ -72,14 +70,6 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V> {
 
     abstract void handleOption( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions,
         String detectedArgument );
-
-    abstract boolean acceptsArguments();
-
-    abstract boolean requiresArgument();
-    
-    abstract boolean isRequired();
-
-    abstract void accept( OptionSpecVisitor visitor );
 
     private void arrangeOptions( Collection<String> unarranged ) {
         if ( unarranged.size() == 1 ) {

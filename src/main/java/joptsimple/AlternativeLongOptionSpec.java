@@ -48,9 +48,4 @@ class AlternativeLongOptionSpec extends ArgumentAcceptingOptionSpec<String> {
 
         arguments.treatNextAsLongOption();
     }
-
-    @Override
-    void accept( OptionSpecVisitor visitor ) {
-        visitor.visit( this );
-    }
 }
