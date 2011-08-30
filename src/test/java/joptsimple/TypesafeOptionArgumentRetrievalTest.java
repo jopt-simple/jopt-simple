@@ -104,6 +104,81 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
     }
 
     @Test
+    public void primitiveBooleanAllowedAsTypeSpecifier() {
+        OptionSpec<Boolean> optionA = parser.accepts( "a" ).withRequiredArg().ofType( boolean.class );
+
+        OptionSet options = parser.parse( "-a", "false" );
+
+        assertTrue( options.has( optionA ) );
+        assertEquals( asList( false ), options.valuesOf( optionA ) );
+    }
+
+    @Test
+    public void primitiveByteAllowedAsTypeSpecifier() {
+        OptionSpec<Byte> optionB = parser.accepts( "b" ).withOptionalArg().ofType( byte.class );
+
+        OptionSet options = parser.parse( "-b", "3" );
+
+        assertTrue( options.has( optionB ) );
+        assertEquals( asList( Byte.valueOf( "3" ) ), options.valuesOf( optionB ) );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void primitiveCharAllowedAsTypeSpecifier() {
+        parser.accepts( "c" ).withRequiredArg().ofType( char.class );
+    }
+
+    @Test
+    public void primitiveDoubleAllowedAsTypeSpecifier() {
+        OptionSpec<Double> optionD = parser.accepts( "d" ).withOptionalArg().ofType( double.class );
+
+        OptionSet options = parser.parse( "-d", "3.1" );
+
+        assertTrue( options.has( optionD ) );
+        assertEquals( asList( 3.1D ), options.valuesOf( optionD ) );
+    }
+
+    @Test
+    public void primitiveFloatAllowedAsTypeSpecifier() {
+        OptionSpec<Float> optionE = parser.accepts( "e" ).withRequiredArg().ofType( float.class );
+
+        OptionSet options = parser.parse( "-e", "2.09" );
+
+        assertTrue( options.has( optionE ) );
+        assertEquals( asList( 2.09F ), options.valuesOf( optionE ) );
+    }
+
+    @Test
+    public void primitiveIntAllowedAsTypeSpecifier() {
+        OptionSpec<Integer> optionF = parser.accepts( "F" ).withRequiredArg().ofType( int.class );
+
+        OptionSet options = parser.parse( "-F", "91" );
+
+        assertTrue( options.has( optionF ) );
+        assertEquals( asList( 91 ), options.valuesOf( optionF ) );
+    }
+
+    @Test
+    public void primitiveLongAllowedAsTypeSpecifier() {
+        OptionSpec<Long> optionG = parser.accepts( "g" ).withOptionalArg().ofType( long.class );
+
+        OptionSet options = parser.parse("-g", "12");
+
+        assertTrue( options.has( optionG ) );
+        assertEquals( asList( 12L ), options.valuesOf( optionG ) );
+    }
+
+    @Test
+    public void primitiveShortAllowedAsTypeSpecifier() {
+        OptionSpec<Short> optionH = parser.accepts( "H" ).withRequiredArg().ofType( short.class );
+
+        OptionSet options = parser.parse( "-H", "8" );
+
+        assertTrue( options.has( optionH ) );
+        assertEquals( asList( Short.valueOf( "8" ) ), options.valuesOf( optionH ) );
+    }
+
+    @Test
     public void cannotFoolHasWithAnOptionNotIssuedFromBuilder() {
         parser.accepts( "e" );
 

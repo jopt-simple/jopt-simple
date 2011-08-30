@@ -32,6 +32,8 @@ import static java.lang.reflect.Modifier.*;
 
 import joptsimple.ValueConverter;
 
+import static joptsimple.internal.Classes.*;
+
 /**
  * <p>Helper methods for reflection.</p>
  *
@@ -50,11 +52,13 @@ public final class Reflection {
      * @return a converter method or constructor
      */
     public static <V> ValueConverter<V> findConverter( Class<V> clazz ) {
-        ValueConverter<V> valueOf = valueOfConverter( clazz );
+        Class<V> maybeWrapper = wrapperOf( clazz );
+
+        ValueConverter<V> valueOf = valueOfConverter( maybeWrapper );
         if ( valueOf != null )
             return valueOf;
 
-        ValueConverter<V> constructor = constructorConverter( clazz );
+        ValueConverter<V> constructor = constructorConverter( maybeWrapper );
         if ( constructor != null )
             return constructor;
 
@@ -64,10 +68,10 @@ public final class Reflection {
     private static <V> ValueConverter<V> valueOfConverter( Class<V> clazz ) {
         try {
             Method valueOf = clazz.getDeclaredMethod( "valueOf", String.class );
-            if ( !meetsConverterRequirements( valueOf, clazz ) )
-                return null;
+            if ( meetsConverterRequirements( valueOf, clazz ) )
+                return new MethodInvokingValueConverter<V>( valueOf, clazz );
 
-            return new MethodInvokingValueConverter<V>( valueOf, clazz );
+            return null;
         }
         catch ( NoSuchMethodException ignored ) {
             return null;
@@ -76,8 +80,7 @@ public final class Reflection {
 
     private static <V> ValueConverter<V> constructorConverter( Class<V> clazz ) {
         try {
-            return new ConstructorInvokingValueConverter<V>(
-                clazz.getConstructor( String.class ) );
+            return new ConstructorInvokingValueConverter<V>( clazz.getConstructor( String.class ) );
         }
         catch ( NoSuchMethodException ignored ) {
             return null;
