@@ -64,6 +64,7 @@ public final class Classes {
      * Gives the primitive wrapper class for the given class. If the given class is not
      * {@linkplain Class#isPrimitive() primitive}, returns the class itself.
      *
+     * @param <T> generic class type
      * @param clazz the class to check
      * @return primitive wrapper type if {@code clazz} is primitive, otherwise {@code clazz}
      */
