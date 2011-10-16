@@ -12,14 +12,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>JOpt Simple - a Java command line parsing library - Examples of Usage</title>
+    <title>Examples of Usage</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
       @import url("./css/site.css");
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       </head>
   <body class="composite">
     <div id="banner">
@@ -42,7 +42,7 @@
   
     
             <div class="xleft">
-        <span id="projectVersion">Version: 4.0-beta1</span>
+        <span id="projectVersion">Version: 4.0</span>
               </div>
             <div class="xright">      
   
@@ -108,6 +108,7 @@
                   
                   
                   
+                  
               
         <li class="collapsed">
                     <a href="project-info.html">Project Information</a>
@@ -146,26 +147,13 @@
   
     
             <div id="lastPublished">
-        <span id="publishDate">Last Published: August 20, 2011</span>
+        <span id="publishDate">Last Published: October 15, 2011</span>
               </div>
             </div>
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Preamble</h2>
-<p>The simplicity in JOpt &quot;Simple&quot; arises from two guiding principles:</p>
-<ul><li>Stick as often as possible to supporting conventional Unix option syntaxes.</li>
-<li>Keep the surface area of the published API as small and simple as possible.</li>
-</ul>
-<p>To the first principle: You will not see support in JOpt Simple for option &quot;groups&quot;, alternative option prefixes (<tt>+</tt>, <tt>/</tt>), enforced multiplicity of option arguments, etc. JOpt Simple believes you can create a useful and understandable CLI without all that stuff. If you feel as though you need any of those features, there are lots of other choices out there. The author of JOpt Simple believes you'll want to leverage its easy configuration, parsing, and option interrogation APIs instead of using more feature-laden, but perhaps more confusing libraries.</p>
-<p>To the second principle: JOpt Simple will make every attempt to keep the API free of clutter. The API is well factored, making it intuitive to use, and the entire library is well tested, making it more reliable and predictable. If you cannot look at the Javadoc and quickly get a sense of what you need to do to use JOpt Simple, then JOpt Simple has failed. So by all means, let the author know what needs improved.</p>
-<p>With that said, let's take a tour through JOpt Simple's features.</p>
-</div>
-<div class="section"><h2>Options</h2>
-<p>JOpt Simple supports short options and long options, using a syntax that attempts to take from the best of POSIX <tt>getopt()</tt> and GNU <tt>getopt_long()</tt>.</p>
-<div class="section"><h3>Short Options</h3>
-<p>Short options begin with a single hyphen (<tt>-</tt>) followed by a single letter or digit, or question mark (<tt>?</tt>), or dot (<tt>.</tt>).</p>
-<div class="source"><pre>package joptsimple.examples;
+        <div class="section"><h2>Preamble<a name="Preamble"></a></h2><p>The simplicity in JOpt &quot;Simple&quot; arises from two guiding principles:</p><ul><li>Stick as often as possible to supporting conventional Unix option syntaxes.</li><li>Keep the surface area of the published API as small and simple as possible.</li></ul><p>To the first principle: You will not see support in JOpt Simple for option &quot;groups&quot;, alternative option prefixes (<tt>+</tt>, <tt>/</tt>), enforced multiplicity of option arguments, etc. JOpt Simple believes you can create a useful and understandable CLI without all that stuff. If you feel as though you need any of those features, there are lots of other choices out there. The author of JOpt Simple believes you'll want to leverage its easy configuration, parsing, and option interrogation APIs instead of using more feature-laden, but perhaps more confusing libraries.</p><p>To the second principle: JOpt Simple will make every attempt to keep the API free of clutter. The API is well factored, making it intuitive to use, and the entire library is well tested, making it more reliable and predictable. If you cannot look at the Javadoc and quickly get a sense of what you need to do to use JOpt Simple, then JOpt Simple has failed. So by all means, let the author know what needs improved.</p><p>With that said, let's take a tour through JOpt Simple's features.</p></div><div class="section"><h2>Options<a name="Options"></a></h2><p>JOpt Simple supports short options and long options, using a syntax that attempts to take from the best of POSIX <tt>getopt()</tt> and GNU <tt>getopt_long()</tt>.</p><div class="section"><h3>Short Options<a name="Short_Options"></a></h3><p>Short options begin with a single hyphen (<tt>-</tt>) followed by a single letter or digit, or question mark (<tt>?</tt>), or dot (<tt>.</tt>).</p><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -185,13 +173,7 @@ public class ShortOptionsTest {
         assertFalse( options.has( &quot;.&quot; ) );
     }
 }
-</pre>
-</div>
-<p>When you construct an <tt>OptionParser</tt> with a string of short option characters, you configure that parser to recognize the options with those characters.</p>
-<div class="section"><h4>Arguments of Options</h4>
-<p>Short options can accept single arguments. The argument can be made required or optional. When you construct an <tt>OptionParser</tt> with a string of short option characters, append a single colon (<tt>:</tt>) to an option character to configure that option to require an argument. Append two colons (<tt>::</tt>) to an option character to configure that option to accept an optional argument.</p>
-<p>The syntax of the option specification string given to the <tt>OptionParser</tt> constructor should look familiar to you if you have used GNU's <tt>getopt()</tt> before.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div><p>When you construct an <tt>OptionParser</tt> with a string of short option characters, you configure that parser to recognize the options with those characters.</p><div class="section"><h4>Arguments of Options<a name="Arguments_of_Options"></a></h4><p>Short options can accept single arguments. The argument can be made required or optional. When you construct an <tt>OptionParser</tt> with a string of short option characters, append a single colon (<tt>:</tt>) to an option character to configure that option to require an argument. Append two colons (<tt>::</tt>) to an option character to configure that option to accept an optional argument.</p><p>The syntax of the option specification string given to the <tt>OptionParser</tt> constructor should look familiar to you if you have used GNU's <tt>getopt()</tt> before.</p><div class="source"><pre>package joptsimple.examples;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -221,15 +203,7 @@ public class ShortOptionsWithArgumentsTest {
         assertEquals( emptyList(), options.valuesOf( &quot;q&quot; ) );
     }
 }
-</pre>
-</div>
-<div class="section"><h5>Specifying Arguments for a Short Option on the Command Line</h5>
-<p>A short option's argument can occur:</p>
-<ul><li>in the position on the command line after the option</li>
-<li>right up against the option</li>
-<li>right up against the option separated by an equals sign (<tt>=</tt>)</li>
-</ul>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div><div class="section"><h5>Specifying Arguments for a Short Option on the Command Line<a name="Specifying_Arguments_for_a_Short_Option_on_the_Command_Line"></a></h5><p>A short option's argument can occur:</p><ul><li>in the position on the command line after the option</li><li>right up against the option</li><li>right up against the option separated by an equals sign (<tt>=</tt>)</li></ul><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -256,12 +230,7 @@ public class ShortOptionsWithArgumentPositioningTest {
         assertEquals( &quot;baz&quot;, options.valueOf( &quot;c&quot; ) );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h5>Multiple Arguments for a Single Option</h5>
-<p>To specify <i>n</i> arguments for a single option, specify the option <i>n</i> times on the command line, once for each argument. JOpt Simple reports the arguments given to the option in the order in which they were encountered on the command line.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h5>Multiple Arguments for a Single Option<a name="Multiple_Arguments_for_a_Single_Option"></a></h5><p>To specify <i>n</i> arguments for a single option, specify the option <i>n</i> times on the command line, once for each argument. JOpt Simple reports the arguments given to the option in the order in which they were encountered on the command line.</p><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
@@ -292,13 +261,7 @@ public class ShortOptionsWithMultipleArgumentsForSingleOptionTest {
         options.valueOf( &quot;a&quot; );
     }
 }
-</pre>
-</div>
-</div>
-</div>
-<div class="section"><h4>Clustering Short Options</h4>
-<p>Short options can be <i>clustered</i> in a single argument, if none of those options can accept arguments.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div></div><div class="section"><h4>Clustering Short Options<a name="Clustering_Short_Options"></a></h4><p>Short options can be <i>clustered</i> in a single argument, if none of those options can accept arguments.</p><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -318,14 +281,7 @@ public class ShortOptionsClusteringTest {
         assertTrue( options.has( &quot;d&quot; ) );
     }
 }
-</pre>
-</div>
-</div>
-</div>
-<div class="section"><h3>Long Options/Fluent Interface</h3>
-<p>Long options begin with two hyphens (<tt>--</tt>), followed by multiple letters, digits, hyphens, question marks, or dots. A hyphen cannot be the first character of a long option specification when configuring the parser.</p>
-<p>Whereas short options can be configured using a constructor argument to <tt>OptionParser</tt>, both long and short options can be configured using a &quot;fluent interface&quot; API, that enables some very descriptive and powerful features.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div></div><div class="section"><h3>Long Options/Fluent Interface<a name="Long_OptionsFluent_Interface"></a></h3><p>Long options begin with two hyphens (<tt>--</tt>), followed by multiple letters, digits, hyphens, question marks, or dots. A hyphen cannot be the first character of a long option specification when configuring the parser.</p><p>Whereas short options can be configured using a constructor argument to <tt>OptionParser</tt>, both long and short options can be configured using a &quot;fluent interface&quot; API, that enables some very descriptive and powerful features.</p><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -345,11 +301,7 @@ public class LongOptionsTest {
         assertFalse( options.has( &quot;verbose&quot; ) );
     }
 }
-</pre>
-</div>
-<div class="section"><h4>Arguments of Options</h4>
-<p>Like short options, long options can accept single arguments. The argument can be made required or optional. Use the methods <tt>withRequiredArg()</tt> and <tt>withOptionalArg()</tt> on the return value of <tt>OptionParser.accepts()</tt> to signal that an option takes a required or optional argument.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div><div class="section"><h4>Arguments of Options<a name="Arguments_of_Options"></a></h4><p>Like short options, long options can accept single arguments. The argument can be made required or optional. Use the methods <tt>withRequiredArg()</tt> and <tt>withOptionalArg()</tt> on the return value of <tt>OptionParser.accepts()</tt> to signal that an option takes a required or optional argument.</p><div class="source"><pre>package joptsimple.examples;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -382,20 +334,7 @@ public class LongOptionsWithArgumentsTest {
         assertEquals( emptyList(), options.valuesOf( &quot;level&quot; ) );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h4>Abbreviating Long Options</h4>
-<p>Notice in the example above that the command line uses abbreviations of command line options. You can abbreviate options so long as the abbreviation is unambiguous. Even though you can abbreviate the options on the command line, you cannot address the <tt>OptionSet</tt> using those abbreviations.</p>
-</div>
-<div class="section"><h4>Using Single Hyphen on Long Options</h4>
-<p>As demonstrated in the example above, you can use a single hyphen instead of a double hyphen to specify a long option -- but be careful that doing so doesn't introduce ambiguity.</p>
-<div class="section"><h5>Specifying Arguments for a Long Option on the Command Line</h5>
-<p>A long option's argument can occur:</p>
-<ul><li>in the position on the command line after the option</li>
-<li>right up against the option separated by an equals sign (<tt>=</tt>)</li>
-</ul>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h4>Abbreviating Long Options<a name="Abbreviating_Long_Options"></a></h4><p>Notice in the example above that the command line uses abbreviations of command line options. You can abbreviate options so long as the abbreviation is unambiguous. Even though you can abbreviate the options on the command line, you cannot address the <tt>OptionSet</tt> using those abbreviations.</p></div><div class="section"><h4>Using Single Hyphen on Long Options<a name="Using_Single_Hyphen_on_Long_Options"></a></h4><p>As demonstrated in the example above, you can use a single hyphen instead of a double hyphen to specify a long option -- but be careful that doing so doesn't introduce ambiguity.</p><div class="section"><h5>Specifying Arguments for a Long Option on the Command Line<a name="Specifying_Arguments_for_a_Long_Option_on_the_Command_Line"></a></h5><p>A long option's argument can occur:</p><ul><li>in the position on the command line after the option</li><li>right up against the option separated by an equals sign (<tt>=</tt>)</li></ul><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -420,18 +359,7 @@ public class LongOptionsWithArgumentPositioningTest {
         assertEquals( &quot;3&quot;, options.valueOf( &quot;level&quot; ) );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h5>Multiple Arguments for a Single Option</h5>
-<p>Specify multiple arguments for a long option in the same manner as for short options (see above).</p>
-</div>
-</div>
-<div class="section"><h4>Alternative Form of Long Options</h4>
-<p>The option <tt>-W</tt> is reserved. If you tell the parser to recognize alternative long options, then it will treat, for example, <tt>-W foo=bar</tt> as the long option <tt>foo</tt> with argument bar, as though you had written <tt>--foo=bar</tt>.</p>
-<p>You can specify <tt>-W</tt> as a valid short option, or use it as an abbreviation for a long option, but recognizing alternative long options will always supersede this behavior.</p>
-<p>To recognize alternative long options, either construct an <tt>OptionParser</tt> with a string of short option characters containing the sequence <tt>W;</tt> (a capital W followed by a semicolon), or call the method <tt>OptionParser.recognizeAlternativeLongOptions()</tt>.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h5>Multiple Arguments for a Single Option<a name="Multiple_Arguments_for_a_Single_Option"></a></h5><p>Specify multiple arguments for a long option in the same manner as for short options (see above).</p></div></div><div class="section"><h4>Alternative Form of Long Options<a name="Alternative_Form_of_Long_Options"></a></h4><p>The option <tt>-W</tt> is reserved. If you tell the parser to recognize alternative long options, then it will treat, for example, <tt>-W foo=bar</tt> as the long option <tt>foo</tt> with argument bar, as though you had written <tt>--foo=bar</tt>.</p><p>You can specify <tt>-W</tt> as a valid short option, or use it as an abbreviation for a long option, but recognizing alternative long options will always supersede this behavior.</p><p>To recognize alternative long options, either construct an <tt>OptionParser</tt> with a string of short option characters containing the sequence <tt>W;</tt> (a capital W followed by a semicolon), or call the method <tt>OptionParser.recognizeAlternativeLongOptions()</tt>.</p><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -452,20 +380,7 @@ public class AlternativeLongOptionsTest {
         assertEquals( &quot;5&quot;, options.valueOf( &quot;level&quot; ) );
     }
 }
-</pre>
-</div>
-</div>
-</div>
-<div class="section"><h3>Other Features</h3>
-<div class="section"><h4>Converting Option Arguments to Other Types</h4>
-<p>Without action other than the <tt>with*Arg()</tt> methods, arguments of options are returned as <tt>String</tt>s. For backwards compatibility, <tt>OptionSet.valueOf(String)</tt> and <tt>OptionSet.valuesOf(String)</tt> return <tt>Object</tt> and <tt>List&lt;?</tt>&gt;, respectively, so to get the values out as <tt>String</tt>s, you will need to downcast the results of those methods.</p>
-<p>You can tell JOpt Simple to convert the arguments of options to different Java types via the <tt>ofType()</tt> method on the return value of <tt>with*Arg()</tt>. The <tt>Class</tt> argument of <tt>ofType()</tt> must represent a Java class that has either:</p>
-<ul><li>a <tt>public static</tt> method called <tt>valueOf()</tt> which accepts a single <tt>String</tt> argument and whose return type is the type itself, or</li>
-<li>a <tt>public</tt> constructor which takes a single <tt>String</tt> argument.</li>
-</ul>
-<p>If the class has both, the <tt>valueOf()</tt> method is used.</p>
-<p>Note that <tt>enum</tt>s have a <tt>valueOf()</tt> method.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div></div><div class="section"><h3>Other Features<a name="Other_Features"></a></h3><div class="section"><h4>Converting Option Arguments to Other Types<a name="Converting_Option_Arguments_to_Other_Types"></a></h4><p>Without action other than the <tt>with*Arg()</tt> methods, arguments of options are returned as <tt>String</tt>s. For backwards compatibility, <tt>OptionSet.valueOf(String)</tt> and <tt>OptionSet.valuesOf(String)</tt> return <tt>Object</tt> and <tt>List&lt;?</tt>&gt;, respectively, so to get the values out as <tt>String</tt>s, you will need to downcast the results of those methods.</p><p>You can tell JOpt Simple to convert the arguments of options to different Java types via the <tt>ofType()</tt> method on the return value of <tt>with*Arg()</tt>. The <tt>Class</tt> argument of <tt>ofType()</tt> must represent a Java class that has either:</p><ul><li>a <tt>public static</tt> method called <tt>valueOf()</tt> which accepts a single <tt>String</tt> argument and whose return type is the type itself, or</li><li>a <tt>public</tt> constructor which takes a single <tt>String</tt> argument.</li></ul><p>If the class has both, the <tt>valueOf()</tt> method is used.</p><p>Note that <tt>enum</tt>s have a <tt>valueOf()</tt> method.</p><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -491,10 +406,7 @@ public class OptionArgumentValueTypeTest {
         assertEquals( Level.DEBUG, options.valueOf( &quot;level&quot; ) );
     }
 }
-</pre>
-</div>
-<p>Another way to convert arguments of options is to specify a converter object via <tt>withValuesConvertedBy()</tt>. This is useful when the desired type for the arguments does not meet the requirements that <tt>ofType()</tt> sets forth. Such objects may not perform any &quot;conversion&quot; at all, but rather can validate that arguments conform to certain restrictions before passing through as-is. </p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div><p>Another way to convert arguments of options is to specify a converter object via <tt>withValuesConvertedBy()</tt>. This is useful when the desired type for the arguments does not meet the requirements that <tt>ofType()</tt> sets forth. Such objects may not perform any &quot;conversion&quot; at all, but rather can validate that arguments conform to certain restrictions before passing through as-is. </p><div class="source"><pre>package joptsimple.examples;
 
 import static joptsimple.util.DateConverter.*;
 import static joptsimple.util.RegexMatcher.*;
@@ -518,12 +430,7 @@ public class OptionArgumentConverterTest {
         assertEquals( &quot;123-45-6789&quot;, options.valueOf( &quot;ssn&quot; ) );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h4>Retrieving Arguments of Options in a Type-Safe Manner</h4>
-<p>In the previous examples, we have been discarding the return values of the methods of JOpt Simple's fluent interface. If instead you retain them in variables of type <tt>OptionSpec</tt>, you can use them to retrieve arguments of options in a type-safe manner.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h4>Retrieving Arguments of Options in a Type-Safe Manner<a name="Retrieving_Arguments_of_Options_in_a_Type-Safe_Manner"></a></h4><p>In the previous examples, we have been discarding the return values of the methods of JOpt Simple's fluent interface. If instead you retain them in variables of type <tt>OptionSpec</tt>, you can use them to retrieve arguments of options in a type-safe manner.</p><div class="source"><pre>package joptsimple.examples;
 
 import java.io.File;
 import static java.util.Arrays.*;
@@ -563,12 +470,7 @@ public class TypesafeOptionArgumentRetrievalTest {
         assertEquals( asList( expectedFile ), file.values( options ) );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h4>Default Values for Option Arguments</h4>
-<p>Often it is convenient to specify default values for the arguments of certain command line options. To do this, call the <tt>defaultsTo()</tt> method.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h4>Default Values for Option Arguments<a name="Default_Values_for_Option_Arguments"></a></h4><p>Often it is convenient to specify default values for the arguments of certain command line options. To do this, call the <tt>defaultsTo()</tt> method.</p><div class="source"><pre>package joptsimple.examples;
 
 import java.io.File;
 
@@ -627,14 +529,7 @@ public class DefaultValuesForOptionArgumentsTest {
         parser.parse( &quot;--outdir&quot; );
     }
 }
-</pre>
-</div>
-<p>You can see that <tt>defaultsTo()</tt> should relieve you of the burden of having to check <tt>has()</tt> and/or <tt>hasArgument()</tt> on an <tt>OptionSet</tt> for a given option, and has no bearing on the return values of those methods. Specifying a default value for an option with a required argument does not mean that you can elide an argument for the option on the command line, as the <tt>try-catch</tt> block demonstrates.</p>
-<p>The type of values <tt>defaultsTo()</tt> expects is dictated by the class given by a previous call to <tt>ofType()</tt> or <tt>withValuesConvertedBy()</tt>; if no such call has been made, the type is <tt>String</tt>.</p>
-</div>
-<div class="section"><h4>&quot;Required&quot; Options</h4>
-<p>You can indicate that a given option must be present on the command line via the <tt>required()</tt> method. Only options that accept arguments can be made &quot;required&quot;.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div><p>You can see that <tt>defaultsTo()</tt> should relieve you of the burden of having to check <tt>has()</tt> and/or <tt>hasArgument()</tt> on an <tt>OptionSet</tt> for a given option, and has no bearing on the return values of those methods. Specifying a default value for an option with a required argument does not mean that you can elide an argument for the option on the command line, as the <tt>try-catch</tt> block demonstrates.</p><p>The type of values <tt>defaultsTo()</tt> expects is dictated by the class given by a previous call to <tt>ofType()</tt> or <tt>withValuesConvertedBy()</tt>; if no such call has been made, the type is <tt>String</tt>.</p></div><div class="section"><h4>&quot;Required&quot; Options<a name="aRequired_Options"></a></h4><p>You can indicate that a given option must be present on the command line via the <tt>required()</tt> method. Only options that accept arguments can be made &quot;required&quot;.</p><div class="source"><pre>package joptsimple.examples;
 
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
@@ -653,12 +548,7 @@ public class RequiredOptionsTest {
         parser.parse( &quot;--userid&quot;, &quot;bob&quot; );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h4>Synonyms of Options</h4>
-<p>Sometimes it is useful to allow many different options to share the same meaning in the program that uses them. To specify that options are to be treated as synonymous, use the <tt>acceptsAll()</tt> method of <tt>OptionParser</tt>.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h4>Synonyms of Options<a name="Synonyms_of_Options"></a></h4><p>Sometimes it is useful to allow many different options to share the same meaning in the program that uses them. To specify that options are to be treated as synonymous, use the <tt>acceptsAll()</tt> method of <tt>OptionParser</tt>.</p><div class="source"><pre>package joptsimple.examples;
 
 import java.util.List;
 import static java.util.Arrays.*;
@@ -686,12 +576,7 @@ public class OptionSynonymTest {
         }
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h4>Concise Specification of Multiple Arguments for an Option</h4>
-<p>Another way to specify multiple arguments for an option is to tell the parser to treat a single argument containing multiple delimited values as multiple arguments for the option using the <tt>withValuesSeparatedBy()</tt> method.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h4>Concise Specification of Multiple Arguments for an Option<a name="Concise_Specification_of_Multiple_Arguments_for_an_Option"></a></h4><p>Another way to specify multiple arguments for an option is to tell the parser to treat a single argument containing multiple delimited values as multiple arguments for the option using the <tt>withValuesSeparatedBy()</tt> method.</p><div class="source"><pre>package joptsimple.examples;
 
 import java.io.File;
 import static java.io.File.*;
@@ -718,15 +603,7 @@ public class MultipleDelimitedArgumentsTest {
         assertEquals( asList( new File( &quot;/tmp&quot; ), new File( &quot;/var&quot; ), new File( &quot;/opt&quot; ) ), options.valuesOf( path ) );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h4>Signalling End of Options</h4>
-<p>An argument consisting only of two hyphens (<tt>--</tt>) signals that the remaining arguments are to be treated as non-options.</p>
-<p>An argument consisting only of a single hyphen is considered a non-option argument (though it can be an argument of an option). Many Unix programs treat single hyphens as stand-ins for the standard input or standard output stream.</p>
-<div class="section"><h5>Non-Option Arguments</h5>
-<p>Any arguments which are not options or arguments of options can be retrieved via method <tt>nonOptionArguments()</tt> on <tt>OptionSet</tt>. If the double hyphen is an argument, it is ignored and is not a non-option argument.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h4>Signalling End of Options<a name="Signalling_End_of_Options"></a></h4><p>An argument consisting only of two hyphens (<tt>--</tt>) signals that the remaining arguments are to be treated as non-options.</p><p>An argument consisting only of a single hyphen is considered a non-option argument (though it can be an argument of an option). Many Unix programs treat single hyphens as stand-ins for the standard input or standard output stream.</p><div class="section"><h5>Non-Option Arguments<a name="Non-Option_Arguments"></a></h5><p>Any arguments which are not options or arguments of options can be retrieved via method <tt>nonOptionArguments()</tt> on <tt>OptionSet</tt>. If the double hyphen is an argument, it is ignored and is not a non-option argument.</p><div class="source"><pre>package joptsimple.examples;
 
 import static java.util.Arrays.*;
 
@@ -756,17 +633,7 @@ public class SignallingEndOfOptionsTest {
         assertEquals( asList( &quot;-d&quot;, &quot;-e&quot;, &quot;baz&quot;, &quot;-f&quot;, &quot;biz&quot; ), options.nonOptionArguments() );
     }
 }
-</pre>
-</div>
-</div>
-</div>
-<div class="section"><h4>&quot;POSIX-ly Correct&quot;-ness</h4>
-<p>By default, as with GNU <tt>getopt()</tt>, JOpt Simple allows intermixing of options and non-options. If, however, the parser has been created to be &quot;POSIX-ly correct&quot;, then the first argument that does not look lexically like an option, and is not a required argument of a preceding option, signals the end of options. You can still bind optional arguments to their options using the abutting (for short options) or <tt>=</tt> syntax.</p>
-<p>Unlike GNU <tt>getopt()</tt>, JOptSimple does not honor the environment variable <tt>POSIXLY_CORRECT</tt>. &quot;POSIX-ly correct&quot; parsers are configured by either:</p>
-<ul><li>using the method <tt>OptionParser.posixlyCorrect()</tt></li>
-<li>using the <tt>OptionParser</tt> constructor with an argument whose first character is a plus sign (<tt>+</tt>)</li>
-</ul>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div></div><div class="section"><h4>&quot;POSIX-ly Correct&quot;-ness<a name="aPOSIX-ly_Correct-ness"></a></h4><p>By default, as with GNU <tt>getopt()</tt>, JOpt Simple allows intermixing of options and non-options. If, however, the parser has been created to be &quot;POSIX-ly correct&quot;, then the first argument that does not look lexically like an option, and is not a required argument of a preceding option, signals the end of options. You can still bind optional arguments to their options using the abutting (for short options) or <tt>=</tt> syntax.</p><p>Unlike GNU <tt>getopt()</tt>, JOptSimple does not honor the environment variable <tt>POSIXLY_CORRECT</tt>. &quot;POSIX-ly correct&quot; parsers are configured by either:</p><ul><li>using the method <tt>OptionParser.posixlyCorrect()</tt></li><li>using the <tt>OptionParser</tt> constructor with an argument whose first character is a plus sign (<tt>+</tt>)</li></ul><div class="source"><pre>package joptsimple.examples;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -802,12 +669,7 @@ public class PosixlyCorrectTest {
         assertEquals( asList( &quot;xyz&quot;, &quot;-jixnay&quot;, &quot;foo&quot;, &quot;-k&quot;, &quot;blah&quot;, &quot;--&quot;, &quot;bah&quot; ), options.nonOptionArguments() );
     }
 }
-</pre>
-</div>
-</div>
-<div class="section"><h4>Special Optional Argument Handling</h4>
-<p>If the parser detects an option whose argument is optional, and the next argument &quot;looks like&quot; an option, that argument is not treated as the argument to the option, but as a potentially valid option. If, on the other hand, the optional argument is typed as a derivative of <tt>Number</tt>, then that argument is treated as the negative number argument of the option, even if the parser recognizes the corresponding numeric option.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div><div class="section"><h4>Special Optional Argument Handling<a name="Special_Optional_Argument_Handling"></a></h4><p>If the parser detects an option whose argument is optional, and the next argument &quot;looks like&quot; an option, that argument is not treated as the argument to the option, but as a potentially valid option. If, on the other hand, the optional argument is typed as a derivative of <tt>Number</tt>, then that argument is treated as the negative number argument of the option, even if the parser recognizes the corresponding numeric option.</p><div class="source"><pre>package joptsimple.examples;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -837,14 +699,7 @@ public class SpecialOptionalArgumentHandlingTest {
         assertEquals( emptyList(), options.valuesOf( &quot;a&quot; ) );
     }
 }
-</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="section"><h2>Generating Command Line Help</h2>
-<p>When you call method <tt>OptionParser.printHelpOn()</tt>, JOpt Simple will write a help screen (80-column width) describing all the options it is configured with, along with types of option arguments, whether the option is required (in angle brackets) or optional (in square brackets), etc. To give an option a description, use <tt>OptionParser.accepts*()</tt> with a description argument. To give an option argument a description, use <tt>describedAs()</tt> on the return value of <tt>with*Arg()</tt>.</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div></div></div></div><div class="section"><h2>Generating Command Line Help<a name="Generating_Command_Line_Help"></a></h2><p>When you call method <tt>OptionParser.printHelpOn()</tt>, JOpt Simple will write a help screen (80-column width) describing all the options it is configured with, along with types of option arguments, whether the option is required (in angle brackets) or optional (in square brackets), etc. To give an option a description, use <tt>OptionParser.accepts*()</tt> with a description argument. To give an option argument a description, use <tt>describedAs()</tt> on the return value of <tt>with*Arg()</tt>.</p><div class="source"><pre>package joptsimple.examples;
 
 import static java.io.File.*;
 import static java.util.Arrays.*;
@@ -879,10 +734,7 @@ public class HelpScreenExample {
         parser.printHelpOn( System.out );
     }
 }
-</pre>
-</div>
-<p>Here is what the help screen looks like for the example above:</p>
-<div class="source"><pre>Option (* = required)                   Description                            
+</pre></div><p>Here is what the help screen looks like for the example above:</p><div class="source"><pre>Option (* = required)                   Description                            
 ---------------------                   -----------                            
 -?, -h                                  show help                              
 -c &lt;Integer: count&gt;                     (default: 1)                           
@@ -892,11 +744,7 @@ public class HelpScreenExample {
 --output-file [File: file]                                                     
 -q [Double: quantity]                                                          
 -v, --chatty, --talkative               be more verbose                        
-</pre>
-</div>
-<p>If you want to create your own help screen, give method <tt>OptionParser.formatHelpWith()</tt> a <tt>HelpFormatter</tt> that builds the help screen as a String. When you call <tt>OptionParser.printHelpOn()</tt>, JOpt Simple will use your <tt>HelpFormatter</tt> to produce the help and write it to the given stream.</p>
-<p>For example, this program:</p>
-<div class="source"><pre>package joptsimple.examples;
+</pre></div><p>If you want to create your own help screen, give method <tt>OptionParser.formatHelpWith()</tt> a <tt>HelpFormatter</tt> that builds the help screen as a String. When you call <tt>OptionParser.printHelpOn()</tt>, JOpt Simple will use your <tt>HelpFormatter</tt> to produce the help and write it to the given stream.</p><p>For example, this program:</p><div class="source"><pre>package joptsimple.examples;
 
 import java.io.File;
 import java.util.HashSet;
@@ -959,22 +807,14 @@ public class HelpFormatterExample {
         parser.printHelpOn( System.out );
     }
 }
-</pre>
-</div>
-<p>yields the following output:</p>
-<div class="source"><pre>[output-file]: description = , required = false, accepts arguments = true, requires argument = false, argument description = file, argument type indicator = java.io.File, default values = []
+</pre></div><p>yields the following output:</p><div class="source"><pre>[output-file]: description = , required = false, accepts arguments = true, requires argument = false, argument description = file, argument type indicator = java.io.File, default values = []
 [?, h]: description = show help, required = false, accepts arguments = false, requires argument = false, argument description = , argument type indicator = , default values = []
 [q]: description = , required = false, accepts arguments = true, requires argument = false, argument description = quantity, argument type indicator = java.lang.Double, default values = []
 [d]: description = some date, required = true, accepts arguments = true, requires argument = true, argument description = , argument type indicator = MM/dd/yy, default values = []
 [v, chatty, talkative]: description = be more verbose, required = false, accepts arguments = false, requires argument = false, argument description = , argument type indicator = , default values = []
 [c]: description = , required = false, accepts arguments = true, requires argument = true, argument description = count, argument type indicator = java.lang.Integer, default values = [1]
 [classpath, cp]: description = , required = false, accepts arguments = true, requires argument = true, argument description = path1:path2:..., argument type indicator = java.io.File, default values = []
-</pre>
-</div>
-</div>
-<div class="section"><h2>Handling Exceptions</h2>
-<p>JOpt Simple's classes raise some derivative of <tt>OptionException</tt> if they encounter problems during parsing. These exceptions are unchecked, so you don't have to do anything with such an exception if you don't want to. The rationale behind this decision is that you will most likely be invoking JOpt Simple's functionality from a <tt>main()</tt> method or very near to it, where a failure such as unrecognized arguments can just stop down the JVM and yield a stack trace without much user or programmer inconvenience. So, without any exception handling at all, a user would see something like this:</p>
-<div class="source"><pre>Exception in thread &quot;main&quot; joptsimple.UnrecognizedOptionException: 'x' is not a recognized option
+</pre></div></div><div class="section"><h2>Handling Exceptions<a name="Handling_Exceptions"></a></h2><p>JOpt Simple's classes raise some derivative of <tt>OptionException</tt> if they encounter problems during parsing. These exceptions are unchecked, so you don't have to do anything with such an exception if you don't want to. The rationale behind this decision is that you will most likely be invoking JOpt Simple's functionality from a <tt>main()</tt> method or very near to it, where a failure such as unrecognized arguments can just stop down the JVM and yield a stack trace without much user or programmer inconvenience. So, without any exception handling at all, a user would see something like this:</p><div class="source"><pre>Exception in thread &quot;main&quot; joptsimple.UnrecognizedOptionException: 'x' is not a recognized option
 	at joptsimple.OptionException.unrecognizedOption(OptionException.java:92)
 	at joptsimple.OptionParser.validateOptionCharacters(OptionParser.java:470)
 	at joptsimple.OptionParser.handleShortOptionCluster(OptionParser.java:420)
@@ -982,11 +822,7 @@ public class HelpFormatterExample {
 	at joptsimple.OptionParserState$2.handleArgument(OptionParserState.java:56)
 	at joptsimple.OptionParser.parse(OptionParser.java:378)
 	at joptsimple.examples.ExceptionExample.main(ExceptionExample.java:9)
-</pre>
-</div>
-<p>If you want to handle the exception yourself, you can just catch <tt>OptionException</tt> in your code, and do whatever you please with the contents of the exception, perhaps using the help generation facility.</p>
-</div>
-
+</pre></div><p>If you want to handle the exception yourself, you can just catch <tt>OptionException</tt> in your code, and do whatever you please with the contents of the exception, perhaps using the help generation facility.</p></div>
       </div>
     </div>
     <div class="clear">
