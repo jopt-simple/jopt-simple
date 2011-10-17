@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="JOpt Simple - a Java command line parsing library">
-    <publishDate position="navigation-bottom" format="MMMM dd, yyyy"/>
-    <poweredBy>
-        <logo name="Maven" href="http://maven.apache.org/"
-            img="http://maven.apache.org/images/logos/maven-feather.png"/>
-    </poweredBy>
-    <bannerLeft>
+   <bannerLeft>
         <name>JOpt Simple</name>
         <src>images/jopt-simple-logo.png</src>
-        <href>http://jopt-simple.sourceforge.net</href>
+        <href>http://pholser.github.com/jopt-simple/</href>
     </bannerLeft>
     <body>
         <menu name="JOpt Simple">
