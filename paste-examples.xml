@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- $Id: paste-examples.xml,v 1.11 2009/10/03 23:27:09 pholser Exp $ -->
 <project>
     <target name="-paste-examples">
         <filterchain id="htmlFilter">
@@ -119,9 +117,7 @@
             srcfile="${java.io.tmpdir}/stack-trace-output.txt">
             <filterchain refid="htmlFilter"/>
         </loadfile>
-        <replace dir="${website.staging.dir}" includes="**/*.html">
-            <replacefilter token="@JOPT_SIMPLE_VERSION@"
-                value="${project.version}"/>
+        <replace dir="${website.staging.dir}" includes="examples.html">
             <replacefilter token="@SHORT_OPTIONS_EXAMPLE@"
                 value="${short.options.example}"/>
             <replacefilter token="@SHORT_OPTIONS_WITH_ARGUMENTS_EXAMPLE@"
