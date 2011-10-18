@@ -64,11 +64,31 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
     }
 
     @Test
-    public void clusteredOptionsWithOneAcceptingAnArgument() {
-        thrown.expect( IllegalOptionClusterException.class );
-        thrown.expect( withOption( "d" ) );
-
+    public void clusteredOptionsWithLastOneAcceptingAnArgumentButMissing() {
+        thrown.expect(OptionMissingRequiredArgumentException.class);
+        
         parser.parse( "-fed" );
+    }
+    
+    @Test
+    public void clusteredOptionsWithLastOneAcceptingAnArgument() {
+        OptionSet options = parser.parse( "-fed", "foo" );
+        
+        assertOptionDetected(options, "d");
+        assertOptionDetected(options, "f");
+        assertOptionDetected(options, "e");
+        assertEquals( "foo", options.valueOf( "d" ) );
+    }
+    
+    @Test
+    public void clusteredOptionsWithOneAcceptingAnArgument() {
+        OptionSet options = parser.parse( "-fde" );
+        
+        assertOptionDetected(options, "f");
+        assertOptionDetected(options, "d");
+        assertOptionNotDetected(options, "e");
+        
+        assertEquals( "e", options.valueOf( "d" ) );
     }
 
     @Test
