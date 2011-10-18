@@ -470,11 +470,11 @@ public class OptionParser {
                 throw unrecognizedOption( option );
 
             if ( specFor( option ).acceptsArguments() ) {
-                if ( i > 0 )
-                    throw illegalOptionCluster( option );
-
-                // remainder of chars are the argument to the option at char 0
-                return;
+                if (i == 0 || i == options.length -1)
+                    // if it is the first option the remainder of chars are the argument to the option at char 0
+                    return;
+                
+                throw illegalOptionCluster( option );
             }
         }
     }
