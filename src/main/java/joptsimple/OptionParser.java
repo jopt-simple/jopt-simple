@@ -419,15 +419,16 @@ public class OptionParser {
         char[] options = extractShortOptionsFrom( candidate );
         validateOptionCharacters( options );
 
-        AbstractOptionSpec<?> optionSpec = specFor( options[ 0 ] );
-
-        if ( optionSpec.acceptsArguments() && options.length > 1 ) {
-            String detectedArgument = String.valueOf( options, 1, options.length - 1 );
-            optionSpec.handleOption( this, arguments, detected, detectedArgument );
-        }
-        else {
-            for ( char each : options )
-                specFor( each ).handleOption( this, arguments, detected, null );
+        for (int i = 0; i < options.length; i++) {
+            AbstractOptionSpec<?> optionSpec = specFor( options[ i ] );
+        
+            if ( optionSpec.acceptsArguments() && options.length > i + 1 ) {
+                String detectedArgument = String.valueOf( options, i + 1, options.length - 1 - i );
+                optionSpec.handleOption( this, arguments, detected, detectedArgument );
+                break;
+            } else {
+                optionSpec.handleOption( this, arguments, detected, null );
+            }
         }
     }
 
@@ -469,13 +470,8 @@ public class OptionParser {
             if ( !isRecognized( option ) )
                 throw unrecognizedOption( option );
 
-            if ( specFor( option ).acceptsArguments() ) {
-                if (i == 0 || i == options.length -1)
-                    // if it is the first option the remainder of chars are the argument to the option at char 0
-                    return;
-                
-                throw illegalOptionCluster( option );
-            }
+            if ( specFor( option ).acceptsArguments() )
+                return;
         }
     }
 
