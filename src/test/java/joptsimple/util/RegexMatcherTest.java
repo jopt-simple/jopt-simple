@@ -33,7 +33,6 @@ import org.junit.rules.ExpectedException;
 
 import static joptsimple.util.RegexMatcher.*;
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
 import static org.junit.rules.ExpectedException.*;
 
 /**

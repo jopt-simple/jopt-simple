@@ -25,17 +25,17 @@
 
 package joptsimple;
 
-import static java.lang.Short.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-import static joptsimple.OptionExceptionMatchers.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import java.util.Collection;
 import java.util.List;
 
 import org.junit.Test;
+
+import static java.lang.Short.*;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+
+import static joptsimple.OptionExceptionMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

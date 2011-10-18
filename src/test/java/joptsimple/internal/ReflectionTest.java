@@ -33,8 +33,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static joptsimple.internal.Reflection.*;
-import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
 import static org.junit.rules.ExpectedException.*;
 
 /**

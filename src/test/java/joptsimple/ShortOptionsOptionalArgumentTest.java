@@ -30,8 +30,8 @@ import org.junit.Test;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+
 import static joptsimple.OptionExceptionMatchers.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
 import static org.junit.Assert.*;
 
 /**

@@ -25,13 +25,9 @@
 
 package joptsimple;
 
-import static java.util.Collections.*;
-
 import org.junit.Test;
 
 import static joptsimple.OptionExceptionMatchers.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

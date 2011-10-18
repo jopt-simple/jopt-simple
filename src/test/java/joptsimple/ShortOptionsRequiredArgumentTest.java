@@ -25,14 +25,14 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-import static joptsimple.OptionExceptionMatchers.*;
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+
+import static joptsimple.OptionExceptionMatchers.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -41,8 +41,8 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
     @Before
     public final void initializeParser() {
         parser.accepts( "d" ).withRequiredArg();
-        parser.accepts("e");
-        parser.accepts("f");
+        parser.accepts( "e" );
+        parser.accepts( "f" );
         parser.accepts( "infile" ).withOptionalArg();
     }
 
@@ -65,7 +65,7 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
 
     @Test
     public void clusteredOptionsWithLastOneAcceptingAnArgumentButMissing() {
-        thrown.expect(OptionMissingRequiredArgumentException.class);
+        thrown.expect( OptionMissingRequiredArgumentException.class );
         
         parser.parse( "-fed" );
     }
@@ -74,9 +74,9 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
     public void clusteredOptionsWithLastOneAcceptingAnArgument() {
         OptionSet options = parser.parse( "-fed", "foo" );
         
-        assertOptionDetected(options, "d");
-        assertOptionDetected(options, "f");
-        assertOptionDetected(options, "e");
+        assertOptionDetected( options, "d" );
+        assertOptionDetected( options, "f" );
+        assertOptionDetected( options, "e" );
         assertEquals( "foo", options.valueOf( "d" ) );
     }
     
@@ -84,9 +84,9 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
     public void clusteredOptionsWithOneAcceptingAnArgument() {
         OptionSet options = parser.parse( "-fde" );
         
-        assertOptionDetected(options, "f");
-        assertOptionDetected(options, "d");
-        assertOptionNotDetected(options, "e");
+        assertOptionDetected( options, "f" );
+        assertOptionDetected( options, "d" );
+        assertOptionNotDetected( options, "e" );
         
         assertEquals( "e", options.valueOf( "d" ) );
     }

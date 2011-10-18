@@ -33,7 +33,7 @@ public class ValueOfHaver {
         // no-op
     }
 
-    public static ValueOfHaver valueOf( @SuppressWarnings( "unused" ) String s ) {
+    public static ValueOfHaver valueOf( String s ) {
         return null;
     }
 }
