@@ -143,11 +143,10 @@
                         <phase>post-site</phase>
                         <configuration>
                             <tasks>
-                                <property name="project.version" value="${project.version}" />
                                 <property name="java.io.tmpdir" value="${java.io.tmpdir}" />
                                 <property name="example.src.dir" value="src/test/java" />
                                 <property name="example.class.path" refid="maven.test.classpath" />
-                                <property name="website.staging.dir" value="target/site" />
+                                <property name="website.staging.dir" value="${project.build.directory}/site" />
                                 <ant antfile="paste-examples.xml" target="-paste-examples" />
                             </tasks>
                         </configuration>
@@ -160,9 +159,6 @@
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>2.3</version>
-                <configuration>
-                    <templateFile>src/site/site.vm</templateFile>
-                </configuration>
             </plugin>
         </plugins>
     </build>
