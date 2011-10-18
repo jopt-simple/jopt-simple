@@ -4,20 +4,29 @@
 
 Changes in version 4.0
 
-    * Added method <<<OptionParser.formatHelpWith(HelpFormatter)>>> to allow programmers to influence what help
-      is printed with <<<OptionParser.printHelpOn()>>>. A <<<HelpFormatter>>> is handed a map, keyed by option text,
-      whose values are <<<OptionDescriptor>>>s that describe the options the parser has been configured with.
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/4} gh-4}} by adding method
+      <<<OptionParser.formatHelpWith(HelpFormatter)>>> to allow programmers to influence what
+      help is printed with <<<OptionParser.printHelpOn()>>>. A <<<HelpFormatter>>> is handed a
+      map, keyed by option text, whose values are <<<OptionDescriptor>>>s that describe the
+      options the parser has been configured with.
 
     * Added method <<<OptionSet.hasOptions()>>>. Thanks to Michael Osipov for this.
 
-    * Using <<<SimpleDateFormat.toPattern()>>> rather than <<<SimpleDateFormat.toLocalizedPattern()>>> in
-      <<<DateConverter>>>. Thanks to Michael Osipov for this.
+    * Resolved {{{https://github.com/pholser/jopt-simple/pull/3} gh-3}} by using
+      <<<SimpleDateFormat.toPattern()>>> rather than <<<SimpleDateFormat.toLocalizedPattern()>>>
+      in <<<DateConverter>>>. Thanks to Michael Osipov for this.
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/5} gh-5}} by allowing primitive
+      <<<Class>>> objects whose wrapper types are considered "value types" for purposes of
+      <<<ArgumentAcceptingOptionSpec.ofType()>>> in place of the wrapper classes. Thanks to
+      Daniel Yokomizo for suggesting this.
+ 
 Changes in version 3.3
 
-    * Added method <<<required()>>> to class <<<ArgumentAcceptingOptionSpec>>>, to allow callers
-    to indicate that a given option must be present on the command line.  Thanks to Emils Solmanis
-    for adding this.
+    * Resolved {{{https://github.com/pholser/jopt-simple/pull/1} gh-1}} by adding method
+      <<<required()>>> to class <<<ArgumentAcceptingOptionSpec>>>, to allow callers to indicate
+      that a given option must be present on the command line.  Thanks to Emils Solmanis for
+      adding this.
 
 Changes in version 3.2
 
