@@ -90,11 +90,17 @@ Options
 
 ** Clustering Short Options
 
-    Short options can be <clustered> in a single argument, if none of those options can
-    accept arguments.
+    Short options can be <clustered> in a single argument.
 
 +----------------------------------------------------------------------------------------
 @SHORT_OPTIONS_CLUSTERING_EXAMPLE@
++----------------------------------------------------------------------------------------
+
+    If one of the short options accepts an argument the remaining characters are interpreted
+    as the argument for that option.
+
++----------------------------------------------------------------------------------------
+@SHORT_OPTIONS_CLUSTERING_WITH_ARGUMENT_EXAMPLE@
 +----------------------------------------------------------------------------------------
 
 * Long Options/Fluent Interface

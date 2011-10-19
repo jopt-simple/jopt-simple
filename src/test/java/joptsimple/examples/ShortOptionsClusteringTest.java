@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class ShortOptionsClusteringTest {
     @Test
-    public void allowsClusteringShortOptionsThatDoNotAcceptArguments() {
+    public void allowsClusteringShortOptions() {
         OptionParser parser = new OptionParser( "aBcd" );
 
         OptionSet options = parser.parse( "-cdBa" );
