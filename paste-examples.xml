@@ -28,6 +28,10 @@
             srcfile="${example.src.dir}/joptsimple/examples/ShortOptionsClusteringTest.java">
             <filterchain refid="htmlFilter"/>
         </loadfile>
+    	<loadfile property="short.options.clustering.with.argument.example"
+    	   srcfile="${example.src.dir}/joptsimple/examples/ShortOptionsClusteringWithArgumentTest.java">
+    	   <filterchain refid="htmlFilter"/>
+    	</loadfile>
         <loadfile property="long.options.example"
             srcfile="${example.src.dir}/joptsimple/examples/LongOptionsTest.java">
             <filterchain refid="htmlFilter"/>
@@ -132,6 +136,8 @@
                 value="${short.options.with.multiple.arguments.for.single.option.example}"/>
             <replacefilter token="@SHORT_OPTIONS_CLUSTERING_EXAMPLE@"
                 value="${short.options.clustering.example}"/>
+        	<replacefilter token="@SHORT_OPTIONS_CLUSTERING_WITH_ARGUMENT_EXAMPLE@"
+        	    value="${short.options.clustering.with.argument.example}" />
             <replacefilter token="@LONG_OPTIONS_EXAMPLE@"
                 value="${long.options.example}"/>
             <replacefilter token="@LONG_OPTIONS_WITH_ARGUMENTS_EXAMPLE@"
