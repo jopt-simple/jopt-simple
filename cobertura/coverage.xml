@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.9975579975579976" branch-rate="0.9711286089238845" lines-covered="817" lines-valid="819" branches-covered="370" branches-valid="381" complexity="1.9618320610687023" version="1.9.4.1" timestamp="1319069916869">
+<coverage line-rate="0.9975579975579976" branch-rate="0.9711286089238845" lines-covered="817" lines-valid="819" branches-covered="370" branches-valid="381" complexity="1.9618320610687023" version="1.9.4.1" timestamp="1319070415866">
 	<sources>
+		<source>/Users/pholser/java/jopt-simple/src/main/java</source>
 		<source>--source</source>
-		<source>/Users/pholser/java/jopt-simple/target/checkout/src/main/java</source>
 	</sources>
 	<packages>
 		<package name="joptsimple" line-rate="0.9980119284294234" branch-rate="0.9787234042553191" complexity="1.8032786885245902">

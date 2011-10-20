@@ -1,28 +1,28 @@
 -classpath
-'/Users/pholser/java/jopt-simple/target/checkout/target/classes'
+'/Users/pholser/java/jopt-simple/target/classes'
 -encoding
 'UTF-8'
 -public
 -source
 '1.5'
 -sourcepath
-'/Users/pholser/java/jopt-simple/target/checkout/src/main/java'
+'/Users/pholser/java/jopt-simple/src/main/java'
 -author
 -bottom
 '<i>&copy; Copyright 2004-2011 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License. pholser@alumni.rice.edu</i>'
 -charset
 'UTF-8'
 -d
-'/Users/pholser/java/jopt-simple/target/checkout/target/site/apidocs'
+'/Users/pholser/java/jopt-simple/target/site/apidocs'
 -docencoding
 'UTF-8'
 -doctitle
-'JOpt Simple 4.1 API'
+'JOpt Simple 4.2-SNAPSHOT API'
 -link
 'http://download.oracle.com/javase/1.5.0/docs/api'
 -linkoffline
-'http://download.oracle.com/javase/1.5.0/docs/api' '/Users/pholser/java/jopt-simple/target/checkout/target/javadoc-bundle-options'
+'http://download.oracle.com/javase/1.5.0/docs/api' '/Users/pholser/java/jopt-simple/target/javadoc-bundle-options'
 -use
 -version
 -windowtitle
-'JOpt Simple 4.1 API'
+'JOpt Simple 4.2-SNAPSHOT API'
