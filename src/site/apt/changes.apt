@@ -5,9 +5,9 @@
 Changes in version 4.1
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/7} gh-7}} by allowing short option
-    clusters to contain options which can accept arguments. When such an option is encountered, the
-    remaining characters in the cluster are treated as the argument to the option. Thanks to
-    Alan van Dam for this.
+      clusters to contain options which can accept arguments. When such an option is encountered,
+      the remaining characters in the cluster are treated as the argument to the option. Thanks to
+      Alan van Dam for this.
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/6} gh-6}} by adding method
       <<<OptionParser.formatHelpWith(HelpFormatter)>>> to allow programmers to influence what
