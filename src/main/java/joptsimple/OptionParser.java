@@ -67,8 +67,9 @@ import static joptsimple.ParserRules.*;
  *   interface" (see below), give multiple values separated by a given character as a single argument to the
  *   option.</li>
  *
- *   <li>Short options can be clustered, so that <kbd>-abc</kbd> is treated as <kbd>-a -b -c</kbd>, if none of those
- *   options can accept arguments.</li>
+ *   <li>Short options can be clustered, so that <kbd>-abc</kbd> is treated as <kbd>-a -b -c</kbd>. If a short option
+ *   in the cluster can accept an argument, the remaining characters are interpreted as the argument for that
+ *   option.</li>
  *
  *   <li>An argument consisting only of two hyphens (<kbd>"--"</kbd>) signals that the remaining arguments are to be
  *   treated as non-options.</li>
@@ -419,7 +420,7 @@ public class OptionParser {
         char[] options = extractShortOptionsFrom( candidate );
         validateOptionCharacters( options );
 
-        for (int i = 0; i < options.length; i++) {
+        for ( int i = 0; i < options.length; i++ ) {
             AbstractOptionSpec<?> optionSpec = specFor( options[ i ] );
         
             if ( optionSpec.acceptsArguments() && options.length > i + 1 ) {
@@ -464,8 +465,8 @@ public class OptionParser {
     }
 
     private void validateOptionCharacters( char[] options ) {
-        for ( int i = 0; i < options.length; ++i ) {
-            String option = String.valueOf( options[ i ] );
+        for ( char each : options ) {
+            String option = String.valueOf( each );
 
             if ( !isRecognized( option ) )
                 throw unrecognizedOption( option );

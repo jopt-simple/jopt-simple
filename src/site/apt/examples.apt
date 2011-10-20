@@ -96,7 +96,7 @@ Options
 @SHORT_OPTIONS_CLUSTERING_EXAMPLE@
 +----------------------------------------------------------------------------------------
 
-    If one of the short options accepts an argument the remaining characters are interpreted
+    If one of the short options can accept an argument, the remaining characters are interpreted
     as the argument for that option.
 
 +----------------------------------------------------------------------------------------
