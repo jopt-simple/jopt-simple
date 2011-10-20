@@ -9,11 +9,8 @@ Changes in version 4.1
       the remaining characters in the cluster are treated as the argument to the option. Thanks to
       Alan van Dam for this.
 
-    * Resolved {{{https://github.com/pholser/jopt-simple/issues/6} gh-6}} by adding method
-      <<<OptionParser.formatHelpWith(HelpFormatter)>>> to allow programmers to influence what
-      help is printed with <<<OptionParser.printHelpOn()>>>. A <<<HelpFormatter>>> is handed a
-      map, keyed by option text, whose values are <<<OptionDescriptor>>>s that describe the
-      options the parser has been configured with.
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/6} gh-6}} with general improvements
+      to the project's site. Thanks to Michael Osipov for this.
 
 Changes in version 4.0
 
