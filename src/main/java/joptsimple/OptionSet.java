@@ -283,7 +283,6 @@ public class OptionSet {
 
     private <V> List<V> defaultValuesFor( String option ) {
         if ( defaultValues.containsKey( option ) ) {
-            @SuppressWarnings( "unchecked" )
             List<V> defaults = (List<V>) defaultValues.get( option );
             return defaults;
         }

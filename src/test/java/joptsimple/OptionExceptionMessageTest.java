@@ -51,7 +51,6 @@ public class OptionExceptionMessageTest {
     public static Collection<?> exceptionsAndMessages() {
         return asList(
             new Object[] { new IllegalOptionSpecificationException( "," ), "',' is not a legal option character" },
-            new Object[] { new IllegalOptionClusterException( "a" ), "Option cluster containing 'a' is illegal" },
             new Object[] { new MultipleArgumentsForOptionException( asList( "b", "c" ) ),
                 "Found multiple arguments for option ['b', 'c'], but you asked for only one" },
             new Object[] { new OptionArgumentConversionException(

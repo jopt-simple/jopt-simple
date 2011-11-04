@@ -523,7 +523,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
         assertEquals( join( expectedLines, LINE_SEPARATOR ), sink.toString() );
     }
 
-    private static class FakeOutputStream extends ByteArrayOutputStream {
+    static class FakeOutputStream extends ByteArrayOutputStream {
         boolean closed;
         boolean flushed;
 

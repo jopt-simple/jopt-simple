@@ -41,9 +41,7 @@ public class OptionSetValuesOfOptionStringImmutabilityTest extends UnmodifiableL
         options.addWithArgument( optionB, "foo" );
         options.addWithArgument( optionB, "bar" );
 
-        @SuppressWarnings( "unchecked" )
-        List<Object> values = (List<Object>) options.valuesOf( "b" );
-        return values;
+        return (List<Object>) options.valuesOf( "b" );
     }
 
     @Override

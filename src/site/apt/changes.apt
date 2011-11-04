@@ -8,6 +8,8 @@ Changes in version 4.2
       <<<ArgumentAcceptingOptionSpec.defaultsTo(V[])>>> in addition to
       <<<ArgumentAcceptingOptionSpec.defaultsTo(V, V...)>>>.
 
+    * Removing some internal unused classes and methods.
+
 Changes in version 4.1
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/7} gh-7}} by allowing short option

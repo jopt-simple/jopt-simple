@@ -84,10 +84,6 @@ public abstract class OptionException extends RuntimeException {
         return buffer.toString();
     }
 
-    static OptionException illegalOptionCluster( String option ) {
-        return new IllegalOptionClusterException( option );
-    }
-
     static OptionException unrecognizedOption( String option ) {
         return new UnrecognizedOptionException( option );
     }

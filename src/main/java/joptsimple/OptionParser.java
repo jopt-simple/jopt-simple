@@ -422,14 +422,14 @@ public class OptionParser {
 
         for ( int i = 0; i < options.length; i++ ) {
             AbstractOptionSpec<?> optionSpec = specFor( options[ i ] );
-        
+
             if ( optionSpec.acceptsArguments() && options.length > i + 1 ) {
                 String detectedArgument = String.valueOf( options, i + 1, options.length - 1 - i );
                 optionSpec.handleOption( this, arguments, detected, detectedArgument );
                 break;
-            } else {
-                optionSpec.handleOption( this, arguments, detected, null );
             }
+
+            optionSpec.handleOption( this, arguments, detected, null );
         }
     }
 

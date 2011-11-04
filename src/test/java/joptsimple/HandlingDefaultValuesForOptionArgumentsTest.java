@@ -48,7 +48,7 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
         assertTrue( options.has( optionA ) );
         assertTrue( options.hasArgument( "a" ) );
         assertTrue( options.hasArgument( optionA ) );
-        Integer expectedArgument = Integer.valueOf( 1 );
+        Integer expectedArgument = 1;
         assertEquals( expectedArgument, options.valueOf( "a" ) );
         assertEquals( expectedArgument, options.valueOf( optionA ) );
         assertEquals( expectedArgument, optionA.value( options ) );
