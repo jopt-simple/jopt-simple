@@ -166,4 +166,16 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
         assertEquals( expected, optionC.values( options ) );
         assertEquals( expected, options.valuesOf( optionC ) );
     }
+
+    @Test
+    public void withCompileTimeArraySpecifyingDefaults() {
+        OptionSpec<Integer> optionD =
+            parser.accepts( "d" ).withRequiredArg().ofType( Integer.class ).defaultsTo( new Integer[] { 1, 2, 3 } );
+
+        OptionSet options = parser.parse();
+
+        List<Integer> expected = asList( 1, 2, 3 );
+        assertEquals( expected, optionD.values( options ) );
+        assertEquals( expected, options.valuesOf( optionD ) );
+    }
 }

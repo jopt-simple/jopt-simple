@@ -2,6 +2,12 @@
                                        Change Log
                                        ----------
 
+Changes in version 4.2
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/8} gh-8}} by offering
+      <<<ArgumentAcceptingOptionSpec.defaultsTo(V[])>>> in addition to
+      <<<ArgumentAcceptingOptionSpec.defaultsTo(V, V...)>>>.
+
 Changes in version 4.1
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/7} gh-7}} by allowing short option

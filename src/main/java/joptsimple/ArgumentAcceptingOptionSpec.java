@@ -180,12 +180,25 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
      */
     public ArgumentAcceptingOptionSpec<V> defaultsTo( V value, V... values ) {
         addDefaultValue( value );
+        defaultsTo( values );
+
+        return this;
+    }
+
+    /**
+     * Specifies a set of default values for the argument of the option that this spec represents.
+     *
+     * @param values the set of default argument values for this spec's option
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws NullPointerException if {@code values} or any elements of {@code values} are {@code null}
+     */
+    public ArgumentAcceptingOptionSpec<V> defaultsTo( V[] values ) {
         for ( V each : values )
             addDefaultValue( each );
 
         return this;
     }
-    
+
     /**
      * Marks this option as required. An {@link OptionException} will be thrown when
      * {@link OptionParser#parse(java.lang.String...)} is called, if an option is marked as required and not specified

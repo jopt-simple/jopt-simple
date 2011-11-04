@@ -242,7 +242,7 @@ Options
     check <<<has()>>> and/or <<<hasArgument()>>> on an <<<OptionSet>>> for a given option,
     and has no bearing on the return values of those methods.  Specifying a default value
     for an option with a required argument does not mean that you can elide an argument for
-    the option on the command line, as the <<<try-catch>>> block demonstrates.
+    the option on the command line.
 
     The type of values <<<defaultsTo()>>> expects is dictated by the class given by a
     previous call to <<<ofType()>>> or <<<withValuesConvertedBy()>>>; if no such call has
