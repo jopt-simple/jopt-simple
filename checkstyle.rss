@@ -8,7 +8,7 @@
     <language>en-us</language>
     <copyright>&#169;2011</copyright>
     <item>
-      <title>File: 42,
+      <title>File: 40,
              Errors: 0,
              Warnings: 11,
              Infos: 0
@@ -72,20 +72,6 @@
                           <tr>
                 <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.ReflectionException.java">joptsimple/internal/ReflectionException.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.IllegalOptionClusterException.java">joptsimple/IllegalOptionClusterException.java</a>
                 </td>
                 <td>
                   0
@@ -268,20 +254,6 @@
                           <tr>
                 <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.OptionSpec.java">joptsimple/OptionSpec.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.OptionSpecVisitor.java">joptsimple/OptionSpecVisitor.java</a>
                 </td>
                 <td>
                   0
