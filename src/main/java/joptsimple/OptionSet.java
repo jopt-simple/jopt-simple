@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+
 import static java.util.Collections.*;
 
 import static joptsimple.internal.Objects.*;
@@ -40,6 +41,7 @@ import static joptsimple.internal.Objects.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class OptionSet {
+    private final List<OptionSpec<?>> detectedSpecs;
     private final Map<String, AbstractOptionSpec<?>> detectedOptions;
     private final Map<AbstractOptionSpec<?>, List<String>> optionsToArguments;
     private final List<String> nonOptionArguments;
@@ -49,13 +51,13 @@ public class OptionSet {
      * Package-private because clients don't create these.
      */
     OptionSet( Map<String, List<?>> defaults ) {
+        detectedSpecs = new ArrayList<OptionSpec<?>>();
         detectedOptions = new HashMap<String, AbstractOptionSpec<?>>();
         optionsToArguments = new IdentityHashMap<AbstractOptionSpec<?>, List<String>>();
         nonOptionArguments = new ArrayList<String>();
         defaultValues = new HashMap<String, List<?>>( defaults );
     }
 
-    
     /**
      * Tells whether any options were detected.
      * 
@@ -225,25 +227,37 @@ public class OptionSet {
     }
 
     /**
+     * Gives the set of options that were detected, in the form of {@linkplain OptionSpec}s, in the order in which the
+     * options were found on the command line.
+     *
+     * @return the set of detected command line options
+     */
+    public List<OptionSpec<?>> specs() {
+        return unmodifiableList( detectedSpecs );
+    }
+
+    /**
      * @return the detected non-option arguments
      */
     public List<String> nonOptionArguments() {
         return unmodifiableList( nonOptionArguments );
     }
     
-    void add( AbstractOptionSpec<?> option ) {
-        addWithArgument( option, null );
+    void add( AbstractOptionSpec<?> spec ) {
+        addWithArgument( spec, null );
     }
 
-    void addWithArgument( AbstractOptionSpec<?> option, String argument ) {
-        for ( String each : option.options() )
-            detectedOptions.put( each, option );
+    void addWithArgument( AbstractOptionSpec<?> spec, String argument ) {
+        detectedSpecs.add( spec );
 
-        List<String> optionArguments = optionsToArguments.get( option );
+        for ( String each : spec.options() )
+            detectedOptions.put( each, spec );
+
+        List<String> optionArguments = optionsToArguments.get( spec );
 
         if ( optionArguments == null ) {
             optionArguments = new ArrayList<String>();
-            optionsToArguments.put( option, optionArguments );
+            optionsToArguments.put( spec, optionArguments );
         }
 
         if ( argument != null )
@@ -282,10 +296,8 @@ public class OptionSet {
     }
 
     private <V> List<V> defaultValuesFor( String option ) {
-        if ( defaultValues.containsKey( option ) ) {
-            List<V> defaults = (List<V>) defaultValues.get( option );
-            return defaults;
-        }
+        if ( defaultValues.containsKey( option ) )
+            return (List<V>) defaultValues.get( option );
 
         return emptyList();
     }
