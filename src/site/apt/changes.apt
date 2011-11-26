@@ -2,6 +2,13 @@
                                        Change Log
                                        ----------
 
+Changes in version 4.3
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/9} gh-9}} by offering
+      <<<OptionSet.specs()>>>, which gives a list of the specs corresponding to the
+      options detected on a parse, in the order in which the options occurred on the
+      command line.
+
 Changes in version 4.2
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/8} gh-8}} by offering
