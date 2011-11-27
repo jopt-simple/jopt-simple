@@ -6,6 +6,7 @@ import static java.util.Collections.*;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class SpecialOptionalArgumentHandlingTest {

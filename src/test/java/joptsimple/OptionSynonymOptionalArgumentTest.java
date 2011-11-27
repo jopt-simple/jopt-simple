@@ -26,13 +26,15 @@
 package joptsimple;
 
 import java.io.File;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

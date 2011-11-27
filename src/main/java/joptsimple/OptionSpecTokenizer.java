@@ -30,7 +30,7 @@ import java.util.NoSuchElementException;
 import static joptsimple.ParserRules.*;
 
 /**
- * <p>Tokenizes a short option specification string.</p>
+ * Tokenizes a short option specification string.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

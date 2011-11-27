@@ -25,15 +25,17 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
 import java.util.Collection;
 
+import static java.util.Arrays.*;
+
 import joptsimple.util.KeyValuePair;
-import static org.junit.Assert.*;
 import org.junit.Test;
-import static org.junit.matchers.JUnitMatchers.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

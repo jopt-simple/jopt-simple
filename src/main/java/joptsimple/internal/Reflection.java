@@ -28,6 +28,7 @@ package joptsimple.internal;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import static java.lang.reflect.Modifier.*;
 
 import joptsimple.ValueConverter;
@@ -35,7 +36,7 @@ import joptsimple.ValueConverter;
 import static joptsimple.internal.Classes.*;
 
 /**
- * <p>Helper methods for reflection.</p>
+ * Helper methods for reflection.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

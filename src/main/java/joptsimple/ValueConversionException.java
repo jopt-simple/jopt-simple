@@ -26,8 +26,7 @@
 package joptsimple;
 
 /**
- * Thrown by {@link ValueConverter}s when problems occur in converting string values to
- * other Java types.
+ * Thrown by {@link ValueConverter}s when problems occur in converting string values to other Java types.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

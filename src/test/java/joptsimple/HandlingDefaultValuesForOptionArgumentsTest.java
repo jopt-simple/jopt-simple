@@ -26,12 +26,14 @@
 package joptsimple;
 
 import java.math.BigDecimal;
-import static java.math.BigDecimal.*;
-import static java.util.Arrays.*;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static java.math.BigDecimal.*;
+import static java.util.Arrays.*;
+
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

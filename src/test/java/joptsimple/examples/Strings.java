@@ -1,6 +1,7 @@
 package joptsimple.examples;
 
 import java.util.Iterator;
+
 import static java.util.Arrays.*;
 
 public class Strings {

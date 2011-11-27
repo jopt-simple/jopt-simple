@@ -28,8 +28,8 @@ package joptsimple;
 import static joptsimple.ParserRules.*;
 
 /**
- * <p>Abstraction of parser state; mostly serves to model how a parser behaves depending
- * on whether end-of-options has been detected.</p>
+ * Abstraction of parser state; mostly serves to model how a parser behaves depending on whether end-of-options
+ * has been detected.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

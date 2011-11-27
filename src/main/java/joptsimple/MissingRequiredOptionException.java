@@ -28,7 +28,7 @@ package joptsimple;
 import java.util.Collection;
 
 /**
- * <p>Thrown when an option is marked as required, but not specified on the command line.</p>
+ * Thrown when an option is marked as required, but not specified on the command line.
  *
  * @author <a href="https://github.com/TC1">Emils Solmanis</a>
  */

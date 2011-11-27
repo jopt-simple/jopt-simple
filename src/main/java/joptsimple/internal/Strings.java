@@ -27,6 +27,7 @@ package joptsimple.internal;
 
 import java.util.Iterator;
 import java.util.List;
+
 import static java.lang.System.*;
 import static java.util.Arrays.*;
 
@@ -43,8 +44,7 @@ public final class Strings {
     }
 
     /**
-     * <p>Gives a string consisting of the given character repeated the given number of
-     * times.</p>
+     * Gives a string consisting of the given character repeated the given number of times.
      *
      * @param ch the character to repeat
      * @param count how many times to repeat the character
@@ -60,8 +60,7 @@ public final class Strings {
     }
 
     /**
-     * <p>Tells whether the given string is either {@code} or consists solely of
-     * whitespace characters.</p>
+     * Tells whether the given string is either {@code} or consists solely of whitespace characters.
      *
      * @param target string to check
      * @return {@code true} if the target string is null or empty
@@ -72,8 +71,7 @@ public final class Strings {
 
 
     /**
-     * <p>Gives a string consisting of a given string prepended and appended with
-     * surrounding characters.</p>
+     * Gives a string consisting of a given string prepended and appended with surrounding characters.
      *
      * @param target a string
      * @param begin character to prepend
@@ -85,8 +83,8 @@ public final class Strings {
     }
 
     /**
-     * Gives a string consisting of the elements of a given array of strings, each
-     * separated by a given separator string.
+     * Gives a string consisting of the elements of a given array of strings, each separated by a given separator
+     * string.
      *
      * @param pieces the strings to join
      * @param separator the separator
@@ -97,8 +95,8 @@ public final class Strings {
     }
 
     /**
-     * Gives a string consisting of the string representations of the elements of a
-     * given array of objects, each separated by a given separator string.
+     * Gives a string consisting of the string representations of the elements of a given array of objects,
+     * each separated by a given separator string.
      *
      * @param pieces the elements whose string representations are to be joined
      * @param separator the separator

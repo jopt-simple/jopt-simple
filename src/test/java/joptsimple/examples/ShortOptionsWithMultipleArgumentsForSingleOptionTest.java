@@ -1,5 +1,7 @@
 package joptsimple.examples;
 
+import static java.util.Arrays.*;
+
 import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -7,7 +9,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 import static org.junit.rules.ExpectedException.*;
 

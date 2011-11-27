@@ -28,8 +28,7 @@ package joptsimple;
 import java.util.Collection;
 
 /**
- * <p>Thrown when a problem occurs converting an argument of an option from {@link String}
- * to another type.</p>
+ * Thrown when a problem occurs converting an argument of an option from {@link String} to another type.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

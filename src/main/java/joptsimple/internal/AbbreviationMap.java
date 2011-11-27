@@ -29,9 +29,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * <p>A map whose keys are strings; when a key/value pair is added to the map,
- * the longest unique abbreviations of that key are added as well, and associated with
- * the value.  Thus:</p>
+ * <p>A map whose keys are strings; when a key/value pair is added to the map, the longest unique abbreviations of that
+ * key are added as well, and associated with the value. Thus:</p>
  *
  * <pre>
  *   <code>
@@ -39,19 +38,17 @@ import java.util.TreeMap;
  *   </code>
  * </pre>
  *
- * <p>would make it such that you could retrieve the value {@code "bye"} from the map
- * using the keys {@code "good"}, {@code "goo"}, {@code "go"}, and {@code "g"}.
- * A subsequent invocation of:</p>
+ * <p>would make it such that you could retrieve the value {@code "bye"} from the map using the keys {@code "good"},
+ * {@code "goo"}, {@code "go"}, and {@code "g"}. A subsequent invocation of:</p>
  * <pre>
  *   <code>
  *   abbreviations.put( "go", "fish" );
  *   </code>
  * </pre>
  *
- * <p>would make it such that you could retrieve the value {@code "bye"} using the keys
- * {@code "good"} and {@code "goo"}, and the value {@code "fish"} using the key
- * {@code "go"}.  The key {@code "g"} would yield {@code null}, since it would no longer
- * be a unique abbreviation.</p>
+ * <p>would make it such that you could retrieve the value {@code "bye"} using the keys {@code "good"} and
+ * {@code "goo"}, and the value {@code "fish"} using the key {@code "go"}.  The key {@code "g"} would yield
+ * {@code null}, since it would no longer be a unique abbreviation.</p>
  *
  * <p>The data structure is much like a "trie".</p>
  *

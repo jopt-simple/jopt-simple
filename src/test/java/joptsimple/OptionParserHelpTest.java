@@ -33,13 +33,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static java.lang.System.*;
 import static java.math.BigDecimal.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import static joptsimple.internal.Strings.*;
 import static joptsimple.util.DateConverter.*;

@@ -26,12 +26,13 @@
 package joptsimple;
 
 import static java.util.Arrays.*;
-import static joptsimple.util.KeyValuePair.*;
-import static org.junit.Assert.*;
-import joptsimple.util.KeyValuePair;
 
+import joptsimple.util.KeyValuePair;
 import org.junit.Before;
 import org.junit.Test;
+
+import static joptsimple.util.KeyValuePair.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

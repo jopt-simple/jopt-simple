@@ -9,8 +9,7 @@ import org.apache.tools.ant.filters.BaseFilterReader;
 import org.apache.tools.ant.filters.ChainableReader;
 
 /**
- * Ant filter class that transforms HTML special characters into their equivalent
- * entities.
+ * Ant filter class that transforms HTML special characters into their equivalent entities.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

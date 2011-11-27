@@ -28,6 +28,7 @@ package joptsimple.internal;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import static java.lang.Integer.*;
 import static java.lang.System.*;
 import static java.util.Collections.*;
@@ -36,7 +37,7 @@ import static joptsimple.internal.Column.*;
 import static joptsimple.internal.Strings.*;
 
 /**
- * <p>A means to display data in a text grid.</p>
+ * A means to display data in a text grid.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

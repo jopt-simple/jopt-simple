@@ -26,10 +26,11 @@
 package joptsimple;
 
 import java.util.Collection;
+
 import static java.lang.Character.*;
 
 /**
- * <p>Can tell whether or not options are well-formed.</p>
+ * Can tell whether or not options are well-formed.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

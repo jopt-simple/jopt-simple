@@ -25,11 +25,11 @@
 
 package joptsimple;
 
-import static org.infinitest.toolkit.Assertions.*;
-import static org.junit.Assert.*;
-
 import org.infinitest.toolkit.Block;
 import org.junit.Test;
+
+import static org.infinitest.toolkit.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

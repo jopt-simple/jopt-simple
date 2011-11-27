@@ -26,7 +26,7 @@
 package joptsimple.internal;
 
 /**
- * <p>This unchecked exception wraps reflection-oriented exceptions.</p>
+ * This unchecked exception wraps reflection-oriented exceptions.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

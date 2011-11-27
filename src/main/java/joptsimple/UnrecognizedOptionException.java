@@ -28,7 +28,7 @@ package joptsimple;
 import static java.util.Collections.*;
 
 /**
- * <p>Thrown when the option parser encounters an unrecognized option.</p>
+ * Thrown when the option parser encounters an unrecognized option.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

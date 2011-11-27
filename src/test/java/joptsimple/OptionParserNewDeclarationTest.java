@@ -29,11 +29,12 @@ import java.math.BigInteger;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.junit.Test;
-
 import static java.lang.Boolean.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**

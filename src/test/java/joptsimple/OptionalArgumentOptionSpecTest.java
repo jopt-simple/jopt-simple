@@ -27,9 +27,10 @@ package joptsimple;
 
 import static java.util.Arrays.*;
 
+import org.junit.Test;
+
 import static org.infinitest.toolkit.CollectionMatchers.*;
 import static org.junit.Assert.*;
-import org.junit.Test;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

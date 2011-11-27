@@ -31,7 +31,7 @@ import java.util.List;
 import static java.util.Collections.*;
 
 /**
- * <p>A specification for an option that does not accept arguments.</p>
+ * A specification for an option that does not accept arguments.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
@@ -45,10 +45,10 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     }
 
     @Override
-    void handleOption( OptionParser parser, ArgumentList arguments,
-        OptionSet detectedOptions, String detectedArgument ) {
+    void handleOption( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions,
+        String detectedArgument ) {
 
-        detectedOptions.add(this);
+        detectedOptions.add( this );
     }
 
     public boolean acceptsArguments() {

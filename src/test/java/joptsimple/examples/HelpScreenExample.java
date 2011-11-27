@@ -2,10 +2,10 @@ package joptsimple.examples;
 
 import java.io.File;
 
-import joptsimple.OptionParser;
-
 import static java.io.File.*;
 import static java.util.Arrays.*;
+
+import joptsimple.OptionParser;
 
 import static joptsimple.util.DateConverter.*;
 

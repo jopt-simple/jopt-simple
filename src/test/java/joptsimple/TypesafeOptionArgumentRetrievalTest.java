@@ -28,11 +28,11 @@ package joptsimple;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
-
 import static java.lang.Short.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+
+import org.junit.Test;
 
 import static joptsimple.OptionExceptionMatchers.*;
 import static org.junit.Assert.*;

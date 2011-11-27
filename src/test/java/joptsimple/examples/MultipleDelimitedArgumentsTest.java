@@ -1,6 +1,7 @@
 package joptsimple.examples;
 
 import java.io.File;
+
 import static java.io.File.*;
 import static java.util.Arrays.*;
 
@@ -8,6 +9,7 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import org.junit.Test;
+
 import static joptsimple.examples.Strings.*;
 import static org.junit.Assert.*;
 

@@ -1,13 +1,13 @@
 package joptsimple.examples;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import org.joda.time.DateMidnight;
+import org.junit.Test;
+
 import static joptsimple.util.DateConverter.*;
 import static joptsimple.util.RegexMatcher.*;
 import static org.junit.Assert.*;
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
-
-import org.joda.time.DateMidnight;
-import org.junit.Test;
 
 public class OptionArgumentConverterTest {
     @Test

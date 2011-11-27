@@ -27,10 +27,11 @@ package joptsimple.util;
 
 import java.util.regex.Pattern;
 
+import static java.util.regex.Pattern.*;
+
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
 
-import static java.util.regex.Pattern.*;
 
 /**
  * Ensures that values entirely match a regular expression.

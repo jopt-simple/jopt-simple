@@ -30,9 +30,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import static java.util.Collections.*;
+
 import joptsimple.internal.ReflectionException;
 
-import static java.util.Collections.*;
 import static joptsimple.internal.Objects.*;
 import static joptsimple.internal.Reflection.*;
 import static joptsimple.internal.Strings.*;

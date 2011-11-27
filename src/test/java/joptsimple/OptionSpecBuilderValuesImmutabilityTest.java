@@ -23,7 +23,9 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package joptsimple;import static java.util.Arrays.asList;
+package joptsimple;
+
+import static java.util.Arrays.asList;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

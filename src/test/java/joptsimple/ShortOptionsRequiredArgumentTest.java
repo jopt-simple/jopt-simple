@@ -25,11 +25,11 @@
 
 package joptsimple;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import static joptsimple.OptionExceptionMatchers.*;
 import static org.junit.Assert.*;

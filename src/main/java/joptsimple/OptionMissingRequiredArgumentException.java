@@ -28,8 +28,7 @@ package joptsimple;
 import java.util.Collection;
 
 /**
- * <p>Thrown when the option parser discovers an option that requires an argument,
- * but that argument is missing.</p>
+ * Thrown when the option parser discovers an option that requires an argument, but that argument is missing.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */

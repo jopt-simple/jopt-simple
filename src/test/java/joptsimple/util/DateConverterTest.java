@@ -32,6 +32,8 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static java.text.DateFormat.*;
+
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
 import org.joda.time.DateMidnight;
@@ -40,7 +42,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static java.text.DateFormat.*;
 import static joptsimple.util.DateConverter.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;

@@ -26,6 +26,7 @@
 package joptsimple;
 
 import java.util.Collections;
+
 import static java.util.Collections.*;
 
 import org.junit.Test;

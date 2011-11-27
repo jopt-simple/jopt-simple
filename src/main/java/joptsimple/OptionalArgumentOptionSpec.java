@@ -28,7 +28,7 @@ package joptsimple;
 import java.util.Collection;
 
 /**
- * <p>Specification of an option that accepts an optional argument.</p>
+ * Specification of an option that accepts an optional argument.
  *
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

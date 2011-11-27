@@ -28,8 +28,7 @@ package joptsimple;
 import java.util.Collection;
 
 /**
- * <p>Thrown when asking an {@link OptionSet} for a single argument of an option when
- * many have been specified.</p>
+ * Thrown when asking an {@link OptionSet} for a single argument of an option when many have been specified.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
