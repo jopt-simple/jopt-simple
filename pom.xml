@@ -190,6 +190,7 @@
                         <param>*Matchers</param>
                         <param>*Ctor</param>
                         <param>*Problematic</param>
+                        <param>*ValueOfHaver</param>
                     </excludedClasses>
                 </configuration>
             </plugin>
