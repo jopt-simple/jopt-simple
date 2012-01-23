@@ -351,7 +351,7 @@ public class OptionParser {
     }
 
     /**
-     * Tells the parser to use the given formatter when asked to {@linkplain #printHelpOn(java.io.Writer)} print help}.
+     * Tells the parser to use the given formatter when asked to {@linkplain #printHelpOn(java.io.Writer) print help}.
      *
      * @param formatter the formatter to use for printing help
      * @throws NullPointerException if the formatter is {@code null}
