@@ -171,6 +171,35 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     /**
+     * <p>Specifies a value separator for the argument of the option that this spec represents.  This allows a single
+     * option argument to represent multiple values for the option.  For example:</p>
+     *
+     * <pre>
+     *   <code>
+     *   parser.accepts( "z" ).withRequiredArg()
+     *       .<strong>withValuesSeparatedBy( ":::" )</strong>;
+     *   OptionSet options = parser.parse( new String[] { "-z", "foo:::bar:::baz", "-z",
+     *       "fizz", "-z", "buzz" } );
+     *   </code>
+     * </pre>
+     *
+     * <p>Then {@code options.valuesOf( "z" )} would yield the list {@code [foo, bar, baz, fizz, buzz]}.</p>
+     *
+     * <p>You cannot use Unicode U+0000 in the separator.</p>
+     *
+     * @param separator a string separator
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws IllegalArgumentException if the separator contains Unicode U+0000
+     */
+    public final ArgumentAcceptingOptionSpec<V> withValuesSeparatedBy( String separator ) {
+        if ( separator.indexOf( NIL_VALUE_SEPARATOR ) != -1 )
+            throw new IllegalArgumentException( "cannot use U+0000 in separator" );
+
+        valueSeparator = separator;
+        return this;
+    }
+
+    /**
      * Specifies a set of default values for the argument of the option that this spec represents.
      *
      * @param value the first in the set of default argument values for this spec's option

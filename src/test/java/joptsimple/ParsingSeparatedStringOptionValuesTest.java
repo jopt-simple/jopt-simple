@@ -37,35 +37,35 @@ import static org.junit.Assert.*;
 public class ParsingSeparatedStringOptionValuesTest extends AbstractOptionParserFixture {
     @Test
     public void parsesSeparatedValuesAsSeparateArgument() {
-        assertCorrectParse( "classpath", ':', "--classpath", "/usr:/opt:/var" );
+        assertCorrectParse( "classpath", ":::", "--classpath", "/usr:::/opt:::/var" );
     }
 
     @Test
     public void parsesSeparatedValuesWhenArgumentAbuttedWithEquals() {
-        assertCorrectParse( "classpath", ':', "--classpath=/usr:/opt:/var" );
+        assertCorrectParse( "classpath", ":", "--classpath=/usr:/opt:/var" );
     }
 
     @Test
     public void parsesEqualsSeparatedValuesWhenArgumentAbuttedWithEquals() {
-        assertCorrectParse( "classpath", '=', "--classpath=/usr=/opt=/var" );
+        assertCorrectParse( "classpath", ":=", "--classpath=/usr:=/opt:=/var" );
     }
 
     @Test
     public void parsesSeparatedValuesAbutting() {
-        assertCorrectParse( "c", ':', "-c/usr:/opt:/var" );
+        assertCorrectParse( "c", ";", "-c/usr;/opt;/var" );
     }
 
     @Test
     public void parsesHyphenSeparatedValuesAbutting() {
-        assertCorrectParse( "c", '-', "-c/usr-/opt-/var" );
+        assertCorrectParse( "c", "--", "-c/usr--/opt--/var" );
     }
 
     @Test
     public void handlesConsecutiveDelimiters() {
-        assertCorrectParse( "c", ',', "-c,/usr,,,/opt,,,/var,,,,," );
+        assertCorrectParse( "c", ",", "-c,/usr,,,/opt,,,/var,,,,," );
     }
 
-    private void assertCorrectParse( String option, char separator, String... args ) {
+    private void assertCorrectParse( String option, String separator, String... args ) {
         parser.accepts( option ).withRequiredArg().withValuesSeparatedBy( separator );
 
         OptionSet options = parser.parse( args );

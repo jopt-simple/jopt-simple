@@ -96,13 +96,23 @@ public class ArgumentAcceptingOptionSpecTest {
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void rejectsUnicodeZeroAsValueSeparatorForRequiredArgument() {
+    public void rejectsUnicodeZeroAsCharValueSeparatorForRequiredArgument() {
         new RequiredArgumentOptionSpec<Void>( "a" ).withValuesSeparatedBy( '\u0000' );
     }
 
     @Test( expected = IllegalArgumentException.class )
-    public void rejectsUnicodeZeroAsValueSeparatorForOptionalArgument() {
+    public void rejectsUnicodeZeroAsCharValueSeparatorForOptionalArgument() {
         new OptionalArgumentOptionSpec<Void>( "b" ).withValuesSeparatedBy( '\u0000' );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void rejectsUnicodeZeroInStringValueSeparatorForRequiredArgument() {
+        new RequiredArgumentOptionSpec<Void>( "c" ).withValuesSeparatedBy( "::\u0000::" );
+    }
+
+    @Test( expected = IllegalArgumentException.class )
+    public void rejectsUnicodeZeroInStringValueSeparatorForOptionalArgument() {
+        new OptionalArgumentOptionSpec<Void>( "d" ).withValuesSeparatedBy( "::::\u0000" );
     }
 
     @Test( expected = NullPointerException.class )
