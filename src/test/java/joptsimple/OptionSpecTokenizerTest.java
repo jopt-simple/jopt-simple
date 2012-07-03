@@ -41,8 +41,7 @@ import static org.junit.rules.ExpectedException.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class OptionSpecTokenizerTest {
-    @Rule
-    public final ExpectedException thrown = none();
+    @Rule public final ExpectedException thrown = none();
 
     @Test
     public void tokenizeEmpty() {
@@ -52,63 +51,124 @@ public class OptionSpecTokenizerTest {
     @Test
     public void tokenizeOptionsWithoutArguments() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "ab" );
-        assertNextTokenTakesNoArgument( lexer, 'a' );
-        assertNextTokenTakesNoArgument( lexer, 'b' );
+        assertNextTokenTakesNoArgument( lexer, 'a', false );
+        assertNextTokenTakesNoArgument( lexer, 'b', false );
         assertNoMoreTokens( lexer );
     }
 
     @Test
     public void tokenizeOptionsWithRequiredArguments() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "c:d:" );
-        assertNextTokenRequiresAnArgument( lexer, 'c' );
-        assertNextTokenRequiresAnArgument( lexer, 'd' );
+        assertNextTokenRequiresAnArgument( lexer, 'c', false );
+        assertNextTokenRequiresAnArgument( lexer, 'd', false );
         assertNoMoreTokens( lexer );
     }
 
     @Test
     public void tokenizeOptionsWithOptionalArguments() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "e::f::" );
-        assertNextTokenTakesAnOptionalArgument( lexer, 'e' );
-        assertNextTokenTakesAnOptionalArgument( lexer, 'f' );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'e', false );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'f', false );
         assertNoMoreTokens( lexer );
     }
 
     @Test
     public void tokenizeOptionsWithMixtureOfSpecTypes() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "gh:i::j" );
-        assertNextTokenTakesNoArgument( lexer, 'g' );
-        assertNextTokenRequiresAnArgument( lexer, 'h' );
-        assertNextTokenTakesAnOptionalArgument( lexer, 'i' );
-        assertNextTokenTakesNoArgument( lexer, 'j' );
+        assertNextTokenTakesNoArgument( lexer, 'g', false );
+        assertNextTokenRequiresAnArgument( lexer, 'h', false );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'i', false );
+        assertNextTokenTakesNoArgument( lexer, 'j', false );
         assertNoMoreTokens( lexer );
     }
 
     @Test
     public void wByItself() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W" );
-        assertNextTokenTakesNoArgument( lexer, 'W' );
+        assertNextTokenTakesNoArgument( lexer, 'W', false );
         assertNoMoreTokens( lexer );
     }
 
     @Test
     public void wRequiredArg() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W:" );
-        assertNextTokenRequiresAnArgument( lexer, 'W' );
+        assertNextTokenRequiresAnArgument( lexer, 'W', false );
         assertNoMoreTokens( lexer );
     }
 
     @Test
     public void wOptionalArg() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W::" );
-        assertNextTokenTakesAnOptionalArgument( lexer, 'W' );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'W', false );
         assertNoMoreTokens( lexer );
     }
 
     @Test
     public void alternativeLongOptionsMarker() {
         OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W;" );
-        assertNextTokenRequiresAnArgument( lexer, 'W' );
+        assertNextTokenRequiresAnArgument( lexer, 'W', false );
         assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void tokenizeOptionsWithoutArgumentsAndHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "ab*" );
+        assertNextTokenTakesNoArgument( lexer, 'a', false );
+        assertNextTokenTakesNoArgument( lexer, 'b', true );
+        assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void tokenizeOptionsWithRequiredArgumentsAndHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "c*:d:" );
+        assertNextTokenRequiresAnArgument( lexer, 'c', true );
+        assertNextTokenRequiresAnArgument( lexer, 'd', false );
+        assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void tokenizeOptionsWithOptionalArgumentsAndHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "e*::f*::" );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'e', true );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'f', true );
+        assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void tokenizeOptionsWithMixtureOfSpecTypesAndHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "g*h:i*::j" );
+        assertNextTokenTakesNoArgument( lexer, 'g', true );
+        assertNextTokenRequiresAnArgument( lexer, 'h', false );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'i', true );
+        assertNextTokenTakesNoArgument( lexer, 'j', false );
+        assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void wByItselfWithHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W*" );
+        assertNextTokenTakesNoArgument( lexer, 'W', true );
+        assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void wRequiredArgWithHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W*:" );
+        assertNextTokenRequiresAnArgument( lexer, 'W', true );
+        assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void wOptionalArgWithHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W*::" );
+        assertNextTokenTakesAnOptionalArgument( lexer, 'W', true );
+        assertNoMoreTokens( lexer );
+    }
+
+    @Test
+    public void alternativeLongOptionsMarkerWithHelpMarker() {
+        OptionSpecTokenizer lexer = new OptionSpecTokenizer( "W*;" );
+        assertNextTokenTakesNoArgument( lexer, 'W', true );
     }
 
     private void assertNoMoreTokens( OptionSpecTokenizer lexer ) {
@@ -118,25 +178,28 @@ public class OptionSpecTokenizerTest {
         lexer.next();
     }
 
-    private static void assertNextTokenTakesNoArgument( OptionSpecTokenizer lexer, char option ) {
-        assertNextToken( lexer, option, false, false );
+    private static void assertNextTokenTakesNoArgument( OptionSpecTokenizer lexer, char option, boolean forHelp ) {
+        assertNextToken( lexer, option, false, false, forHelp );
     }
 
-    private static void assertNextTokenRequiresAnArgument( OptionSpecTokenizer lexer, char option ) {
-        assertNextToken( lexer, option, true, true );
+    private static void assertNextTokenRequiresAnArgument( OptionSpecTokenizer lexer, char option, boolean forHelp ) {
+        assertNextToken( lexer, option, true, true, forHelp );
     }
 
-    private static void assertNextTokenTakesAnOptionalArgument( OptionSpecTokenizer lexer, char option ) {
-        assertNextToken( lexer, option, true, false );
+    private static void assertNextTokenTakesAnOptionalArgument( OptionSpecTokenizer lexer, char option,
+        boolean forHelp ) {
+
+        assertNextToken( lexer, option, true, false, forHelp );
     }
 
     private static void assertNextToken( OptionSpecTokenizer lexer, char option, boolean acceptsArguments,
-        boolean requiresArgument ) {
+        boolean requiresArgument, boolean forHelp ) {
 
         assertTrue( "no more tokens?", lexer.hasMore() );
         AbstractOptionSpec<?> spec = lexer.next();
         assertThat( "option?", spec.options(), hasSameContentsAs( singleton( String.valueOf( option ) ) ) );
         assertEquals( "accepts args?", acceptsArguments, spec.acceptsArguments() );
         assertEquals( "requires arg?", requiresArgument, spec.requiresArgument() );
+        assertEquals( "for help?", forHelp, spec.isForHelp() );
     }
 }

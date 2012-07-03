@@ -39,8 +39,7 @@ import static org.junit.rules.ExpectedException.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class RegexMatcherTest {
-    @Rule
-    public final ExpectedException thrown = none();
+    @Rule public final ExpectedException thrown = none();
 
     private RegexMatcher abc;
 

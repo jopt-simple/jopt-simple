@@ -334,7 +334,7 @@ public class OptionParserHelpTest extends AbstractOptionParserFixture {
         parser.acceptsAll( asList( "B", "bootstrap-debug" ),
             "Specify a text to be logged at the beginning (e.g. used by Gradle's bootstrap class." )
             .withRequiredArg().ofType( String.class );
-        parser.acceptsAll( asList( "h", "?" ), "Shows this help message" );
+        parser.acceptsAll( asList( "h", "?" ), "Shows this help message" ).forHelp();
 
         parser.printHelpOn( sink );
 

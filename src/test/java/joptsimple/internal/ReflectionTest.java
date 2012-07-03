@@ -39,8 +39,7 @@ import static org.junit.rules.ExpectedException.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class ReflectionTest {
-    @Rule
-    public final ExpectedException thrown = none();
+    @Rule public final ExpectedException thrown = none();
 
     @Test
     public void invokingConstructorQuietlyWrapsInstantiationException() throws Exception {

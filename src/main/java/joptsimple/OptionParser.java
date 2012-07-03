@@ -140,11 +140,14 @@ import static joptsimple.ParserRules.*;
  *     <ul>
  *       <li>Any letter or digit is treated as an option character.</li>
  *
- *       <li>If an option character is followed by a single colon (<kbd>":"</kbd>), then the option requires an
- *       argument.</li>
+ *       <li>An option character can be immediately followed by an asterisk (*) to indicate that the option is a
+ *       "help" option.</li>
  *
- *       <li>If an option character is followed by two colons (<kbd>"::"</kbd>), then the option accepts an optional
- *       argument.</li>
+ *       <li>If an option character (with possible trailing asterisk) is followed by a single colon (<kbd>":"</kbd>),
+ *       then the option requires an argument.</li>
+ *
+ *       <li>If an option character (with possible trailing asterisk) is followed by two colons (<kbd>"::"</kbd>),
+ *       then the option accepts an optional argument.</li>
  *
  *       <li>Otherwise, the option character accepts no argument.</li>
  *
@@ -392,7 +395,15 @@ public class OptionParser {
                 missingRequiredOptions.addAll( each.options() );
         }
 
-        if ( !missingRequiredOptions.isEmpty() )
+        boolean helpOptionPresent = false;
+        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+            if ( each.isForHelp() ) {
+                helpOptionPresent = true;
+                break;
+            }
+        }
+
+        if ( !missingRequiredOptions.isEmpty() && !helpOptionPresent )
             throw new MissingRequiredOptionException( missingRequiredOptions );
     }
 

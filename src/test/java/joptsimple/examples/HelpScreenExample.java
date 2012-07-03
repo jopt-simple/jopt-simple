@@ -22,7 +22,7 @@ public class HelpScreenExample {
                 acceptsAll( asList( "v", "talkative", "chatty" ), "be more verbose" );
                 accepts( "output-file" ).withOptionalArg().ofType( File.class )
                      .describedAs( "file" );
-                acceptsAll( asList( "h", "?" ), "show help" );
+                acceptsAll( asList( "h", "?" ), "show help" ).forHelp();
                 acceptsAll( asList( "cp", "classpath" ) ).withRequiredArg()
                     .describedAs( "path1" + pathSeparatorChar + "path2:..." )
                     .ofType( File.class )

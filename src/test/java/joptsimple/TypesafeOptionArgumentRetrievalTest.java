@@ -311,5 +311,9 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         public List<V> values( OptionSet detectedOptions ) {
             return detectedOptions.valuesOf( this );
         }
+
+        public boolean isForHelp() {
+            return false;
+        }
     }
 }

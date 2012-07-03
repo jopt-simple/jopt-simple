@@ -36,6 +36,7 @@ import static joptsimple.ParserRules.*;
  */
 class OptionSpecTokenizer {
     private static final char POSIXLY_CORRECT_MARKER = '+';
+    private static final char HELP_MARKER = '*';
 
     private String specification;
     private int index;
@@ -69,11 +70,18 @@ class OptionSpecTokenizer {
 
         ensureLegalOption( optionCandidate );
 
-        if ( hasMore() )
-            spec = specification.charAt( index ) == ':'
+        if ( hasMore() ) {
+            boolean forHelp = false;
+            if ( specification.charAt( index ) == HELP_MARKER ) {
+                forHelp = true;
+                ++index;
+            }
+            spec = hasMore() && specification.charAt( index ) == ':'
                 ? handleArgumentAcceptingOption( optionCandidate )
                 : new NoArgumentOptionSpec( optionCandidate );
-        else
+            if ( forHelp )
+                spec.forHelp();
+        } else
             spec = new NoArgumentOptionSpec( optionCandidate );
 
         return spec;

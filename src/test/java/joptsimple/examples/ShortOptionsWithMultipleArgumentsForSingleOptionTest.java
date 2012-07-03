@@ -13,8 +13,7 @@ import static org.junit.Assert.*;
 import static org.junit.rules.ExpectedException.*;
 
 public class ShortOptionsWithMultipleArgumentsForSingleOptionTest {
-    @Rule
-    public final ExpectedException thrown = none();
+    @Rule public final ExpectedException thrown = none();
 
     @Test
     public void allowsMultipleValuesForAnOption() {

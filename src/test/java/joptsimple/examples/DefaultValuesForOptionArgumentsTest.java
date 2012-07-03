@@ -15,8 +15,7 @@ import static org.junit.Assert.*;
 import static org.junit.rules.ExpectedException.*;
 
 public class DefaultValuesForOptionArgumentsTest {
-    @Rule
-    public final ExpectedException thrown = none();
+    @Rule public final ExpectedException thrown = none();
 
     @Test
     public void allowsSpecificationOfDefaultValues() throws Exception {

@@ -87,4 +87,12 @@ public interface OptionSpec<V> {
      * @return the string representations of this option
      */
     Collection<String> options();
+
+    /**
+     * Tells whether this option is designated as a "help" option. The presence of a "help" option on a command line
+     * means that missing "required" options will not cause parsing to fail.
+     *
+     * @return whether this option is designated as a "help" option
+     */
+    boolean isForHelp();
 }

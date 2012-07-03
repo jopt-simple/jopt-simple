@@ -40,6 +40,7 @@ import static joptsimple.internal.Strings.*;
 abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor {
     private final List<String> options = new ArrayList<String>();
     private final String description;
+    private boolean forHelp;
 
     protected AbstractOptionSpec( String option ) {
         this( singletonList( option ), EMPTY );
@@ -65,6 +66,15 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
 
     public String description() {
         return description;
+    }
+
+    public final AbstractOptionSpec<V> forHelp() {
+        forHelp = true;
+        return this;
+    }
+
+    public final boolean isForHelp() {
+        return forHelp;
     }
 
     protected abstract V convert( String argument );

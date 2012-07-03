@@ -52,7 +52,9 @@ Options
     optional.  When you construct an <<<OptionParser>>> with a string of short option
     characters, append a single colon (<<<:>>>) to an option character to configure
     that option to require an argument.  Append two colons (<<<::>>>) to an option
-    character to configure that option to accept an optional argument.
+    character to configure that option to accept an optional argument. Append an
+    asterisk (<<<*>>>) to an option character, but before any "argument" indicators,
+    to configure that option as a "help" option.
 
     The syntax of the option specification string given to the <<<OptionParser>>>
     constructor should look familiar to you if you have used GNU's <<<getopt()>>>
@@ -252,6 +254,9 @@ Options
 
     You can indicate that a given option must be present on the command line via the
     <<<required()>>> method.  Only options that accept arguments can be made "required".
+
+    An option designated as a "help" option via <<<forHelp()>>>, when present on the
+    command line, causes missing "required" options not to reject the command line.
 
 +----------------------------------------------------------------------------------------
 @REQUIRED_OPTIONS_EXAMPLE@

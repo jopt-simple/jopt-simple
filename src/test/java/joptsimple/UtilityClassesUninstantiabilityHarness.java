@@ -41,8 +41,7 @@ import static org.junit.rules.ExpectedException.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public abstract class UtilityClassesUninstantiabilityHarness {
-    @Rule
-    public final ExpectedException thrown = none();
+    @Rule public final ExpectedException thrown = none();
 
     private final Class<?> utility;
 
