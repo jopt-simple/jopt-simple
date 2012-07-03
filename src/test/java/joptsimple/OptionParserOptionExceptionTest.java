@@ -50,6 +50,14 @@ public class OptionParserOptionExceptionTest extends AbstractOptionParserFixture
     }
 
     @Test
+    public void asteriskIsIllegalOptionCharacter() {
+        thrown.expect( IllegalOptionSpecificationException.class );
+        thrown.expect( withOption( "*" ) );
+
+        parser.accepts( "*" );
+    }
+
+    @Test
     public void tooManyHyphens() {
         parser.accepts( "b" );
         thrown.expect( UnrecognizedOptionException.class );
