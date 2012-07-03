@@ -52,11 +52,11 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
     }
 
     public final Collection<String> options() {
-        return unmodifiableCollection(options);
+        return unmodifiableCollection( options );
     }
 
     public final List<V> values( OptionSet detectedOptions ) {
-        return detectedOptions.valuesOf(this);
+        return detectedOptions.valuesOf( this );
     }
 
     public final V value( OptionSet detectedOptions ) {
