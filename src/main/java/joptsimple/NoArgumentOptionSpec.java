@@ -41,7 +41,7 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     }
 
     NoArgumentOptionSpec( Collection<String> options, String description ) {
-        super(options, description);
+        super( options, description );
     }
 
     @Override
