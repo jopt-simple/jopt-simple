@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -32,8 +34,8 @@ import org.hamcrest.TypeSafeMatcher;
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-public class OptionExceptionMatchers {
-    private OptionExceptionMatchers() {
+public class ExceptionMatchers {
+    private ExceptionMatchers() {
         throw new UnsupportedOperationException();
     }
 
@@ -60,6 +62,20 @@ public class OptionExceptionMatchers {
 
             public void describeTo( Description description ) {
                 description.appendText( "an exception with cause of type " );
+                description.appendValue( type );
+            }
+        };
+    }
+
+    public static Matcher<InvocationTargetException> withTargetOfType( final Class<? extends Throwable> type ) {
+        return new TypeSafeMatcher<InvocationTargetException>() {
+            @Override
+            public boolean matchesSafely( InvocationTargetException target ) {
+                return type.isInstance( target.getTargetException() );
+            }
+
+            public void describeTo( Description description ) {
+                description.appendText( "an InvocationTargetException with target of type " );
                 description.appendValue( type );
             }
         };

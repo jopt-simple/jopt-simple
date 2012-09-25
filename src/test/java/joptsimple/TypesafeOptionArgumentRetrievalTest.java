@@ -34,7 +34,7 @@ import static java.util.Collections.*;
 
 import org.junit.Test;
 
-import static joptsimple.OptionExceptionMatchers.*;
+import static joptsimple.ExceptionMatchers.*;
 import static org.junit.Assert.*;
 
 /**

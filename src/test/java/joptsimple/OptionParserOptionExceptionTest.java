@@ -27,7 +27,7 @@ package joptsimple;
 
 import org.junit.Test;
 
-import static joptsimple.OptionExceptionMatchers.*;
+import static joptsimple.ExceptionMatchers.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
