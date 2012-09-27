@@ -397,7 +397,7 @@ public class OptionParser {
 
         boolean helpOptionPresent = false;
         for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
-            if ( each.isForHelp() ) {
+            if ( each.isForHelp() && options.has( each ) ) {
                 helpOptionPresent = true;
                 break;
             }
