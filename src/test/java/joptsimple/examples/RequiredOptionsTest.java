@@ -33,4 +33,17 @@ public class RequiredOptionsTest {
         OptionSet options = parser.parse( "--help" );
         assertTrue( options.has( "help" ) );
     }
+    
+    @Test( expected = OptionException.class )
+    public void missingHelpOptionMeansRequiredOptionsMustBePresent() {
+        OptionParser parser = new OptionParser() {
+            {
+                accepts( "userid" ).withRequiredArg().required();
+                accepts( "password" ).withRequiredArg().required();
+                accepts( "help" ).forHelp();
+            }
+        };
+
+        parser.parse( "" );
+    }
 }
