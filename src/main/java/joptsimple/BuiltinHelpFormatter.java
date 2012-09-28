@@ -46,9 +46,9 @@ class BuiltinHelpFormatter implements HelpFormatter {
 
     public String format( Map<String, ? extends OptionDescriptor> options ) {
         if ( options.isEmpty() )
-            return "No options specified";
+            return Messages.getString( "BuiltinHelpFormatter.noOptionsSpecified" );
 
-        grid = new ColumnarData( optionHeader( options ), "Description" );
+        grid = new ColumnarData( optionHeader( options ), Messages.getString( "BuiltinHelpFormatter.description" ) );
 
         Comparator<OptionDescriptor> comparator =
             new Comparator<OptionDescriptor>() {
@@ -69,10 +69,10 @@ class BuiltinHelpFormatter implements HelpFormatter {
     private String optionHeader( Map<String, ? extends OptionDescriptor> options ) {
         for ( OptionDescriptor each : options.values() ) {
             if ( each.isRequired() )
-                return "Option (* = required)";
+                return Messages.getString( "BuiltinHelpFormatter.optionRequired" );
         }
 
-        return "Option";
+        return Messages.getString( "BuiltinHelpFormatter.option" );
     }
 
     private void addHelpLineFor( OptionDescriptor descriptor ) {
@@ -131,7 +131,7 @@ class BuiltinHelpFormatter implements HelpFormatter {
             return descriptor.description();
 
         String defaultValuesDisplay = createDefaultValuesDisplay( defaultValues );
-        return descriptor.description() + ' ' + surround( "default: " + defaultValuesDisplay, '(', ')' );
+        return descriptor.description() + ' ' + surround( Messages.getString( "BuiltinHelpFormatter.default" ) + defaultValuesDisplay, '(', ')' );
     }
 
     private String createDefaultValuesDisplay( List<?> defaultValues ) {
