@@ -4,6 +4,15 @@
 
 Changes in version 4.4
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/22} gh-22}}. Thanks to
+      El Kodus for this.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/19} gh-19}}. Thanks to
+      El Kodus for this.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/14} gh-14}} by offering
+      <<<AbstractOptionSpec.forHelp()>>>.
+
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/13} gh-13}} by offering
       <<<ArgumentAcceptingOptionSpec.withValuesSeparatedBy(String)>>>.
 
