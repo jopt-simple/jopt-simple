@@ -61,7 +61,9 @@ public class OptionExceptionMessageTest {
                 "Option ['e', 'honest'] requires an argument" },
             new Object[] { new UnrecognizedOptionException( "f" ), "'f' is not a recognized option" },
             new Object[] { new MissingRequiredOptionException( asList( "g", "h" ) ),
-                "Missing required option ['g', 'h']" }
+                "Missing required option(s) ['g', 'h']" },
+            new Object[] { new UnconfiguredOptionException( asList( "i", "j" ) ),
+                "Option ['i', 'j'] has not been configured on this parser" }
         );
     }
 

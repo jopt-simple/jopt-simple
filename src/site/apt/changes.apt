@@ -4,6 +4,9 @@
 
 Changes in version 4.4
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/12} gh-12}} by offering
+      <<<OptionSpecBuilder.requiredIf()>>>.
+
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/22} gh-22}}. Thanks to
       El Kodus for this.
 

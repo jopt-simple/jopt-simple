@@ -27,20 +27,26 @@ package joptsimple;
 
 import java.util.Collection;
 
+import static java.util.Collections.*;
+
 /**
- * Thrown when an option is marked as required, but not specified on the command line.
+ * Thrown when an option parser refers to an option that is not in fact configured already on the parser.
  *
- * @author <a href="https://github.com/TC1">Emils Solmanis</a>
+ * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-class MissingRequiredOptionException extends OptionException {
+class UnconfiguredOptionException extends OptionException {
     private static final long serialVersionUID = -1L;
 
-    protected MissingRequiredOptionException( Collection<String> options ) {
+    UnconfiguredOptionException( String option ) {
+        this( singletonList( option ) );
+    }
+
+    UnconfiguredOptionException( Collection<String> options ) {
         super( options );
     }
 
     @Override
     public String getMessage() {
-        return "Missing required option(s) " + multipleOptionMessage();
+        return "Option " + multipleOptionMessage() + " has not been configured on this parser";
     }
 }

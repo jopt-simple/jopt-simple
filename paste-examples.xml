@@ -62,6 +62,10 @@
             srcfile="${example.src.dir}/joptsimple/examples/RequiredOptionsTest.java">
             <filterchain refid="htmlFilter"/>
         </loadfile>
+        <loadfile property="required.if.options.example"
+            srcfile="${example.src.dir}/joptsimple/examples/RequiredIfTest.java">
+            <filterchain refid="htmlFilter"/>
+        </loadfile>
         <loadfile property="default.values.for.option.arguments.example"
             srcfile="${example.src.dir}/joptsimple/examples/DefaultValuesForOptionArgumentsTest.java">
             <filterchain refid="htmlFilter"/>
@@ -152,6 +156,8 @@
                 value="${default.values.for.option.arguments.example}"/>
             <replacefilter token="@REQUIRED_OPTIONS_EXAMPLE@"
                 value="${required.options.example}"/>
+            <replacefilter token="@REQUIRED_IF_OPTIONS_EXAMPLE@"
+                value="${required.if.options.example}"/>
             <replacefilter token="@OPTION_SYNONYM_EXAMPLE@"
                 value="${option.synonym.example}"/>
             <replacefilter token="@MULTIPLE_DELIMITED_ARGUMENTS_EXAMPLE@"

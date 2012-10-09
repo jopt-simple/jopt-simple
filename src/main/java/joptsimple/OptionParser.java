@@ -193,6 +193,7 @@ import static joptsimple.ParserRules.*;
  */
 public class OptionParser {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
+    private final Map<Collection<String>, OptionSpec<?>> requiredIf;
     private OptionParserState state;
     private boolean posixlyCorrect;
     private HelpFormatter helpFormatter = new BuiltinHelpFormatter();
@@ -203,6 +204,7 @@ public class OptionParser {
      */
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
+        requiredIf = new HashMap<Collection<String>, OptionSpec<?>>();
         state = moreOptions( false );
     }
 
@@ -389,12 +391,32 @@ public class OptionParser {
     }
     
     private void ensureRequiredOptions( OptionSet options ) {
+        Collection<String> missingRequiredOptions = missingRequiredOptions( options );
+        boolean helpOptionPresent = isHelpOptionPresent( options );
+
+        if ( !missingRequiredOptions.isEmpty() && !helpOptionPresent )
+            throw new MissingRequiredOptionException( missingRequiredOptions );
+    }
+
+    private Collection<String> missingRequiredOptions( OptionSet options ) {
         Collection<String> missingRequiredOptions = new HashSet<String>();
+
         for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
             if ( each.isRequired() && !options.has( each ) )
                 missingRequiredOptions.addAll( each.options() );
         }
 
+        for ( Map.Entry<Collection<String>, OptionSpec<?>> eachEntry : requiredIf.entrySet() ) {
+            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+            if ( options.has( eachEntry.getValue() ) && !options.has( required ) ) {
+                missingRequiredOptions.addAll( required.options() );
+            }
+        }
+
+        return missingRequiredOptions;
+    }
+
+    private boolean isHelpOptionPresent( OptionSet options ) {
         boolean helpOptionPresent = false;
         for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
             if ( each.isForHelp() && options.has( each ) ) {
@@ -402,9 +424,7 @@ public class OptionParser {
                 break;
             }
         }
-
-        if ( !missingRequiredOptions.isEmpty() && !helpOptionPresent )
-            throw new MissingRequiredOptionException( missingRequiredOptions );
+        return helpOptionPresent;
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
@@ -452,8 +472,26 @@ public class OptionParser {
         return isShortOptionToken( argument ) || isLongOptionToken( argument );
     }
 
-    private boolean isRecognized( String option ) {
+    boolean isRecognized( String option ) {
         return recognizedOptions.contains( option );
+    }
+
+    boolean isRecognized( OptionSpec<?> option ) {
+        return recognizedOptions.contains( option.options().iterator().next() );
+    }
+
+    void requiredIf( Collection<String> precedentSynonyms, String required ) {
+        requiredIf( precedentSynonyms, specFor( required ));
+    }
+
+    void requiredIf( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
+        for ( String each : precedentSynonyms ) {
+            AbstractOptionSpec<?> spec = specFor( each );
+            if ( spec == null )
+                throw new UnconfiguredOptionException( precedentSynonyms );
+        }
+
+        requiredIf.put( precedentSynonyms, required );
     }
 
     private AbstractOptionSpec<?> specFor( char option ) {

@@ -262,6 +262,19 @@ Options
 @REQUIRED_OPTIONS_EXAMPLE@
 +----------------------------------------------------------------------------------------
 
+** "Required" Dependent Options
+
+    You can indicate that a given option must be present on the command line if some
+    other option is present on the command line via the <<<requiredIf()>>> method.
+    Any option can be made "required if".
+
+    An option designated as a "help" option via <<<forHelp()>>>, when present on the
+    command line, causes missing "required if" options not to reject the command line.
+
++----------------------------------------------------------------------------------------
+@REQUIRED_IF_OPTIONS_EXAMPLE@
++----------------------------------------------------------------------------------------
+
 ** Synonyms of Options
 
     Sometimes it is useful to allow many different options to share the same meaning in

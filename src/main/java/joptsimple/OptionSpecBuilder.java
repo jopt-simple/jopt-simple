@@ -93,4 +93,34 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
 
         return newSpec;
     }
+
+    /**
+     * Informs an option parser that this builder's option is required if the given option is present on the command
+     * line.
+     *
+     * @param dependent the option whose presence on a command line makes this builder's option required
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     */
+    public OptionSpecBuilder requiredIf( String dependent ) {
+        if ( !parser.isRecognized( dependent ) )
+            throw new UnconfiguredOptionException( dependent );
+
+        parser.requiredIf( options(), dependent );
+        return this;
+    }
+
+    /**
+     * Informs an option parser that this builder's option is required if the given option is present on the command
+     * line.
+     *
+     * @param dependent the option whose presence on a command line makes this builder's option required
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     */
+    public OptionSpecBuilder requiredIf( OptionSpec<?> dependent ) {
+        if ( !parser.isRecognized( dependent ) )
+            throw new UnconfiguredOptionException( dependent.options() );
+
+        parser.requiredIf( options(), dependent );
+        return this;
+    }
 }
