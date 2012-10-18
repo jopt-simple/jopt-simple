@@ -19,6 +19,8 @@ Changes in version 4.4
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/13} gh-13}} by offering
       <<<ArgumentAcceptingOptionSpec.withValuesSeparatedBy(String)>>>.
 
+    * Added <<<InetAddressValueConverter>>>. Thanks to Raymund F\u00FCl\u00F6p for this.
+
 Changes in version 4.3
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/9} gh-9}} by offering
