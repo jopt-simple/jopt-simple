@@ -70,7 +70,6 @@ public class DateConverter implements ValueConverter<Date> {
         return new DateConverter( formatter );
     }
 
-    /** {@inheritDoc} */
     public Date convert( String value ) {
         ParsePosition position = new ParsePosition( 0 );
 
@@ -81,12 +80,10 @@ public class DateConverter implements ValueConverter<Date> {
         return date;
     }
 
-    /** {@inheritDoc} */
     public Class<Date> valueType() {
         return Date.class;
     }
 
-    /** {@inheritDoc} */
     public String valuePattern() {
         return formatter instanceof SimpleDateFormat
             ? ( (SimpleDateFormat) formatter ).toPattern()
