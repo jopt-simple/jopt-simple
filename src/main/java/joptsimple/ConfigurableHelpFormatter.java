@@ -59,13 +59,27 @@ class ConfigurableHelpFormatter implements HelpFormatter {
     }
 
     private void addRows( Collection<? extends OptionDescriptor> options ) {
-        addHeaders();
+        addHeaders(options);
         addOptions(options);
     }
 
-    private void addHeaders() {
-        addRow("Option", "Description");
-        addRow("------", "-----------");
+    private void addHeaders( Collection<? extends OptionDescriptor> options ) {
+        if ( !hasRequiredOption(options) ) {
+            addRow("Option", "Description");
+            addRow("------", "-----------");
+        } else {
+            addRow("Option (* = required)", "Description");
+            addRow("---------------------", "-----------");
+        }
+    }
+
+    private boolean hasRequiredOption( Collection<? extends OptionDescriptor> options ) {
+        for ( OptionDescriptor each : options ) {
+            if ( each.isRequired() ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addOptions( Collection<? extends OptionDescriptor> options ) {
@@ -140,7 +154,7 @@ class ConfigurableHelpFormatter implements HelpFormatter {
             return descriptor.description();
 
         String defaultValuesDisplay = createDefaultValuesDisplay( defaultValues );
-        return descriptor.description() + ' ' + surround( "default: " + defaultValuesDisplay, '(', ')' );
+        return (descriptor.description() + ' ' + surround( "default: " + defaultValuesDisplay, '(', ')' )).trim();
     }
 
     private String createDefaultValuesDisplay( List<?> defaultValues ) {
