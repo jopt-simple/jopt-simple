@@ -4,6 +4,10 @@
 
 Changes in version 4.4
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/16} gh-16}} by offering
+      <<<BuiltinHelpFormatter>>> that allows configuration of overall row width and
+      column separator width. Thanks to Ryan Breidenbach for contributing code to this.
+
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/12} gh-12}} by offering
       <<<OptionSpecBuilder.requiredIf()>>>.
 

@@ -45,7 +45,6 @@ import org.junit.rules.ExpectedException;
 import static joptsimple.util.DateConverter.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
-import static org.junit.matchers.JUnitMatchers.*;
 import static org.junit.rules.ExpectedException.*;
 
 /**
@@ -148,8 +147,6 @@ public class DateConverterTest {
 
     @Test
     public void shouldGiveValuePatternIfFormatterIsASimpleDateFormat() {
-        assertEquals(
-            monthDayYear.toPattern(),
-            datePattern( monthDayYear.toPattern() ).valuePattern() );
+        assertEquals( monthDayYear.toPattern(), datePattern( monthDayYear.toPattern() ).valuePattern() );
     }
 }

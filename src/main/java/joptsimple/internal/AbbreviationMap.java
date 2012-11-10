@@ -208,7 +208,7 @@ public class AbbreviationMap<V> {
     }
 
     /**
-    * Gives a Java map representation of this abbreviation map.
+     * Gives a Java map representation of this abbreviation map.
      *
      * @return a Java map corresponding to this abbreviation map
      */

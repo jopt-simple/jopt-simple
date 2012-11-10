@@ -25,6 +25,7 @@
 
 package joptsimple;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -32,23 +33,46 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import joptsimple.internal.ColumnarData;
+import joptsimple.internal.Rows;
+import joptsimple.internal.Strings;
 
 import static joptsimple.ParserRules.*;
 import static joptsimple.internal.Classes.*;
 import static joptsimple.internal.Strings.*;
 
 /**
+ * <p>A help formatter that allows configuration of overall row width and column separator width.</p>
+ *
+ * <p>The formatter produces a two-column output. The left column is for the options, and the right column for their
+ * descriptions. The formatter will allow as much space as possible for the descriptions, by minimizing the option
+ * column's width, no greater than slightly less than half the overall desired width.</p>
+ *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-class BuiltinHelpFormatter implements HelpFormatter {
-    private ColumnarData grid;
+public class BuiltinHelpFormatter implements HelpFormatter {
+    private final Rows rows;
+
+    /**
+     * Makes a formatter with a pre-configured overall row width and column separator width.
+     */
+    BuiltinHelpFormatter() {
+        this( 80, 2 );
+    }
+
+    /**
+     * Makes a formatter with a given overall row width and column separator width.
+     *
+     * @param desiredOverallWidth how many characters wide to make the overall help display
+     * @param desiredColumnSeparatorWidth how many characters wide to make the separation between option column and
+     * description column
+     */
+    public BuiltinHelpFormatter( int desiredOverallWidth, int desiredColumnSeparatorWidth ) {
+        rows = new Rows( desiredOverallWidth, desiredColumnSeparatorWidth );
+    }
 
     public String format( Map<String, ? extends OptionDescriptor> options ) {
         if ( options.isEmpty() )
             return "No options specified";
-
-        grid = new ColumnarData( optionHeader( options ), "Description" );
 
         Comparator<OptionDescriptor> comparator =
             new Comparator<OptionDescriptor>() {
@@ -60,69 +84,95 @@ class BuiltinHelpFormatter implements HelpFormatter {
         Set<OptionDescriptor> sorted = new TreeSet<OptionDescriptor>( comparator );
         sorted.addAll( options.values() );
 
-        for ( OptionDescriptor each : sorted )
-            addHelpLineFor( each );
+        addRows( sorted );
 
-        return grid.format();
+        return rows.render();
     }
 
-    private String optionHeader( Map<String, ? extends OptionDescriptor> options ) {
-        for ( OptionDescriptor each : options.values() ) {
-            if ( each.isRequired() )
-                return "Option (* = required)";
-        }
-
-        return "Option";
+    private void addRows( Collection<? extends OptionDescriptor> options ) {
+        addHeaders( options );
+        addOptions( options );
+        fitRowsToWidth();
     }
 
-    private void addHelpLineFor( OptionDescriptor descriptor ) {
-        if ( descriptor.acceptsArguments() ) {
-            if ( descriptor.requiresArgument() )
-                addHelpLineWithArgument( descriptor, '<', '>' );
-            else
-                addHelpLineWithArgument( descriptor, '[', ']' );
+    private void addHeaders( Collection<? extends OptionDescriptor> options ) {
+        if ( hasRequiredOption( options ) ) {
+            rows.add( "Option (* = required)", "Description" );
+            rows.add( "---------------------", "-----------" );
         } else {
-            addHelpLineFor( descriptor, "" );
+            rows.add( "Option", "Description" );
+            rows.add( "------", "-----------" );
         }
     }
 
-    void addHelpLineFor( OptionDescriptor descriptor, String additionalInfo ) {
-        grid.addRow( createOptionDisplay( descriptor ) + additionalInfo, createDescriptionDisplay( descriptor ) );
+    private boolean hasRequiredOption( Collection<? extends OptionDescriptor> options ) {
+        for ( OptionDescriptor each : options ) {
+            if ( each.isRequired() )
+                return true;
+        }
+
+        return false;
     }
 
-    private void addHelpLineWithArgument( OptionDescriptor descriptor, char begin, char end ) {
-        String argDescription = descriptor.argumentDescription();
-        String typeIndicator = typeIndicator( descriptor );
-        StringBuilder collector = new StringBuilder();
-
-        if ( typeIndicator.length() > 0 ) {
-            collector.append( typeIndicator );
-
-            if ( argDescription.length() > 0 )
-                collector.append( ": " ).append( argDescription );
-        }
-        else if ( argDescription.length() > 0 )
-            collector.append( argDescription );
-
-        String helpLine = collector.length() == 0
-            ? ""
-            : ' ' + surround( collector.toString(), begin, end );
-        addHelpLineFor( descriptor, helpLine );
+    private void addOptions( Collection<? extends OptionDescriptor> options ) {
+        for ( OptionDescriptor each : options )
+            rows.add( createOptionDisplay( each ), createDescriptionDisplay( each ) );
     }
 
     private String createOptionDisplay( OptionDescriptor descriptor ) {
         StringBuilder buffer = new StringBuilder( descriptor.isRequired() ? "* " : "" );
 
-        for ( Iterator<String> iter = descriptor.options().iterator(); iter.hasNext(); ) {
-            String option = iter.next();
+        for ( Iterator<String> i = descriptor.options().iterator(); i.hasNext(); ) {
+            String option = i.next();
             buffer.append( option.length() > 1 ? DOUBLE_HYPHEN : HYPHEN );
             buffer.append( option );
 
-            if ( iter.hasNext() )
+            if ( i.hasNext() )
                 buffer.append( ", " );
         }
 
+        maybeAppendOptionInfo( buffer, descriptor );
+
         return buffer.toString();
+    }
+
+    private void maybeAppendOptionInfo( StringBuilder buffer, OptionDescriptor descriptor ) {
+        String indicator = extractTypeIndicator( descriptor );
+        String description = descriptor.argumentDescription();
+        if ( indicator != null || !isNullOrEmpty( description ) )
+            appendOptionHelp( buffer, indicator, description, descriptor.requiresArgument() );
+    }
+
+    private String extractTypeIndicator( OptionDescriptor descriptor ) {
+        String indicator = descriptor.argumentTypeIndicator();
+
+        if ( !isNullOrEmpty( indicator ) && !String.class.getName().equals( indicator ) )
+            return shortNameOf( indicator );
+
+        return null;
+    }
+
+    private void appendOptionHelp( StringBuilder buffer, String typeIndicator, String description, boolean required ) {
+        if ( required )
+            appendTypeIndicator( buffer, typeIndicator, description, '<', '>' );
+        else
+            appendTypeIndicator( buffer, typeIndicator, description, '[', ']' );
+    }
+
+    private void appendTypeIndicator( StringBuilder buffer, String typeIndicator, String description,
+                                      char start, char end ) {
+        buffer.append( ' ' ).append( start );
+        if ( typeIndicator != null )
+            buffer.append( typeIndicator );
+
+        if ( !Strings.isNullOrEmpty( description ) ) {
+            if ( typeIndicator != null )
+                buffer.append( ": " );
+
+            buffer.append( description );
+        }
+
+        buffer.append( end );
     }
 
     private String createDescriptionDisplay( OptionDescriptor descriptor ) {
@@ -131,17 +181,14 @@ class BuiltinHelpFormatter implements HelpFormatter {
             return descriptor.description();
 
         String defaultValuesDisplay = createDefaultValuesDisplay( defaultValues );
-        return descriptor.description() + ' ' + surround( "default: " + defaultValuesDisplay, '(', ')' );
+        return ( descriptor.description() + ' ' + surround( "default: " + defaultValuesDisplay, '(', ')' ) ).trim();
     }
 
     private String createDefaultValuesDisplay( List<?> defaultValues ) {
         return defaultValues.size() == 1 ? defaultValues.get( 0 ).toString() : defaultValues.toString();
     }
 
-    private static String typeIndicator( OptionDescriptor descriptor ) {
-        String indicator = descriptor.argumentTypeIndicator();
-        return indicator == null || String.class.getName().equals( indicator )
-            ? ""
-            : shortNameOf( indicator );
+    private void fitRowsToWidth() {
+        rows.fitToWidth();
     }
 }

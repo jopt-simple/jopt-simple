@@ -95,6 +95,13 @@ public class RequiredIfTest extends AbstractOptionParserFixture {
     }
 
     @Test
+    public void rejectsOptionSpecNotAlreadyConfigured() {
+        thrown.expect( UnconfiguredOptionException.class );
+
+        parser.accepts( "foo" ).requiredIf( "bar" );
+    }
+
+    @Test
     public void presenceOfHelpOptionNegatesRequiredIfness() {
         OptionSet options = parser.parse( "--ftp", "-?" );
 

@@ -25,17 +25,25 @@
 
 package joptsimple.internal;
 
+import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
+
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-class ColumnWidthCalculator {
-    int calculate( int totalWidth, int numberOfColumns ) {
-        if ( numberOfColumns == 1 )
-            return totalWidth;
+public class RowEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport {
+    @Override
+    protected Object equalButDifferentClass() throws Exception {
+        return new Row( "o", "d" ) {
+        };
+    }
 
-        int remainder = totalWidth % numberOfColumns;
-        if ( remainder == numberOfColumns - 1 )
-            return totalWidth / numberOfColumns;
-        return totalWidth / numberOfColumns - 1;
+    @Override
+    protected Object equal() throws Exception {
+        return new Row( "o", "d" );
+    }
+
+    @Override
+    protected Object notEqual() throws Exception {
+        return new Row( "o", "e" );
     }
 }
