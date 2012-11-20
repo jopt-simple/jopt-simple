@@ -63,7 +63,7 @@
             <filterchain refid="htmlFilter"/>
         </loadfile>
         <loadfile property="required.if.options.example"
-            srcfile="${example.src.dir}/joptsimple/examples/RequiredIfTest.java">
+            srcfile="${example.src.dir}/joptsimple/examples/RequiredIfExample.java">
             <filterchain refid="htmlFilter"/>
         </loadfile>
         <loadfile property="default.values.for.option.arguments.example"
