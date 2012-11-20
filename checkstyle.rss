@@ -6,11 +6,11 @@
     <link>http://pholser.github.com/jopt-simple</link>
     <description>JOpt Simple - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2011</copyright>
+    <copyright>&#169;2012</copyright>
     <item>
-      <title>File: 40,
+      <title>File: 42,
              Errors: 0,
-             Warnings: 11,
+             Warnings: 28,
              Infos: 0
       </title>
             <link>http://pholser.github.com/jopt-simple/checkstyle.html</link>
@@ -35,7 +35,7 @@
                   0
                 </td>
                 <td>
-                  0
+                  3
                 </td>
                 <td>
                   0
@@ -72,6 +72,20 @@
                           <tr>
                 <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.ReflectionException.java">joptsimple/internal/ReflectionException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.Row.java">joptsimple/internal/Row.java</a>
                 </td>
                 <td>
                   0
@@ -225,6 +239,34 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.util.InetAddressConverter.java">joptsimple/util/InetAddressConverter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.Rows.java">joptsimple/internal/Rows.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.NoArgumentOptionSpec.java">joptsimple/NoArgumentOptionSpec.java</a>
                 </td>
                 <td>
@@ -315,7 +357,7 @@
                   0
                 </td>
                 <td>
-                  0
+                  4
                 </td>
                 <td>
                   0
@@ -330,6 +372,20 @@
                 </td>
                 <td>
                   6
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.Columns.java">joptsimple/internal/Columns.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
                 </td>
                 <td>
                   0
@@ -379,20 +435,6 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.Column.java">joptsimple/internal/Column.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.RequiredArgumentOptionSpec.java">joptsimple/RequiredArgumentOptionSpec.java</a>
                 </td>
                 <td>
@@ -427,7 +469,7 @@
                   0
                 </td>
                 <td>
-                  0
+                  3
                 </td>
                 <td>
                   0
@@ -449,35 +491,21 @@
               </tr>
                           <tr>
                 <td>
+                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.UnconfiguredOptionException.java">joptsimple/UnconfiguredOptionException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.OptionSpecBuilder.java">joptsimple/OptionSpecBuilder.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.ColumnWidthCalculator.java">joptsimple/internal/ColumnWidthCalculator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="http://pholser.github.com/jopt-simple/checkstyle.html#joptsimple.internal.ColumnarData.java">joptsimple/internal/ColumnarData.java</a>
                 </td>
                 <td>
                   0
