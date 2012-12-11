@@ -25,7 +25,6 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
 import org.junit.Before;
@@ -36,77 +35,45 @@ import static org.junit.Assert.*;
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-public class RequiredIfTest extends AbstractOptionParserFixture {
+public class RequiredIfAnyTest extends AbstractOptionParserFixture {
     @Before
     public void configureParser() {
-        OptionSpec<Void> ftp = parser.acceptsAll( asList( "ftp", "file-transfer" ) );
-        parser.acceptsAll( asList( "username", "userid" ) ).requiredIf( "file-transfer" ).withRequiredArg();
-        parser.acceptsAll( asList( "password", "pwd" ) ).requiredIf( ftp ).withRequiredArg();
-        parser.accepts( "?" ).forHelp();
+        parser.accepts( "a" );
+        parser.accepts( "b" );
+        OptionSpec<Void> c = parser.accepts( "c" );
+        OptionSpec<Void> d = parser.accepts( "d" );
+        parser.accepts( "e" );
+        parser.accepts( "n" ).requiredIf( "a", "b" ).requiredIf( c, d );
     }
 
     @Test
     public void rejectsCommandLineMissingConditionallyRequiredOption() {
         thrown.expect( MissingRequiredOptionException.class );
 
-        parser.parse( "--ftp" );
-    }
-
-    @Test
-    public void rejectsCommandLineMissingConditionallyRequiredOptionSynonym() {
-        thrown.expect( MissingRequiredOptionException.class );
-
-        parser.parse( "--file-transfer" );
+        parser.parse( "-a" );
     }
 
     @Test
     public void rejectsCommandLineWithNotAllConditionallyRequiredOptionsPresent() {
         thrown.expect( MissingRequiredOptionException.class );
 
-        parser.parse( "--ftp", "--username", "joe" );
+        parser.parse( "-a", "-b", "-c", "-d" );
     }
 
     @Test
     public void acceptsCommandLineWithConditionallyRequiredOptionsPresent() {
-        OptionSet options = parser.parse( "--ftp", "--userid", "joe", "--password=secret" );
-
-        assertOptionDetected( options, "ftp" );
-        assertOptionDetected( options, "username" );
-        assertOptionDetected( options, "password" );
-        assertEquals( singletonList( "joe" ), options.valuesOf( "username" ) );
-        assertEquals( singletonList( "secret" ), options.valuesOf( "password" ) );
+        OptionSet options = parser.parse( "-b", "-n" );
+        
+        assertOptionDetected( options, "b" );
+        assertOptionDetected( options, "n" );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
     @Test
     public void acceptsOptionWithPrerequisiteAsNormalIfPrerequisiteNotInPlay() {
-        OptionSet options = parser.parse( "--pwd", "secret" );
+        OptionSet options = parser.parse( "-n" );
 
-        assertOptionDetected( options, "pwd" );
-        assertEquals( singletonList( "secret" ), options.valuesOf( "pwd" ) );
+        assertOptionDetected( options, "n" );
         assertEquals( emptyList(), options.nonOptionArguments() );
-    }
-
-    @Test
-    public void rejectsOptionNotAlreadyConfigured() {
-        thrown.expect( UnconfiguredOptionException.class );
-
-        parser.accepts( "foo" ).requiredIf( "bar" );
-    }
-
-    @Test
-    public void rejectsOptionSpecNotAlreadyConfigured() {
-        thrown.expect( UnconfiguredOptionException.class );
-
-        parser.accepts( "foo" ).requiredIf( "bar" );
-    }
-
-    @Test
-    public void presenceOfHelpOptionNegatesRequiredIfness() {
-        OptionSet options = parser.parse( "--ftp", "-?" );
-
-        assertOptionDetected( options, "ftp" );
-        assertOptionDetected( options, "?" );
-        assertEquals(emptyList(), options.nonOptionArguments());
     }
 }

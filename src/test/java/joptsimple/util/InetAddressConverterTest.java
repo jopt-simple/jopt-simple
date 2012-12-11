@@ -27,15 +27,9 @@ package joptsimple.util;
 
 import joptsimple.ValueConversionException;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import java.net.InetAddress;
-
-import static joptsimple.util.RegexMatcher.*;
 import static org.junit.Assert.*;
-import static org.junit.rules.ExpectedException.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.Collections.*;
 
@@ -193,7 +194,7 @@ import static joptsimple.ParserRules.*;
  */
 public class OptionParser {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
-    private final Map<Collection<String>, OptionSpec<?>> requiredIf;
+    private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
     private OptionParserState state;
     private boolean posixlyCorrect;
     private HelpFormatter helpFormatter = new BuiltinHelpFormatter();
@@ -204,7 +205,7 @@ public class OptionParser {
      */
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
-        requiredIf = new HashMap<Collection<String>, OptionSpec<?>>();
+        requiredIf = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
     }
 
@@ -406,14 +407,24 @@ public class OptionParser {
                 missingRequiredOptions.addAll( each.options() );
         }
 
-        for ( Map.Entry<Collection<String>, OptionSpec<?>> eachEntry : requiredIf.entrySet() ) {
+        for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredIf.entrySet() ) {
             AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
-            if ( options.has( eachEntry.getValue() ) && !options.has( required ) ) {
+            
+            if ( optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
                 missingRequiredOptions.addAll( required.options() );
             }
         }
 
         return missingRequiredOptions;
+    }
+
+    private boolean optionsHasAnyOf( OptionSet options, Collection<OptionSpec<?>> specs ) {
+        for ( OptionSpec<?> each : specs ) {
+            if ( options.has( each ) )
+                return true;
+        }
+
+        return false;
     }
 
     private boolean isHelpOptionPresent( OptionSet options ) {
@@ -491,7 +502,13 @@ public class OptionParser {
                 throw new UnconfiguredOptionException( precedentSynonyms );
         }
 
-        requiredIf.put( precedentSynonyms, required );
+        Set<OptionSpec<?>> associated = requiredIf.get( precedentSynonyms );
+        if ( associated == null ) {
+            associated = new HashSet<OptionSpec<?>>();
+            requiredIf.put( precedentSynonyms, associated );
+        }
+
+        associated.add( required );
     }
 
     private AbstractOptionSpec<?> specFor( char option ) {

@@ -25,7 +25,10 @@
 
 package joptsimple;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Allows callers to specify whether a given option accepts arguments (required or optional).
@@ -98,14 +101,23 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * Informs an option parser that this builder's option is required if the given option is present on the command
      * line.
      *
-     * @param dependent the option whose presence on a command line makes this builder's option required
+     * @param dependent an option whose presence on a command line makes this builder's option required
+     * @param otherDependents other options whose presence on a command line makes this builder's option required
      * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
-    public OptionSpecBuilder requiredIf( String dependent ) {
-        if ( !parser.isRecognized( dependent ) )
-            throw new UnconfiguredOptionException( dependent );
+    public OptionSpecBuilder requiredIf( String dependent, String... otherDependents ) {
+        List<String> dependents = new ArrayList<String>();
+        dependents.add( dependent );
+        Collections.addAll( dependents, otherDependents );
 
-        parser.requiredIf( options(), dependent );
+        for ( String each : dependents ) {
+            if ( !parser.isRecognized( each ) )
+                throw new UnconfiguredOptionException( each );
+
+            parser.requiredIf( options(), dependent );
+        }
+
         return this;
     }
 
@@ -116,10 +128,14 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
      *
      * @param dependent the option whose presence on a command line makes this builder's option required
+     * @param otherDependents other options whose presence on a command line makes this builder's option required
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
-    public OptionSpecBuilder requiredIf( OptionSpec<?> dependent ) {
+    public OptionSpecBuilder requiredIf( OptionSpec<?> dependent, OptionSpec<?>... otherDependents ) {
         parser.requiredIf( options(), dependent );
+        for ( OptionSpec<?> each : otherDependents )
+            parser.requiredIf( options(), each );
+
         return this;
     }
 }
