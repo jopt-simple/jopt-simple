@@ -17,7 +17,7 @@
 -docencoding
 'UTF-8'
 -doctitle
-'JOpt Simple 4.4-beta-3 API'
+'JOpt Simple 4.4 API'
 -link
 'http://download.oracle.com/javase/1.5.0/docs/api'
 -linkoffline
@@ -25,4 +25,4 @@
 -use
 -version
 -windowtitle
-'JOpt Simple 4.4-beta-3 API'
+'JOpt Simple 4.4 API'
