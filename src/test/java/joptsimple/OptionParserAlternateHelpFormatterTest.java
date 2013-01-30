@@ -3,6 +3,7 @@ package joptsimple;
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import static java.util.Arrays.*;
@@ -42,10 +43,13 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
 
     @Test
     public void getsFedOptionDescriptorsForRecognizedOptions() {
-        assertEquals( 1, captured.size() );
-        Map.Entry<String, ? extends OptionDescriptor> only = captured.entrySet().iterator().next();
-        assertEquals( "b", only.getKey() );
-        OptionDescriptor descriptor = only.getValue();
+        assertEquals( 2, captured.size() );
+        Iterator<? extends Map.Entry<String,? extends OptionDescriptor>> iterator = captured.entrySet().iterator();
+        Map.Entry<String, ? extends OptionDescriptor> first = iterator.next();
+        assertEquals( "[arguments]", first.getKey() );
+        Map.Entry<String, ? extends OptionDescriptor> second = iterator.next();
+        assertEquals("b", second.getKey());
+        OptionDescriptor descriptor = second.getValue();
         assertThat( descriptor.options(), hasSameContentsAs( asList( "b" ) ) );
         assertEquals( "boo", descriptor.description() );
         assertFalse( descriptor.acceptsArguments() );

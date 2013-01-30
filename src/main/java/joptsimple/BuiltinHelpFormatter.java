@@ -50,7 +50,8 @@ import static joptsimple.internal.Strings.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class BuiltinHelpFormatter implements HelpFormatter {
-    private final Rows rows;
+    private final Rows nonOptionRows;
+    private final Rows optionRows;
 
     /**
      * Makes a formatter with a pre-configured overall row width and column separator width.
@@ -67,13 +68,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * description column
      */
     public BuiltinHelpFormatter( int desiredOverallWidth, int desiredColumnSeparatorWidth ) {
-        rows = new Rows( desiredOverallWidth, desiredColumnSeparatorWidth );
+        nonOptionRows = new Rows( desiredOverallWidth * 2, 0 );
+        optionRows = new Rows( desiredOverallWidth, desiredColumnSeparatorWidth );
     }
 
     public String format( Map<String, ? extends OptionDescriptor> options ) {
-        if ( options.isEmpty() )
-            return "No options specified";
-
         Comparator<OptionDescriptor> comparator =
             new Comparator<OptionDescriptor>() {
                 public int compare( OptionDescriptor first, OptionDescriptor second ) {
@@ -86,22 +85,78 @@ public class BuiltinHelpFormatter implements HelpFormatter {
 
         addRows( sorted );
 
-        return rows.render();
+        return formattedHelpOutput();
+    }
+
+    private String formattedHelpOutput() {
+        StringBuilder formatted = new StringBuilder();
+        String nonOptionDisplay = nonOptionRows.render();
+        if ( !Strings.isNullOrEmpty( nonOptionDisplay ) )
+            formatted.append( nonOptionDisplay ).append( LINE_SEPARATOR );
+        formatted.append( optionRows.render() );
+
+        return formatted.toString();
     }
 
     private void addRows( Collection<? extends OptionDescriptor> options ) {
-        addHeaders( options );
-        addOptions( options );
+        addNonOptionsDescription( options );
+
+        if ( options.isEmpty() )
+            optionRows.add( "No options specified", "" );
+        else {
+            addHeaders( options );
+            addOptions( options );
+        }
+
         fitRowsToWidth();
+    }
+
+    private void addNonOptionsDescription( Collection<? extends OptionDescriptor> options ) {
+        OptionDescriptor nonOptions = findAndRemoveNonOptionsSpec( options );
+        if ( shouldShowNonOptionArgumentDisplay( nonOptions ) ) {
+            nonOptionRows.add( "Non-option arguments:", "" );
+            nonOptionRows.add(createNonOptionArgumentsDisplay(nonOptions), "");
+        }
+    }
+
+    private boolean shouldShowNonOptionArgumentDisplay( OptionDescriptor nonOptions ) {
+        return !Strings.isNullOrEmpty( nonOptions.description() )
+            || !Strings.isNullOrEmpty( nonOptions.argumentTypeIndicator() )
+            || !Strings.isNullOrEmpty( nonOptions.argumentDescription() );
+    }
+
+    private String createNonOptionArgumentsDisplay(OptionDescriptor nonOptions) {
+        StringBuilder buffer = new StringBuilder();
+        maybeAppendOptionInfo( buffer, nonOptions );
+        maybeAppendNonOptionsDescription( buffer, nonOptions );
+
+        return buffer.toString();
+    }
+
+    private void maybeAppendNonOptionsDescription( StringBuilder buffer, OptionDescriptor nonOptions ) {
+        buffer.append( buffer.length() > 0 && !Strings.isNullOrEmpty( nonOptions.description() ) ? " -- " : "" )
+            .append( nonOptions.description() );
+    }
+
+    private OptionDescriptor findAndRemoveNonOptionsSpec( Collection<? extends OptionDescriptor> options ) {
+        for ( Iterator<? extends OptionDescriptor> it = options.iterator(); it.hasNext(); ) {
+            OptionDescriptor next = it.next();
+            if ( next.representsNonOptions() ) {
+                it.remove();
+                return next;
+            }
+        }
+
+        throw new AssertionError( "no non-options argument spec" );
     }
 
     private void addHeaders( Collection<? extends OptionDescriptor> options ) {
         if ( hasRequiredOption( options ) ) {
-            rows.add( "Option (* = required)", "Description" );
-            rows.add( "---------------------", "-----------" );
+            optionRows.add("Option (* = required)", "Description");
+            optionRows.add("---------------------", "-----------");
         } else {
-            rows.add( "Option", "Description" );
-            rows.add( "------", "-----------" );
+            optionRows.add("Option", "Description");
+            optionRows.add("------", "-----------");
         }
     }
 
@@ -115,8 +170,10 @@ public class BuiltinHelpFormatter implements HelpFormatter {
     }
 
     private void addOptions( Collection<? extends OptionDescriptor> options ) {
-        for ( OptionDescriptor each : options )
-            rows.add( createOptionDisplay( each ), createDescriptionDisplay( each ) );
+        for ( OptionDescriptor each : options ) {
+            if ( !each.representsNonOptions() )
+                optionRows.add( createOptionDisplay( each ), createDescriptionDisplay( each ) );
+        }
     }
 
     private String createOptionDisplay( OptionDescriptor descriptor ) {
@@ -189,6 +246,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
     }
 
     private void fitRowsToWidth() {
-        rows.fitToWidth();
+        nonOptionRows.fitToWidth();
+        optionRows.fitToWidth();
     }
 }

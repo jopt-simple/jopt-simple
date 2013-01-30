@@ -2,6 +2,11 @@
                                        Change Log
                                        ----------
 
+Changes in version 4.5
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/17} gh-17}} by offering
+    <<<OptionParser.nonOptions()>>> and <<<NonOptionArgumentSpec>>>.
+
 Changes in version 4.4
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/16} gh-16}} by offering
@@ -68,7 +73,7 @@ Changes in version 4.0
       <<<Class>>> objects whose wrapper types are considered "value types" for purposes of
       <<<ArgumentAcceptingOptionSpec.ofType()>>> in place of the wrapper classes. Thanks to
       Daniel Yokomizo for suggesting this.
- 
+
 Changes in version 3.3
 
     * Resolved {{{https://github.com/pholser/jopt-simple/pull/1} gh-1}} by adding method
@@ -84,11 +89,11 @@ Changes in version 3.2
     also show up in the help screen entries for their options.  This serves to resolve
     {{{https://sourceforge.net/tracker/?func=detail&aid=2484524&group_id=125731&atid=703508} feature
     request 2484524}}.
-    
+
     * Fixed a problem whereby the empty string, a string consisting solely of whitespace, or a
     string with embedded whitespace weren't being properly recognized as arguments of options
     when they should have.
-    
+
     * Resolved {{{https://sourceforge.net/tracker/?func=detail&aid=2793762&group_id=125731&atid=703508} feature
     request 2793762}}, having to do with improving the behavior of embedded newlines in option
     descriptions in help screens.
@@ -99,7 +104,7 @@ Changes in version 3.1
     to allow callers to specify converters or validators that transform arguments of
     options into instances of specific Java types.  This is useful for types which do not
     meet the requirements of <<<ofType()>>>.
-    
+
     * Added classes <<<DateConverter>>> and <<<RegexMatcher>>> as examples of useful
     argument converters.
 
@@ -181,7 +186,7 @@ Changes in version 2.3.3
 
     * Deprecated method <<<OptionSet.wasDetected()>>> in favor of <<<OptionSet.has()>>> --
     the new name seems to read better.
-                
+
     * <<<OptionException>>>s now override <<<getMessage()>>> sensibly, so that if a caller
     wants to handle the exception by catching it and displaying a message from the
     exception, she can do so and get satisfactory results.

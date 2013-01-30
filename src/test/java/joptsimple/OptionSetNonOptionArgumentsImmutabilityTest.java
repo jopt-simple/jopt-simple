@@ -34,12 +34,14 @@ import org.infinitest.toolkit.UnmodifiableListTestSupport;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class OptionSetNonOptionArgumentsImmutabilityTest extends UnmodifiableListTestSupport<String> {
+    @SuppressWarnings( "unchecked" )
     @Override
     protected List<String> newList() {
         OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() );
-        options.addNonOptionArgument( "1" );
-        options.addNonOptionArgument( "2" );
-        return options.nonOptionArguments();
+        NonOptionArgumentSpec<String> nonOptions = new NonOptionArgumentSpec<String>( null );
+        options.addWithArgument( nonOptions, "1" );
+        options.addWithArgument( nonOptions, "2" );
+        return (List<String>) options.nonOptionArguments();
     }
 
     @Override

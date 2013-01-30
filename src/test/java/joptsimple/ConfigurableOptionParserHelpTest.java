@@ -57,7 +57,7 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
     public void unconfiguredParser() throws Exception {
         parser.printHelpOn( sink );
 
-        assertEquals( "No options specified", sink.toString() );
+        assertHelpLines( "No options specified   ", EMPTY );
     }
 
     @Test

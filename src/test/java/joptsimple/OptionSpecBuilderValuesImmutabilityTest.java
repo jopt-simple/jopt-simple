@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import static java.util.Arrays.asList;
+import static java.util.Arrays.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

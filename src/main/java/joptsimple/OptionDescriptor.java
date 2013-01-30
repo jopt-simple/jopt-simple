@@ -91,4 +91,11 @@ public interface OptionDescriptor {
      * @return a description for the option's argument type
      */
     String argumentTypeIndicator();
+
+    /**
+     * Tells whether this object represents the non-option arguments of a command line.
+     *
+     * @return {@code true} if this represents non-option arguments
+     */
+    boolean representsNonOptions();
 }

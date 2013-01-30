@@ -24,6 +24,11 @@ public class HelpFormatterExample {
         }
 
         private String lineFor( OptionDescriptor descriptor ) {
+            if ( descriptor.representsNonOptions() ) {
+                return descriptor.argumentDescription() + '(' + descriptor.argumentTypeIndicator() + "): "
+                    + descriptor.description() + System.getProperty( "line.separator" );
+            }
+
             StringBuilder line = new StringBuilder( descriptor.options().toString() );
             line.append( ": description = " ).append( descriptor.description() );
             line.append( ", required = " ).append( descriptor.isRequired() );
@@ -54,6 +59,7 @@ public class HelpFormatterExample {
                     .describedAs( "path1" + pathSeparatorChar + "path2:..." )
                     .ofType( File.class )
                     .withValuesSeparatedBy( pathSeparatorChar );
+                nonOptions( "files to chew on" ).ofType( File.class ).describedAs( "input files" );
             }
         };
 

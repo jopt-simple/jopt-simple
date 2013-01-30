@@ -207,6 +207,8 @@ public class OptionParser {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
         requiredIf = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
+
+        recognize(new NonOptionArgumentSpec<String>());
     }
 
     /**
@@ -253,7 +255,7 @@ public class OptionParser {
      *
      * @see #accepts(String)
      * @param option the option to recognize
-     * @param description a string that describes the purpose of the option.  This is used when generating help
+     * @param description a string that describes the purpose of the option. This is used when generating help
      * information about the parser.
      * @return an object that can be used to flesh out more detail about the option
      * @throws OptionException if the option contains illegal characters
@@ -292,9 +294,40 @@ public class OptionParser {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
 
-        ensureLegalOptions( options );
+        ensureLegalOptions(options);
 
         return new OptionSpecBuilder( this, options, description );
+    }
+
+    // TODO: javadoc, examples, change log
+
+    /**
+     * Gives an object that represents an access point for non-option arguments on a command line.
+     *
+     * @return an object that can be used to flesh out more detail about the non-option arguments
+     */
+    public NonOptionArgumentSpec<String> nonOptions() {
+        NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<String>();
+
+        recognize( spec );
+
+        return spec;
+    }
+
+    /**
+     * Gives an object that represents an access point for non-option arguments on a command line.
+     *
+     * @see #nonOptions()
+     * @param description a string that describes the purpose of the non-option arguments. This is used when generating
+     * help information about the parser.
+     * @return an object that can be used to flesh out more detail about the non-option arguments
+     */
+    public NonOptionArgumentSpec<String> nonOptions( String description ) {
+        NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<String>( description );
+
+        recognize( spec );
+
+        return spec;
     }
 
     /**
@@ -324,7 +357,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll( spec.options(), spec );
+        recognizedOptions.putAll(spec.options(), spec);
     }
 
     /**
@@ -338,7 +371,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn( new OutputStreamWriter( sink ) );
+        printHelpOn(new OutputStreamWriter(sink));
     }
 
     /**
@@ -380,17 +413,18 @@ public class OptionParser {
     public OptionSet parse( String... arguments ) {
         ArgumentList argumentList = new ArgumentList( arguments );
         OptionSet detected = new OptionSet( defaultValues() );
+        detected.add( recognizedOptions.get( NonOptionArgumentSpec.NAME ) );
 
         while ( argumentList.hasMore() )
             state.handleArgument( this, argumentList, detected );
 
         reset();
-        
+
         ensureRequiredOptions( detected );
-        
+
         return detected;
     }
-    
+
     private void ensureRequiredOptions( OptionSet options ) {
         Collection<String> missingRequiredOptions = missingRequiredOptions( options );
         boolean helpOptionPresent = isHelpOptionPresent( options );
@@ -409,7 +443,7 @@ public class OptionParser {
 
         for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredIf.entrySet() ) {
             AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
-            
+
             if ( optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
                 missingRequiredOptions.addAll( required.options() );
             }
@@ -439,7 +473,7 @@ public class OptionParser {
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseLongOptionWithArgument( candidate );
+        KeyValuePair optionAndArgument = parseLongOptionWithArgument(candidate);
 
         if ( !isRecognized( optionAndArgument.key ) )
             throw unrecognizedOption( optionAndArgument.key );
@@ -449,7 +483,7 @@ public class OptionParser {
     }
 
     void handleShortOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseShortOptionWithArgument( candidate );
+        KeyValuePair optionAndArgument = parseShortOptionWithArgument(candidate);
 
         if ( isRecognized( optionAndArgument.key ) ) {
             specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );
@@ -475,6 +509,10 @@ public class OptionParser {
         }
     }
 
+    void handleNonOptionArgument( String candidate, ArgumentList arguments, OptionSet detectedOptions ) {
+        specFor( NonOptionArgumentSpec.NAME ).handleOption( this, arguments, detectedOptions, candidate );
+    }
+
     void noMoreOptions() {
         state = OptionParserState.noMoreOptions();
     }
@@ -485,10 +523,6 @@ public class OptionParser {
 
     boolean isRecognized( String option ) {
         return recognizedOptions.contains( option );
-    }
-
-    boolean isRecognized( OptionSpec<?> option ) {
-        return recognizedOptions.contains( option.options().iterator().next() );
     }
 
     void requiredIf( Collection<String> precedentSynonyms, String required ) {

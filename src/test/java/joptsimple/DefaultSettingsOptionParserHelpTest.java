@@ -26,6 +26,7 @@
 package joptsimple;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     public void unconfiguredParser() throws Exception {
         parser.printHelpOn( sink );
 
-        assertEquals( "No options specified", sink.toString() );
+        assertHelpLines( "No options specified  ", EMPTY );
     }
 
     @Test
@@ -282,7 +283,7 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
 
         parser.printHelpOn( bytesOut );
 
-        assertEquals( "No options specified", bytesOut.toString() );
+        assertEquals( "No options specified  " + LINE_SEPARATOR, bytesOut.toString() );
     }
 
     // Bug 1956418
@@ -543,6 +544,90 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
             "Option (* = required)  Description",
             "---------------------  -----------",
             "* -e                              ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentDescription() throws Exception {
+        parser.nonOptions( "stuff" );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:",
+            "stuff                ",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentType() throws Exception {
+        parser.nonOptions().ofType( File.class );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:",
+            "[File]               ",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentTypeDescribedAs() throws Exception {
+        parser.nonOptions().describedAs( "files" );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:",
+            "[files]              ",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentTypeAndArgumentDescription() throws Exception {
+        parser.nonOptions().ofType( File.class ).describedAs( "files" );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:",
+            "[File: files]        ",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentTypeAndDescription() throws Exception {
+        parser.nonOptions( "some files to operate on" ).ofType( File.class );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:             ",
+            "[File] -- some files to operate on",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentTypeAndDescriptionAndArgumentDescription() throws Exception {
+        parser.nonOptions( "some files to operate on" ).ofType( File.class ).describedAs( "files" );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:                    ",
+            "[File: files] -- some files to operate on",
+            EMPTY,
+            "No options specified  ",
             EMPTY );
     }
 

@@ -44,7 +44,6 @@ public class OptionSet {
     private final List<OptionSpec<?>> detectedSpecs;
     private final Map<String, AbstractOptionSpec<?>> detectedOptions;
     private final Map<AbstractOptionSpec<?>, List<String>> optionsToArguments;
-    private final List<String> nonOptionArguments;
     private final Map<String, List<?>> defaultValues;
 
     /*
@@ -54,19 +53,18 @@ public class OptionSet {
         detectedSpecs = new ArrayList<OptionSpec<?>>();
         detectedOptions = new HashMap<String, AbstractOptionSpec<?>>();
         optionsToArguments = new IdentityHashMap<AbstractOptionSpec<?>, List<String>>();
-        nonOptionArguments = new ArrayList<String>();
         defaultValues = new HashMap<String, List<?>>( defaults );
     }
 
     /**
      * Tells whether any options were detected.
-     * 
+     *
      * @return {@code true} if any options were detected
      */
     public boolean hasOptions() {
         return !detectedOptions.isEmpty();
     }
-    
+
     /**
      * Tells whether the given option was detected.
      *
@@ -233,16 +231,19 @@ public class OptionSet {
      * @return the set of detected command line options
      */
     public List<OptionSpec<?>> specs() {
-        return unmodifiableList( detectedSpecs );
+        List<OptionSpec<?>> specs = detectedSpecs;
+        specs.remove( detectedOptions.get( NonOptionArgumentSpec.NAME ) );
+
+        return unmodifiableList( specs );
     }
 
     /**
      * @return the detected non-option arguments
      */
-    public List<String> nonOptionArguments() {
-        return unmodifiableList( nonOptionArguments );
+    public List<?> nonOptionArguments() {
+        return unmodifiableList( valuesOf( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );
     }
-    
+
     void add( AbstractOptionSpec<?> spec ) {
         addWithArgument( spec, null );
     }
@@ -264,10 +265,6 @@ public class OptionSet {
             optionArguments.add( argument );
     }
 
-    void addNonOptionArgument( String argument ) {
-        nonOptionArguments.add( argument );
-    }
-
     @Override
     public boolean equals( Object that ) {
         if ( this == that )
@@ -282,17 +279,14 @@ public class OptionSet {
         Map<AbstractOptionSpec<?>, List<String>> otherOptionsToArguments =
             new HashMap<AbstractOptionSpec<?>, List<String>>( other.optionsToArguments );
         return detectedOptions.equals( other.detectedOptions )
-            && thisOptionsToArguments.equals( otherOptionsToArguments )
-            && nonOptionArguments.equals( other.nonOptionArguments() );
+            && thisOptionsToArguments.equals( otherOptionsToArguments );
     }
 
     @Override
     public int hashCode() {
         Map<AbstractOptionSpec<?>, List<String>> thisOptionsToArguments =
             new HashMap<AbstractOptionSpec<?>, List<String>>( optionsToArguments );
-        return detectedOptions.hashCode()
-            ^ thisOptionsToArguments.hashCode()
-            ^ nonOptionArguments.hashCode();
+        return detectedOptions.hashCode() ^ thisOptionsToArguments.hashCode();
     }
 
     private <V> List<V> defaultValuesFor( String option ) {

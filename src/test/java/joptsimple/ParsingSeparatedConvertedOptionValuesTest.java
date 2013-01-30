@@ -25,9 +25,9 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
-
 import java.io.File;
+
+import static java.util.Arrays.*;
 
 import org.junit.Test;
 

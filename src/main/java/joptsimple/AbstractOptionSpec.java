@@ -31,6 +31,9 @@ import java.util.List;
 
 import static java.util.Collections.*;
 
+import joptsimple.internal.Reflection;
+import joptsimple.internal.ReflectionException;
+
 import static joptsimple.internal.Strings.*;
 
 /**
@@ -77,7 +80,31 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
         return forHelp;
     }
 
+    public boolean representsNonOptions() {
+        return false;
+    }
+
     protected abstract V convert( String argument );
+
+    protected V convertWith( ValueConverter<V> converter, String argument ) {
+        try {
+            return Reflection.convertWith( converter, argument );
+        }
+        catch ( ReflectionException ex ) {
+            throw new OptionArgumentConversionException( options(), argument, converter.valueType(), ex );
+        }
+        catch ( ValueConversionException ex ) {
+            throw new OptionArgumentConversionException( options(), argument, converter.valueType(), ex );
+        }
+    }
+
+    protected String argumentTypeIndicatorFrom( ValueConverter<V> converter ) {
+        if ( converter == null )
+            return null;
+
+        String pattern = converter.valuePattern();
+        return pattern == null ? converter.valueType().getName() : pattern;
+    }
 
     abstract void handleOption( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions,
         String detectedArgument );

@@ -38,7 +38,7 @@ abstract class OptionParserState {
         return new OptionParserState() {
             @Override
             protected void handleArgument( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions ) {
-                detectedOptions.addNonOptionArgument( arguments.next() );
+                parser.handleNonOptionArgument( arguments.next(), arguments, detectedOptions );
             }
         };
     }
@@ -58,7 +58,7 @@ abstract class OptionParserState {
                     if ( posixlyCorrect )
                         parser.noMoreOptions();
 
-                    detectedOptions.addNonOptionArgument( candidate );
+                    parser.handleNonOptionArgument( candidate, arguments, detectedOptions );
                 }
             }
         };

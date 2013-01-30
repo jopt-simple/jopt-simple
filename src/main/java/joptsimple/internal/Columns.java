@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static java.text.BreakIterator.*;
+
 import static joptsimple.internal.Strings.*;
 
 /**

@@ -38,7 +38,6 @@ public class OptionSetEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport
     protected OptionSet equal() {
         OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() );
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "anArg" );
-        options.addNonOptionArgument( "aNonOptionArgument" );
         return options;
     }
 
@@ -46,7 +45,6 @@ public class OptionSetEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport
     protected OptionSet notEqual() {
         OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() );
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "aDifferentArg" );
-        options.addNonOptionArgument( "aNonOptionArgument" );
         return options;
     }
 
@@ -56,7 +54,6 @@ public class OptionSetEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport
             // anonymous subclass
         };
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "anArg" );
-        options.addNonOptionArgument( "aNonOptionArgument" );
         return options;
     }
 }

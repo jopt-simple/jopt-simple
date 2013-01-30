@@ -33,7 +33,7 @@ Options
 
     JOpt Simple supports short options and long options, using a syntax that attempts to
     take from the best of POSIX <<<getopt()>>> and GNU <<<getopt_long()>>>.
-    
+
 * Short Options
 
     Short options begin with a single hyphen (<<<->>>) followed by a single letter or
@@ -214,8 +214,8 @@ Options
     <<<withValuesConvertedBy()>>>.  This is useful when the desired type for the arguments
     does not meet the requirements that <<<ofType()>>> sets forth.  Such objects may not
     perform any "conversion" at all, but rather can validate that arguments conform to
-    certain restrictions before passing through as-is. 
- 
+    certain restrictions before passing through as-is.
+
 +----------------------------------------------------------------------------------------
 @OPTION_ARGUMENT_CONVERTER_EXAMPLE@
 +----------------------------------------------------------------------------------------
@@ -226,6 +226,9 @@ Options
     of JOpt Simple's fluent interface.  If instead you retain them in variables of type
     <<<OptionSpec>>>, you can use them to retrieve arguments of options in a type-safe
     manner.
+
+    You can also do this for the non-option arguments of your command line, if you desire
+    to treat them all as a single type.
 
 +----------------------------------------------------------------------------------------
 @TYPESAFE_OPTION_ARGUMENT_RETRIEVAL_EXAMPLE@

@@ -123,6 +123,11 @@ public final class Reflection {
         }
     }
 
+    @SuppressWarnings( "unchecked" )
+    public static <V> V convertWith( ValueConverter<V> converter, String raw ) {
+        return converter == null ? (V) raw : converter.convert( raw );
+    }
+
     private static boolean meetsConverterRequirements( Method method, Class<?> expectedReturnType ) {
         int modifiers = method.getModifiers();
         return isPublic( modifiers ) && isStatic( modifiers ) && expectedReturnType.equals( method.getReturnType() );

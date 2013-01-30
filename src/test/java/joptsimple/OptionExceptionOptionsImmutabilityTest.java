@@ -25,9 +25,9 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
-
 import java.util.Collection;
+
+import static java.util.Arrays.*;
 
 import org.infinitest.toolkit.UnmodifiableCollectionTestSupport;
 
