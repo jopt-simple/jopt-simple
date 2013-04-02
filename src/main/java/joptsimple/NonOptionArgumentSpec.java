@@ -56,6 +56,8 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
 
     private ValueConverter<V> converter;
     private String argumentDescription = "";
+    private int minimumNumberOfArgs = 0;
+    private int maximumNumberOfArgs = Integer.MAX_VALUE;
 
     NonOptionArgumentSpec() {
         this( "" );
@@ -63,6 +65,28 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
 
     NonOptionArgumentSpec( String description ) {
         super( asList( NAME ), description );
+    }
+
+    public NonOptionArgumentSpec<V> atLeast( int minimum ) {
+        if ( minimum < 0 )
+            throw new IllegalArgumentException( "Negative minimum for non-option arg count: " + minimum );
+        if ( minimum > maximumNumberOfArgs )
+            throw new IllegalArgumentException( "Minimum for non-option arg count " + minimum + " < set maximum: "
+                    + maximumNumberOfArgs );
+
+        minimumNumberOfArgs = minimum;
+        return this;
+    }
+
+    public NonOptionArgumentSpec<V> atMost( int maximum ) {
+        if ( maximum < 0 )
+            throw new IllegalArgumentException( "Negative maximum for non-option arg count: " + maximum );
+        if ( maximum < minimumNumberOfArgs )
+            throw new IllegalArgumentException( "Maximum for non-option arg count " + maximum + " < set minimum: "
+                    + minimumNumberOfArgs );
+
+        maximumNumberOfArgs = maximum;
+        return this;
     }
 
     /**
@@ -145,5 +169,11 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
 
     public boolean representsNonOptions() {
         return true;
+    }
+
+    void validateNumberOfArguments( List<?> nonOptions ) {
+        if ( nonOptions.size() < minimumNumberOfArgs || nonOptions.size() > maximumNumberOfArgs )
+            throw new UnacceptableNumberOfNonOptionsException( minimumNumberOfArgs, maximumNumberOfArgs,
+                    nonOptions.size() );
     }
 }

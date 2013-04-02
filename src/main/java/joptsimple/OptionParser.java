@@ -357,7 +357,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll(spec.options(), spec);
+        recognizedOptions.putAll( spec.options(), spec );
     }
 
     /**
@@ -371,7 +371,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn(new OutputStreamWriter(sink));
+        printHelpOn( new OutputStreamWriter( sink ) );
     }
 
     /**
@@ -421,6 +421,7 @@ public class OptionParser {
         reset();
 
         ensureRequiredOptions( detected );
+        ensureDesiredRangeOfNonOptionArguments( detected );
 
         return detected;
     }
@@ -459,6 +460,11 @@ public class OptionParser {
         }
 
         return false;
+    }
+
+    private void ensureDesiredRangeOfNonOptionArguments( OptionSet detected ) {
+        NonOptionArgumentSpec<?> spec = (NonOptionArgumentSpec<?>) recognizedOptions.get( NonOptionArgumentSpec.NAME );
+        spec.validateNumberOfArguments( detected.nonOptionArguments() );
     }
 
     private boolean isHelpOptionPresent( OptionSet options ) {
