@@ -25,12 +25,15 @@
 
 package joptsimple;
 
-import java.io.File;
-
-import static java.util.Arrays.*;
-
 import org.junit.Test;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+import static joptsimple.util.DateConverter.*;
 import static org.junit.Assert.*;
 
 public class NonOptionArgumentSpecTest extends AbstractOptionParserFixture {
@@ -77,41 +80,19 @@ public class NonOptionArgumentSpecTest extends AbstractOptionParserFixture {
         assertFalse( nonOptions.acceptsArguments() );
     }
 
-    @Test( expected = IllegalArgumentException.class )
-    public void negativeMinimumNumberOfArgs() {
-        parser.nonOptions().atLeast( -1 );
+    @Test
+    public void convertingUsingConverter() throws Exception {
+        OptionSpec<Date> date = parser.nonOptions().withValuesConvertedBy( datePattern( "MM/dd/yyyy" ) );
+
+        OptionSet options = parser.parse( "01/24/2013" );
+
+        assertEquals(
+            singletonList( new SimpleDateFormat( "MM/dd/yyyy" ).parse( "01/24/2013" ) ),
+            date.values( options ) );
     }
 
-    @Test( expected = IllegalArgumentException.class )
-    public void negativeMaximumNumberOfArgs() {
-        parser.nonOptions().atMost( -1 );
-    }
-
-    @Test( expected = IllegalArgumentException.class )
-    public void maximumNumberOfArgsLessThanMinimum() {
-        parser.nonOptions().atLeast( 2 ).atMost( 1 );
-    }
-
-    @Test( expected = IllegalArgumentException.class )
-    public void maximumNumberOfArgsLessThanMinimumSetInDifferentOrder() {
-        parser.nonOptions().atMost( 1 ).atLeast( 2 );
-    }
-
-    @Test( expected = UnacceptableNumberOfNonOptionsException.class )
-    public void maximumNumberOfArgsViolation() {
-        parser.accepts( "a" );
-        parser.accepts( "b" );
-        parser.nonOptions().atLeast( 1 ).atMost( 2 );
-
-        parser.parse( "-a", "1", "-b", "2", "3" );
-    }
-
-    @Test( expected = UnacceptableNumberOfNonOptionsException.class )
-    public void minimumNumberOfArgsViolation() {
-        parser.accepts( "a" );
-        parser.accepts( "b" );
-        parser.nonOptions().atLeast( 2 ).atMost( 3 );
-
-        parser.parse( "-a", "1", "-b" );
+    @Test( expected = NullPointerException.class )
+    public void convertingUsingNullConverter() {
+        parser.nonOptions().withValuesConvertedBy(null);
     }
 }

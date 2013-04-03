@@ -216,6 +216,9 @@ Options
     perform any "conversion" at all, but rather can validate that arguments conform to
     certain restrictions before passing through as-is.
 
+    You can also do this for the non-option arguments of your command line, if you desire
+    to treat them all as a single type.
+
 +----------------------------------------------------------------------------------------
 @OPTION_ARGUMENT_CONVERTER_EXAMPLE@
 +----------------------------------------------------------------------------------------

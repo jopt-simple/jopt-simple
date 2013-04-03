@@ -29,7 +29,6 @@ import java.util.List;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
-
 import static joptsimple.internal.Reflection.*;
 
 /**
@@ -56,37 +55,13 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
 
     private ValueConverter<V> converter;
     private String argumentDescription = "";
-    private int minimumNumberOfArgs = 0;
-    private int maximumNumberOfArgs = Integer.MAX_VALUE;
 
     NonOptionArgumentSpec() {
-        this( "" );
+        this("");
     }
 
     NonOptionArgumentSpec( String description ) {
         super( asList( NAME ), description );
-    }
-
-    public NonOptionArgumentSpec<V> atLeast( int minimum ) {
-        if ( minimum < 0 )
-            throw new IllegalArgumentException( "Negative minimum for non-option arg count: " + minimum );
-        if ( minimum > maximumNumberOfArgs )
-            throw new IllegalArgumentException( "Minimum for non-option arg count " + minimum + " < set maximum: "
-                    + maximumNumberOfArgs );
-
-        minimumNumberOfArgs = minimum;
-        return this;
-    }
-
-    public NonOptionArgumentSpec<V> atMost( int maximum ) {
-        if ( maximum < 0 )
-            throw new IllegalArgumentException( "Negative maximum for non-option arg count: " + maximum );
-        if ( maximum < minimumNumberOfArgs )
-            throw new IllegalArgumentException( "Maximum for non-option arg count " + maximum + " < set minimum: "
-                    + minimumNumberOfArgs );
-
-        maximumNumberOfArgs = maximum;
-        return this;
     }
 
     /**
@@ -105,7 +80,8 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
      * <p>This class converts arguments using those methods in that order; that is, {@code valueOf} would be invoked
      * before a one-{@link String}-arg constructor would.</p>
      *
-     * <p>Invoking this method will trump any previous calls to this method.</p>
+     * <p>Invoking this method will trump any previous calls to this method or to
+     * {@link #withValuesConvertedBy(ValueConverter)}.</p>
      *
      * @param <T> represents the runtime class of the desired option argument type
      * @param argumentType desired type of arguments to this spec's option
@@ -116,6 +92,27 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
     @SuppressWarnings( "unchecked" )
     public <T> NonOptionArgumentSpec<T> ofType( Class<T> argumentType ) {
         converter = (ValueConverter<V>) findConverter( argumentType );
+        return (NonOptionArgumentSpec<T>) this;
+    }
+
+    /**
+     * <p>Specifies a converter to use to translate non-option arguments into Java objects.  This is useful
+     * when converting to types that do not have the requisite factory method or constructor for
+     * {@link #ofType(Class)}.</p>
+     *
+     * <p>Invoking this method will trump any previous calls to this method or to {@link #ofType(Class)}.
+     *
+     * @param <T> represents the runtime class of the desired non-option argument type
+     * @param aConverter the converter to use
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws NullPointerException if the converter is {@code null}
+     */
+    @SuppressWarnings( "unchecked" )
+    public final <T> NonOptionArgumentSpec<T> withValuesConvertedBy( ValueConverter<T> aConverter ) {
+        if ( aConverter == null )
+            throw new NullPointerException( "illegal null converter" );
+
+        converter = (ValueConverter<V>) aConverter;
         return (NonOptionArgumentSpec<T>) this;
     }
 
@@ -169,11 +166,5 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
 
     public boolean representsNonOptions() {
         return true;
-    }
-
-    void validateNumberOfArguments( List<?> nonOptions ) {
-        if ( nonOptions.size() < minimumNumberOfArgs || nonOptions.size() > maximumNumberOfArgs )
-            throw new UnacceptableNumberOfNonOptionsException( minimumNumberOfArgs, maximumNumberOfArgs,
-                    nonOptions.size() );
     }
 }

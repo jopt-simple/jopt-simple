@@ -25,6 +25,9 @@
 
 package joptsimple;
 
+import joptsimple.internal.AbbreviationMap;
+import joptsimple.util.KeyValuePair;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -37,10 +40,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.*;
-
-import joptsimple.internal.AbbreviationMap;
-import joptsimple.util.KeyValuePair;
-
 import static joptsimple.OptionException.*;
 import static joptsimple.OptionParserState.*;
 import static joptsimple.ParserRules.*;
@@ -357,7 +356,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll( spec.options(), spec );
+        recognizedOptions.putAll(spec.options(), spec);
     }
 
     /**
@@ -371,7 +370,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn( new OutputStreamWriter( sink ) );
+        printHelpOn(new OutputStreamWriter(sink));
     }
 
     /**
@@ -421,7 +420,6 @@ public class OptionParser {
         reset();
 
         ensureRequiredOptions( detected );
-        ensureDesiredRangeOfNonOptionArguments( detected );
 
         return detected;
     }
@@ -460,11 +458,6 @@ public class OptionParser {
         }
 
         return false;
-    }
-
-    private void ensureDesiredRangeOfNonOptionArguments( OptionSet detected ) {
-        NonOptionArgumentSpec<?> spec = (NonOptionArgumentSpec<?>) recognizedOptions.get( NonOptionArgumentSpec.NAME );
-        spec.validateNumberOfArguments( detected.nonOptionArguments() );
     }
 
     private boolean isHelpOptionPresent( OptionSet options ) {
