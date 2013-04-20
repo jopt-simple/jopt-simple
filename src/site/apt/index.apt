@@ -41,7 +41,7 @@
 
     * {{{http://jcommander.org} JCommander}}
 
-    []  
+    []
 
     I hope you'll agree that JOpt Simple tops them all in ease of use and cleanliness of
     code (although I admire JewelCli quite a bit).
@@ -52,7 +52,7 @@
 
 Projects Using JOpt Simple
 
-    Here are some we know of:
+    Here are some we know of or have known of:
 
     * {{{http://openjdk.java.net/} OpenJDK}}.
     From {{{http://weblogs.java.net/blog/mreinhold/} Mark Reinhold}}: "I thought you might
@@ -63,5 +63,7 @@ Projects Using JOpt Simple
     * {{{http://www.gradle.org/} Gradle}}
 
     * {{{http://natbraille.free.fr} NATBraille}}
+
+    * {{{https://minecraft.net} Minecraft}}
 
     []
