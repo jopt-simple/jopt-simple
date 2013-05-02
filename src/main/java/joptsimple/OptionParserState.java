@@ -48,18 +48,26 @@ abstract class OptionParserState {
             @Override
             protected void handleArgument( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions ) {
                 String candidate = arguments.next();
-                if ( isOptionTerminator( candidate ) )
-                    parser.noMoreOptions();
-                else if ( isLongOptionToken( candidate ) )
-                    parser.handleLongOptionToken( candidate, arguments, detectedOptions );
-                else if ( isShortOptionToken( candidate ) )
-                    parser.handleShortOptionToken( candidate, arguments, detectedOptions );
-                else {
-                    if ( posixlyCorrect )
+                try {
+                    if ( isOptionTerminator( candidate ) ) {
                         parser.noMoreOptions();
-
-                    parser.handleNonOptionArgument( candidate, arguments, detectedOptions );
+                        return;
+                    } else if ( isLongOptionToken( candidate ) ) {
+                        parser.handleLongOptionToken( candidate, arguments, detectedOptions );
+                        return;
+                    } else if ( isShortOptionToken( candidate ) ) {
+                        parser.handleShortOptionToken( candidate, arguments, detectedOptions );
+                        return;
+                    }
+                } catch ( UnrecognizedOptionException e ) {
+                    if ( !parser.allowsUnrecognized() )
+                        throw e;
                 }
+
+                if ( posixlyCorrect )
+                    parser.noMoreOptions();
+
+                parser.handleNonOptionArgument( candidate, arguments, detectedOptions );
             }
         };
     }
