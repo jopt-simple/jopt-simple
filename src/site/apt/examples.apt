@@ -411,3 +411,15 @@ Handling Exceptions
     If you want to handle the exception yourself, you can just catch <<<OptionException>>>
     in your code, and do whatever you please with the contents of the exception, perhaps
     using the help generation facility.
+
+* Suppressing <<<UnrecognizedOptionException>>>
+
+    Sometimes you just want to ignore that options are not being recognized.
+
+    For example when you are just interested in handling part of the arguments given. Or
+    when you want to pass on options to another program and not having to bother the user
+    with providing two hyphens (<<<-->>>) to indicate the end of known options. Or maybe
+    you want to provide future forwards/backwards compatibility when you foresee passing
+    in new options to old code (or old code invoking new code with 'old' arguments).
+
+    You can achieve this by using the method <<<OptionParser.allowsUnrecognized(true)>>>.
