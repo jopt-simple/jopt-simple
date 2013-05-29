@@ -125,6 +125,10 @@
             srcfile="${java.io.tmpdir}/stack-trace-output.txt">
             <filterchain refid="htmlFilter"/>
         </loadfile>
+        <loadfile property="unrecognized.options.allowed.example"
+            srcfile="${example.src.dir}/joptsimple/examples/UnrecognizedOptionsAllowedTest.java">
+            <filterchain refid="htmlFilter"/>
+        </loadfile>
         <replace dir="${website.staging.dir}" includes="examples.html">
             <replacefilter token="@SHORT_OPTIONS_EXAMPLE@"
                 value="${short.options.example}"/>
@@ -178,6 +182,8 @@
                 value="${help.formatter.example.output}"/>
             <replacefilter token="@EXAMPLE_STACK_TRACE@"
                 value="${example.stack.trace}"/>
+            <replacefilter token="@UNRECOGNIZED_OPTIONS_ALLOWED_EXAMPLE@"
+                value="${unrecognized.options.allowed.example}"/>
         </replace>
     </target>
 </project>

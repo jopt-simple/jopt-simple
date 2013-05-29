@@ -7,6 +7,9 @@ Changes in version 4.5
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/17} gh-17}} by offering
     <<<OptionParser.nonOptions()>>> and <<<NonOptionArgumentSpec>>>.
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/pull/27} gh-27}} by offering
+    <<<OptionParser.allowsUnrecognizedOptions()>>>. Thanks to Erik Broes for this.
+
 Changes in version 4.4
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/16} gh-16}} by offering

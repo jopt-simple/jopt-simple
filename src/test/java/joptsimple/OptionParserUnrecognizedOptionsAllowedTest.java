@@ -32,23 +32,20 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class OptionParserUnrecognizedAllowedTest extends AbstractOptionParserFixture {
+public class OptionParserUnrecognizedOptionsAllowedTest extends AbstractOptionParserFixture {
     @Test
     public void unrecognizedOptionDisallowed() {
+        assertFalse( parser.doesAllowsUnrecognizedOptions() );
+
         thrown.expect( UnrecognizedOptionException.class );
         thrown.expect( withOption( "a" ) );
 
-        // Ensure the default is 'false'
-        assertFalse(parser.allowsUnrecognized());
-
-        OptionSet options = parser.parse( "-a" );
-
-        assertEquals( asList( "-a" ), options.nonOptionArguments() );
+        parser.parse( "-a" );
     }
 
     @Test
     public void unrecognizedOptionAllowed() {
-        parser.allowsUnrecognized(true);
+        parser.allowsUnrecognizedOptions();
 
         OptionSet options = parser.parse( "-a" );
 

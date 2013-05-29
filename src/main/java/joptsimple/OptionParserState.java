@@ -60,7 +60,7 @@ abstract class OptionParserState {
                         return;
                     }
                 } catch ( UnrecognizedOptionException e ) {
-                    if ( !parser.allowsUnrecognized() )
+                    if ( !parser.doesAllowsUnrecognizedOptions() )
                         throw e;
                 }
 

@@ -196,7 +196,7 @@ public class OptionParser {
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
     private OptionParserState state;
     private boolean posixlyCorrect;
-    private boolean allowsUnrecognized;
+    private boolean allowsUnrecognizedOptions;
     private HelpFormatter helpFormatter = new BuiltinHelpFormatter();
 
     /**
@@ -345,16 +345,17 @@ public class OptionParser {
     }
 
     /**
-     * Tells the parser to accept unrecognized arguments as 'non-options'. Useful for forward/backwards compatibility.
+     * <p>Tells the parser to treat unrecognized options as non-option arguments.</p>
      *
-     * @param setting {@code true} if the parsers should threat unrecognized arguments as 'non-options'
+     * <p>If not called, then the parser raises an {@link OptionException} when it encounters an unrecognized
+     * option.</p>
      */
-    public void allowsUnrecognized(boolean setting) {
-        allowsUnrecognized = setting;
+    public void allowsUnrecognizedOptions() {
+        allowsUnrecognizedOptions = true;
     }
 
-    public boolean allowsUnrecognized() {
-        return allowsUnrecognized;
+    boolean doesAllowsUnrecognizedOptions() {
+        return allowsUnrecognizedOptions;
     }
 
     /**
