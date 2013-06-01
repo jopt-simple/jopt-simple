@@ -24,6 +24,10 @@
         <developerConnection>scm:git:ssh://git@github.com/pholser/jopt-simple.git</developerConnection>
         <url>http://github.com/pholser/jopt-simple</url>
     </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>http://github.com/pholser/jopt-simple/issues</url>
+    </issueManagement>
     <developers>
         <developer>
             <id>pholser</id>
