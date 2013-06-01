@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>JOpt Simple - a Java command line parsing library - Issue Tracking</title>
+    <title>JOpt Simple - a Java command line parsing library - Dependency Information</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -77,8 +77,8 @@
                           <a href="distribution-management.html" title="Distribution Management">Distribution Management</a>
             </li>
                       <li class="none">
-                          <a href="dependency-info.html" title="Dependency Information">Dependency Information</a>
-            </li>
+            <strong>Dependency Information</strong>
+          </li>
                       <li class="none">
                           <a href="source-repository.html" title="Source Repository">Source Repository</a>
             </li>
@@ -86,8 +86,8 @@
                           <a href="mail-lists.html" title="Mailing Lists">Mailing Lists</a>
             </li>
                       <li class="none">
-            <strong>Issue Tracking</strong>
-          </li>
+                          <a href="issue-tracking.html" title="Issue Tracking">Issue Tracking</a>
+            </li>
                       <li class="none">
                           <a href="integration.html" title="Continuous Integration">Continuous Integration</a>
             </li>
@@ -121,7 +121,15 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Overview<a name="Overview"></a></h2><a name="Overview"></a><p>This project uses GitHub to manage its issues.</p></div><div class="section"><h2>Issue Tracking<a name="Issue_Tracking"></a></h2><a name="Issue_Tracking"></a><p>Issues, bugs, and feature requests should be submitted to the following issue tracking system for this project.</p><div class="source"><pre><a class="externalLink" href="http://github.com/pholser/jopt-simple/issues">http://github.com/pholser/jopt-simple/issues</a></pre></div></div>
+        <div class="section"><h2>Dependency Information<a name="Dependency_Information"></a></h2><a name="Dependency_Information"></a><div class="section"><h3>Apache Maven<a name="Apache_Maven"></a></h3><a name="Apache_Maven"></a><div class="source"><pre>&lt;dependency&gt;
+  &lt;groupId&gt;net.sf.jopt-simple&lt;/groupId&gt;
+  &lt;artifactId&gt;jopt-simple&lt;/artifactId&gt;
+  &lt;version&gt;4.5&lt;/version&gt;
+&lt;/dependency&gt;</pre></div></div><div class="section"><h3>Apache Buildr<a name="Apache_Buildr"></a></h3><a name="Apache_Buildr"></a><div class="source"><pre>'net.sf.jopt-simple:jopt-simple:jar:4.5'</pre></div></div><div class="section"><h3>Apache Ant<a name="Apache_Ant"></a></h3><a name="Apache_Ant"></a><div class="source"><pre>&lt;dependency org=&quot;net.sf.jopt-simple&quot; name=&quot;jopt-simple&quot; rev=&quot;4.5&quot;&gt;
+  &lt;artifact name=&quot;jopt-simple&quot; type=&quot;jar&quot; /&gt;
+&lt;/dependency&gt;</pre></div></div><div class="section"><h3>Groovy Grape<a name="Groovy_Grape"></a></h3><a name="Groovy_Grape"></a><div class="source"><pre>@Grapes(
+@Grab(group='net.sf.jopt-simple', module='jopt-simple', version='4.5')
+)</pre></div></div><div class="section"><h3>Grails<a name="Grails"></a></h3><a name="Grails"></a><div class="source"><pre>compile 'net.sf.jopt-simple:jopt-simple:4.5'</pre></div></div><div class="section"><h3>Leiningen<a name="Leiningen"></a></h3><a name="Leiningen"></a><div class="source"><pre>[net.sf.jopt-simple/jopt-simple &quot;4.5&quot;]</pre></div></div><div class="section"><h3>SBT<a name="SBT"></a></h3><a name="SBT"></a><div class="source"><pre>libraryDependencies += &quot;net.sf.jopt-simple&quot; %% &quot;jopt-simple&quot; % &quot;4.5&quot;</pre></div></div></div>
       </div>
     </div>
     <div class="clear">
