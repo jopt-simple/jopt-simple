@@ -49,6 +49,6 @@ class OptionArgumentConversionException extends OptionException {
 
     @Override
     public String getMessage() {
-        return "Cannot convert argument '" + argument + "' of option " + multipleOptionMessage() + " to " + valueType;
+        return "Cannot parse argument '" + argument + "' of option " + multipleOptionMessage() + ".";
     }
 }
