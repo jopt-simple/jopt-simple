@@ -49,6 +49,6 @@ public class InetAddressConverterTest {
 
     @Test( expected = ValueConversionException.class )
     public void unknownHost() {
-        converter.convert( "!@#!@$$##" );
+        converter.convert( "yer.mom" );
     }
 }

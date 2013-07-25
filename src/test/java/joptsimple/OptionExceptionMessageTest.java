@@ -54,9 +54,8 @@ public class OptionExceptionMessageTest {
             new Object[] { new IllegalOptionSpecificationException( "," ), "',' is not a legal option character" },
             new Object[] { new MultipleArgumentsForOptionException( asList( "b", "c" ) ),
                 "Found multiple arguments for option ['b', 'c'], but you asked for only one" },
-            new Object[] { new OptionArgumentConversionException(
-                asList( "c", "number" ), "d", Integer.class, null ),
-                "Cannot convert argument 'd' of option ['c', 'number'] to class java.lang.Integer" },
+            new Object[] { new OptionArgumentConversionException( asList( "c", "number" ), "d", null ),
+                "Cannot parse argument 'd' of option ['c', 'number']" },
             new Object[] { new OptionMissingRequiredArgumentException( asList( "e", "honest" ) ),
                 "Option ['e', 'honest'] requires an argument" },
             new Object[] { new UnrecognizedOptionException( "f" ), "'f' is not a recognized option" },

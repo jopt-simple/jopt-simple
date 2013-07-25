@@ -91,10 +91,10 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
             return Reflection.convertWith( converter, argument );
         }
         catch ( ReflectionException ex ) {
-            throw new OptionArgumentConversionException( options(), argument, converter.valueType(), ex );
+            throw new OptionArgumentConversionException( options(), argument, ex );
         }
         catch ( ValueConversionException ex ) {
-            throw new OptionArgumentConversionException( options(), argument, converter.valueType(), ex );
+            throw new OptionArgumentConversionException( options(), argument, ex );
         }
     }
 
