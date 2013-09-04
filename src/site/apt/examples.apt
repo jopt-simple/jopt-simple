@@ -281,6 +281,15 @@ Options
 @REQUIRED_IF_OPTIONS_EXAMPLE@
 +----------------------------------------------------------------------------------------
 
+    You can also indicate that a given option must be present on the command line if some
+    other option is NOT present on the command line via the <<<requiredUnless()>>> method.
+    Any option can be made "required unless", but, to avoid potential conflicts, it should
+    not be "required if" at the same time.
+
++----------------------------------------------------------------------------------------
+@REQUIRED_UNLESS_OPTIONS_EXAMPLE@
++----------------------------------------------------------------------------------------
+
 ** Synonyms of Options
 
     Sometimes it is useful to allow many different options to share the same meaning in

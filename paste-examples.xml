@@ -66,6 +66,10 @@
             srcfile="${example.src.dir}/joptsimple/examples/RequiredIfExample.java">
             <filterchain refid="htmlFilter"/>
         </loadfile>
+        <loadfile property="required.unless.options.example"
+            srcfile="${example.src.dir}/joptsimple/examples/RequiredUnlessExample.java">
+            <filterchain refid="htmlFilter"/>
+        </loadfile>
         <loadfile property="default.values.for.option.arguments.example"
             srcfile="${example.src.dir}/joptsimple/examples/DefaultValuesForOptionArgumentsTest.java">
             <filterchain refid="htmlFilter"/>
