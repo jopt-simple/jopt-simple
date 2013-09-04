@@ -25,17 +25,13 @@
 
 package joptsimple;
 
-import static java.util.Collections.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static java.util.Collections.emptyList;
+import static org.junit.Assert.assertEquals;
 
-/**
- * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- */
-public class RequiredIfAnyTest extends AbstractOptionParserFixture {
+public class RequiredUnlessAnyTest extends AbstractOptionParserFixture {
     @Before
     public void configureParser() {
         parser.accepts( "a" );
@@ -43,43 +39,39 @@ public class RequiredIfAnyTest extends AbstractOptionParserFixture {
         OptionSpec<Void> c = parser.accepts( "c" );
         OptionSpec<Void> d = parser.accepts( "d" );
         parser.accepts( "e" );
-        parser.accepts( "n" ).requiredIf( "a", "b" ).requiredIf( c, d );
+        parser.accepts( "n" ).requiredUnless( "a", "b" ).requiredUnless( c, d );
     }
 
     @Test
     public void rejectsCommandLineMissingConditionallyRequiredOption() {
-        thrown.expect( MissingRequiredOptionException.class );
-
-        parser.parse( "-a" );
-    }
-
-    @Test
-    public void rejectsCommandLineMissingOtherConditionallyRequiredOption() {
-        thrown.expect( MissingRequiredOptionException.class );
-
-        parser.parse( "-b" );
+        OptionSet options = parser.parse( "-a" );
+        assertOptionDetected( options, "a" );
+        assertOptionNotDetected( options, "n" );
     }
 
     @Test
     public void rejectsCommandLineWithNotAllConditionallyRequiredOptionsPresent() {
-        thrown.expect( MissingRequiredOptionException.class );
-
-        parser.parse( "-a", "-b", "-c", "-d" );
+        OptionSet options = parser.parse( "-a", "-b", "-c", "-d" );
+        assertOptionDetected( options, "a" );
+        assertOptionDetected( options, "b" );
+        assertOptionDetected( options, "c" );
+        assertOptionDetected( options, "d" );
+        assertOptionNotDetected( options, "n" );
     }
 
     @Test
     public void acceptsCommandLineWithConditionallyRequiredOptionsPresent() {
-        OptionSet options = parser.parse( "-b", "-n" );
-        
-        assertOptionDetected( options, "b" );
+        OptionSet options = parser.parse( "-n" );
+
         assertOptionDetected( options, "n" );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
     @Test
     public void acceptsOptionWithPrerequisiteAsNormalIfPrerequisiteNotInPlay() {
-        OptionSet options = parser.parse( "-n" );
+        OptionSet options = parser.parse( "-a", "-n" );
 
+        assertOptionDetected( options, "a" );
         assertOptionDetected( options, "n" );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
