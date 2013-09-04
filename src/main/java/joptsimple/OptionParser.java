@@ -194,6 +194,7 @@ import static joptsimple.ParserRules.*;
 public class OptionParser {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
+    private final Map<Collection<String>, Set<OptionSpec<?>>> requiredUnless;
     private OptionParserState state;
     private boolean posixlyCorrect;
     private boolean allowsUnrecognizedOptions;
@@ -206,6 +207,7 @@ public class OptionParser {
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
         requiredIf = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
+        requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
 
         recognize(new NonOptionArgumentSpec<String>());
@@ -463,6 +465,14 @@ public class OptionParser {
             }
         }
 
+        for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredUnless.entrySet() ) {
+            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+
+            if ( !optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
+                missingRequiredOptions.addAll( required.options() );
+            }
+        }
+
         return missingRequiredOptions;
     }
 
@@ -544,16 +554,29 @@ public class OptionParser {
     }
 
     void requiredIf( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
+        putRequiredOption(precedentSynonyms, required, requiredIf);
+    }
+
+    void requiredUnless( Collection<String> precedentSynonyms, String required ) {
+        requiredUnless( precedentSynonyms, specFor( required ));
+    }
+
+    void requiredUnless( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
+        putRequiredOption(precedentSynonyms, required, requiredUnless);
+    }
+
+    private void putRequiredOption(Collection<String> precedentSynonyms, OptionSpec<?> required,
+                                   Map<Collection<String>, Set<OptionSpec<?>>> target) {
         for ( String each : precedentSynonyms ) {
             AbstractOptionSpec<?> spec = specFor( each );
             if ( spec == null )
                 throw new UnconfiguredOptionException( precedentSynonyms );
         }
 
-        Set<OptionSpec<?>> associated = requiredIf.get( precedentSynonyms );
+        Set<OptionSpec<?>> associated = target.get( precedentSynonyms );
         if ( associated == null ) {
             associated = new HashSet<OptionSpec<?>>();
-            requiredIf.put( precedentSynonyms, associated );
+            target.put( precedentSynonyms, associated );
         }
 
         associated.add( required );
