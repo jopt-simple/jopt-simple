@@ -43,14 +43,14 @@ public class RequiredUnlessAnyTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void rejectsCommandLineMissingConditionallyRequiredOption() {
+    public void commandLineMissingConditionallyRequiredOption() {
         OptionSet options = parser.parse( "-a" );
         assertOptionDetected( options, "a" );
         assertOptionNotDetected( options, "n" );
     }
 
     @Test
-    public void rejectsCommandLineWithNotAllConditionallyRequiredOptionsPresent() {
+    public void commandLineWithNotAllConditionallyRequiredOptionsPresent() {
         OptionSet options = parser.parse( "-a", "-b", "-c", "-d" );
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );

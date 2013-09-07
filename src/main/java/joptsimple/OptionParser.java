@@ -210,7 +210,7 @@ public class OptionParser {
         requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
 
-        recognize(new NonOptionArgumentSpec<String>());
+        recognize( new NonOptionArgumentSpec<String>() );
     }
 
     /**
@@ -296,12 +296,10 @@ public class OptionParser {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
 
-        ensureLegalOptions(options);
+        ensureLegalOptions( options );
 
         return new OptionSpecBuilder( this, options, description );
     }
-
-    // TODO: javadoc, examples, change log
 
     /**
      * Gives an object that represents an access point for non-option arguments on a command line.
@@ -373,7 +371,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll(spec.options(), spec);
+        recognizedOptions.putAll( spec.options(), spec );
     }
 
     /**
@@ -387,7 +385,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn(new OutputStreamWriter(sink));
+        printHelpOn( new OutputStreamWriter( sink ) );
     }
 
     /**
@@ -550,23 +548,24 @@ public class OptionParser {
     }
 
     void requiredIf( Collection<String> precedentSynonyms, String required ) {
-        requiredIf( precedentSynonyms, specFor( required ));
+        requiredIf( precedentSynonyms, specFor( required ) );
     }
 
     void requiredIf( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
-        putRequiredOption(precedentSynonyms, required, requiredIf);
+        putRequiredOption( precedentSynonyms, required, requiredIf );
     }
 
     void requiredUnless( Collection<String> precedentSynonyms, String required ) {
-        requiredUnless( precedentSynonyms, specFor( required ));
+        requiredUnless( precedentSynonyms, specFor( required ) );
     }
 
     void requiredUnless( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
-        putRequiredOption(precedentSynonyms, required, requiredUnless);
+        putRequiredOption( precedentSynonyms, required, requiredUnless );
     }
 
     private void putRequiredOption(Collection<String> precedentSynonyms, OptionSpec<?> required,
-                                   Map<Collection<String>, Set<OptionSpec<?>>> target) {
+        Map<Collection<String>, Set<OptionSpec<?>>> target) {
+
         for ( String each : precedentSynonyms ) {
             AbstractOptionSpec<?> spec = specFor( each );
             if ( spec == null )

@@ -33,7 +33,6 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 
-
 public class RequiredUnlessTest extends AbstractOptionParserFixture {
     @Before
     public void configureParser() {
@@ -106,6 +105,6 @@ public class RequiredUnlessTest extends AbstractOptionParserFixture {
         OptionSet options = parser.parse( "-?" );
 
         assertOptionDetected( options, "?" );
-        assertEquals(emptyList(), options.nonOptionArguments());
+        assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }

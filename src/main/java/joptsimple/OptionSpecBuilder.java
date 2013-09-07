@@ -98,9 +98,11 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
     }
 
     /**
-     * Informs an option parser that this builder's option is required if the given option is present on the command
-     * line. For a given option, you <i>should</i> not mix this with {@link #requiredUnless(String, String...)}
-     * to avoid conflicts.
+     * <p>Informs an option parser that this builder's option is required if the given option is present on the command
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #requiredUnless(String, String...)
+     * requiredUnless} to avoid conflicts.</p>
      *
      * @param dependent an option whose presence on a command line makes this builder's option required
      * @param otherDependents other options whose presence on a command line makes this builder's option required
@@ -108,7 +110,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
     public OptionSpecBuilder requiredIf( String dependent, String... otherDependents ) {
-        List<String> dependents = validatedDependents(dependent, otherDependents);
+        List<String> dependents = validatedDependents( dependent, otherDependents );
         for ( String each : dependents ) {
             parser.requiredIf( options(), each );
         }
@@ -118,8 +120,10 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
 
     /**
      * <p>Informs an option parser that this builder's option is required if the given option is present on the command
-     * line. For a given option, you <i>should</i> not mix this with {@link #requiredUnless(OptionSpec, OptionSpec[])}
-     * to avoid conflicts.</p>
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #requiredUnless(OptionSpec, OptionSpec[])
+     * requiredUnless} to avoid conflicts.</p>
      *
      * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
      *
@@ -136,9 +140,11 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
     }
 
     /**
-     * Informs an option parser that this builder's option is required if the given option is NOT present on the command
-     * line. For a given option, you <i>should</i> not mix this with {@link #requiredIf(String, String...)}
-     * to avoid conflicts.
+     * <p>Informs an option parser that this builder's option is required if the given option is absent on the command
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #requiredIf(OptionSpec, OptionSpec[])
+     * requiredIf} to avoid conflicts.</p>
      *
      * @param dependent an option whose absence on a command line makes this builder's option required
      * @param otherDependents other options whose absence on a command line makes this builder's option required
@@ -146,7 +152,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
     public OptionSpecBuilder requiredUnless( String dependent, String... otherDependents ) {
-        List<String> dependents = validatedDependents(dependent, otherDependents);
+        List<String> dependents = validatedDependents( dependent, otherDependents );
         for ( String each : dependents ) {
             parser.requiredUnless( options(), each );
         }
@@ -154,9 +160,11 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
     }
 
     /**
-     * <p>Informs an option parser that this builder's option is required if the given option is NOT present on the command
-     * line. For a given option, you <i>should</i> not mix this with {@link #requiredIf(OptionSpec, OptionSpec[])}
-     * to avoid conflicts.</p>
+     * <p>Informs an option parser that this builder's option is required if the given option is absent on the command
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #requiredIf(OptionSpec, OptionSpec[])
+     * requiredIf} to avoid conflicts.</p>
      *
      * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
      *
@@ -172,7 +180,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
         return this;
     }
 
-    private List<String> validatedDependents(String dependent, String... otherDependents) {
+    private List<String> validatedDependents( String dependent, String... otherDependents ) {
         List<String> dependents = new ArrayList<String>();
         dependents.add( dependent );
         Collections.addAll( dependents, otherDependents );
