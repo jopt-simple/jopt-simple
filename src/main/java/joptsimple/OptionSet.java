@@ -25,11 +25,7 @@
 
 package joptsimple;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.*;
 
@@ -54,6 +50,40 @@ public class OptionSet {
         detectedOptions = new HashMap<String, AbstractOptionSpec<?>>();
         optionsToArguments = new IdentityHashMap<AbstractOptionSpec<?>, List<String>>();
         defaultValues = new HashMap<String, List<?>>( defaults );
+    }
+
+    /**
+     * Pick a key to represent an option for {@link #mapWith}.
+     */
+    public interface OptionKey {
+        /**
+         * Select a string key for the given <var>spec</var> in {@link #mapWith}.
+         *
+         * A typical implementation would use the long form of aliases.  If "-d" and "--debug" are
+         * aliased flags, the key would be "debug".  This is also a good place to modify keys, say
+         * "my.app.debug" for the "debug" option when integrating options into other features such
+         * as properties.
+         *
+         * @param spec the option spec, never missing
+         * @return the string key
+         */
+        String select( OptionSpec<?> spec );
+    }
+
+    /**
+     * Create an new map of keys to option values.
+     *
+     * @param selector the function for finding keys for option specs, never missing
+     * @return the map, never missing
+     */
+    public Map<String, Object> mapWith( OptionKey selector ) {
+        ensureNotNull( selector );
+
+        // Alternate implementation might present a view rather than a copy
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        for ( OptionSpec<?> spec : detectedSpecs )
+            map.put( selector.select(spec), hasArgument(spec) ? valueOf(spec) : true );
+        return map;
     }
 
     /**
