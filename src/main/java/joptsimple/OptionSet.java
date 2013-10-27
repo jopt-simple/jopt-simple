@@ -71,7 +71,7 @@ public class OptionSet {
     }
 
     /**
-     * Create an new map of keys to option values.
+     * Create an new, unmodifiable map of keys to option values.
      *
      * @param selector the function for finding keys for option specs, never missing
      * @return the map, never missing
@@ -82,8 +82,20 @@ public class OptionSet {
         // Alternate implementation might present a view rather than a copy
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         for ( OptionSpec<?> spec : detectedSpecs )
-            map.put( selector.select(spec), hasArgument(spec) ? valueOf(spec) : true );
-        return map;
+            map.put(selector.select( spec ), valueFor( spec ));
+        return unmodifiableMap( map );
+    }
+
+    private Object valueFor( OptionSpec<?> spec ) {
+        List<?> values = spec.values( this );
+        switch( values.size() ) {
+            case 0:
+                return true;
+            case 1:
+                return values.get( 0 );
+            default:
+                return values;
+        }
     }
 
     /**
