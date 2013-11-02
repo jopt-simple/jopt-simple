@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import static java.util.Collections.*;
 import static joptsimple.OptionException.*;
@@ -414,6 +415,18 @@ public class OptionParser {
             throw new NullPointerException();
 
         helpFormatter = formatter;
+    }
+    
+    /**
+     * Allows to retrieve all the options which have been configured for the parser. 
+     * 
+     * @return a {@link Map} containing all the configured options and their corresponding {@link OptionSpec}
+     */
+    public Map<String, OptionSpec<?>> recognizedOptions() {
+    	Map<String, OptionSpec<?>> rOpt = new HashMap<String, OptionSpec<?>>();
+    	for(Map.Entry<String, AbstractOptionSpec<?>> each : recognizedOptions.toJavaUtilMap().entrySet()) 
+    		rOpt.put(each.getKey(), each.getValue());
+    	return rOpt;
     }
 
     /**
