@@ -7,6 +7,9 @@ Changes in version 4.6
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/31} gh-31}} by offering
       <<<OptionSpecBuilder.requiredUnless()>>>. Thanks to ohr for this.
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/38} gh-38}} by offering
+      <<<OptionParser.recognizedOptions()>>>. Thanks to Antoine Neveux for this.
+
 Changes in version 4.5
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/17} gh-17}} by offering
