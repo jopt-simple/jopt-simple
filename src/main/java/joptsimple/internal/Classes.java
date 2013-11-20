@@ -68,6 +68,7 @@ public final class Classes {
      * @param clazz the class to check
      * @return primitive wrapper type if {@code clazz} is primitive, otherwise {@code clazz}
      */
+    @SuppressWarnings( "unchecked" )
     public static <T> Class<T> wrapperOf( Class<T> clazz ) {
         return clazz.isPrimitive() ? (Class<T>) WRAPPERS.get( clazz ) : clazz;
     }

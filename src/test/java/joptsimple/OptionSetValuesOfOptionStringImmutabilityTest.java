@@ -34,6 +34,7 @@ import org.infinitest.toolkit.UnmodifiableListTestSupport;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class OptionSetValuesOfOptionStringImmutabilityTest extends UnmodifiableListTestSupport<Object> {
+    @SuppressWarnings( "unchecked" )
     @Override
     protected List<Object> newList() {
         RequiredArgumentOptionSpec<String> optionB = new RequiredArgumentOptionSpec<String>( "b" );

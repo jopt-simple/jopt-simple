@@ -289,6 +289,7 @@ public class OptionSet {
         return detectedOptions.hashCode() ^ thisOptionsToArguments.hashCode();
     }
 
+    @SuppressWarnings( "unchecked" )
     private <V> List<V> defaultValuesFor( String option ) {
         if ( defaultValues.containsKey( option ) )
             return (List<V>) defaultValues.get( option );
