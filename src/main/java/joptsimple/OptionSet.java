@@ -55,52 +55,6 @@ public class OptionSet {
     }
 
     /**
-     * Pick a key to represent an option for {@link #mapWith}.
-     */
-    public interface OptionKey {
-        /**
-         * Select a string key for the given <var>spec</var> in {@link #mapWith}.
-         *
-         * A typical implementation would use the long form of aliases.  If "-d" and "--debug" are
-         * aliased flags, the key would be "debug".  This is also a good place to modify keys, say
-         * "my.app.debug" for the "debug" option when integrating options into other features such
-         * as properties.
-         *
-         * @param spec the option spec, never missing
-         * @return the string key
-         */
-        String select( OptionSpec<?> spec );
-    }
-
-    /**
-     * Create an new, unmodifiable map of keys to option values.
-     *
-     * @param selector the function for finding keys for option specs, never missing
-     * @return the map, never missing
-     */
-    public Map<String, Object> mapWith( OptionKey selector ) {
-        ensureNotNull( selector );
-
-        // Alternate implementation might present a view rather than a copy
-        Map<String, Object> map = new LinkedHashMap<String, Object>();
-        for ( OptionSpec<?> spec : detectedSpecs )
-            map.put(selector.select( spec ), valueFor( spec ));
-        return unmodifiableMap( map );
-    }
-
-    private Object valueFor( OptionSpec<?> spec ) {
-        List<?> values = spec.values( this );
-        switch( values.size() ) {
-            case 0:
-                return true;
-            case 1:
-                return values.get( 0 );
-            default:
-                return values;
-        }
-    }
-
-    /**
      * Tells whether any options were detected.
      *
      * @return {@code true} if any options were detected
