@@ -282,13 +282,13 @@ public class OptionSet {
     }
 
     /**
-     * Gives declared options as a map of string to strings.
+     * Gives all declared options as a map of string to {@linkplain OptionSpec}.
      *
      * @return the declared options as a map
      */
     public Map<OptionSpec<?>, List<?>> asMap() {
         Map<OptionSpec<?>, List<?>> map = new HashMap<OptionSpec<?>, List<?>>();
-        for ( final AbstractOptionSpec<?> spec : recognizedSpecs.values() )
+        for ( AbstractOptionSpec<?> spec : recognizedSpecs.values() )
             if ( !spec.representsNonOptions() )
                 map.put( spec, valuesOf( spec ) );
         return unmodifiableMap( map );
