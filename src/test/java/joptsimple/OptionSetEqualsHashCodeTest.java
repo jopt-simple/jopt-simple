@@ -25,10 +25,9 @@
 
 package joptsimple;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
+
+import java.util.Collections;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -36,23 +35,24 @@ import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
 public class OptionSetEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport {
     @Override
     protected OptionSet equal() {
-        OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "anArg" );
         return options;
     }
 
     @Override
     protected OptionSet notEqual() {
-        OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "aDifferentArg" );
         return options;
     }
 
     @Override
     protected Object equalButDifferentClass() {
-        OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() ) {
-            // anonymous subclass
-        };
+        OptionSet options =
+                new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() ) {
+                // anonymous subclass
+            };
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "anArg" );
         return options;
     }

@@ -25,15 +25,15 @@
 
 package joptsimple;
 
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.Collections.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.Collections;
+
+import static java.util.Collections.emptyList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -43,7 +43,7 @@ public class EmptyOptionSetTest {
 
     @Before
     public void setUp() {
-        empty = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        empty = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
     }
 
     @Test

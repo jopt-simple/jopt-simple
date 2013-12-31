@@ -35,14 +35,16 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.Collections.*;
-import static joptsimple.OptionException.*;
-import static joptsimple.OptionParserState.*;
-import static joptsimple.ParserRules.*;
+import static java.util.Collections.singletonList;
+import static joptsimple.OptionException.unrecognizedOption;
+import static joptsimple.OptionParserState.moreOptions;
+import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
+import static joptsimple.ParserRules.ensureLegalOptions;
+import static joptsimple.ParserRules.isLongOptionToken;
+import static joptsimple.ParserRules.isShortOptionToken;
 
 /**
  * <p>Parses command line arguments, using a syntax that attempts to take from the best of POSIX {@code getopt()}
@@ -210,7 +212,7 @@ public class OptionParser {
         requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
 
-        recognize( new NonOptionArgumentSpec<String>() );
+        recognize(new NonOptionArgumentSpec<String>());
     }
 
     /**
@@ -296,7 +298,7 @@ public class OptionParser {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
 
-        ensureLegalOptions( options );
+        ensureLegalOptions(options);
 
         return new OptionSpecBuilder( this, options, description );
     }
@@ -371,7 +373,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll( spec.options(), spec );
+        recognizedOptions.putAll(spec.options(), spec);
     }
 
     /**
@@ -385,7 +387,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn( new OutputStreamWriter( sink ) );
+        printHelpOn(new OutputStreamWriter(sink));
     }
 
     /**
@@ -426,7 +428,7 @@ public class OptionParser {
      */
     public OptionSet parse( String... arguments ) {
         ArgumentList argumentList = new ArgumentList( arguments );
-        OptionSet detected = new OptionSet( defaultValues() );
+        OptionSet detected = new OptionSet(recognizedOptions.toJavaUtilMap() );
         detected.add( recognizedOptions.get( NonOptionArgumentSpec.NAME ) );
 
         while ( argumentList.hasMore() )
@@ -548,19 +550,19 @@ public class OptionParser {
     }
 
     void requiredIf( Collection<String> precedentSynonyms, String required ) {
-        requiredIf( precedentSynonyms, specFor( required ) );
+        requiredIf(precedentSynonyms, specFor(required));
     }
 
     void requiredIf( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
-        putRequiredOption( precedentSynonyms, required, requiredIf );
+        putRequiredOption(precedentSynonyms, required, requiredIf);
     }
 
     void requiredUnless( Collection<String> precedentSynonyms, String required ) {
-        requiredUnless( precedentSynonyms, specFor( required ) );
+        requiredUnless(precedentSynonyms, specFor(required));
     }
 
     void requiredUnless( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
-        putRequiredOption( precedentSynonyms, required, requiredUnless );
+        putRequiredOption(precedentSynonyms, required, requiredUnless);
     }
 
     private void putRequiredOption(Collection<String> precedentSynonyms, OptionSpec<?> required,
@@ -582,7 +584,7 @@ public class OptionParser {
     }
 
     private AbstractOptionSpec<?> specFor( char option ) {
-        return specFor( String.valueOf( option ) );
+        return specFor(String.valueOf(option));
     }
 
     private AbstractOptionSpec<?> specFor( String option ) {
@@ -618,12 +620,5 @@ public class OptionParser {
 
     private static KeyValuePair parseShortOptionWithArgument( String argument ) {
         return KeyValuePair.valueOf( argument.substring( 1 ) );
-    }
-
-    private Map<String, List<?>> defaultValues() {
-        Map<String, List<?>> defaults = new HashMap<String, List<?>>();
-        for ( Map.Entry<String, AbstractOptionSpec<?>> each : recognizedOptions.toJavaUtilMap().entrySet() )
-            defaults.put( each.getKey(), each.getValue().defaultValues() );
-        return defaults;
     }
 }
