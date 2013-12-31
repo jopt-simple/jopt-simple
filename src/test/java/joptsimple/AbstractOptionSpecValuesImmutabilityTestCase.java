@@ -37,8 +37,7 @@ public abstract class AbstractOptionSpecValuesImmutabilityTestCase<T> extends Un
     @Override
     protected List<T> newList() {
         AbstractOptionSpec<T> spec = newOptionSpec();
-        OptionSet options =
-            new OptionSet( Collections.<String, List<?>> emptyMap(), Collections.<OptionSpec<?>> emptyList() );
+        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         options.addWithArgument( spec, firstArg() );
         options.addWithArgument( spec, secondArg() );
 

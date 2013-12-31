@@ -29,7 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
-import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
@@ -44,7 +43,7 @@ public class EmptyOptionSetTest {
 
     @Before
     public void setUp() {
-        empty = new OptionSet( Collections.<String, List<?>> emptyMap(), Collections.<OptionSpec<?>> emptyList() );
+        empty = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
     }
 
     @Test

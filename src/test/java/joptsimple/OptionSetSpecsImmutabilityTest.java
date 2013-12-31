@@ -36,8 +36,7 @@ import java.util.List;
 public class OptionSetSpecsImmutabilityTest extends UnmodifiableListTestSupport<OptionSpec<?>> {
     @Override
     protected List<OptionSpec<?>> newList() {
-        OptionSet options =
-            new OptionSet( Collections.<String, List<?>> emptyMap(), Collections.<OptionSpec<?>> emptyList() );
+        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         options.add( new NoArgumentOptionSpec( "a" ) );
         return options.specs();
     }

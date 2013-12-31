@@ -37,9 +37,8 @@ public class OptionSetValuesOfOptionStringImmutabilityTest extends UnmodifiableL
     @Override
     protected List<Object> newList() {
         RequiredArgumentOptionSpec<String> optionB = new RequiredArgumentOptionSpec<String>( "b" );
-        OptionSet options =
-            new OptionSet( Collections.<String, List<?>> emptyMap(), Collections.<OptionSpec<?>> emptyList() );
-        options.addWithArgument( optionB, "foo" );
+        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        options.addWithArgument( optionB, "foo" ); 
         options.addWithArgument( optionB, "bar" );
 
         return (List<Object>) options.valuesOf( "b" );

@@ -25,15 +25,13 @@
 
 package joptsimple;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collections;
+
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -47,7 +45,7 @@ public class PopulatedOptionSetTest {
 
     @Before
     public void setUp() {
-        populated = new OptionSet( Collections.<String, List<?>> emptyMap(), Collections.<OptionSpec<?>> emptyList() );
+        populated = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         populated.add( new NoArgumentOptionSpec( "a" ) );
         populated.addWithArgument( new RequiredArgumentOptionSpec<String>( "b" ), "arg-of-b" );
     }
