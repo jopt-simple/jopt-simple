@@ -21,19 +21,23 @@
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 package joptsimple;
 
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Collections.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -43,7 +47,7 @@ public class PopulatedOptionSetTest {
 
     @Before
     public void setUp() {
-        populated = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        populated = new OptionSet( Collections.<String, List<?>> emptyMap(), Collections.<OptionSpec<?>> emptyList() );
         populated.add( new NoArgumentOptionSpec( "a" ) );
         populated.addWithArgument( new RequiredArgumentOptionSpec<String>( "b" ), "arg-of-b" );
     }

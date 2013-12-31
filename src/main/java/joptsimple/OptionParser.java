@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -426,7 +427,7 @@ public class OptionParser {
      */
     public OptionSet parse( String... arguments ) {
         ArgumentList argumentList = new ArgumentList( arguments );
-        OptionSet detected = new OptionSet( defaultValues() );
+        OptionSet detected = new OptionSet( defaultValues(), recognized() );
         detected.add( recognizedOptions.get( NonOptionArgumentSpec.NAME ) );
 
         while ( argumentList.hasMore() )
@@ -625,5 +626,13 @@ public class OptionParser {
         for ( Map.Entry<String, AbstractOptionSpec<?>> each : recognizedOptions.toJavaUtilMap().entrySet() )
             defaults.put( each.getKey(), each.getValue().defaultValues() );
         return defaults;
+    }
+
+    private List<OptionSpec<?>> recognized() {
+        List<OptionSpec<?>> recognized = new ArrayList<OptionSpec<?>>();
+        for ( AbstractOptionSpec<?> spec : recognizedOptions.toJavaUtilMap().values() )
+            if ( !spec.representsNonOptions() )
+                recognized.add( spec );
+        return recognized;
     }
 }

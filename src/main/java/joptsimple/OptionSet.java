@@ -41,15 +41,17 @@ public class OptionSet {
     private final Map<String, AbstractOptionSpec<?>> detectedOptions;
     private final Map<AbstractOptionSpec<?>, List<String>> optionsToArguments;
     private final Map<String, List<?>> defaultValues;
+    private final List<OptionSpec<?>> recognizedSpecs;
 
     /*
      * Package-private because clients don't create these.
      */
-    OptionSet( Map<String, List<?>> defaults ) {
+    OptionSet( Map<String, List<?>> defaults, List<OptionSpec<?>> recognized ) {
         detectedSpecs = new ArrayList<OptionSpec<?>>();
         detectedOptions = new HashMap<String, AbstractOptionSpec<?>>();
         optionsToArguments = new IdentityHashMap<AbstractOptionSpec<?>, List<String>>();
         defaultValues = new HashMap<String, List<?>>( defaults );
+        recognizedSpecs = new ArrayList<OptionSpec<?>>( recognized );
     }
 
     /**
@@ -277,6 +279,18 @@ public class OptionSet {
         specs.remove( detectedOptions.get( NonOptionArgumentSpec.NAME ) );
 
         return unmodifiableList( specs );
+    }
+
+    /**
+     * Gives declared options as a map of string to strings.
+     *
+     * @return the declared options as a map
+     */
+    public Map<OptionSpec<?>, List<?>> asMap() {
+        Map<OptionSpec<?>, List<?>> map = new HashMap<OptionSpec<?>, List<?>>();
+        for ( final OptionSpec<?> spec : recognizedSpecs )
+            map.put( spec, valuesOf( spec ) );
+        return unmodifiableMap( map );
     }
 
     /**
