@@ -25,10 +25,10 @@
 
 package joptsimple;
 
-import org.infinitest.toolkit.UnmodifiableListTestSupport;
-
 import java.util.Collections;
 import java.util.List;
+
+import org.infinitest.toolkit.UnmodifiableListTestSupport;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

@@ -38,13 +38,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.Collections.singletonList;
-import static joptsimple.OptionException.unrecognizedOption;
-import static joptsimple.OptionParserState.moreOptions;
-import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
-import static joptsimple.ParserRules.ensureLegalOptions;
-import static joptsimple.ParserRules.isLongOptionToken;
-import static joptsimple.ParserRules.isShortOptionToken;
+import static java.util.Collections.*;
+import static joptsimple.OptionException.*;
+import static joptsimple.OptionParserState.*;
+import static joptsimple.ParserRules.*;
 
 /**
  * <p>Parses command line arguments, using a syntax that attempts to take from the best of POSIX {@code getopt()}
@@ -212,7 +209,7 @@ public class OptionParser {
         requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
 
-        recognize(new NonOptionArgumentSpec<String>());
+        recognize( new NonOptionArgumentSpec<String>() );
     }
 
     /**
@@ -298,7 +295,7 @@ public class OptionParser {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
 
-        ensureLegalOptions(options);
+        ensureLegalOptions( options );
 
         return new OptionSpecBuilder( this, options, description );
     }
@@ -373,7 +370,7 @@ public class OptionParser {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll(spec.options(), spec);
+        recognizedOptions.putAll( spec.options(), spec );
     }
 
     /**
@@ -387,7 +384,7 @@ public class OptionParser {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn(new OutputStreamWriter(sink));
+        printHelpOn( new OutputStreamWriter( sink ) );
     }
 
     /**
@@ -428,7 +425,7 @@ public class OptionParser {
      */
     public OptionSet parse( String... arguments ) {
         ArgumentList argumentList = new ArgumentList( arguments );
-        OptionSet detected = new OptionSet(recognizedOptions.toJavaUtilMap() );
+        OptionSet detected = new OptionSet( recognizedOptions.toJavaUtilMap() );
         detected.add( recognizedOptions.get( NonOptionArgumentSpec.NAME ) );
 
         while ( argumentList.hasMore() )
@@ -497,7 +494,7 @@ public class OptionParser {
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseLongOptionWithArgument(candidate);
+        KeyValuePair optionAndArgument = parseLongOptionWithArgument( candidate );
 
         if ( !isRecognized( optionAndArgument.key ) )
             throw unrecognizedOption( optionAndArgument.key );
@@ -507,7 +504,7 @@ public class OptionParser {
     }
 
     void handleShortOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseShortOptionWithArgument(candidate);
+        KeyValuePair optionAndArgument = parseShortOptionWithArgument( candidate );
 
         if ( isRecognized( optionAndArgument.key ) ) {
             specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );
@@ -550,23 +547,23 @@ public class OptionParser {
     }
 
     void requiredIf( Collection<String> precedentSynonyms, String required ) {
-        requiredIf(precedentSynonyms, specFor(required));
+        requiredIf( precedentSynonyms, specFor( required ) );
     }
 
     void requiredIf( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
-        putRequiredOption(precedentSynonyms, required, requiredIf);
+        putRequiredOption( precedentSynonyms, required, requiredIf );
     }
 
     void requiredUnless( Collection<String> precedentSynonyms, String required ) {
-        requiredUnless(precedentSynonyms, specFor(required));
+        requiredUnless( precedentSynonyms, specFor( required ) );
     }
 
     void requiredUnless( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
-        putRequiredOption(precedentSynonyms, required, requiredUnless);
+        putRequiredOption( precedentSynonyms, required, requiredUnless );
     }
 
-    private void putRequiredOption(Collection<String> precedentSynonyms, OptionSpec<?> required,
-        Map<Collection<String>, Set<OptionSpec<?>>> target) {
+    private void putRequiredOption( Collection<String> precedentSynonyms, OptionSpec<?> required,
+        Map<Collection<String>, Set<OptionSpec<?>>> target ) {
 
         for ( String each : precedentSynonyms ) {
             AbstractOptionSpec<?> spec = specFor( each );
@@ -584,7 +581,7 @@ public class OptionParser {
     }
 
     private AbstractOptionSpec<?> specFor( char option ) {
-        return specFor(String.valueOf(option));
+        return specFor( String.valueOf( option ) );
     }
 
     private AbstractOptionSpec<?> specFor( String option ) {

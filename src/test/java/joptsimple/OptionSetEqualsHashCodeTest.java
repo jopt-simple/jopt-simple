@@ -25,9 +25,9 @@
 
 package joptsimple;
 
-import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
-
 import java.util.Collections;
+
+import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>

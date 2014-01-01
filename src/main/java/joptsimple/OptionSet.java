@@ -166,7 +166,7 @@ public class OptionSet {
     public <V> V valueOf( OptionSpec<V> option ) {
         ensureNotNull( option );
 
-        List<V> values = valuesOf(option);
+        List<V> values = valuesOf( option );
         switch ( values.size() ) {
             case 0:
                 return null;
@@ -189,7 +189,7 @@ public class OptionSet {
     public List<?> valuesOf( String option ) {
         ensureNotNull( option );
 
-        AbstractOptionSpec<?> spec = detectedOptions.get(option);
+        AbstractOptionSpec<?> spec = detectedOptions.get( option );
         return spec == null ? defaultValuesFor( option ) : valuesOf( spec );
     }
 
@@ -252,7 +252,7 @@ public class OptionSet {
      * @return the detected non-option arguments
      */
     public List<?> nonOptionArguments() {
-        return unmodifiableList(valuesOf(detectedOptions.get(NonOptionArgumentSpec.NAME)));
+        return unmodifiableList( valuesOf( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );
     }
 
     void add( AbstractOptionSpec<?> spec ) {
@@ -260,7 +260,7 @@ public class OptionSet {
     }
 
     void addWithArgument( AbstractOptionSpec<?> spec, String argument ) {
-        detectedSpecs.add(spec);
+        detectedSpecs.add( spec );
 
         for ( String each : spec.options() )
             detectedOptions.put( each, spec );
