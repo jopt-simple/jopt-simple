@@ -25,11 +25,7 @@
 
 package joptsimple;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Collections.*;
 
@@ -44,16 +40,18 @@ public class OptionSet {
     private final List<OptionSpec<?>> detectedSpecs;
     private final Map<String, AbstractOptionSpec<?>> detectedOptions;
     private final Map<AbstractOptionSpec<?>, List<String>> optionsToArguments;
+    private final Map<String, AbstractOptionSpec<?>> recognizedSpecs;
     private final Map<String, List<?>> defaultValues;
 
     /*
      * Package-private because clients don't create these.
      */
-    OptionSet( Map<String, List<?>> defaults ) {
+    OptionSet( Map<String, AbstractOptionSpec<?>> recognizedSpecs ) {
         detectedSpecs = new ArrayList<OptionSpec<?>>();
         detectedOptions = new HashMap<String, AbstractOptionSpec<?>>();
         optionsToArguments = new IdentityHashMap<AbstractOptionSpec<?>, List<String>>();
-        defaultValues = new HashMap<String, List<?>>( defaults );
+        defaultValues = defaultValues( recognizedSpecs );
+        this.recognizedSpecs = recognizedSpecs;
     }
 
     /**
@@ -238,6 +236,19 @@ public class OptionSet {
     }
 
     /**
+     * Gives all declared options as a map of string to {@linkplain OptionSpec}.
+     *
+     * @return the declared options as a map
+     */
+    public Map<OptionSpec<?>, List<?>> asMap() {
+        Map<OptionSpec<?>, List<?>> map = new HashMap<OptionSpec<?>, List<?>>();
+        for ( AbstractOptionSpec<?> spec : recognizedSpecs.values() )
+            if ( !spec.representsNonOptions() )
+                map.put( spec, valuesOf( spec ) );
+        return unmodifiableMap( map );
+    }
+
+    /**
      * @return the detected non-option arguments
      */
     public List<?> nonOptionArguments() {
@@ -299,5 +310,12 @@ public class OptionSet {
 
     private <V> List<V> defaultValueFor( OptionSpec<V> option ) {
         return defaultValuesFor( option.options().iterator().next() );
+    }
+
+    private static Map<String, List<?>> defaultValues( Map<String, AbstractOptionSpec<?>> recognizedSpecs ) {
+        Map<String, List<?>> defaults = new HashMap<String, List<?>>();
+        for ( Map.Entry<String, AbstractOptionSpec<?>> each : recognizedSpecs.entrySet() )
+            defaults.put( each.getKey(), each.getValue().defaultValues() );
+        return defaults;
     }
 }

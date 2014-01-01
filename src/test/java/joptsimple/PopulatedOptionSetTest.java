@@ -21,12 +21,11 @@
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 package joptsimple;
 
 import java.util.Collections;
-import java.util.List;
 
 import static java.util.Collections.*;
 
@@ -43,7 +42,7 @@ public class PopulatedOptionSetTest {
 
     @Before
     public void setUp() {
-        populated = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        populated = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         populated.add( new NoArgumentOptionSpec( "a" ) );
         populated.addWithArgument( new RequiredArgumentOptionSpec<String>( "b" ), "arg-of-b" );
     }

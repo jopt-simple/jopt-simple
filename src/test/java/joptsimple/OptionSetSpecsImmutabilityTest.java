@@ -36,7 +36,7 @@ import org.infinitest.toolkit.UnmodifiableListTestSupport;
 public class OptionSetSpecsImmutabilityTest extends UnmodifiableListTestSupport<OptionSpec<?>> {
     @Override
     protected List<OptionSpec<?>> newList() {
-        OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         options.add( new NoArgumentOptionSpec( "a" ) );
         return options.specs();
     }

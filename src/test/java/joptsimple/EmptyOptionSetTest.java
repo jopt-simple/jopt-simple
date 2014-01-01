@@ -26,8 +26,6 @@
 package joptsimple;
 
 import java.util.Collections;
-import java.util.List;
-
 import static java.util.Collections.*;
 
 import org.junit.Before;
@@ -43,7 +41,7 @@ public class EmptyOptionSetTest {
 
     @Before
     public void setUp() {
-        empty = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        empty = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
     }
 
     @Test

@@ -35,7 +35,6 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -435,7 +434,7 @@ public class OptionParser {
      */
     public OptionSet parse( String... arguments ) {
         ArgumentList argumentList = new ArgumentList( arguments );
-        OptionSet detected = new OptionSet( defaultValues() );
+        OptionSet detected = new OptionSet( recognizedOptions.toJavaUtilMap() );
         detected.add( recognizedOptions.get( NonOptionArgumentSpec.NAME ) );
 
         while ( argumentList.hasMore() )
@@ -504,7 +503,7 @@ public class OptionParser {
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseLongOptionWithArgument(candidate);
+        KeyValuePair optionAndArgument = parseLongOptionWithArgument( candidate );
 
         if ( !isRecognized( optionAndArgument.key ) )
             throw unrecognizedOption( optionAndArgument.key );
@@ -514,7 +513,7 @@ public class OptionParser {
     }
 
     void handleShortOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
-        KeyValuePair optionAndArgument = parseShortOptionWithArgument(candidate);
+        KeyValuePair optionAndArgument = parseShortOptionWithArgument( candidate );
 
         if ( isRecognized( optionAndArgument.key ) ) {
             specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );
@@ -572,8 +571,8 @@ public class OptionParser {
         putRequiredOption( precedentSynonyms, required, requiredUnless );
     }
 
-    private void putRequiredOption(Collection<String> precedentSynonyms, OptionSpec<?> required,
-        Map<Collection<String>, Set<OptionSpec<?>>> target) {
+    private void putRequiredOption( Collection<String> precedentSynonyms, OptionSpec<?> required,
+        Map<Collection<String>, Set<OptionSpec<?>>> target ) {
 
         for ( String each : precedentSynonyms ) {
             AbstractOptionSpec<?> spec = specFor( each );
@@ -627,12 +626,5 @@ public class OptionParser {
 
     private static KeyValuePair parseShortOptionWithArgument( String argument ) {
         return KeyValuePair.valueOf( argument.substring( 1 ) );
-    }
-
-    private Map<String, List<?>> defaultValues() {
-        Map<String, List<?>> defaults = new HashMap<String, List<?>>();
-        for ( Map.Entry<String, AbstractOptionSpec<?>> each : recognizedOptions.toJavaUtilMap().entrySet() )
-            defaults.put( each.getKey(), each.getValue().defaultValues() );
-        return defaults;
     }
 }

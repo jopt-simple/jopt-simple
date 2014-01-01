@@ -37,7 +37,7 @@ public class OptionSetValuesOfSpecImmutabilityTest extends UnmodifiableListTestS
     @Override
     protected List<String> newList() {
         RequiredArgumentOptionSpec<String> optionA = new RequiredArgumentOptionSpec<String>( "a" );
-        OptionSet options = new OptionSet( Collections.<String, List<?>> emptyMap() );
+        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
         options.addWithArgument( optionA, "anArgument" );
         options.addWithArgument( optionA, "anotherArgument" );
         return options.valuesOf( optionA );
