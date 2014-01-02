@@ -27,6 +27,7 @@ public class OptionSetAsMapTest extends AbstractOptionParserFixture {
         final OptionSpec<String> e = parser.accepts( "e" ).withOptionalArg().defaultsTo( "2" );
         final OptionSpec<String> f = parser.accepts( "f" ).withRequiredArg().defaultsTo( "3" );
         final OptionSpec<String> g = parser.accepts( "g" ).withOptionalArg().defaultsTo( "4" );
+        final OptionSpec<Void> h = parser.accepts( "h" );
 
         OptionSet options = parser.parse( "-a", "-e", "-c", "5", "-d", "6", "-b", "4", "-d", "7", "-e", "8" );
 
@@ -39,6 +40,7 @@ public class OptionSetAsMapTest extends AbstractOptionParserFixture {
                 put( e, asList( "8" ) );
                 put( f, asList( "3" ) );
                 put( g, asList( "4" ) );
+                put( h, asList() );
             }
         };
         assertThat( options.asMap(), is( equalTo( expected ) ) );
