@@ -21,7 +21,7 @@
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+*/
 
 package joptsimple;
 
@@ -190,7 +190,7 @@ import static joptsimple.ParserRules.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  * @see <a href="http://www.gnu.org/software/libc/manual">The GNU C Library</a>
  */
-public class OptionParser implements OptionDeclarer {
+public class OptionParser {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredUnless;
