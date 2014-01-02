@@ -169,7 +169,7 @@ public interface OptionDeclarer {
      * @throws OptionException if the option contains illegal characters
      * @throws NullPointerException if the option is {@code null}
      */
-    OptionSpecBuilder accepts(String option);
+    OptionSpecBuilder accepts( String option );
 
     /**
      * Tells the parser to recognize the given option.
@@ -182,7 +182,7 @@ public interface OptionDeclarer {
      * @throws OptionException if the option contains illegal characters
      * @throws NullPointerException if the option is {@code null}
      */
-    OptionSpecBuilder accepts(String option, String description);
+    OptionSpecBuilder accepts( String option, String description );
 
     /**
      * Tells the parser to recognize the given options, and treat them as synonymous.
@@ -193,7 +193,7 @@ public interface OptionDeclarer {
      * @throws OptionException if any of the options contain illegal characters
      * @throws NullPointerException if the option list or any of its elements are {@code null}
      */
-    OptionSpecBuilder acceptsAll(Collection<String> options);
+    OptionSpecBuilder acceptsAll( Collection<String> options );
 
     /**
      * Tells the parser to recognize the given options, and treat them as synonymous.
@@ -207,7 +207,7 @@ public interface OptionDeclarer {
      * @throws NullPointerException if the option list or any of its elements are {@code null}
      * @throws IllegalArgumentException if the option list is empty
      */
-    OptionSpecBuilder acceptsAll(Collection<String> options, String description);
+    OptionSpecBuilder acceptsAll( Collection<String> options, String description );
 
     /**
      * Gives an object that represents an access point for non-option arguments on a command line.
@@ -224,14 +224,14 @@ public interface OptionDeclarer {
      * help information about the parser.
      * @return an object that can be used to flesh out more detail about the non-option arguments
      */
-    NonOptionArgumentSpec<String> nonOptions(String description);
+    NonOptionArgumentSpec<String> nonOptions( String description );
 
     /**
      * Tells the parser whether or not to behave "POSIX-ly correct"-ly.
      *
      * @param setting {@code true} if the parser should behave "POSIX-ly correct"-ly
      */
-    void posixlyCorrect(boolean setting);
+    void posixlyCorrect( boolean setting );
 
     /**
      * <p>Tells the parser to treat unrecognized options as non-option arguments.</p>
@@ -246,5 +246,5 @@ public interface OptionDeclarer {
      *
      * @param recognize {@code true} if the parser is to recognize the special style of long options
      */
-    void recognizeAlternativeLongOptions(boolean recognize);
+    void recognizeAlternativeLongOptions( boolean recognize );
 }
