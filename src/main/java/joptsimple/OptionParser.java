@@ -414,6 +414,15 @@ public class OptionParser implements OptionDeclarer {
 
         helpFormatter = formatter;
     }
+    
+    /**
+     * Retrieves all the options which have been configured for the parser.
+     * 
+     * @return a {@link Map} containing all the configured options and their corresponding {@link OptionSpec}
+     */
+    public Map<String, OptionSpec<?>> recognizedOptions() {
+        return new HashMap<String, OptionSpec<?>>( recognizedOptions.toJavaUtilMap() );
+    }
 
     /**
      * Parses the given command line arguments according to the option specifications given to the parser.
