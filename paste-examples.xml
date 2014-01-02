@@ -58,6 +58,14 @@
             srcfile="${example.src.dir}/joptsimple/examples/TypesafeOptionArgumentRetrievalTest.java">
             <filterchain refid="htmlFilter"/>
         </loadfile>
+        <loadfile property="typesafe.option.argument.retrieval.example"
+            srcfile="${example.src.dir}/joptsimple/examples/TypesafeOptionArgumentRetrievalTest.java">
+            <filterchain refid="htmlFilter"/>
+        </loadfile>
+        <loadfile property="export.options.example"
+            srcfile="${example.src.dir}/joptsimple/examples/ExportOptionsTest.java">
+            <filterchain refid="htmlFilter"/>
+        </loadfile>
         <loadfile property="required.options.example"
             srcfile="${example.src.dir}/joptsimple/examples/RequiredOptionsTest.java">
             <filterchain refid="htmlFilter"/>
@@ -160,6 +168,8 @@
                 value="${option.argument.converter.example}"/>
             <replacefilter token="@TYPESAFE_OPTION_ARGUMENT_RETRIEVAL_EXAMPLE@"
                 value="${typesafe.option.argument.retrieval.example}"/>
+            <replacefilter token="@EXPORTING_OPTIONS_AND_ARGUMENTS_EXAMPLE@"
+                value="${export.options.example}"/>
             <replacefilter token="@DEFAULT_VALUES_FOR_OPTION_ARGUMENTS_EXAMPLE@"
                 value="${default.values.for.option.arguments.example}"/>
             <replacefilter token="@REQUIRED_OPTIONS_EXAMPLE@"

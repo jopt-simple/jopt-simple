@@ -10,6 +10,9 @@ Changes in version 4.6
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/38} gh-38}} by offering
       <<<OptionParser.recognizedOptions()>>>. Thanks to Antoine Neveux for this.
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/35} gh-35}} by offering
+      <<<OptionSet.asMap()>>>. Thanks to Brian Oxley for this.
+
 Changes in version 4.5
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/17} gh-17}} by offering

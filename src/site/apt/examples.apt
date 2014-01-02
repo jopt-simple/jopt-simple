@@ -237,6 +237,19 @@ Options
 @TYPESAFE_OPTION_ARGUMENT_RETRIEVAL_EXAMPLE@
 +----------------------------------------------------------------------------------------
 
+** Exporting Options and Arguments to other Code
+
+    As an integration aid for other libraries, you can use <<<OptionSet.asMap()>>> to
+    obtain a mapping of <<<OptionSpec>>> to option values, for example to create a
+    properties map of options.
+
+    Here is sample code to create properties whose keys have a common prefix.  The key is
+    choosen as the first non-short option:
+
++----------------------------------------------------------------------------------------
+@EXPORTING_OPTIONS_AND_ARGUMENTS_EXAMPLE@
++----------------------------------------------------------------------------------------
+
 ** Default Values for Option Arguments
 
     Often it is convenient to specify default values for the arguments of certain
