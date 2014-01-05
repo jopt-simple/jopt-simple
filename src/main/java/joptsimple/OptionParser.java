@@ -228,69 +228,18 @@ public class OptionParser implements OptionDeclarer {
         new OptionSpecTokenizer( optionSpecification ).configure( this );
     }
 
-    /**
-     * <p>Tells the parser to recognize the given option.</p>
-     *
-     * <p>This method returns an instance of {@link OptionSpecBuilder} to allow the formation of parser directives
-     * as sentences in a fluent interface language. For example:</p>
-     *
-     * <pre><code>
-     *   OptionParser parser = new OptionParser();
-     *   parser.<strong>accepts( "c" )</strong>.withRequiredArg().ofType( Integer.class );
-     * </code></pre>
-     *
-     * <p>If no methods are invoked on the returned {@link OptionSpecBuilder}, then the parser treats the option as
-     * accepting no argument.</p>
-     *
-     * @param option the option to recognize
-     * @return an object that can be used to flesh out more detail about the option
-     * @throws OptionException if the option contains illegal characters
-     * @throws NullPointerException if the option is {@code null}
-     */
     public OptionSpecBuilder accepts( String option ) {
         return acceptsAll( singletonList( option ) );
     }
 
-    /**
-     * Tells the parser to recognize the given option.
-     *
-     * @see #accepts(String)
-     * @param option the option to recognize
-     * @param description a string that describes the purpose of the option. This is used when generating help
-     * information about the parser.
-     * @return an object that can be used to flesh out more detail about the option
-     * @throws OptionException if the option contains illegal characters
-     * @throws NullPointerException if the option is {@code null}
-     */
     public OptionSpecBuilder accepts( String option, String description ) {
         return acceptsAll( singletonList( option ), description );
     }
 
-    /**
-     * Tells the parser to recognize the given options, and treat them as synonymous.
-     *
-     * @see #accepts(String)
-     * @param options the options to recognize and treat as synonymous
-     * @return an object that can be used to flesh out more detail about the options
-     * @throws OptionException if any of the options contain illegal characters
-     * @throws NullPointerException if the option list or any of its elements are {@code null}
-     */
     public OptionSpecBuilder acceptsAll( Collection<String> options ) {
         return acceptsAll( options, "" );
     }
 
-    /**
-     * Tells the parser to recognize the given options, and treat them as synonymous.
-     *
-     * @see #acceptsAll(Collection)
-     * @param options the options to recognize and treat as synonymous
-     * @param description a string that describes the purpose of the option.  This is used when generating help
-     * information about the parser.
-     * @return an object that can be used to flesh out more detail about the options
-     * @throws OptionException if any of the options contain illegal characters
-     * @throws NullPointerException if the option list or any of its elements are {@code null}
-     * @throws IllegalArgumentException if the option list is empty
-     */
     public OptionSpecBuilder acceptsAll( Collection<String> options, String description ) {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
@@ -300,11 +249,6 @@ public class OptionParser implements OptionDeclarer {
         return new OptionSpecBuilder( this, options, description );
     }
 
-    /**
-     * Gives an object that represents an access point for non-option arguments on a command line.
-     *
-     * @return an object that can be used to flesh out more detail about the non-option arguments
-     */
     public NonOptionArgumentSpec<String> nonOptions() {
         NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<String>();
 
@@ -313,14 +257,6 @@ public class OptionParser implements OptionDeclarer {
         return spec;
     }
 
-    /**
-     * Gives an object that represents an access point for non-option arguments on a command line.
-     *
-     * @see #nonOptions()
-     * @param description a string that describes the purpose of the non-option arguments. This is used when generating
-     * help information about the parser.
-     * @return an object that can be used to flesh out more detail about the non-option arguments
-     */
     public NonOptionArgumentSpec<String> nonOptions( String description ) {
         NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<String>( description );
 
@@ -329,11 +265,6 @@ public class OptionParser implements OptionDeclarer {
         return spec;
     }
 
-    /**
-     * Tells the parser whether or not to behave "POSIX-ly correct"-ly.
-     *
-     * @param setting {@code true} if the parser should behave "POSIX-ly correct"-ly
-     */
     public void posixlyCorrect( boolean setting ) {
         posixlyCorrect = setting;
         state = moreOptions( setting );
@@ -343,12 +274,6 @@ public class OptionParser implements OptionDeclarer {
         return posixlyCorrect;
     }
 
-    /**
-     * <p>Tells the parser to treat unrecognized options as non-option arguments.</p>
-     *
-     * <p>If not called, then the parser raises an {@link OptionException} when it encounters an unrecognized
-     * option.</p>
-     */
     public void allowsUnrecognizedOptions() {
         allowsUnrecognizedOptions = true;
     }
@@ -357,11 +282,6 @@ public class OptionParser implements OptionDeclarer {
         return allowsUnrecognizedOptions;
     }
 
-    /**
-     * Tells the parser either to recognize or ignore <kbd>"-W"</kbd>-style long options.
-     *
-     * @param recognize {@code true} if the parser is to recognize the special style of long options
-     */
     public void recognizeAlternativeLongOptions( boolean recognize ) {
         if ( recognize )
             recognize( new AlternativeLongOptionSpec() );
@@ -414,10 +334,10 @@ public class OptionParser implements OptionDeclarer {
 
         helpFormatter = formatter;
     }
-    
+
     /**
      * Retrieves all the options which have been configured for the parser.
-     * 
+     *
      * @return a {@link Map} containing all the configured options and their corresponding {@link OptionSpec}
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
