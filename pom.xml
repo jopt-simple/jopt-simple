@@ -227,7 +227,7 @@
                     <links>
                         <link>http://download.oracle.com/javase/1.5.0/docs/api</link>
                     </links>
-                    <bottom><![CDATA[<i>&copy; Copyright 2004-2013 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License. pholser@alumni.rice.edu</i>]]></bottom>
+                    <bottom><![CDATA[<i>&copy; Copyright 2004-2014 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License. pholser@alumni.rice.edu</i>]]></bottom>
                 </configuration>
                 <reportSets>
                     <reportSet>
