@@ -220,7 +220,7 @@
                 <version>2.9.1</version>
                 <configuration>
                     <!-- TODO: Workaround for JDK8 - avoid javadoc bug on HTML kbd tag -->
-                    <additionalparam>-Xdoclint:none</additionalparam>
+<!--                    <additionalparam>-Xdoclint:none</additionalparam> -->
                     <source>1.5</source>
                     <show>public</show>
                     <excludePackageNames>joptsimple.examples:joptsimple.internal:joptsimple.internal.*</excludePackageNames>
