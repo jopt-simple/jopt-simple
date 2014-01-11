@@ -38,10 +38,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.Collections.*;
-import static joptsimple.OptionException.*;
-import static joptsimple.OptionParserState.*;
-import static joptsimple.ParserRules.*;
+import static java.util.Collections.singletonList;
+import static joptsimple.OptionException.unrecognizedOption;
+import static joptsimple.OptionParserState.moreOptions;
+import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
+import static joptsimple.ParserRules.ensureLegalOptions;
+import static joptsimple.ParserRules.isLongOptionToken;
+import static joptsimple.ParserRules.isShortOptionToken;
 
 /**
  * <p>Parses command line arguments, using a syntax that attempts to take from the best of POSIX {@code getopt()}
@@ -290,7 +293,7 @@ public class OptionParser implements OptionDeclarer {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll( spec.options(), spec );
+        recognizedOptions.putAll(spec.options(), spec);
     }
 
     /**
@@ -336,15 +339,17 @@ public class OptionParser implements OptionDeclarer {
     }
 
     /**
-     * Retrieves all the options which have been configured for the parser.
+     * Retrieves all the options which have been configured for the parser in the same order as declared during
+     * training.
      *
-     * @return a {@link Map} containing all the configured options and their corresponding {@link OptionSpec}
+     * @return a map containing all the configured options and their corresponding {@link OptionSpec}
+     * @since 4.6
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
-        return new HashMap<String, OptionSpec<?>>( recognizedOptions.toJavaUtilMap() );
+        return (Map<String, OptionSpec<?>>) (Map) recognizedOptions.toJavaUtilMap();
     }
 
-    /**
+   /**
      * Parses the given command line arguments according to the option specifications given to the parser.
      *
      * @param arguments arguments to parse

@@ -21,18 +21,20 @@
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 package joptsimple;
 
+import org.junit.Test;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import java.util.Map;
-
-import org.junit.Test;
 
 public class OptionParserRecognizedOptionsTest extends AbstractOptionParserFixture {
     @Test
@@ -43,13 +45,32 @@ public class OptionParserRecognizedOptionsTest extends AbstractOptionParserFixtu
 
         Map<String, OptionSpec<?>> recognizedOptions = parser.recognizedOptions();
 
-        assertEquals(4, recognizedOptions.size());
+        assertEquals( 4, recognizedOptions.size() );
         assertTrue( recognizedOptions.keySet().contains( "first" ) );
         assertTrue( recognizedOptions.keySet().contains( "second" ) );
         assertTrue( recognizedOptions.keySet().contains( "third" ) );
         assertTrue( recognizedOptions.keySet().contains( "[arguments]" ) );
         assertTrue( recognizedOptions.get( "third" ).isForHelp() );
-        assertFalse( recognizedOptions.get("second").isForHelp() );
-        assertNotNull( recognizedOptions.get("first").options() );
+        assertFalse( recognizedOptions.get( "second" ).isForHelp() );
+        assertNotNull( recognizedOptions.get( "first" ).options() );
+    }
+
+    @Test
+    public void insertionOrderPreserved() {
+        final OptionSpecBuilder z = parser.acceptsAll( asList( "zebra", "aardvark" ) );
+        final OptionSpecBuilder y = parser.accepts( "yak" );
+        final OptionSpecBuilder x = parser.acceptsAll( asList( "baboon", "xantus" ) );
+
+        assertEquals(new LinkedHashMap<String, OptionSpec<?>>() {
+            {
+                for (final String option : parser.nonOptions().options())
+                    put(option, parser.nonOptions());
+                put("zebra", z);
+                put("aardvark", z);
+                put("yak", y);
+                put("baboon", x);
+                put("xantus", x);
+            }
+        }, parser.recognizedOptions());
     }
 }
