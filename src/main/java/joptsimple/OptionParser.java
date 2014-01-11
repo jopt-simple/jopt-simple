@@ -32,9 +32,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -195,6 +198,7 @@ import static joptsimple.ParserRules.isShortOptionToken;
  */
 public class OptionParser implements OptionDeclarer {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
+    private final List<OptionSpec<?>> trainingOrder;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredUnless;
     private OptionParserState state;
@@ -208,6 +212,7 @@ public class OptionParser implements OptionDeclarer {
      */
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
+        trainingOrder = new ArrayList<OptionSpec<?>>();
         requiredIf = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
@@ -294,6 +299,7 @@ public class OptionParser implements OptionDeclarer {
 
     void recognize( AbstractOptionSpec<?> spec ) {
         recognizedOptions.putAll(spec.options(), spec);
+        trainingOrder.add( spec );
     }
 
     /**
@@ -339,14 +345,21 @@ public class OptionParser implements OptionDeclarer {
     }
 
     /**
-     * Retrieves all the options which have been configured for the parser in the same order as declared during
-     * training.
+     * Retrieves all options-spec pairings which have been configured for the parser in the same order as declared
+     * during training. Option flags for specs are alphabetized by {@link OptionSpec#options()}; only the order of the
+     * specs is preserved.
+     *
+     * (Note: prior to 4.7 the order was alphabetical across all options regardless of spec.)
      *
      * @return a map containing all the configured options and their corresponding {@link OptionSpec}
      * @since 4.6
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
-        return (Map<String, OptionSpec<?>>) (Map) recognizedOptions.toJavaUtilMap();
+        final Map<String, OptionSpec<?>> options = new LinkedHashMap<String, OptionSpec<?>>();
+        for ( final OptionSpec<?> spec : trainingOrder )
+            for ( final String option : spec.options() )
+                options.put( option, spec );
+        return options;
     }
 
    /**
