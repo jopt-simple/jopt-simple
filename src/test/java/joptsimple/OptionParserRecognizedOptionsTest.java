@@ -27,7 +27,7 @@ package joptsimple;
 
 import org.junit.Test;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
@@ -56,21 +56,12 @@ public class OptionParserRecognizedOptionsTest extends AbstractOptionParserFixtu
     }
 
     @Test
-    public void insertionOrderPreserved() {
+    public void parserPreservesTrainingOrder() {
         final OptionSpecBuilder z = parser.acceptsAll( asList( "zebra", "aardvark" ) );
         final OptionSpecBuilder y = parser.accepts( "yak" );
         final OptionSpecBuilder x = parser.acceptsAll( asList( "baboon", "xantus" ) );
 
-        assertEquals(new LinkedHashMap<String, OptionSpec<?>>() {
-            {
-                for (final String option : parser.nonOptions().options())
-                    put(option, parser.nonOptions());
-                put("zebra", z);
-                put("aardvark", z);
-                put("yak", y);
-                put("baboon", x);
-                put("xantus", x);
-            }
-        }, parser.recognizedOptions());
+        assertEquals( asList( "[arguments]", "aardvark", "zebra", "yak", "baboon", "xantus" ), new ArrayList<String>(
+            parser.recognizedOptions().keySet() ) );
     }
 }
