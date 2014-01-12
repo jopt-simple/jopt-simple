@@ -33,7 +33,7 @@ import java.util.List;
  *
  * <p>Instances of this interface are returned by the "fluent interface" methods to allow retrieval of option arguments
  * in a type-safe manner.  Here's an example:</p>
- * 
+ *
  * <pre><code>
  *     OptionParser parser = new OptionParser();
  *     <strong>OptionSpec&lt;Integer&gt;</strong> count =
@@ -49,7 +49,7 @@ import java.util.List;
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-public interface OptionSpec<V> {
+public interface OptionSpec<V> extends OptionDescriptor {
     /**
      * Gives any arguments associated with the given option in the given set of detected options.
      *
@@ -95,4 +95,6 @@ public interface OptionSpec<V> {
      * @return whether this option is designated as a "help" option
      */
     boolean isForHelp();
+
+    V convert( String argument );
 }

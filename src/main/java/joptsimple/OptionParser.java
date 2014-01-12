@@ -200,7 +200,7 @@ import static joptsimple.ParserRules.isShortOptionToken;
  */
 public class OptionParser implements OptionDeclarer {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
-    private final List<AbstractOptionSpec<?>> trainingOrder;
+    private final List<OptionSpec<?>> trainingOrder;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredUnless;
     private OptionParserState state;
@@ -214,7 +214,7 @@ public class OptionParser implements OptionDeclarer {
      */
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
-        trainingOrder = new ArrayList<AbstractOptionSpec<?>>();
+        trainingOrder = new ArrayList<OptionSpec<?>>();
         requiredIf = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
@@ -309,7 +309,7 @@ public class OptionParser implements OptionDeclarer {
         private HelpFormatter helpFormatter;
         private OptionOrder optionOrder = ALPHABETICAL_ORDER;
 
-        HelpPrinter( final OptionParser optionParser ) {
+        private HelpPrinter( final OptionParser optionParser ) {
             this.optionParser = optionParser;
         }
 
@@ -333,7 +333,7 @@ public class OptionParser implements OptionDeclarer {
         }
 
         private String formatHelp() {
-            return helpFormatter.format( optionParser.recognizedDescriptors( optionOrder ) );
+            return helpFormatter().format( optionParser.recognizedOptions( optionOrder ) );
         }
 
         private HelpFormatter helpFormatter() {
@@ -404,17 +404,17 @@ public class OptionParser implements OptionDeclarer {
      * @since 4.6
      * @todo Consider a DescribedOptionSpec extending both {@code OptionSpec} and {@code OptionDescriptor}
      */
-    public Map<String, OptionSpec<?>> recognizedOptions() {
-        return (Map<String, OptionSpec<?>>) (Map) recognizedDescriptors( TRAINING_ORDER );
+    public Map<String, ? extends OptionSpec<?>> recognizedOptions() {
+        return recognizedOptions(TRAINING_ORDER);
     }
 
-    Map<String, AbstractOptionSpec<?>> recognizedDescriptors( OptionOrder optionOrder ) {
+    Map<String, ? extends OptionSpec<?>> recognizedOptions(OptionOrder optionOrder) {
         switch ( optionOrder ) {
             case ALPHABETICAL_ORDER:
                 return recognizedOptions.toJavaUtilMap();
             case TRAINING_ORDER:
-                final Map<String, AbstractOptionSpec<?>> options = new LinkedHashMap<String, AbstractOptionSpec<?>>();
-                for ( final AbstractOptionSpec<?> spec : trainingOrder )
+                final Map<String, OptionSpec<?>> options = new LinkedHashMap<String, OptionSpec<?>>();
+                for ( final OptionSpec<?> spec : trainingOrder )
                     for ( final String option : spec.options() )
                         options.put( option, spec );
                 return options;
@@ -457,13 +457,13 @@ public class OptionParser implements OptionDeclarer {
     private Collection<String> missingRequiredOptions( OptionSet options ) {
         Collection<String> missingRequiredOptions = new HashSet<String>();
 
-        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+        for ( OptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
             if ( each.isRequired() && !options.has( each ) )
                 missingRequiredOptions.addAll( each.options() );
         }
 
         for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredIf.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+            OptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
 
             if ( optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
                 missingRequiredOptions.addAll( required.options() );
@@ -471,7 +471,7 @@ public class OptionParser implements OptionDeclarer {
         }
 
         for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredUnless.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+            OptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
 
             if ( !optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
                 missingRequiredOptions.addAll( required.options() );
@@ -492,7 +492,7 @@ public class OptionParser implements OptionDeclarer {
 
     private boolean isHelpOptionPresent( OptionSet options ) {
         boolean helpOptionPresent = false;
-        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+        for ( OptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
             if ( each.isForHelp() && options.has( each ) ) {
                 helpOptionPresent = true;
                 break;

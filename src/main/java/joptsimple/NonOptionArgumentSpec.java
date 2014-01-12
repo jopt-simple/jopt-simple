@@ -128,8 +128,7 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
         return this;
     }
 
-    @Override
-    protected final V convert( String argument ) {
+    public final V convert( String argument ) {
         return convertWith( converter, argument );
     }
 
