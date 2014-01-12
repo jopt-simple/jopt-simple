@@ -21,7 +21,7 @@
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 package joptsimple;
 
@@ -43,6 +43,8 @@ import java.util.Set;
 
 import static java.util.Collections.singletonList;
 import static joptsimple.OptionException.unrecognizedOption;
+import static joptsimple.OptionOrder.ALPHABETICAL_ORDER;
+import static joptsimple.OptionOrder.TRAINING_ORDER;
 import static joptsimple.OptionParserState.moreOptions;
 import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
 import static joptsimple.ParserRules.ensureLegalOptions;
@@ -198,7 +200,7 @@ import static joptsimple.ParserRules.isShortOptionToken;
  */
 public class OptionParser implements OptionDeclarer {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
-    private final List<OptionSpec<?>> trainingOrder;
+    private final List<AbstractOptionSpec<?>> trainingOrder;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
     private final Map<Collection<String>, Set<OptionSpec<?>>> requiredUnless;
     private OptionParserState state;
@@ -212,7 +214,7 @@ public class OptionParser implements OptionDeclarer {
      */
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
-        trainingOrder = new ArrayList<OptionSpec<?>>();
+        trainingOrder = new ArrayList<AbstractOptionSpec<?>>();
         requiredIf = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
@@ -298,8 +300,49 @@ public class OptionParser implements OptionDeclarer {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll(spec.options(), spec);
+        recognizedOptions.putAll( spec.options(), spec );
         trainingOrder.add( spec );
+    }
+
+    public static class HelpPrinter {
+        private final OptionParser optionParser;
+        private HelpFormatter helpFormatter;
+        private OptionOrder optionOrder = ALPHABETICAL_ORDER;
+
+        HelpPrinter( final OptionParser optionParser ) {
+            this.optionParser = optionParser;
+        }
+
+        public HelpPrinter with( HelpFormatter helpFormatter ) {
+            this.helpFormatter = helpFormatter;
+            return this;
+        }
+
+        public HelpPrinter in( OptionOrder optionOrder ) {
+            this.optionOrder = optionOrder;
+            return this;
+        }
+
+        public void on( OutputStream sink ) throws IOException {
+            on( new OutputStreamWriter( sink ) );
+        }
+
+        public void on( Writer sink ) throws IOException {
+            sink.write( formatHelp() );
+            sink.flush();
+        }
+
+        private String formatHelp() {
+            return helpFormatter.format( optionParser.recognizedDescriptors( optionOrder ) );
+        }
+
+        private HelpFormatter helpFormatter() {
+            return null == helpFormatter ? optionParser.helpFormatter : helpFormatter;
+        }
+    }
+
+    public HelpPrinter printHelp() {
+        return new HelpPrinter( this );
     }
 
     /**
@@ -349,20 +392,38 @@ public class OptionParser implements OptionDeclarer {
      * during training. Option flags for specs are alphabetized by {@link OptionSpec#options()}; only the order of the
      * specs is preserved.
      *
+     * Ideally the signature would be {@code <T extends OptionSpec<?> & OptionDescriptor> Map<String, T>}, and while
+     * this works when consuming an iterator of the returned map, it is impossible to declare a variable of this type to
+     * receive the map itself.
+     *
+     * Hence, it is guaranteed safe to cast values to be either {@code OptionSpec<?>} or {@code OptionDescriptor}.
+     *
      * (Note: prior to 4.7 the order was alphabetical across all options regardless of spec.)
      *
      * @return a map containing all the configured options and their corresponding {@link OptionSpec}
      * @since 4.6
+     * @todo Consider a DescribedOptionSpec extending both {@code OptionSpec} and {@code OptionDescriptor}
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
-        final Map<String, OptionSpec<?>> options = new LinkedHashMap<String, OptionSpec<?>>();
-        for ( final OptionSpec<?> spec : trainingOrder )
-            for ( final String option : spec.options() )
-                options.put( option, spec );
-        return options;
+        return (Map<String, OptionSpec<?>>) (Map) recognizedDescriptors( TRAINING_ORDER );
     }
 
-   /**
+    Map<String, AbstractOptionSpec<?>> recognizedDescriptors( OptionOrder optionOrder ) {
+        switch ( optionOrder ) {
+            case ALPHABETICAL_ORDER:
+                return recognizedOptions.toJavaUtilMap();
+            case TRAINING_ORDER:
+                final Map<String, AbstractOptionSpec<?>> options = new LinkedHashMap<String, AbstractOptionSpec<?>>();
+                for ( final AbstractOptionSpec<?> spec : trainingOrder )
+                    for ( final String option : spec.options() )
+                        options.put( option, spec );
+                return options;
+            default:
+                throw new IllegalStateException( "BUG: Unrecognized option order: " + optionOrder );
+        }
+    }
+
+    /**
      * Parses the given command line arguments according to the option specifications given to the parser.
      *
      * @param arguments arguments to parse
@@ -455,8 +516,7 @@ public class OptionParser implements OptionDeclarer {
 
         if ( isRecognized( optionAndArgument.key ) ) {
             specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );
-        }
-        else
+        } else
             handleShortOptionCluster( candidate, arguments, detected );
     }
 
@@ -465,7 +525,7 @@ public class OptionParser implements OptionDeclarer {
         validateOptionCharacters( options );
 
         for ( int i = 0; i < options.length; i++ ) {
-            AbstractOptionSpec<?> optionSpec = specFor( options[ i ] );
+            AbstractOptionSpec<?> optionSpec = specFor( options[i] );
 
             if ( optionSpec.acceptsArguments() && options.length > i + 1 ) {
                 String detectedArgument = String.valueOf( options, i + 1, options.length - 1 - i );
@@ -540,7 +600,7 @@ public class OptionParser implements OptionDeclarer {
     }
 
     private static char[] extractShortOptionsFrom( String argument ) {
-        char[] options = new char[ argument.length() - 1 ];
+        char[] options = new char[argument.length() - 1];
         argument.getChars( 1, argument.length(), options, 0 );
 
         return options;

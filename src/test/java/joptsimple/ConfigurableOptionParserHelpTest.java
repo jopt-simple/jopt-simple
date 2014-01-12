@@ -25,21 +25,24 @@
 
 package joptsimple;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import static java.math.BigDecimal.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static joptsimple.internal.Strings.*;
-import static joptsimple.util.DateConverter.*;
-import static org.junit.Assert.*;
+import static java.math.BigDecimal.TEN;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+import static joptsimple.OptionOrder.ALPHABETICAL_ORDER;
+import static joptsimple.OptionOrder.TRAINING_ORDER;
+import static joptsimple.internal.Strings.EMPTY;
+import static joptsimple.internal.Strings.LINE_SEPARATOR;
+import static joptsimple.internal.Strings.join;
+import static joptsimple.util.DateConverter.datePattern;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -49,7 +52,7 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
 
     @Before
     public final void createSink() {
-        parser.formatHelpWith( new BuiltinHelpFormatter( 120, 3 ) );
+        parser.formatHelpWith( new BuiltinHelpFormatter( 120, 3, ALPHABETICAL_ORDER ) );
         sink = new StringWriter();
     }
 
@@ -481,6 +484,23 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
             "---------------------   -----------",
             "* -e                               ",
             EMPTY );
+    }
+
+    @Test
+    public void formatterPreservesTrainingOrder() throws Exception {
+        parser.acceptsAll( asList( "zebra", "aardvark" ) );
+        parser.accepts( "yak" );
+        parser.acceptsAll( asList( "baboon", "xantus" ) );
+
+        parser.printHelp().with( new BuiltinHelpFormatter( 120, 3, TRAINING_ORDER ) ).in( TRAINING_ORDER ).on( sink );
+
+        assertHelpLines(
+                "Option                Description",
+                "------                -----------",
+                "--aardvark, --zebra              ",
+                "--yak                            ",
+                "--baboon, --xantus               ",
+                EMPTY );
     }
 
     private void assertHelpLines( String... expectedLines ) {
