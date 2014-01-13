@@ -492,7 +492,7 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.accepts( "yak" );
         parser.acceptsAll( asList( "baboon", "xantus" ) );
 
-        parser.printHelp().with( new BuiltinHelpFormatter( 120, 3, TRAINING_ORDER ) ).on( sink );
+        parser.printHelp().formatWith(new BuiltinHelpFormatter(120, 3, TRAINING_ORDER)).on( sink );
 
         assertHelpLines(
                 "Option                Description",

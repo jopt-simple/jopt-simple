@@ -303,6 +303,11 @@ public class OptionParser implements OptionDeclarer {
         trainingOrder.add( spec );
     }
 
+    /**
+     * Provides a fluent alternative to {@link #printHelpOn(OutputStream)} and friends.
+     *
+     * See {@link #printHelpOn(OutputStream)} for one-call alternative
+     */
     public static class HelpPrinter {
         private final OptionParser optionParser;
         private HelpFormatter helpFormatter;
@@ -311,15 +316,41 @@ public class OptionParser implements OptionDeclarer {
             this.optionParser = optionParser;
         }
 
-        public HelpPrinter with( HelpFormatter helpFormatter ) {
+        /**
+         * Changes the help formatter. The default otherwise is to use the help formatter of the option parser.
+         *
+         * @param helpFormatter the help formatter, never missing
+         * @return the help printer, never missing
+         */
+        public HelpPrinter formatWith( HelpFormatter helpFormatter ) {
             this.helpFormatter = helpFormatter;
             return this;
         }
 
+        /**
+         * Writes information about the options this parser recognizes to the given output sink.
+         *
+         * The output sink is flushed, but not closed.
+         *
+         * @param sink the sink to write information to
+         * @throws IOException if there is a problem writing to the sink
+         * @throws NullPointerException if {@code sink} is {@code null}
+         * @see #on(Writer)
+         */
         public void on( OutputStream sink ) throws IOException {
             on( new OutputStreamWriter( sink ) );
         }
 
+        /**
+         * Writes information about the options this parser recognizes to the given output sink.
+         *
+         * The output sink is flushed, but not closed.
+         *
+         * @param sink the sink to write information to
+         * @throws IOException if there is a problem writing to the sink
+         * @throws NullPointerException if {@code sink} is {@code null}
+         * @see #on(OutputStream)
+         */
         public void on( Writer sink ) throws IOException {
             sink.write( formatHelp() );
             sink.flush();
@@ -334,6 +365,12 @@ public class OptionParser implements OptionDeclarer {
         }
     }
 
+    /**
+     * Provides a fluent alternative to {@link #printHelpOn(OutputStream)} and friends.
+     *
+     * @see #printHelpOn(OutputStream)
+     * @since 4.7
+     */
     public HelpPrinter printHelp() {
         return new HelpPrinter( this );
     }
@@ -347,6 +384,7 @@ public class OptionParser implements OptionDeclarer {
      * @throws IOException if there is a problem writing to the sink
      * @throws NullPointerException if {@code sink} is {@code null}
      * @see #printHelpOn(Writer)
+     * @see #printHelp()
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
         printHelpOn( new OutputStreamWriter( sink ) );
@@ -361,6 +399,7 @@ public class OptionParser implements OptionDeclarer {
      * @throws IOException if there is a problem writing to the sink
      * @throws NullPointerException if {@code sink} is {@code null}
      * @see #printHelpOn(OutputStream)
+     * @see #printHelp()
      */
     public void printHelpOn( Writer sink ) throws IOException {
         sink.write( helpFormatter.format( this ) );
@@ -384,6 +423,8 @@ public class OptionParser implements OptionDeclarer {
      * Retrieves all options-spec pairings which have been configured for the parser in the same order as declared
      * during training. Option flags for specs are alphabetized by {@link OptionSpec#options()}; only the order of the
      * specs is preserved.
+     *
+     * Note: the return type has changed since 4.6.
      *
      * @return a map containing all the configured options and their corresponding {@link OptionSpec}
      * @since 4.7
