@@ -392,12 +392,12 @@ public class OptionParser implements OptionDeclarer {
         return OptionOrder.asMap( TRAINING_ORDER.of( this ) );
     }
 
-    Collection<? extends OptionSpec<?>> abbreviationOrder() {
-        return recognizedOptions.values();
+    List<? extends OptionSpec<?>> abbreviationOrder() {
+        return new ArrayList<OptionSpec<?>>( recognizedOptions.values() );
     }
 
-    Collection<? extends OptionSpec<?>> trainingOrder() {
-        return new ArrayList<OptionSpec<?>>(trainingOrder);
+    List<? extends OptionSpec<?>> trainingOrder() {
+        return new ArrayList<OptionSpec<?>>( trainingOrder );
     }
 
     /**

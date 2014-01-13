@@ -1,11 +1,13 @@
 package joptsimple;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
+import static java.util.Collections.sort;
 
 /**
  * {@code OptionOrder} orders option parser specs into maps of option-spec pairs. Each enum is a strategy for ordering.
@@ -33,15 +35,15 @@ public enum OptionOrder {
      */
     FIRST_OPTION_ORDER {
         @Override
-        public Collection<OptionSpec<?>> of( OptionParser optionParser ) {
+        public List<OptionSpec<?>> of( OptionParser optionParser ) {
             Comparator<OptionSpec<?>> byFirstOption = new Comparator<OptionSpec<?>>() {
                 public int compare( OptionSpec<?> first, OptionSpec<?> second ) {
                     return first.options().iterator().next().compareTo( second.options().iterator().next() );
                 }
             };
 
-            SortedSet<OptionSpec<?>> sorted = new TreeSet<OptionSpec<?>>( byFirstOption );
-            sorted.addAll( optionParser.abbreviationOrder() );
+            List<OptionSpec<?>> sorted = new ArrayList<OptionSpec<?>>( optionParser.abbreviationOrder() );
+            sort( sorted, byFirstOption );
             return sorted;
         }
     },
@@ -51,18 +53,18 @@ public enum OptionOrder {
      */
     TRAINING_ORDER {
         @Override
-        public Collection<? extends OptionSpec<?>> of( OptionParser optionParser ) {
+        public List<? extends OptionSpec<?>> of( OptionParser optionParser ) {
             return optionParser.trainingOrder();
         }
     };
 
     /**
-     * Creates new sorted set of specs for the option parser using this ordering strategy.
+     * Creates new list of unique specs for the option parser using this ordering strategy.
      *
      * @param optionParser the option parser, never missing
      * @return the sorted specs, never missing
      */
-    public abstract Collection<? extends OptionSpec<?>> of( OptionParser optionParser );
+    public abstract List<? extends OptionSpec<?>> of( OptionParser optionParser );
 
     /** @todo Does not belong here */
     public static Map<String, ? extends OptionSpec<?>> asMap( Collection<? extends OptionSpec<?>> specs ) {
