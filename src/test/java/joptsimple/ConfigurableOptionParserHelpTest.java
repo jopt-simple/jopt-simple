@@ -36,7 +36,7 @@ import java.util.List;
 import static java.math.BigDecimal.TEN;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static joptsimple.OptionOrder.ALPHABETICAL_ORDER;
+import static joptsimple.OptionOrder.FIRST_OPTION_ORDER;
 import static joptsimple.OptionOrder.TRAINING_ORDER;
 import static joptsimple.internal.Strings.EMPTY;
 import static joptsimple.internal.Strings.LINE_SEPARATOR;
@@ -52,7 +52,7 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
 
     @Before
     public final void createSink() {
-        parser.formatHelpWith( new BuiltinHelpFormatter( 120, 3, ALPHABETICAL_ORDER ) );
+        parser.formatHelpWith( new BuiltinHelpFormatter( 120, 3, FIRST_OPTION_ORDER) );
         sink = new StringWriter();
     }
 
@@ -492,7 +492,7 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.accepts( "yak" );
         parser.acceptsAll( asList( "baboon", "xantus" ) );
 
-        parser.printHelp().with( new BuiltinHelpFormatter( 120, 3, TRAINING_ORDER ) ).in( TRAINING_ORDER ).on( sink );
+        parser.printHelp().with( new BuiltinHelpFormatter( 120, 3, TRAINING_ORDER ) ).on( sink );
 
         assertHelpLines(
                 "Option                Description",

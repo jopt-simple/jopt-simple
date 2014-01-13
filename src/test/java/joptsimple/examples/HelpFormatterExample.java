@@ -1,23 +1,21 @@
 package joptsimple.examples;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.Map;
-
-import static java.io.File.*;
-import static java.util.Arrays.*;
-
 import joptsimple.HelpFormatter;
 import joptsimple.OptionDescriptor;
 import joptsimple.OptionParser;
 
-import static joptsimple.util.DateConverter.*;
+import java.io.File;
+import java.util.HashSet;
+
+import static java.io.File.pathSeparatorChar;
+import static java.util.Arrays.asList;
+import static joptsimple.util.DateConverter.datePattern;
 
 public class HelpFormatterExample {
     static class MyFormatter implements HelpFormatter {
-        public String format( Map<String, ? extends OptionDescriptor> options ) {
+        public String format( final OptionParser optionParser ) {
             StringBuilder buffer = new StringBuilder();
-            for ( OptionDescriptor each : new HashSet<OptionDescriptor>( options.values() ) ) {
+            for ( OptionDescriptor each : new HashSet<OptionDescriptor>( optionParser.recognizedOptions().values() ) ) {
                 buffer.append( lineFor( each ) );
             }
             return buffer.toString();

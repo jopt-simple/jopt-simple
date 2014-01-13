@@ -36,14 +36,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.singletonList;
 import static joptsimple.OptionException.unrecognizedOption;
-import static joptsimple.OptionOrder.ALPHABETICAL_ORDER;
 import static joptsimple.OptionOrder.TRAINING_ORDER;
 import static joptsimple.OptionParserState.moreOptions;
 import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
@@ -292,6 +290,7 @@ public class OptionParser implements OptionDeclarer {
         return allowsUnrecognizedOptions;
     }
 
+    /** @todo Test/fix for trainingOrder */
     public void recognizeAlternativeLongOptions( boolean recognize ) {
         if ( recognize )
             recognize( new AlternativeLongOptionSpec() );
@@ -300,14 +299,13 @@ public class OptionParser implements OptionDeclarer {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll( spec.options(), spec );
+        recognizedOptions.putAll(spec.options(), spec);
         trainingOrder.add( spec );
     }
 
     public static class HelpPrinter {
         private final OptionParser optionParser;
         private HelpFormatter helpFormatter;
-        private OptionOrder optionOrder = ALPHABETICAL_ORDER;
 
         private HelpPrinter( final OptionParser optionParser ) {
             this.optionParser = optionParser;
@@ -315,11 +313,6 @@ public class OptionParser implements OptionDeclarer {
 
         public HelpPrinter with( HelpFormatter helpFormatter ) {
             this.helpFormatter = helpFormatter;
-            return this;
-        }
-
-        public HelpPrinter in( OptionOrder optionOrder ) {
-            this.optionOrder = optionOrder;
             return this;
         }
 
@@ -333,7 +326,7 @@ public class OptionParser implements OptionDeclarer {
         }
 
         private String formatHelp() {
-            return helpFormatter().format( optionParser.recognizedOptions( optionOrder ) );
+            return helpFormatter().format( optionParser );
         }
 
         private HelpFormatter helpFormatter() {
@@ -370,7 +363,7 @@ public class OptionParser implements OptionDeclarer {
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( helpFormatter.format( recognizedOptions.toJavaUtilMap() ) );
+        sink.write( helpFormatter.format( this ) );
         sink.flush();
     }
 
@@ -392,35 +385,19 @@ public class OptionParser implements OptionDeclarer {
      * during training. Option flags for specs are alphabetized by {@link OptionSpec#options()}; only the order of the
      * specs is preserved.
      *
-     * Ideally the signature would be {@code <T extends OptionSpec<?> & OptionDescriptor> Map<String, T>}, and while
-     * this works when consuming an iterator of the returned map, it is impossible to declare a variable of this type to
-     * receive the map itself.
-     *
-     * Hence, it is guaranteed safe to cast values to be either {@code OptionSpec<?>} or {@code OptionDescriptor}.
-     *
-     * (Note: prior to 4.7 the order was alphabetical across all options regardless of spec.)
-     *
      * @return a map containing all the configured options and their corresponding {@link OptionSpec}
-     * @since 4.6
-     * @todo Consider a DescribedOptionSpec extending both {@code OptionSpec} and {@code OptionDescriptor}
+     * @since 4.7
      */
     public Map<String, ? extends OptionSpec<?>> recognizedOptions() {
-        return recognizedOptions(TRAINING_ORDER);
+        return OptionOrder.asMap( TRAINING_ORDER.of( this ) );
     }
 
-    Map<String, ? extends OptionSpec<?>> recognizedOptions(OptionOrder optionOrder) {
-        switch ( optionOrder ) {
-            case ALPHABETICAL_ORDER:
-                return recognizedOptions.toJavaUtilMap();
-            case TRAINING_ORDER:
-                final Map<String, OptionSpec<?>> options = new LinkedHashMap<String, OptionSpec<?>>();
-                for ( final OptionSpec<?> spec : trainingOrder )
-                    for ( final String option : spec.options() )
-                        options.put( option, spec );
-                return options;
-            default:
-                throw new IllegalStateException( "BUG: Unrecognized option order: " + optionOrder );
-        }
+    Collection<? extends OptionSpec<?>> abbreviationOrder() {
+        return recognizedOptions.values();
+    }
+
+    Collection<? extends OptionSpec<?>> trainingOrder() {
+        return new ArrayList<OptionSpec<?>>(trainingOrder);
     }
 
     /**
@@ -457,7 +434,7 @@ public class OptionParser implements OptionDeclarer {
     private Collection<String> missingRequiredOptions( OptionSet options ) {
         Collection<String> missingRequiredOptions = new HashSet<String>();
 
-        for ( OptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+        for ( OptionSpec<?> each : abbreviationOrder() ) {
             if ( each.isRequired() && !options.has( each ) )
                 missingRequiredOptions.addAll( each.options() );
         }
@@ -492,7 +469,7 @@ public class OptionParser implements OptionDeclarer {
 
     private boolean isHelpOptionPresent( OptionSet options ) {
         boolean helpOptionPresent = false;
-        for ( OptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+        for ( OptionSpec<?> each : abbreviationOrder() ) {
             if ( each.isForHelp() && options.has( each ) ) {
                 helpOptionPresent = true;
                 break;

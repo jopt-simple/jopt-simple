@@ -29,13 +29,10 @@ import joptsimple.internal.Rows;
 import joptsimple.internal.Strings;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
 
-import static joptsimple.OptionOrder.ALPHABETICAL_ORDER;
+import static joptsimple.OptionOrder.FIRST_OPTION_ORDER;
 import static joptsimple.ParserRules.DOUBLE_HYPHEN;
 import static joptsimple.ParserRules.HYPHEN;
 import static joptsimple.internal.Classes.shortNameOf;
@@ -61,7 +58,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * Makes a formatter with a pre-configured overall row width and column separator width.
      */
     BuiltinHelpFormatter() {
-        this( 80, 2, ALPHABETICAL_ORDER );
+        this( 80, 2, FIRST_OPTION_ORDER);
     }
 
     /**
@@ -78,28 +75,8 @@ public class BuiltinHelpFormatter implements HelpFormatter {
         this.optionOrder = optionOrder;
     }
 
-    public String format( Map<String, ? extends OptionDescriptor> options ) {
-        final Collection<OptionDescriptor> sorted;
-        switch ( optionOrder ) {
-            case ALPHABETICAL_ORDER:
-                Comparator<OptionDescriptor> comparator = new Comparator<OptionDescriptor>() {
-                    public int compare( OptionDescriptor first, OptionDescriptor second ) {
-                        return first.options().iterator().next().compareTo( second.options().iterator().next() );
-                    }
-                };
-
-                sorted = new TreeSet<OptionDescriptor>( comparator );
-                sorted.addAll( options.values() );
-                break;
-            case TRAINING_ORDER:
-                sorted = (Collection<OptionDescriptor>) (Collection) options.values();
-                break;
-            default:
-                throw new IllegalStateException( "BUG: Unknown option order: " + optionOrder );
-        }
-
-        addRows( sorted );
-
+    public String format( OptionParser optionParser ) {
+        addRows( optionOrder.of( optionParser ) );
         return formattedHelpOutput();
     }
 
