@@ -79,9 +79,9 @@ public class InetAddressConverterTest {
         @Mock( invocations = 1 )
         public InetAddress getByName( String host ) throws UnknownHostException {
             if ( "localhost".equals( host ) )
-                return InetAddress.getLoopbackAddress();
-            else
-                throw new UnknownHostException( host );
+                return InetAddress.getByAddress( new byte[] { 127, 0, 0, 1 } );
+
+            throw new UnknownHostException( host );
         }
     }
 }
