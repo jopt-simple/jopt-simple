@@ -129,7 +129,6 @@
                 <executions>
                     <execution>
                         <id>check-signature</id>
-                        <phase>process-classes</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
@@ -137,7 +136,6 @@
                     <!-- Needs 1.10 version of animal sniffer plugin
                     <execution>
                         <id>check-test-signature</id>
-                        <phase>process-test-classes</phase>
                         <goals>
                             <goal>test-check</goal>
                         </goals>
