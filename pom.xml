@@ -37,7 +37,9 @@
         </developer>
     </developers>
     <properties>
+        <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.project.outputEncoding>UTF-8</project.project.outputEncoding>
     </properties>
     <dependencies>
         <dependency>
@@ -186,6 +188,9 @@
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.3</version>
+                <configuration>
+                    <outputEncoding>UTF-8</outputEncoding>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.pitest</groupId>
