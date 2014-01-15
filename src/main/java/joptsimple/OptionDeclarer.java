@@ -6,10 +6,14 @@ import java.util.Collection;
  * Trains the option parser. This interface aids integration that disposes declaration of options but not actual
  * command-line parsing.
  *
- * Note that although this is an interface, the returned values of most calls are concrete jopt-simple classes.
+ * Typical use is for another class to implement {@code OptionDeclarer} as a facade, forwarding calls to an
+ * {@code OptionParser} instance.
+ *
+ * Note that although this is an interface, the returned values of calls are concrete jopt-simple classes.
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  * @see OptionParser
+ * @since 4.6
  */
 public interface OptionDeclarer {
     /**
