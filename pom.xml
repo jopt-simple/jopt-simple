@@ -260,8 +260,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9.1</version>
                 <configuration>
-                    <!-- TODO: Workaround for JDK8 - avoid javadoc bug on HTML kbd tag -->
-<!--                    <additionalparam>-Xdoclint:none</additionalparam> -->
+                    <additionalparam>${disable-doclint}</additionalparam>
                     <source>1.5</source>
                     <show>public</show>
                     <excludePackageNames>joptsimple.examples:joptsimple.internal:joptsimple.internal.*</excludePackageNames>
@@ -319,4 +318,16 @@
             <url>gitsite:git@github.com/pholser/jopt-simple.git</url>
         </site>
     </distributionManagement>
+    <profiles>
+        <profile>
+            <!-- TODO: Workaround for JDK8 - avoid javadoc bug on HTML kbd tag -->
+            <id>javadoc-8-broken</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <properties>
+                <disable-doclint>-Xdoclint:none</disable-doclint>
+            </properties>
+        </profile>
+    </profiles>
 </project>
