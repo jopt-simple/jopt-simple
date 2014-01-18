@@ -271,8 +271,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     protected abstract void detectOptionArgument( OptionParser parser, ArgumentList arguments,
         OptionSet detectedOptions );
 
-    @Override
-    protected final V convert( String argument ) {
+    public final V convert( String argument ) {
         return convertWith( converter, argument );
     }
 

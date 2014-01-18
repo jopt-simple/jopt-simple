@@ -21,7 +21,7 @@
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+ */
 
 package joptsimple;
 
@@ -36,13 +36,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.singletonList;
 import static joptsimple.OptionException.unrecognizedOption;
+import static joptsimple.OptionOrder.TRAINING_ORDER;
 import static joptsimple.OptionParserState.moreOptions;
 import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
 import static joptsimple.ParserRules.ensureLegalOptions;
@@ -290,6 +290,7 @@ public class OptionParser implements OptionDeclarer {
         return allowsUnrecognizedOptions;
     }
 
+    /** @todo Test/fix for trainingOrder */
     public void recognizeAlternativeLongOptions( boolean recognize ) {
         if ( recognize )
             recognize( new AlternativeLongOptionSpec() );
@@ -303,6 +304,78 @@ public class OptionParser implements OptionDeclarer {
     }
 
     /**
+     * Provides a fluent alternative to {@link #printHelpOn(OutputStream)} and friends.
+     *
+     * See {@link #printHelpOn(OutputStream)} for one-call alternative
+     */
+    public static class HelpPrinter {
+        private final OptionParser optionParser;
+        private HelpFormatter helpFormatter;
+
+        private HelpPrinter( final OptionParser optionParser ) {
+            this.optionParser = optionParser;
+        }
+
+        /**
+         * Changes the help formatter. The default otherwise is to use the help formatter of the option parser.
+         *
+         * @param helpFormatter the help formatter, never missing
+         * @return the help printer, never missing
+         */
+        public HelpPrinter formatWith( HelpFormatter helpFormatter ) {
+            this.helpFormatter = helpFormatter;
+            return this;
+        }
+
+        /**
+         * Writes information about the options this parser recognizes to the given output sink.
+         *
+         * The output sink is flushed, but not closed.
+         *
+         * @param sink the sink to write information to
+         * @throws IOException if there is a problem writing to the sink
+         * @throws NullPointerException if {@code sink} is {@code null}
+         * @see #on(Writer)
+         */
+        public void on( OutputStream sink ) throws IOException {
+            on( new OutputStreamWriter( sink ) );
+        }
+
+        /**
+         * Writes information about the options this parser recognizes to the given output sink.
+         *
+         * The output sink is flushed, but not closed.
+         *
+         * @param sink the sink to write information to
+         * @throws IOException if there is a problem writing to the sink
+         * @throws NullPointerException if {@code sink} is {@code null}
+         * @see #on(OutputStream)
+         */
+        public void on( Writer sink ) throws IOException {
+            sink.write( formatHelp() );
+            sink.flush();
+        }
+
+        private String formatHelp() {
+            return helpFormatter().format( optionParser );
+        }
+
+        private HelpFormatter helpFormatter() {
+            return null == helpFormatter ? optionParser.helpFormatter : helpFormatter;
+        }
+    }
+
+    /**
+     * Provides a fluent alternative to {@link #printHelpOn(OutputStream)} and friends.
+     *
+     * @see #printHelpOn(OutputStream)
+     * @since 4.7
+     */
+    public HelpPrinter printHelp() {
+        return new HelpPrinter( this );
+    }
+
+    /**
      * Writes information about the options this parser recognizes to the given output sink.
      *
      * The output sink is flushed, but not closed.
@@ -311,6 +384,7 @@ public class OptionParser implements OptionDeclarer {
      * @throws IOException if there is a problem writing to the sink
      * @throws NullPointerException if {@code sink} is {@code null}
      * @see #printHelpOn(Writer)
+     * @see #printHelp()
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
         printHelpOn( new OutputStreamWriter( sink ) );
@@ -325,9 +399,10 @@ public class OptionParser implements OptionDeclarer {
      * @throws IOException if there is a problem writing to the sink
      * @throws NullPointerException if {@code sink} is {@code null}
      * @see #printHelpOn(OutputStream)
+     * @see #printHelp()
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( helpFormatter.format( recognizedOptions.toJavaUtilMap() ) );
+        sink.write( helpFormatter.format( this ) );
         sink.flush();
     }
 
@@ -349,20 +424,24 @@ public class OptionParser implements OptionDeclarer {
      * during training. Option flags for specs are alphabetized by {@link OptionSpec#options()}; only the order of the
      * specs is preserved.
      *
-     * (Note: prior to 4.7 the order was alphabetical across all options regardless of spec.)
+     * Note: the return type has changed since 4.6.
      *
      * @return a map containing all the configured options and their corresponding {@link OptionSpec}
-     * @since 4.6
+     * @since 4.7
      */
-    public Map<String, OptionSpec<?>> recognizedOptions() {
-        final Map<String, OptionSpec<?>> options = new LinkedHashMap<String, OptionSpec<?>>();
-        for ( final OptionSpec<?> spec : trainingOrder )
-            for ( final String option : spec.options() )
-                options.put( option, spec );
-        return options;
+    public Map<String, ? extends OptionSpec<?>> recognizedOptions() {
+        return OptionOrder.asMap( TRAINING_ORDER.of( this ) );
     }
 
-   /**
+    List<? extends OptionSpec<?>> abbreviationOrder() {
+        return new ArrayList<OptionSpec<?>>( recognizedOptions.values() );
+    }
+
+    List<? extends OptionSpec<?>> trainingOrder() {
+        return new ArrayList<OptionSpec<?>>( trainingOrder );
+    }
+
+    /**
      * Parses the given command line arguments according to the option specifications given to the parser.
      *
      * @param arguments arguments to parse
@@ -396,13 +475,13 @@ public class OptionParser implements OptionDeclarer {
     private Collection<String> missingRequiredOptions( OptionSet options ) {
         Collection<String> missingRequiredOptions = new HashSet<String>();
 
-        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+        for ( OptionSpec<?> each : abbreviationOrder() ) {
             if ( each.isRequired() && !options.has( each ) )
                 missingRequiredOptions.addAll( each.options() );
         }
 
         for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredIf.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+            OptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
 
             if ( optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
                 missingRequiredOptions.addAll( required.options() );
@@ -410,7 +489,7 @@ public class OptionParser implements OptionDeclarer {
         }
 
         for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredUnless.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+            OptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
 
             if ( !optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
                 missingRequiredOptions.addAll( required.options() );
@@ -431,7 +510,7 @@ public class OptionParser implements OptionDeclarer {
 
     private boolean isHelpOptionPresent( OptionSet options ) {
         boolean helpOptionPresent = false;
-        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
+        for ( OptionSpec<?> each : abbreviationOrder() ) {
             if ( each.isForHelp() && options.has( each ) ) {
                 helpOptionPresent = true;
                 break;
@@ -455,8 +534,7 @@ public class OptionParser implements OptionDeclarer {
 
         if ( isRecognized( optionAndArgument.key ) ) {
             specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );
-        }
-        else
+        } else
             handleShortOptionCluster( candidate, arguments, detected );
     }
 
@@ -465,7 +543,7 @@ public class OptionParser implements OptionDeclarer {
         validateOptionCharacters( options );
 
         for ( int i = 0; i < options.length; i++ ) {
-            AbstractOptionSpec<?> optionSpec = specFor( options[ i ] );
+            AbstractOptionSpec<?> optionSpec = specFor( options[i] );
 
             if ( optionSpec.acceptsArguments() && options.length > i + 1 ) {
                 String detectedArgument = String.valueOf( options, i + 1, options.length - 1 - i );
@@ -540,7 +618,7 @@ public class OptionParser implements OptionDeclarer {
     }
 
     private static char[] extractShortOptionsFrom( String argument ) {
-        char[] options = new char[ argument.length() - 1 ];
+        char[] options = new char[argument.length() - 1];
         argument.getChars( 1, argument.length(), options, 0 );
 
         return options;

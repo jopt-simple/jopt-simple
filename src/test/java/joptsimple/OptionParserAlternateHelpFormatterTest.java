@@ -1,18 +1,19 @@
 package joptsimple;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.StringWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static java.util.Arrays.*;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.infinitest.toolkit.CollectionMatchers.*;
-import static org.junit.Assert.*;
+import static java.util.Arrays.asList;
+import static org.infinitest.toolkit.CollectionMatchers.hasSameContentsAs;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 
 public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParserFixture {
     private StringWriter sink;
@@ -25,10 +26,11 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
         parser.accepts( "b", "boo" );
 
         parser.formatHelpWith(new HelpFormatter() {
-            public String format( Map<String, ? extends OptionDescriptor> options ) {
-                captured = options;
+            public String format( final OptionParser optionParser ) {
+                captured = optionParser.recognizedOptions();
                 return "some help you are";
             }
+
         });
 
         sink = new StringWriter();

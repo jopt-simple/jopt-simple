@@ -25,16 +25,17 @@
 
 package joptsimple;
 
+import joptsimple.internal.Reflection;
+import joptsimple.internal.ReflectionException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static java.util.Collections.*;
-
-import joptsimple.internal.Reflection;
-import joptsimple.internal.ReflectionException;
-
-import static joptsimple.internal.Strings.*;
+import static java.util.Collections.singletonList;
+import static java.util.Collections.sort;
+import static java.util.Collections.unmodifiableList;
+import static joptsimple.internal.Strings.EMPTY;
 
 /**
  * @param <V> represents the type of the arguments this option accepts
@@ -83,8 +84,6 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
     public boolean representsNonOptions() {
         return false;
     }
-
-    protected abstract V convert( String argument );
 
     protected V convertWith( ValueConverter<V> converter, String argument ) {
         try {

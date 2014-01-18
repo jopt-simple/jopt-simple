@@ -25,7 +25,10 @@
 
 package joptsimple.internal;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -219,12 +222,26 @@ public class AbbreviationMap<V> {
         return mappings;
     }
 
+    public Set<V> values() {
+        final Set<V> values = new LinkedHashSet<V>();
+        addToValues( values );
+        return values;
+    }
+
     private void addToMappings( Map<String, V> mappings ) {
         if ( key != null )
             mappings.put( key, value );
 
         for ( AbbreviationMap<V> each : children.values() )
             each.addToMappings( mappings );
+    }
+
+    private void addToValues( Collection<V> values ) {
+        if ( key != null )
+            values.add( value );
+
+        for ( AbbreviationMap<V> each : children.values() )
+            each.addToValues( values );
     }
 
     private static char[] charsOf( String aKey ) {

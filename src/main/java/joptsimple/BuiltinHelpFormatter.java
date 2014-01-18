@@ -25,20 +25,20 @@
 
 package joptsimple;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import joptsimple.internal.Rows;
 import joptsimple.internal.Strings;
 
-import static joptsimple.ParserRules.*;
-import static joptsimple.internal.Classes.*;
-import static joptsimple.internal.Strings.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+import static joptsimple.OptionOrder.FIRST_OPTION_ORDER;
+import static joptsimple.ParserRules.DOUBLE_HYPHEN;
+import static joptsimple.ParserRules.HYPHEN;
+import static joptsimple.internal.Classes.shortNameOf;
+import static joptsimple.internal.Strings.LINE_SEPARATOR;
+import static joptsimple.internal.Strings.isNullOrEmpty;
+import static joptsimple.internal.Strings.surround;
 
 /**
  * <p>A help formatter that allows configuration of overall row width and column separator width.</p>
@@ -52,12 +52,13 @@ import static joptsimple.internal.Strings.*;
 public class BuiltinHelpFormatter implements HelpFormatter {
     private final Rows nonOptionRows;
     private final Rows optionRows;
+    private final OptionOrder optionOrder;
 
     /**
      * Makes a formatter with a pre-configured overall row width and column separator width.
      */
     BuiltinHelpFormatter() {
-        this( 80, 2 );
+        this( 80, 2, FIRST_OPTION_ORDER);
     }
 
     /**
@@ -67,24 +68,15 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param desiredColumnSeparatorWidth how many characters wide to make the separation between option column and
      * description column
      */
-    public BuiltinHelpFormatter( int desiredOverallWidth, int desiredColumnSeparatorWidth ) {
+    public BuiltinHelpFormatter( int desiredOverallWidth, int desiredColumnSeparatorWidth,
+            OptionOrder optionOrder ) {
         nonOptionRows = new Rows( desiredOverallWidth * 2, 0 );
         optionRows = new Rows( desiredOverallWidth, desiredColumnSeparatorWidth );
+        this.optionOrder = optionOrder;
     }
 
-    public String format( Map<String, ? extends OptionDescriptor> options ) {
-        Comparator<OptionDescriptor> comparator =
-            new Comparator<OptionDescriptor>() {
-                public int compare( OptionDescriptor first, OptionDescriptor second ) {
-                    return first.options().iterator().next().compareTo( second.options().iterator().next() );
-                }
-            };
-
-        Set<OptionDescriptor> sorted = new TreeSet<OptionDescriptor>( comparator );
-        sorted.addAll( options.values() );
-
-        addRows( sorted );
-
+    public String format( OptionParser optionParser ) {
+        addRows( optionOrder.of( optionParser ) );
         return formattedHelpOutput();
     }
 
@@ -125,7 +117,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
             || !Strings.isNullOrEmpty( nonOptions.argumentDescription() );
     }
 
-    private String createNonOptionArgumentsDisplay(OptionDescriptor nonOptions) {
+    private String createNonOptionArgumentsDisplay( OptionDescriptor nonOptions) {
         StringBuilder buffer = new StringBuilder();
         maybeAppendOptionInfo( buffer, nonOptions );
         maybeAppendNonOptionsDescription( buffer, nonOptions );

@@ -38,18 +38,18 @@ import static joptsimple.internal.Objects.*;
  */
 public class OptionSet {
     private final List<OptionSpec<?>> detectedSpecs;
-    private final Map<String, AbstractOptionSpec<?>> detectedOptions;
-    private final Map<AbstractOptionSpec<?>, List<String>> optionsToArguments;
-    private final Map<String, AbstractOptionSpec<?>> recognizedSpecs;
+    private final Map<String, OptionSpec<?>> detectedOptions;
+    private final Map<OptionSpec<?>, List<String>> optionsToArguments;
+    private final Map<String, ? extends OptionSpec<?>> recognizedSpecs;
     private final Map<String, List<?>> defaultValues;
 
     /*
      * Package-private because clients don't create these.
      */
-    OptionSet( Map<String, AbstractOptionSpec<?>> recognizedSpecs ) {
+    OptionSet( Map<String, ? extends OptionSpec<?>> recognizedSpecs ) {
         detectedSpecs = new ArrayList<OptionSpec<?>>();
-        detectedOptions = new HashMap<String, AbstractOptionSpec<?>>();
-        optionsToArguments = new IdentityHashMap<AbstractOptionSpec<?>, List<String>>();
+        detectedOptions = new HashMap<String, OptionSpec<?>>();
+        optionsToArguments = new IdentityHashMap<OptionSpec<?>, List<String>>();
         defaultValues = defaultValues( recognizedSpecs );
         this.recognizedSpecs = recognizedSpecs;
     }
@@ -99,7 +99,7 @@ public class OptionSet {
      * @see #hasArgument(OptionSpec)
      */
     public boolean hasArgument( String option ) {
-        AbstractOptionSpec<?> spec = detectedOptions.get( option );
+        OptionSpec<?> spec = detectedOptions.get( option );
         return spec != null && hasArgument( spec );
     }
 
@@ -141,7 +141,7 @@ public class OptionSet {
     public Object valueOf( String option ) {
         ensureNotNull( option );
 
-        AbstractOptionSpec<?> spec = detectedOptions.get( option );
+        OptionSpec<?> spec = detectedOptions.get( option );
         if ( spec == null ) {
             List<?> defaults = defaultValuesFor( option );
             return defaults.isEmpty() ? null : defaults.get( 0 );
@@ -189,7 +189,7 @@ public class OptionSet {
     public List<?> valuesOf( String option ) {
         ensureNotNull( option );
 
-        AbstractOptionSpec<?> spec = detectedOptions.get( option );
+        OptionSpec<?> spec = detectedOptions.get( option );
         return spec == null ? defaultValuesFor( option ) : valuesOf( spec );
     }
 
@@ -214,10 +214,9 @@ public class OptionSet {
         if ( values == null || values.isEmpty() )
             return defaultValueFor( option );
 
-        AbstractOptionSpec<V> spec = (AbstractOptionSpec<V>) option;
         List<V> convertedValues = new ArrayList<V>();
         for ( String each : values )
-            convertedValues.add( spec.convert( each ) );
+            convertedValues.add( option.convert(each) );
 
         return unmodifiableList( convertedValues );
     }
@@ -242,7 +241,7 @@ public class OptionSet {
      */
     public Map<OptionSpec<?>, List<?>> asMap() {
         Map<OptionSpec<?>, List<?>> map = new HashMap<OptionSpec<?>, List<?>>();
-        for ( AbstractOptionSpec<?> spec : recognizedSpecs.values() )
+        for ( OptionSpec<?> spec : recognizedSpecs.values() )
             if ( !spec.representsNonOptions() )
                 map.put( spec, valuesOf( spec ) );
         return unmodifiableMap( map );
@@ -255,11 +254,11 @@ public class OptionSet {
         return unmodifiableList( valuesOf( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );
     }
 
-    void add( AbstractOptionSpec<?> spec ) {
+    void add( OptionSpec<?> spec ) {
         addWithArgument( spec, null );
     }
 
-    void addWithArgument( AbstractOptionSpec<?> spec, String argument ) {
+    void addWithArgument( OptionSpec<?> spec, String argument ) {
         detectedSpecs.add( spec );
 
         for ( String each : spec.options() )
@@ -285,18 +284,18 @@ public class OptionSet {
             return false;
 
         OptionSet other = (OptionSet) that;
-        Map<AbstractOptionSpec<?>, List<String>> thisOptionsToArguments =
-            new HashMap<AbstractOptionSpec<?>, List<String>>( optionsToArguments );
-        Map<AbstractOptionSpec<?>, List<String>> otherOptionsToArguments =
-            new HashMap<AbstractOptionSpec<?>, List<String>>( other.optionsToArguments );
+        Map<OptionSpec<?>, List<String>> thisOptionsToArguments =
+            new HashMap<OptionSpec<?>, List<String>>( optionsToArguments );
+        Map<OptionSpec<?>, List<String>> otherOptionsToArguments =
+            new HashMap<OptionSpec<?>, List<String>>( other.optionsToArguments );
         return detectedOptions.equals( other.detectedOptions )
             && thisOptionsToArguments.equals( otherOptionsToArguments );
     }
 
     @Override
     public int hashCode() {
-        Map<AbstractOptionSpec<?>, List<String>> thisOptionsToArguments =
-            new HashMap<AbstractOptionSpec<?>, List<String>>( optionsToArguments );
+        Map<OptionSpec<?>, List<String>> thisOptionsToArguments =
+            new HashMap<OptionSpec<?>, List<String>>( optionsToArguments );
         return detectedOptions.hashCode() ^ thisOptionsToArguments.hashCode();
     }
 
@@ -312,9 +311,9 @@ public class OptionSet {
         return defaultValuesFor( option.options().iterator().next() );
     }
 
-    private static Map<String, List<?>> defaultValues( Map<String, AbstractOptionSpec<?>> recognizedSpecs ) {
+    private static Map<String, List<?>> defaultValues( Map<String, ? extends OptionSpec<?>> recognizedSpecs ) {
         Map<String, List<?>> defaults = new HashMap<String, List<?>>();
-        for ( Map.Entry<String, AbstractOptionSpec<?>> each : recognizedSpecs.entrySet() )
+        for ( Map.Entry<String, ? extends OptionSpec<?>> each : recognizedSpecs.entrySet() )
             defaults.put( each.getKey(), each.getValue().defaultValues() );
         return defaults;
     }

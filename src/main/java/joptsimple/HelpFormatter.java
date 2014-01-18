@@ -25,8 +25,6 @@
 
 package joptsimple;
 
-import java.util.Map;
-
 /**
  * <p>Represents objects charged with taking a set of option descriptions and producing some help text from them.</p>
  *
@@ -34,12 +32,12 @@ import java.util.Map;
  */
 public interface HelpFormatter {
     /**
-     * Produces help text, given a set of option descriptors.
+     * Produces help text, given an option parser.
      *
-     * @param options descriptors for the configured options of a parser
+     * @param optionParser the option parser, never missing
      * @return text to be used as help
      * @see OptionParser#printHelpOn(java.io.Writer)
      * @see OptionParser#formatHelpWith(HelpFormatter)
      */
-    String format( Map<String, ? extends OptionDescriptor> options );
+    String format( OptionParser optionParser );
 }

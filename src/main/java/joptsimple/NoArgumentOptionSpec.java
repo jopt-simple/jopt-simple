@@ -71,8 +71,7 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
         return "";
     }
 
-    @Override
-    protected Void convert( String argument ) {
+    public Void convert( String argument ) {
         return null;
     }
 

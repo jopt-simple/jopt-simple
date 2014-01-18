@@ -25,6 +25,10 @@
 
 package joptsimple;
 
+import joptsimple.util.InetAddressConverter;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.StringWriter;
@@ -34,17 +38,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static java.math.BigDecimal.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-
-import joptsimple.util.InetAddressConverter;
-import org.junit.Before;
-import org.junit.Test;
-
-import static joptsimple.internal.Strings.*;
-import static joptsimple.util.DateConverter.*;
-import static org.junit.Assert.*;
+import static java.math.BigDecimal.TEN;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+import static joptsimple.internal.Strings.EMPTY;
+import static joptsimple.internal.Strings.LINE_SEPARATOR;
+import static joptsimple.internal.Strings.join;
+import static joptsimple.util.DateConverter.datePattern;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -636,7 +640,8 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
         parser.accepts( "f" );
 
         parser.formatHelpWith( new HelpFormatter() {
-            public String format( Map<String, ? extends OptionDescriptor> options ) {
+            public String format( final OptionParser optionParser ) {
+                Map<String, ? extends OptionDescriptor> options = optionParser.recognizedOptions();
                 assertEquals( 1, options.size() );
                 OptionDescriptor only = options.get( "f" );
                 assertEquals( asList( "f" ), new ArrayList<String>( only.options() ) );
@@ -649,6 +654,7 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
                 assertFalse( only.requiresArgument() );
                 return null;
             }
+
         } );
     }
 

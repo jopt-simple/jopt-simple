@@ -25,17 +25,19 @@
 
 package joptsimple;
 
+import org.junit.Test;
+
 import java.util.Collection;
 import java.util.List;
 
-import static java.lang.Short.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-
-import org.junit.Test;
-
-import static joptsimple.ExceptionMatchers.*;
-import static org.junit.Assert.*;
+import static java.lang.Short.parseShort;
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static joptsimple.ExceptionMatchers.withCauseOfType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -304,6 +306,38 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
             return asList( option );
         }
 
+        public String description() {
+            return null;
+        }
+
+        public List<?> defaultValues() {
+            return null;
+        }
+
+        public boolean isRequired() {
+            return false;
+        }
+
+        public boolean acceptsArguments() {
+            return false;
+        }
+
+        public boolean requiresArgument() {
+            return false;
+        }
+
+        public String argumentDescription() {
+            return null;
+        }
+
+        public String argumentTypeIndicator() {
+            return null;
+        }
+
+        public boolean representsNonOptions() {
+            return false;
+        }
+
         public V value( OptionSet detectedOptions ) {
             return detectedOptions.valueOf( this );
         }
@@ -314,6 +348,10 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
 
         public boolean isForHelp() {
             return false;
+        }
+
+        public V convert(final String argument) {
+            return null;
         }
     }
 }
