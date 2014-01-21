@@ -56,10 +56,6 @@ public class ToStringTest {
             { KeyValuePair.valueOf( "key=value" ), new String[] { "key", "=", "value" } },
             { new UnrecognizedOptionException( "a" ), new String[] { "'a'" } },
             { new NoArgumentOptionSpec( asList( "a", "b" ), "" ), new String[] { "[a, b]" } },
-            {
-                    new UnacceptableNumberOfNonOptionsException( 1, 2, 3 ),
-                    new String[] { "actual = 3, minimum = 1, maximum = 2" }
-            }
         } );
     }
 
