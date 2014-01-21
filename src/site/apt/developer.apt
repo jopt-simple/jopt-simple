@@ -32,3 +32,17 @@ for (int i = 0; i < 10; ++i)
     if (i < 5)
         println(i);
 +----+
+
+* {Building}
+
+  There are no integration tests.  Your typical command line is:
+
++----+
+$ mvn clean test
++----+
+
+  Before pushing commits, please check that the site fully builds:
+
++----+
+$ mvn clean post-site
++----+
