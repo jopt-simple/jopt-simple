@@ -12,6 +12,7 @@
             <item name="Examples" href="examples.html"/>
             <item name="Change Log" href="changes.html"/>
             <item name="Javadoc" href="apidocs/index.html"/>
+            <item name="Developer Docs" href="developer.html"/>
             <item name="Acknowledgements" href="acknowledgments.html"/>
         </menu>
         <menu ref="reports"/>
