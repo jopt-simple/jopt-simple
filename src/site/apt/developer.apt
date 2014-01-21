@@ -6,7 +6,7 @@ Help for developing JOpt Simple
 
   This page has notes and hints for contributing to JOpt Simple, mostly around getting started and style questions.
 
-* {Code Style}
+* {{Code Style}}
 
   Style is important.  Why?  Chiefly to aid merges.  Reformatting code makes merging more difficult.  When needing to reformat unchanged code, please do so on a separate commit with a clear commit message indicating a non-code change.
 
@@ -14,7 +14,7 @@ Help for developing JOpt Simple
 
   The ultimate arbiter of good style is Paul Holser.
 
-** {Braces}
+** {{Braces}}
 
   * Yes:
 
@@ -33,7 +33,7 @@ for (int i = 0; i < 10; ++i)
         println(i);
 +----+
 
-* {Building}
+* {{Building}}
 
   There are no integration tests.  Your typical command line is:
 
