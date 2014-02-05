@@ -25,10 +25,13 @@
 
 package joptsimple;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.*;
-
 import static joptsimple.internal.Objects.*;
 
 /**
@@ -60,7 +63,7 @@ public class OptionSet {
      * @return {@code true} if any options were detected
      */
     public boolean hasOptions() {
-        return !detectedOptions.isEmpty();
+        return !( detectedOptions.size() == 1 && detectedOptions.values().iterator().next().representsNonOptions() );
     }
 
     /**
