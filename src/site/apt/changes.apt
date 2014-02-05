@@ -2,6 +2,11 @@
                                        Change Log
                                        ----------
 
+Changes in version 4.7
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/53} gh-53}} by correcting
+      <<<OptionSet.hasOptions()>>> to answer correctly for no switches.
+
 Changes in version 4.6
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/31} gh-31}} by offering
