@@ -27,6 +27,7 @@ package joptsimple;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -655,6 +656,25 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     @Test( expected = NullPointerException.class )
     public void rejectsNullHelpFormatter() {
         parser.formatHelpWith( null );
+    }
+
+    @Test
+    public void fixForIssue56() throws IOException {
+        parser.accepts( "password", "Server Password" ).withRequiredArg().ofType( String.class );
+        parser.accepts( "F", "Forward port mapping (ie: localhost:5900:localhost:5900)" ).withRequiredArg();
+        parser.accepts( "R", "Reverse port mapping (ie: localhost:5900:localhost:5900)" ).withRequiredArg();
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+                "Option      Description                         ",
+                "------      -----------                         ",
+                "-F          Forward port mapping (ie: localhost:",
+                "              5900:localhost:5900)              ",
+                "-R          Reverse port mapping (ie: localhost:",
+                "              5900:localhost:5900)              ",
+                "--password  Server Password                     ",
+                EMPTY );
     }
 
     private void assertHelpLines( String... expectedLines ) {

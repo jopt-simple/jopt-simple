@@ -7,6 +7,10 @@ Changes in version 4.7
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/53} gh-53}} by correcting
       <<<OptionSet.hasOptions()>>> to answer correctly for no switches.
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/56} gh-56}} by correcting
+      the default help formatting not to use a <<<Set>>> for rows of output,
+      but <<<List>>>.
+
 Changes in version 4.6
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/31} gh-31}} by offering

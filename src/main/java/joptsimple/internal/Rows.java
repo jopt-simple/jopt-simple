@@ -25,8 +25,8 @@
 
 package joptsimple.internal;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.*;
 
@@ -38,7 +38,7 @@ import static joptsimple.internal.Strings.*;
 public class Rows {
     private final int overallWidth;
     private final int columnSeparatorWidth;
-    private final Set<Row> rows = new LinkedHashSet<Row>();
+    private final List<Row> rows = new ArrayList<Row>();
     private int widthOfWidestOption;
     private int widthOfWidestDescription;
 
@@ -66,7 +66,7 @@ public class Rows {
     public void fitToWidth() {
         Columns columns = new Columns( optionWidth(), descriptionWidth() );
 
-        Set<Row> fitted = new LinkedHashSet<Row>();
+        List<Row> fitted = new ArrayList<Row>();
         for ( Row each : rows )
             fitted.addAll( columns.fit( each ) );
 
