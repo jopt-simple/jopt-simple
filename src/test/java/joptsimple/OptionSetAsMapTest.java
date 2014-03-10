@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -31,16 +32,18 @@ public class OptionSetAsMapTest extends AbstractOptionParserFixture {
 
         OptionSet options = parser.parse( "-a", "-e", "-c", "5", "-d", "6", "-b", "4", "-d", "7", "-e", "8" );
 
-        final Map<OptionSpec<?>, List<?>> expected = new HashMap<OptionSpec<?>, List<?>>() {
+        Map<OptionSpec<?>, List<?>> expected = new HashMap<OptionSpec<?>, List<?>>() {
+            private static final long serialVersionUID = Long.MIN_VALUE;
+
             {
-                put( a, asList() );
+                put( a, emptyList() );
                 put( b, asList( "4" ) );
                 put( c, asList( "5" ) );
                 put( d, asList( "6", "7" ) );
                 put( e, asList( "8" ) );
                 put( f, asList( "3" ) );
                 put( g, asList( "4" ) );
-                put( h, asList() );
+                put( h, emptyList() );
             }
         };
         assertThat( options.asMap(), is( equalTo( expected ) ) );

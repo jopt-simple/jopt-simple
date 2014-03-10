@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.util.Arrays;
+
 import static java.util.Arrays.*;
 
 import org.junit.Test;
@@ -45,6 +47,6 @@ public class OptionSetDetectedOptionsTest extends AbstractOptionParserFixture {
 
         OptionSet options = parser.parse( "-a", "-e", "-c", "5", "-d", "6", "-b", "4", "-d", "7", "-e", "8" );
 
-        assertEquals( asList( a, e, c, d, b, d, e ), options.specs() );
+        assertEquals( Arrays.<OptionSpec<?>> asList( a, e, c, d, b, d, e ), options.specs() );
     }
 }
