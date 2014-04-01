@@ -48,6 +48,11 @@ public class PunctuationInShortOptionTest {
         assertOptionAllowed( "." );
     }
 
+    @Test
+    public void allowsUnderscoreAsShortOption() {
+        assertOptionAllowed( "_" );
+    }
+
     private void assertOptionAllowed( String option ) {
         OptionSet options = new OptionParser( option ).parse( '-' + option );
 

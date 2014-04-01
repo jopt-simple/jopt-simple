@@ -58,6 +58,11 @@ public class PunctuationInLongOptionTest extends AbstractOptionParserFixture {
         assertOptionAllowed( "??who?k??n???e????w?" );
     }
 
+    @Test
+    public void allowsUnderscoreInOptionNames() {
+        assertOptionAllowed( "super_long_option_name" );
+    }
+
     private void assertOptionAllowed( String option ) {
         parser.accepts( option );
 

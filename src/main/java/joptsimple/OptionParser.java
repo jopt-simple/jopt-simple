@@ -57,7 +57,7 @@ import static joptsimple.ParserRules.isShortOptionToken;
  *
  * <ul>
  *   <li><dfn>Short options</dfn> begin with a single hyphen ("<kbd>-</kbd>") followed by a single letter or digit,
- *   or question mark ("<kbd>?</kbd>"), or dot ("<kbd>.</kbd>").</li>
+ *   or question mark ("<kbd>?</kbd>"), or dot ("<kbd>.</kbd>"), or underscore ("<kbd>_</kbd>").</li>
  *
  *   <li>Short options can accept single arguments. The argument can be made required or optional. The option's
  *   argument can occur:

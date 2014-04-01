@@ -4,6 +4,9 @@
 
 Changes in version 4.7
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/57} gh-57}} by admitting
+      the underscore as a legal option character.
+
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/53} gh-53}} by correcting
       <<<OptionSet.hasOptions()>>> to answer correctly for no switches.
 

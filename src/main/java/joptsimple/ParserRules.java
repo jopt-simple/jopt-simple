@@ -78,7 +78,7 @@ final class ParserRules {
     }
 
     private static boolean isAllowedPunctuation( char option ) {
-        String allowedPunctuation = "?." + HYPHEN_CHAR;
+        String allowedPunctuation = "?._" + HYPHEN_CHAR;
         return allowedPunctuation.indexOf( option ) != -1;
     }
 }
