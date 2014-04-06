@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Specification of an option that accepts an optional argument.
@@ -38,7 +38,7 @@ class OptionalArgumentOptionSpec<V> extends ArgumentAcceptingOptionSpec<V> {
         super( option, false );
     }
 
-    OptionalArgumentOptionSpec( Collection<String> options, String description ) {
+    OptionalArgumentOptionSpec( List<String> options, String description ) {
         super( options, false, description );
     }
 

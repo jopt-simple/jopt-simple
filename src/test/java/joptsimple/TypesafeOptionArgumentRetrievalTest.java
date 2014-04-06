@@ -25,15 +25,13 @@
 
 package joptsimple;
 
-import java.util.Collection;
 import java.util.List;
+
+import org.junit.Test;
 
 import static java.lang.Short.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
-
-import org.junit.Test;
-
 import static joptsimple.ExceptionMatchers.*;
 import static org.junit.Assert.*;
 
@@ -300,7 +298,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
             this.option = option;
         }
 
-        public Collection<String> options() {
+        public List<String> options() {
             return asList( option );
         }
 

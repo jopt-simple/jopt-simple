@@ -54,7 +54,7 @@ public class ToStringTest {
     public static Collection<?> objectsAndStringRepresentations() {
         return asList( new Object[][] {
             { KeyValuePair.valueOf( "key=value" ), new String[] { "key", "=", "value" } },
-            { new UnrecognizedOptionException( "a" ), new String[] { "'a'" } },
+            { new UnrecognizedOptionException( "a" ), new String[] { "a" } },
             { new NoArgumentOptionSpec( asList( "a", "b" ), "" ), new String[] { "[a, b]" } },
         } );
     }

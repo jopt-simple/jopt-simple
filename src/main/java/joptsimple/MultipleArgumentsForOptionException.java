@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import java.util.Collection;
+import static java.util.Collections.*;
 
 /**
  * Thrown when asking an {@link OptionSet} for a single argument of an option when many have been specified.
@@ -35,12 +35,12 @@ import java.util.Collection;
 class MultipleArgumentsForOptionException extends OptionException {
     private static final long serialVersionUID = -1L;
 
-    MultipleArgumentsForOptionException( Collection<String> options ) {
-        super( options );
+    MultipleArgumentsForOptionException( OptionSpec<?> options ) {
+        super( singleton( options ) );
     }
 
     @Override
     public String getMessage() {
-        return "Found multiple arguments for option " + multipleOptionMessage() + ", but you asked for only one";
+        return "Found multiple arguments for option " + singleOptionMessage() + ", but you asked for only one";
     }
 }

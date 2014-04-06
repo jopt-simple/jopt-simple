@@ -25,14 +25,14 @@
 
 package joptsimple;
 
+import java.util.Arrays;
 import java.util.Collection;
-
-import static java.util.Arrays.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
 /**
@@ -51,18 +51,28 @@ public class OptionExceptionMessageTest {
     @Parameterized.Parameters
     public static Collection<?> exceptionsAndMessages() {
         return asList(
-            new Object[] { new IllegalOptionSpecificationException( "," ), "',' is not a legal option character" },
-            new Object[] { new MultipleArgumentsForOptionException( asList( "b", "c" ) ),
-                "Found multiple arguments for option ['b', 'c'], but you asked for only one" },
-            new Object[] { new OptionArgumentConversionException( asList( "c", "number" ), "d", null ),
-                "Cannot parse argument 'd' of option ['c', 'number']" },
-            new Object[] { new OptionMissingRequiredArgumentException( asList( "e", "honest" ) ),
-                "Option ['e', 'honest'] requires an argument" },
-            new Object[] { new UnrecognizedOptionException( "f" ), "'f' is not a recognized option" },
-            new Object[] { new MissingRequiredOptionException( asList( "g", "h" ) ),
-                "Missing required option(s) ['g', 'h']" },
+            new Object[] { new IllegalOptionSpecificationException( "," ), ", is not a legal option character" },
+            new Object[] { new MultipleArgumentsForOptionException(
+                new RequiredArgumentOptionSpec<Object>( asList( "b", "c" ), "d" ) ),
+                "Found multiple arguments for option b/c, but you asked for only one" },
+            new Object[] { new OptionArgumentConversionException(
+                new RequiredArgumentOptionSpec<Object>( asList( "c", "number" ), "x" ), "d", null ),
+                "Cannot parse argument 'd' of option c/number" },
+            new Object[] { new OptionMissingRequiredArgumentException(
+                new RequiredArgumentOptionSpec<Object>( asList( "e", "honest" ), "" ) ),
+                "Option e/honest requires an argument" },
+            new Object[] { new UnrecognizedOptionException( "f" ), "f is not a recognized option" },
+            new Object[] { new MissingRequiredOptionsException(
+                Arrays.<AbstractOptionSpec<?>> asList(
+                    new NoArgumentOptionSpec( "g" ), new NoArgumentOptionSpec( "h" ) ) ),
+                "Missing required option(s) [g, h]" },
+            new Object[] { new MissingRequiredOptionsException(
+                    Arrays.<AbstractOptionSpec<?>> asList(
+                        new RequiredArgumentOptionSpec<Object>( asList( "p", "place" ), "spot" ),
+                        new RequiredArgumentOptionSpec<Object>( asList( "d", "data-dir" ), "dir" ) ) ),
+                    "Missing required option(s) [p/place, d/data-dir]" },
             new Object[] { new UnconfiguredOptionException( asList( "i", "j" ) ),
-                "Option ['i', 'j'] has not been configured on this parser" }
+                "Option(s) [i, j] not configured on this parser" }
         );
     }
 

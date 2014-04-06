@@ -248,7 +248,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     @Test
     public void requiredOptionWithArgMissing() {
         parser.accepts( "t" ).withOptionalArg().required();
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
         thrown.expect( withOption( "t" ) );
 
         parser.parse();

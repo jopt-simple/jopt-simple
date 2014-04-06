@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import java.util.Collection;
+import static java.util.Collections.*;
 
 /**
  * Thrown when a problem occurs converting an argument of an option from {@link String} to another type.
@@ -37,14 +37,14 @@ class OptionArgumentConversionException extends OptionException {
 
     private final String argument;
 
-    OptionArgumentConversionException( Collection<String> options, String argument, Throwable cause ) {
-        super( options, cause );
+    OptionArgumentConversionException( OptionSpec<?> options, String argument, Throwable cause ) {
+        super( singleton( options ), cause );
 
         this.argument = argument;
     }
 
     @Override
     public String getMessage() {
-        return "Cannot parse argument '" + argument + "' of option " + multipleOptionMessage();
+        return "Cannot parse argument '" + argument + "' of option " + singleOptionMessage();
     }
 }

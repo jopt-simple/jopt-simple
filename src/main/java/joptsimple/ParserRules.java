@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import java.util.Collection;
+import java.util.List;
 
 import static java.lang.Character.*;
 
@@ -67,7 +67,7 @@ final class ParserRules {
             ensureLegalOptionCharacter( option.charAt( i ) );
     }
 
-    static void ensureLegalOptions( Collection<String> options ) {
+    static void ensureLegalOptions( List<String> options ) {
         for ( String each : options )
             ensureLegalOption( each );
     }

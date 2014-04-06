@@ -1,6 +1,6 @@
 package joptsimple;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Trains the option parser. This interface aids integration that disposes declaration of options but not actual
@@ -59,12 +59,12 @@ public interface OptionDeclarer {
      * @throws OptionException if any of the options contain illegal characters
      * @throws NullPointerException if the option list or any of its elements are {@code null}
      */
-    OptionSpecBuilder acceptsAll( Collection<String> options );
+    OptionSpecBuilder acceptsAll( List<String> options );
 
     /**
      * Tells the parser to recognize the given options, and treat them as synonymous.
      *
-     * @see #acceptsAll(Collection)
+     * @see #acceptsAll(List)
      * @param options the options to recognize and treat as synonymous
      * @param description a string that describes the purpose of the option.  This is used when generating help
      * information about the parser.
@@ -73,7 +73,7 @@ public interface OptionDeclarer {
      * @throws NullPointerException if the option list or any of its elements are {@code null}
      * @throws IllegalArgumentException if the option list is empty
      */
-    OptionSpecBuilder acceptsAll( Collection<String> options, String description );
+    OptionSpecBuilder acceptsAll( List<String> options, String description );
 
     /**
      * Gives an object that represents an access point for non-option arguments on a command line.

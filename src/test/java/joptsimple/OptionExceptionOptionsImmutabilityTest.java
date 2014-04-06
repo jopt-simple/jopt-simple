@@ -25,18 +25,18 @@
 
 package joptsimple;
 
-import java.util.Collection;
+import java.util.List;
+
+import org.infinitest.toolkit.UnmodifiableListTestSupport;
 
 import static java.util.Arrays.*;
-
-import org.infinitest.toolkit.UnmodifiableCollectionTestSupport;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-public class OptionExceptionOptionsImmutabilityTest extends UnmodifiableCollectionTestSupport<String> {
+public class OptionExceptionOptionsImmutabilityTest extends UnmodifiableListTestSupport<String> {
     @Override
-    protected Collection<String> newCollection() {
+    protected List<String> newList() {
         return new OptionException( asList( "a", "b" ) ) {
             private static final long serialVersionUID = -1L;
         }.options();

@@ -30,9 +30,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static java.util.Collections.*;
+import joptsimple.internal.Strings;
 
-import static joptsimple.internal.Strings.*;
+import static java.util.Collections.*;
 
 /**
  * Thrown when a problem occurs during option parsing.
@@ -44,14 +44,28 @@ public abstract class OptionException extends RuntimeException {
 
     private final List<String> options = new ArrayList<String>();
 
-    protected OptionException( Collection<String> options ) {
+    protected OptionException( List<String> options ) {
         this.options.addAll( options );
     }
 
-    protected OptionException( Collection<String> options, Throwable cause ) {
-        super( cause );
+    protected OptionException( Collection<? extends OptionSpec<?>> options ) {
+        this.options.addAll( specsToStrings( options ) );
+    }
 
-        this.options.addAll( options );
+    protected OptionException( Collection<? extends OptionSpec<?>> options, Throwable cause ) {
+        super( cause );
+        this.options.addAll( specsToStrings( options ) );
+    }
+
+    private List<String> specsToStrings( Collection<? extends OptionSpec<?>> options ) {
+        List<String> strings = new ArrayList<String>();
+        for ( OptionSpec<?> each : options )
+            strings.add( specToString( each ) );
+        return strings;
+    }
+
+    private String specToString( OptionSpec<?> option ) {
+        return Strings.join( new ArrayList<String>( option.options() ), "/" );
     }
 
     /**
@@ -59,8 +73,8 @@ public abstract class OptionException extends RuntimeException {
      *
      * @return the option being considered when the exception was created
      */
-    public Collection<String> options() {
-        return unmodifiableCollection( options );
+    public List<String> options() {
+        return unmodifiableList( options );
     }
 
     protected final String singleOptionMessage() {
@@ -68,7 +82,7 @@ public abstract class OptionException extends RuntimeException {
     }
 
     protected final String singleOptionMessage( String option ) {
-        return SINGLE_QUOTE + option + SINGLE_QUOTE;
+        return option;
     }
 
     protected final String multipleOptionMessage() {

@@ -26,12 +26,10 @@
 package joptsimple;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import static java.util.Collections.*;
-
 import static joptsimple.internal.Objects.*;
 import static joptsimple.internal.Reflection.*;
 import static joptsimple.internal.Strings.*;
@@ -71,7 +69,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
         this.argumentRequired = argumentRequired;
     }
 
-    ArgumentAcceptingOptionSpec( Collection<String> options, boolean argumentRequired, String description ) {
+    ArgumentAcceptingOptionSpec( List<String> options, boolean argumentRequired, String description ) {
         super( options, description );
 
         this.argumentRequired = argumentRequired;

@@ -25,18 +25,18 @@
 
 package joptsimple;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
- * Thrown when an option is marked as required, but not specified on the command line.
+ * Thrown when options marked as required are not specified on the command line.
  *
  * @author <a href="https://github.com/TC1">Emils Solmanis</a>
  */
-class MissingRequiredOptionException extends OptionException {
+class MissingRequiredOptionsException extends OptionException {
     private static final long serialVersionUID = -1L;
 
-    protected MissingRequiredOptionException( Collection<String> options ) {
-        super( options );
+    protected MissingRequiredOptionsException( List<? extends OptionSpec<?>> missingRequiredOptions ) {
+        super( missingRequiredOptions );
     }
 
     @Override

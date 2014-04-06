@@ -25,7 +25,6 @@
 
 package joptsimple;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -86,7 +85,7 @@ public interface OptionSpec<V> {
     /**
      * @return the string representations of this option
      */
-    Collection<String> options();
+    List<String> options();
 
     /**
      * Tells whether this option is designated as a "help" option. The presence of a "help" option on a command line

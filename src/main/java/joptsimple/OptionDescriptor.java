@@ -25,7 +25,6 @@
 
 package joptsimple;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,7 +39,7 @@ public interface OptionDescriptor {
      *
      * @return synonymous options
      */
-    Collection<String> options();
+    List<String> options();
 
     /**
      * Description of this option's purpose.

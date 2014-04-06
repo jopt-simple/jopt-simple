@@ -49,13 +49,13 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
         this( singletonList( option ), EMPTY );
     }
 
-    protected AbstractOptionSpec( Collection<String> options, String description ) {
+    protected AbstractOptionSpec( List<String> options, String description ) {
         arrangeOptions( options );
 
         this.description = description;
     }
 
-    public final Collection<String> options() {
+    public final List<String> options() {
         return unmodifiableList( options );
     }
 
@@ -91,10 +91,10 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
             return Reflection.convertWith( converter, argument );
         }
         catch ( ReflectionException ex ) {
-            throw new OptionArgumentConversionException( options(), argument, ex );
+            throw new OptionArgumentConversionException( this, argument, ex );
         }
         catch ( ValueConversionException ex ) {
-            throw new OptionArgumentConversionException( options(), argument, ex );
+            throw new OptionArgumentConversionException( this, argument, ex );
         }
     }
 
@@ -109,7 +109,7 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
     abstract void handleOption( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions,
         String detectedArgument );
 
-    private void arrangeOptions( Collection<String> unarranged ) {
+    private void arrangeOptions( List<String> unarranged ) {
         if ( unarranged.size() == 1 ) {
             options.addAll( unarranged );
             return;

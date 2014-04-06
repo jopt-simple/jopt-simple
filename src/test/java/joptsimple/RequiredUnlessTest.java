@@ -44,14 +44,14 @@ public class RequiredUnlessTest extends AbstractOptionParserFixture {
 
     @Test
     public void rejectsCommandLineMissingConditionallyRequiredOption() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "" );
     }
 
     @Test
     public void rejectsCommandLineWithNotAllConditionallyRequiredOptionsPresent() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "--username", "joe" );
     }

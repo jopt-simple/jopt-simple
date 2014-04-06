@@ -176,7 +176,7 @@ public class OptionSet {
             case 1:
                 return values.get( 0 );
             default:
-                throw new MultipleArgumentsForOptionException( option.options() );
+                throw new MultipleArgumentsForOptionException( option );
         }
     }
 

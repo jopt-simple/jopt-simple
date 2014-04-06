@@ -40,7 +40,7 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
         this( singletonList( option ), "" );
     }
 
-    NoArgumentOptionSpec( Collection<String> options, String description ) {
+    NoArgumentOptionSpec( List<String> options, String description ) {
         super( options, description );
     }
 

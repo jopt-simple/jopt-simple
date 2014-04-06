@@ -26,7 +26,6 @@
 package joptsimple;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,7 +59,7 @@ import java.util.List;
 public class OptionSpecBuilder extends NoArgumentOptionSpec {
     private final OptionParser parser;
 
-    OptionSpecBuilder( OptionParser parser, Collection<String> options, String description ) {
+    OptionSpecBuilder( OptionParser parser, List<String> options, String description ) {
         super( options, description );
 
         this.parser = parser;

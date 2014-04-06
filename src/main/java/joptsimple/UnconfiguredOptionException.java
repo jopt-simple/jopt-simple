@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import java.util.Collection;
+import java.util.List;
 
 import static java.util.Collections.*;
 
@@ -41,12 +41,12 @@ class UnconfiguredOptionException extends OptionException {
         this( singletonList( option ) );
     }
 
-    UnconfiguredOptionException( Collection<String> options ) {
+    UnconfiguredOptionException( List<String> options ) {
         super( options );
     }
 
     @Override
     public String getMessage() {
-        return "Option " + multipleOptionMessage() + " has not been configured on this parser";
+        return "Option(s) " + multipleOptionMessage() + " not configured on this parser";
     }
 }

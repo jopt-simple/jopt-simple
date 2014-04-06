@@ -7,7 +7,6 @@ import joptsimple.OptionSpec;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -18,22 +17,23 @@ public class ExportOptionsTest {
     private static Properties asProperties( OptionSet options, String prefix ) {
         Properties properties = new Properties();
         for ( Entry<OptionSpec<?>, List<?>> entry : options.asMap().entrySet() ) {
-            final OptionSpec<?> spec = entry.getKey();
-            properties.setProperty( asPropertyKey( prefix, spec ),
-                asPropertValue( entry.getValue(), options.has( spec ) ) );
+            OptionSpec<?> spec = entry.getKey();
+            properties.setProperty(
+                asPropertyKey( prefix, spec ),
+                asPropertyValue( entry.getValue(), options.has( spec ) ) );
         }
         return properties;
     }
 
     private static String asPropertyKey( String prefix, OptionSpec<?> spec ) {
-        Collection<String> flags = spec.options();
+        List<String> flags = spec.options();
         for ( String flag : flags )
             if ( 1 < flag.length() )
                 return null == prefix ? flag : ( prefix + '.' + flag );
         throw new IllegalArgumentException( "No usable non-short flag: " + flags );
     }
 
-    private static String asPropertValue( List<?> values, boolean present ) {
+    private static String asPropertyValue( List<?> values, boolean present ) {
         // Simple flags have no values; treat presence/absence as true/false
         return values.isEmpty() ? String.valueOf( present ) : Joiner.on( "," ).join( values );
     }

@@ -48,21 +48,21 @@ public class RequiredIfAnyTest extends AbstractOptionParserFixture {
 
     @Test
     public void rejectsCommandLineMissingConditionallyRequiredOption() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "-a" );
     }
 
     @Test
     public void rejectsCommandLineMissingOtherConditionallyRequiredOption() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "-b" );
     }
 
     @Test
     public void rejectsCommandLineWithNotAllConditionallyRequiredOptionsPresent() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "-a", "-b", "-c", "-d" );
     }

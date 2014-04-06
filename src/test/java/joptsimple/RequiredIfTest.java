@@ -47,21 +47,21 @@ public class RequiredIfTest extends AbstractOptionParserFixture {
 
     @Test
     public void rejectsCommandLineMissingConditionallyRequiredOption() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "--ftp" );
     }
 
     @Test
     public void rejectsCommandLineMissingConditionallyRequiredOptionSynonym() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "--file-transfer" );
     }
 
     @Test
     public void rejectsCommandLineWithNotAllConditionallyRequiredOptionsPresent() {
-        thrown.expect( MissingRequiredOptionException.class );
+        thrown.expect( MissingRequiredOptionsException.class );
 
         parser.parse( "--ftp", "--username", "joe" );
     }

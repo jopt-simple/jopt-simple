@@ -25,9 +25,6 @@
 
 package joptsimple;
 
-import joptsimple.internal.AbbreviationMap;
-import joptsimple.util.KeyValuePair;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -41,13 +38,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.Collections.singletonList;
-import static joptsimple.OptionException.unrecognizedOption;
-import static joptsimple.OptionParserState.moreOptions;
-import static joptsimple.ParserRules.RESERVED_FOR_EXTENSIONS;
-import static joptsimple.ParserRules.ensureLegalOptions;
-import static joptsimple.ParserRules.isLongOptionToken;
-import static joptsimple.ParserRules.isShortOptionToken;
+import joptsimple.internal.AbbreviationMap;
+import joptsimple.util.KeyValuePair;
+
+import static java.util.Collections.*;
+import static joptsimple.OptionException.*;
+import static joptsimple.OptionParserState.*;
+import static joptsimple.ParserRules.*;
 
 /**
  * <p>Parses command line arguments, using a syntax that attempts to take from the best of POSIX {@code getopt()}
@@ -132,7 +129,7 @@ import static joptsimple.ParserRules.isShortOptionToken;
  *
  * <ol>
  *   <li>A "fluent interface"-style API for specifying options, available since version 2. Sentences in this fluent
- *   interface language begin with a call to {@link #accepts(String) accepts} or {@link #acceptsAll(Collection)
+ *   interface language begin with a call to {@link #accepts(String) accepts} or {@link #acceptsAll(List)
  *   acceptsAll} methods; calls on the ensuing chain of objects describe whether the options can take an argument,
  *   whether the argument is required or optional, to what type arguments of the options should be converted if any,
  *   etc. Since version 3, these calls return an instance of {@link OptionSpec}, which can subsequently be used to
@@ -165,7 +162,7 @@ import static joptsimple.ParserRules.isShortOptionToken;
  *   </li>
  * </ol>
  *
- * <p>Each of the options in a list of options given to {@link #acceptsAll(Collection) acceptsAll} is treated as a
+ * <p>Each of the options in a list of options given to {@link #acceptsAll(List) acceptsAll} is treated as a
  * synonym of the others.  For example:
  *   <pre>
  *     <code>
@@ -199,8 +196,8 @@ import static joptsimple.ParserRules.isShortOptionToken;
 public class OptionParser implements OptionDeclarer {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
     private final List<OptionSpec<?>> trainingOrder;
-    private final Map<Collection<String>, Set<OptionSpec<?>>> requiredIf;
-    private final Map<Collection<String>, Set<OptionSpec<?>>> requiredUnless;
+    private final Map<List<String>, Set<OptionSpec<?>>> requiredIf;
+    private final Map<List<String>, Set<OptionSpec<?>>> requiredUnless;
     private OptionParserState state;
     private boolean posixlyCorrect;
     private boolean allowsUnrecognizedOptions;
@@ -213,8 +210,8 @@ public class OptionParser implements OptionDeclarer {
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
         trainingOrder = new ArrayList<OptionSpec<?>>();
-        requiredIf = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
-        requiredUnless = new HashMap<Collection<String>, Set<OptionSpec<?>>>();
+        requiredIf = new HashMap<List<String>, Set<OptionSpec<?>>>();
+        requiredUnless = new HashMap<List<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
 
         recognize( new NonOptionArgumentSpec<String>() );
@@ -244,11 +241,11 @@ public class OptionParser implements OptionDeclarer {
         return acceptsAll( singletonList( option ), description );
     }
 
-    public OptionSpecBuilder acceptsAll( Collection<String> options ) {
+    public OptionSpecBuilder acceptsAll( List<String> options ) {
         return acceptsAll( options, "" );
     }
 
-    public OptionSpecBuilder acceptsAll( Collection<String> options, String description ) {
+    public OptionSpecBuilder acceptsAll( List<String> options, String description ) {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
 
@@ -386,34 +383,34 @@ public class OptionParser implements OptionDeclarer {
     }
 
     private void ensureRequiredOptions( OptionSet options ) {
-        Collection<String> missingRequiredOptions = missingRequiredOptions( options );
+        List<AbstractOptionSpec<?>> missingRequiredOptions = missingRequiredOptions(options);
         boolean helpOptionPresent = isHelpOptionPresent( options );
 
         if ( !missingRequiredOptions.isEmpty() && !helpOptionPresent )
-            throw new MissingRequiredOptionException( missingRequiredOptions );
+            throw new MissingRequiredOptionsException( missingRequiredOptions );
     }
 
-    private Collection<String> missingRequiredOptions( OptionSet options ) {
-        Collection<String> missingRequiredOptions = new HashSet<String>();
+    private List<AbstractOptionSpec<?>> missingRequiredOptions(OptionSet options) {
+        List<AbstractOptionSpec<?>> missingRequiredOptions = new ArrayList<AbstractOptionSpec<?>>();
 
         for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
             if ( each.isRequired() && !options.has( each ) )
-                missingRequiredOptions.addAll( each.options() );
+                missingRequiredOptions.add(each);
         }
 
-        for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredIf.entrySet() ) {
+        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> eachEntry : requiredIf.entrySet() ) {
             AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
 
             if ( optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
-                missingRequiredOptions.addAll( required.options() );
+                missingRequiredOptions.add(required);
             }
         }
 
-        for ( Map.Entry<Collection<String>, Set<OptionSpec<?>>> eachEntry : requiredUnless.entrySet() ) {
+        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> eachEntry : requiredUnless.entrySet() ) {
             AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
 
             if ( !optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
-                missingRequiredOptions.addAll( required.options() );
+                missingRequiredOptions.add(required);
             }
         }
 
@@ -493,24 +490,24 @@ public class OptionParser implements OptionDeclarer {
         return recognizedOptions.contains( option );
     }
 
-    void requiredIf( Collection<String> precedentSynonyms, String required ) {
+    void requiredIf( List<String> precedentSynonyms, String required ) {
         requiredIf( precedentSynonyms, specFor( required ) );
     }
 
-    void requiredIf( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
+    void requiredIf( List<String> precedentSynonyms, OptionSpec<?> required ) {
         putRequiredOption( precedentSynonyms, required, requiredIf );
     }
 
-    void requiredUnless( Collection<String> precedentSynonyms, String required ) {
+    void requiredUnless( List<String> precedentSynonyms, String required ) {
         requiredUnless( precedentSynonyms, specFor( required ) );
     }
 
-    void requiredUnless( Collection<String> precedentSynonyms, OptionSpec<?> required ) {
+    void requiredUnless( List<String> precedentSynonyms, OptionSpec<?> required ) {
         putRequiredOption( precedentSynonyms, required, requiredUnless );
     }
 
-    private void putRequiredOption( Collection<String> precedentSynonyms, OptionSpec<?> required,
-        Map<Collection<String>, Set<OptionSpec<?>>> target ) {
+    private void putRequiredOption( List<String> precedentSynonyms, OptionSpec<?> required,
+        Map<List<String>, Set<OptionSpec<?>>> target ) {
 
         for ( String each : precedentSynonyms ) {
             AbstractOptionSpec<?> spec = specFor( each );
