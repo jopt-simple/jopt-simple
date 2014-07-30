@@ -14,6 +14,9 @@ Changes in version 4.7
       the default help formatting not to use a <<<Set>>> for rows of output,
       but <<<List>>>.
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/59} gh-59}} by relaxing
+      the return type of <<<ValueConverter.valueType()>>>.
+
 Changes in version 4.6
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/31} gh-31}} by offering
