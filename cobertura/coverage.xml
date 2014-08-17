@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.996938775510204" branch-rate="0.9731543624161074" lines-covered="977" lines-valid="980" branches-covered="435" branches-valid="447" complexity="1.9221183800623054" version="1.9.4.1" timestamp="1406846898165">
+<coverage line-rate="0.996938775510204" branch-rate="0.9731543624161074" lines-covered="977" lines-valid="980" branches-covered="435" branches-valid="447" complexity="1.9221183800623054" version="1.9.4.1" timestamp="1408239127716">
 	<sources>
 		<source>/Users/prholser/java/jopt-simple/target/checkout/src/main/java</source>
 		<source>--source</source>

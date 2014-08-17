@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2014-07-31T17:48:30.553">
+<pmd version="4.2.5" timestamp="2014-08-16T20:32:19.769">
 <file name="/Users/prholser/java/jopt-simple/target/checkout/src/main/java/joptsimple/OptionParser.java">
 <violation beginline="26" endline="568" begincolumn="1" endcolumn="2" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="joptsimple" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
 Too many static imports may lead to messy code
