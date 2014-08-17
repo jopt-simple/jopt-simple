@@ -35,7 +35,6 @@ import static java.util.Arrays.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public final class Strings {
-    public static final String EMPTY = "";
     public static final String SINGLE_QUOTE = "'";
     public static final String LINE_SEPARATOR = getProperty( "line.separator" );
 
@@ -66,7 +65,7 @@ public final class Strings {
      * @return {@code true} if the target string is null or empty
      */
     public static boolean isNullOrEmpty( String target ) {
-        return target == null || EMPTY.equals( target );
+        return target == null || target.isEmpty();
     }
 
 
