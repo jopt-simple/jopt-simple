@@ -46,7 +46,7 @@ class UnconfiguredOptionException extends OptionException {
     }
 
     @Override
-    public String getMessage() {
-        return "Option(s) " + multipleOptionMessage() + " not configured on this parser";
+    Object[] messageArguments() {
+        return new Object[] { multipleOptionString() };
     }
 }

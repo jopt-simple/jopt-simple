@@ -40,7 +40,7 @@ class MissingRequiredOptionsException extends OptionException {
     }
 
     @Override
-    public String getMessage() {
-        return "Missing required option(s) " + multipleOptionMessage();
+    Object[] messageArguments() {
+        return new Object[] { multipleOptionString() };
     }
 }

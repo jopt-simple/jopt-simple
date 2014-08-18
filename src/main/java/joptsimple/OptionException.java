@@ -25,10 +25,13 @@
 
 package joptsimple;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import joptsimple.internal.Strings;
 
@@ -77,19 +80,19 @@ public abstract class OptionException extends RuntimeException {
         return unmodifiableList( options );
     }
 
-    protected final String singleOptionMessage() {
-        return singleOptionMessage( options.get( 0 ) );
+    protected final String singleOptionString() {
+        return singleOptionString( options.get( 0 ) );
     }
 
-    protected final String singleOptionMessage( String option ) {
+    protected final String singleOptionString( String option ) {
         return option;
     }
 
-    protected final String multipleOptionMessage() {
+    protected final String multipleOptionString() {
         StringBuilder buffer = new StringBuilder( "[" );
 
         for ( Iterator<String> iter = options.iterator(); iter.hasNext(); ) {
-            buffer.append( singleOptionMessage( iter.next() ) );
+            buffer.append( singleOptionString(iter.next()) );
             if ( iter.hasNext() )
                 buffer.append( ", " );
         }
@@ -102,4 +105,23 @@ public abstract class OptionException extends RuntimeException {
     static OptionException unrecognizedOption( String option ) {
         return new UnrecognizedOptionException( option );
     }
+
+    @Override
+    public final String getMessage() {
+        return localizedMessage( Locale.getDefault() );
+    }
+
+    final String localizedMessage( Locale locale ) {
+        return formattedMessage( locale );
+    }
+
+    private String formattedMessage( Locale locale ) {
+        ResourceBundle bundle = ResourceBundle.getBundle( "joptsimple.ExceptionMessages", locale );
+        String template = bundle.getString( getClass().getName() + ".message" );
+        MessageFormat format = new MessageFormat( template );
+        format.setLocale( locale );
+        return format.format( messageArguments() );
+    }
+
+    abstract Object[] messageArguments();
 }

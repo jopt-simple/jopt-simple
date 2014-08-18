@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.text.MessageFormat;
+
 import static java.util.Collections.*;
 
 /**
@@ -40,7 +42,7 @@ class UnrecognizedOptionException extends OptionException {
     }
 
     @Override
-    public String getMessage() {
-        return singleOptionMessage() + " is not a recognized option";
+    Object[] messageArguments() {
+        return new Object[] { singleOptionString() };
     }
 }

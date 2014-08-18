@@ -26,9 +26,11 @@
 package joptsimple.util;
 
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
@@ -91,10 +93,19 @@ public class DateConverter implements ValueConverter<Date> {
     }
 
     private String message( String value ) {
-        String message = "Value [" + value + "] does not match date/time pattern";
-        if ( formatter instanceof SimpleDateFormat )
-            message += " [" + ( (SimpleDateFormat) formatter ).toPattern() + ']';
+        ResourceBundle bundle = ResourceBundle.getBundle( "joptsimple.ExceptionMessages" );
 
-        return message;
+        String key;
+        Object[] arguments;
+        if ( formatter instanceof SimpleDateFormat ) {
+            key = getClass().getName() + ".with.pattern.message";
+            arguments = new Object[] { value, ( (SimpleDateFormat) formatter ).toPattern() };
+        } else {
+            key = getClass().getName() + ".without.pattern.message";
+            arguments = new Object[] { value };
+        }
+
+        String template = bundle.getString( key );
+        return new MessageFormat( template ).format( arguments );
     }
 }

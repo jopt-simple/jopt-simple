@@ -40,7 +40,7 @@ class IllegalOptionSpecificationException extends OptionException {
     }
 
     @Override
-    public String getMessage() {
-        return singleOptionMessage() + " is not a legal option character";
+    Object[] messageArguments() {
+        return new Object[] { singleOptionString() };
     }
 }

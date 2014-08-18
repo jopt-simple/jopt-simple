@@ -40,7 +40,7 @@ class MultipleArgumentsForOptionException extends OptionException {
     }
 
     @Override
-    public String getMessage() {
-        return "Found multiple arguments for option " + singleOptionMessage() + ", but you asked for only one";
+    Object[] messageArguments() {
+        return new Object[] { singleOptionString() };
     }
 }

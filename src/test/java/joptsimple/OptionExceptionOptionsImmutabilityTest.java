@@ -39,6 +39,11 @@ public class OptionExceptionOptionsImmutabilityTest extends UnmodifiableListTest
     protected List<String> newList() {
         return new OptionException( asList( "a", "b" ) ) {
             private static final long serialVersionUID = -1L;
+
+            @Override
+            Object[] messageArguments() {
+                return new Object[0];
+            }
         }.options();
     }
 

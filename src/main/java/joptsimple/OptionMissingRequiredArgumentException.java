@@ -40,7 +40,7 @@ class OptionMissingRequiredArgumentException extends OptionException {
     }
 
     @Override
-    public String getMessage() {
-        return "Option " + singleOptionMessage() + " requires an argument";
+    Object[] messageArguments() {
+        return new Object[] { singleOptionString() };
     }
 }

@@ -25,6 +25,8 @@
 
 package joptsimple.util;
 
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.*;
@@ -66,8 +68,7 @@ public class RegexMatcher implements ValueConverter<String> {
 
     public String convert( String value ) {
         if ( !pattern.matcher( value ).matches() ) {
-            throw new ValueConversionException(
-                "Value [" + value + "] did not match regex [" + pattern.pattern() + ']' );
+            raiseValueConversionFailure( value );
         }
 
         return value;
@@ -79,5 +80,12 @@ public class RegexMatcher implements ValueConverter<String> {
 
     public String valuePattern() {
         return pattern.pattern();
+    }
+
+    private void raiseValueConversionFailure( String value ) {
+        ResourceBundle bundle = ResourceBundle.getBundle( "joptsimple.ExceptionMessages" );
+        String template = bundle.getString( getClass().getName() + ".message" );
+        String message = new MessageFormat( template ).format( new Object[] { value, pattern.pattern() } );
+        throw new ValueConversionException( message );
     }
 }
