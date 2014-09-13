@@ -2,6 +2,21 @@
                                        Change Log
                                        ----------
 
+Changes in version 4.8
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/65} gh-65}}
+      by modifying the build file to create a JAR with OSGi metadata.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/63} gh-63}}
+      by externalizing exception messages into resource bundles.
+      Currently, we ship only with messages for locale "en_US".
+      Translations for other locales are more than welcome.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/58} gh-58}} by
+      rewriting exception messaging to clarify synonymous options.
+      Synonyms are be separated by slashes (/); lists of distinct options will
+      be separated by commas (,) in square brackets ([]).
+
 Changes in version 4.7
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/57} gh-57}} by admitting
