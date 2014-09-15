@@ -283,8 +283,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
             while ( lexer.hasMoreTokens() )
                 convert( lexer.nextToken() );
             return true;
-        }
-        catch ( OptionException ignored ) {
+        } catch ( OptionException ignored ) {
             return false;
         }
     }

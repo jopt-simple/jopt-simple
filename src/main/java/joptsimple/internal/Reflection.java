@@ -73,8 +73,7 @@ public final class Reflection {
                 return new MethodInvokingValueConverter<>( valueOf, clazz );
 
             return null;
-        }
-        catch ( NoSuchMethodException ignored ) {
+        } catch ( NoSuchMethodException ignored ) {
             return null;
         }
     }
@@ -82,8 +81,7 @@ public final class Reflection {
     private static <V> ValueConverter<V> constructorConverter( Class<V> clazz ) {
         try {
             return new ConstructorInvokingValueConverter<>( clazz.getConstructor( String.class ) );
-        }
-        catch ( NoSuchMethodException ignored ) {
+        } catch ( NoSuchMethodException ignored ) {
             return null;
         }
     }
@@ -100,8 +98,7 @@ public final class Reflection {
     public static <T> T instantiate( Constructor<T> constructor, Object... args ) {
         try {
             return constructor.newInstance( args );
-        }
-        catch ( Exception ex ) {
+        } catch ( Exception ex ) {
             throw reflectionException( ex );
         }
     }
@@ -117,8 +114,7 @@ public final class Reflection {
     public static Object invoke( Method method, Object... args ) {
         try {
             return method.invoke( null, args );
-        }
-        catch ( Exception ex ) {
+        } catch ( Exception ex ) {
             throw reflectionException( ex );
         }
     }
