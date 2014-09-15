@@ -211,7 +211,7 @@ public class OptionSet {
      * example, if the type does not implement a correct conversion constructor or method
      */
     public <V> List<V> valuesOf( OptionSpec<V> option ) {
-        requireNonNull(option);
+        requireNonNull( option );
 
         List<String> values = optionsToArguments.get( option );
         if ( values == null || values.isEmpty() )
