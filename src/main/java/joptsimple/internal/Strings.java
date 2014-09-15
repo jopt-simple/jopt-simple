@@ -65,7 +65,7 @@ public final class Strings {
      * @return {@code true} if the target string is null or empty
      */
     public static boolean isNullOrEmpty( String target ) {
-        return target == null || EMPTY.equals( target );
+        return target == null || target.isEmpty();
     }
 
 
