@@ -47,7 +47,7 @@ public class InetAddressConverterTest {
 
     @Test
     public void localhost() throws Exception {
-       assumeTrue( InetAddress.getByName( "127.0.0.1").isReachable( 5000 ) );
+       assumeTrue( InetAddress.getByName( "127.0.0.1" ).isReachable( 5000 ) );
 
        assertEquals( "127.0.0.1", converter.convert( "localhost" ).getHostAddress() );
     }
