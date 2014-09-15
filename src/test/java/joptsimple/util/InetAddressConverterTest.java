@@ -21,39 +21,24 @@
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+*/
 
 package joptsimple.util;
 
+import java.net.InetAddress;
+
 import joptsimple.ValueConversionException;
-import mockit.Mock;
-import mockit.MockUp;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.isIn;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 
 /**
- * Tests {@link InetAddressConverter}. Note use of jmockit to stub {@link InetAddress#getByName(String)}; on slow
- * networks or offline this test otherwise would hang.
- *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- *
- * @see <a href="http://jmockit.googlecode.com/svn/trunk/www/tutorial/AnExample.html#mockups">Using the Mockups API</a>
  */
 public class InetAddressConverterTest {
     private InetAddressConverter converter;
-
-    @BeforeClass
-    public static void setUpClass() {
-        new MockInetAddress();
-    }
 
     @Before
     public void setUp() {
@@ -61,27 +46,14 @@ public class InetAddressConverterTest {
     }
 
     @Test
-    public void localhost() {
-        // NB - 127.0.0.1 is IPv4, ::1 is IPv6
-        assertThat( converter.convert( "localhost" ).getHostAddress(), isIn( asList( "127.0.0.1", "::1" ) ) );
+    public void localhost() throws Exception {
+       assumeTrue( InetAddress.getByName( "127.0.0.1").isReachable( 5000 ) );
+
+       assertEquals( "127.0.0.1", converter.convert( "localhost" ).getHostAddress() );
     }
 
     @Test( expected = ValueConversionException.class )
     public void unknownHost() {
         converter.convert( "yer.mom" );
-    }
-
-    public static final class MockInetAddress extends MockUp<InetAddress> {
-        @Mock
-        public void $clinit() {
-        }
-
-        @Mock( invocations = 1 )
-        public InetAddress getByName( String host ) throws UnknownHostException {
-            if ( "localhost".equals( host ) )
-                return InetAddress.getByAddress( new byte[] { 127, 0, 0, 1 } );
-
-            throw new UnknownHostException( host );
-        }
     }
 }

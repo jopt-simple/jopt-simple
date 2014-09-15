@@ -204,7 +204,8 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
      * @throws NullPointerException if {@code value}, {@code values}, or any elements of {@code values} are
      * {@code null}
      */
-    public ArgumentAcceptingOptionSpec<V> defaultsTo( V value, V... values ) {
+    @SafeVarargs
+    public final ArgumentAcceptingOptionSpec<V> defaultsTo( V value, V... values ) {
         addDefaultValue( value );
         defaultsTo( values );
 

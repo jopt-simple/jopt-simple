@@ -36,7 +36,7 @@ import static java.text.DateFormat.*;
 
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
-import org.joda.time.DateMidnight;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -88,7 +88,7 @@ public class DateConverterTest {
     public void shouldConvertValuesToDatesUsingADateFormat() {
         ValueConverter<Date> converter = new DateConverter( monthDayYear );
 
-        assertEquals( new DateMidnight( 2009, 1, 24 ).toDate(), converter.convert( "01/24/2009" ) );
+        assertEquals( new LocalDate( 2009, 1, 24 ).toDate(), converter.convert( "01/24/2009" ) );
     }
 
     @Test
@@ -107,7 +107,7 @@ public class DateConverterTest {
 
     @Test
     public void shouldCreateSimpleDateFormatConverter() {
-        assertEquals( new DateMidnight( 2009, 7, 4 ).toDate(), datePattern( "MM/dd/yyyy" ).convert( "07/04/2009" ) );
+        assertEquals( new LocalDate( 2009, 7, 4 ).toDate(), datePattern( "MM/dd/yyyy" ).convert( "07/04/2009" ) );
     }
 
     @Test
