@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import static java.util.Collections.*;
-import static java.util.Objects.requireNonNull;
+import static java.util.Objects.*;
 
 import static joptsimple.internal.Reflection.*;
 import static joptsimple.internal.Strings.*;

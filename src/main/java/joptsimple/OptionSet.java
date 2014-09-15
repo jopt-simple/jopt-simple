@@ -142,7 +142,7 @@ public class OptionSet {
      * @throws OptionException if more than one argument was detected for the option
      */
     public Object valueOf( String option ) {
-        requireNonNull(option);
+        requireNonNull( option );
 
         AbstractOptionSpec<?> spec = detectedOptions.get( option );
         if ( spec == null ) {
@@ -167,7 +167,7 @@ public class OptionSet {
      * @throws ClassCastException if the arguments of this option are not of the expected type
      */
     public <V> V valueOf( OptionSpec<V> option ) {
-        requireNonNull(option);
+        requireNonNull( option );
 
         List<V> values = valuesOf( option );
         switch ( values.size() ) {
@@ -190,7 +190,7 @@ public class OptionSet {
      * @throws NullPointerException if {@code option} is {@code null}
      */
     public List<?> valuesOf( String option ) {
-        requireNonNull(option);
+        requireNonNull( option );
 
         AbstractOptionSpec<?> spec = detectedOptions.get( option );
         return spec == null ? defaultValuesFor( option ) : valuesOf( spec );
@@ -256,8 +256,7 @@ public class OptionSet {
      */
     public List<?> nonOptionArguments() {
         AbstractOptionSpec<?> spec = detectedOptions.get( NonOptionArgumentSpec.NAME );
-        List<?> values = valuesOf( spec );
-        return unmodifiableList( values );
+        return valuesOf( spec );
     }
 
     void add( AbstractOptionSpec<?> spec ) {
@@ -305,7 +304,7 @@ public class OptionSet {
     @SuppressWarnings( "unchecked" )
     private <V> List<V> defaultValuesFor( String option ) {
         if ( defaultValues.containsKey( option ) )
-            return (List<V>) defaultValues.get( option );
+            return unmodifiableList( (List<V>) defaultValues.get( option ) );
 
         return emptyList();
     }
