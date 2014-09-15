@@ -20,7 +20,7 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
 
     @Before
     public void primeParser() throws Exception {
-        captured = new HashMap<String, OptionDescriptor>();
+        captured = new HashMap<>();
 
         parser.accepts( "b", "boo" );
 
@@ -56,6 +56,6 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
         assertFalse( descriptor.requiresArgument() );
         assertEquals( "", descriptor.argumentDescription() );
         assertEquals( "", descriptor.argumentTypeIndicator() );
-        assertEquals( Collections.<Object> emptyList(), descriptor.defaultValues() );
+        assertEquals( Collections.emptyList(), descriptor.defaultValues() );
     }
 }

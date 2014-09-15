@@ -18,7 +18,7 @@ public class OptionArgumentValueTypeTest {
 
         assertTrue( options.has( "count" ) );
         assertTrue( options.hasArgument( "count" ) );
-        assertEquals( Integer.valueOf( 3 ), options.valueOf( "count" ) );
+        assertEquals( 3, options.valueOf( "count" ) );
 
         assertTrue( options.has( "level" ) );
         assertTrue( options.hasArgument( "level" ) );

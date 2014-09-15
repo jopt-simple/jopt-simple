@@ -30,7 +30,7 @@ import static joptsimple.internal.Strings.*;
 /**
  * <p>A simple string key/string value pair.</p>
  *
- * <p>This is useful as an argument type for options whose values take on the form <kbd>key=value</kbd>, such as JVM
+ * <p>This is useful as an argument type for options whose values take on the form {@code key=value}, such as JVM
  * command line system properties.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -45,7 +45,7 @@ public final class KeyValuePair {
     }
 
     /**
-     * Parses a string assumed to be of the form <kbd>key=value</kbd> into its parts.
+     * Parses a string assumed to be of the form {@code key=value} into its parts.
      *
      * @param asString key-value string
      * @return a key-value pair

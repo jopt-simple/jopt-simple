@@ -640,7 +640,7 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
             public String format( Map<String, ? extends OptionDescriptor> options ) {
                 assertEquals( 1, options.size() );
                 OptionDescriptor only = options.get( "f" );
-                assertEquals( asList( "f" ), new ArrayList<String>( only.options() ) );
+                assertEquals( asList( "f" ), new ArrayList<>( only.options() ) );
                 assertFalse( only.acceptsArguments() );
                 assertEquals( "", only.argumentDescription() );
                 assertEquals( "", only.argumentTypeIndicator() );

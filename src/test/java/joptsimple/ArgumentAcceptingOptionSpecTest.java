@@ -84,8 +84,7 @@ public class ArgumentAcceptingOptionSpecTest {
 
     @Test
     public void optionalArgOfValueTypeBasedOnCtor() {
-        final OptionalArgumentOptionSpec<Ctor> spec =
-            new OptionalArgumentOptionSpec<Ctor>( "abc" );
+        final OptionalArgumentOptionSpec<Ctor> spec = new OptionalArgumentOptionSpec<>( "abc" );
 
         assertNoException( new Block() {
             public void execute() {

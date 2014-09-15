@@ -188,7 +188,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
     @Test
     public void cannotFoolHasArgumentWithAnOptionNotIssuedFromBuilder() {
         parser.accepts( "f" ).withRequiredArg();
-        OptionSpec<String> fakeOptionF = new FakeOptionSpec<String>( "f" );
+        OptionSpec<String> fakeOptionF = new FakeOptionSpec<>( "f" );
 
         OptionSet options = parser.parse( "-f", "boo" );
 

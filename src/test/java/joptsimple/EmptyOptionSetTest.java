@@ -42,7 +42,7 @@ public class EmptyOptionSetTest {
     @Before
     public void setUp() {
         empty = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
-        empty.add( new NonOptionArgumentSpec<Object>() );
+        empty.add( new NonOptionArgumentSpec<>() );
     }
 
     @Test

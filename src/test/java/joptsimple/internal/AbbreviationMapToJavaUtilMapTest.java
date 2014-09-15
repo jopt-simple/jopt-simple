@@ -40,7 +40,7 @@ public class AbbreviationMapToJavaUtilMapTest {
 
     @Before
     public void setUp() {
-        abbreviations = new AbbreviationMap<String>();
+        abbreviations = new AbbreviationMap<>();
     }
 
     @Test

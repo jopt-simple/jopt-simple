@@ -13,10 +13,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * {@code OptionSetAsMapTest} needs documentation.
- *
  * @author <a href="mailto:binkley@alumni.rice.edu">B. K. Oxley (binkley)</a>
- * @todo Needs documentation.
  */
 public class OptionSetAsMapTest extends AbstractOptionParserFixture {
     @Test

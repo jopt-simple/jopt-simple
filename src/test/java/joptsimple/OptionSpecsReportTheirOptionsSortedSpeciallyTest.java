@@ -42,7 +42,7 @@ public class OptionSpecsReportTheirOptionsSortedSpeciallyTest {
     public void shortOptionsComeFirstFollowedByLongOptionsLexicographically() {
         AbstractOptionSpec<Void> spec = new NoArgumentOptionSpec( asList( "after-date", "n", "N", "past" ), "" );
 
-        List<String> actualOptions = new ArrayList<String>( spec.options() );
+        List<String> actualOptions = new ArrayList<>( spec.options() );
 
         assertEquals( asList( "N", "n", "after-date", "past" ), actualOptions );
     }

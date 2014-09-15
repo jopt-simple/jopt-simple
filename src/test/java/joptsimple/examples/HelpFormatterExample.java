@@ -17,7 +17,7 @@ public class HelpFormatterExample {
     static class MyFormatter implements HelpFormatter {
         public String format( Map<String, ? extends OptionDescriptor> options ) {
             StringBuilder buffer = new StringBuilder();
-            for ( OptionDescriptor each : new HashSet<OptionDescriptor>( options.values() ) ) {
+            for ( OptionDescriptor each : new HashSet<>( options.values() ) ) {
                 buffer.append( lineFor( each ) );
             }
             return buffer.toString();

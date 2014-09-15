@@ -26,7 +26,6 @@
 package joptsimple;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static java.util.Collections.*;
@@ -41,7 +40,7 @@ import static joptsimple.internal.Strings.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor {
-    private final List<String> options = new ArrayList<String>();
+    private final List<String> options = new ArrayList<>();
     private final String description;
     private boolean forHelp;
 
@@ -90,10 +89,7 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
         try {
             return Reflection.convertWith( converter, argument );
         }
-        catch ( ReflectionException ex ) {
-            throw new OptionArgumentConversionException( this, argument, ex );
-        }
-        catch ( ValueConversionException ex ) {
+        catch ( ReflectionException | ValueConversionException ex ) {
             throw new OptionArgumentConversionException( this, argument, ex );
         }
     }
@@ -115,8 +111,8 @@ abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor 
             return;
         }
 
-        List<String> shortOptions = new ArrayList<String>();
-        List<String> longOptions = new ArrayList<String>();
+        List<String> shortOptions = new ArrayList<>();
+        List<String> longOptions = new ArrayList<>();
 
         for ( String each : unarranged ) {
             if ( each.length() == 1 )

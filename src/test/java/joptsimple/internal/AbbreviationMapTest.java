@@ -38,7 +38,7 @@ public class AbbreviationMapTest {
 
     @Before
     public void setUp() {
-        abbreviations = new AbbreviationMap<String>();
+        abbreviations = new AbbreviationMap<>();
     }
 
     @Test( expected = NullPointerException.class )

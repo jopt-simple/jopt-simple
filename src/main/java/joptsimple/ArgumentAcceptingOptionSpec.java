@@ -30,7 +30,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import static java.util.Collections.*;
-import static joptsimple.internal.Objects.*;
+import static java.util.Objects.requireNonNull;
+
 import static joptsimple.internal.Reflection.*;
 import static joptsimple.internal.Strings.*;
 
@@ -61,7 +62,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     private ValueConverter<V> converter;
     private String argumentDescription = "";
     private String valueSeparator = String.valueOf( NIL_VALUE_SEPARATOR );
-    private final List<V> defaultValues = new ArrayList<V>();
+    private final List<V> defaultValues = new ArrayList<>();
 
     ArgumentAcceptingOptionSpec( String option, boolean argumentRequired ) {
         super( option );
@@ -150,7 +151,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
      *   </code>
      * </pre>
      *
-     * <p>Then {@code options.valuesOf( "z" )} would yield the list {@code [foo, bar, baz, fizz, buzz]}.</p>
+     * <p>Then <code>options.valuesOf( "z" )</code> would yield the list {@code [foo, bar, baz, fizz, buzz]}.</p>
      *
      * <p>You cannot use Unicode U+0000 as the separator.</p>
      *
@@ -179,7 +180,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
      *   </code>
      * </pre>
      *
-     * <p>Then {@code options.valuesOf( "z" )} would yield the list {@code [foo, bar, baz, fizz, buzz]}.</p>
+     * <p>Then <code>options.valuesOf( "z" )</code> would yield the list {@code [foo, bar, baz, fizz, buzz]}.</p>
      *
      * <p>You cannot use Unicode U+0000 in the separator.</p>
      *
@@ -243,7 +244,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     private void addDefaultValue( V value ) {
-        ensureNotNull( value );
+        requireNonNull( value );
         defaultValues.add( value );
     }
 

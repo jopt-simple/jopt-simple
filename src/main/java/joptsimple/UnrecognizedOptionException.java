@@ -25,8 +25,6 @@
 
 package joptsimple;
 
-import java.text.MessageFormat;
-
 import static java.util.Collections.*;
 
 /**

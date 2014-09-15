@@ -38,7 +38,7 @@ public class OptionSetNonOptionArgumentsImmutabilityTest extends UnmodifiableLis
     @Override
     protected List<String> newList() {
         OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
-        NonOptionArgumentSpec<String> nonOptions = new NonOptionArgumentSpec<String>( null );
+        NonOptionArgumentSpec<String> nonOptions = new NonOptionArgumentSpec<>( null );
         options.addWithArgument( nonOptions, "1" );
         options.addWithArgument( nonOptions, "2" );
         return (List<String>) options.nonOptionArguments();

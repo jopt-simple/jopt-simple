@@ -33,7 +33,7 @@ public class RequiredArgumentOptionSpecValuesImmutabilityTest
 
     @Override
     protected AbstractOptionSpec<String> newOptionSpec() {
-        return new RequiredArgumentOptionSpec<String>( "file" );
+        return new RequiredArgumentOptionSpec<>( "file" );
     }
 
     @Override

@@ -32,7 +32,7 @@ import java.util.Map;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public final class Classes {
-    private static final Map<Class<?>, Class<?>> WRAPPERS = new HashMap<Class<?>, Class<?>>( 13 );
+    private static final Map<Class<?>, Class<?>> WRAPPERS = new HashMap<>( 13 );
 
     static {
         WRAPPERS.put( boolean.class, Boolean.class );

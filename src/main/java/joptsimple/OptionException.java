@@ -45,7 +45,7 @@ import static java.util.Collections.*;
 public abstract class OptionException extends RuntimeException {
     private static final long serialVersionUID = -1L;
 
-    private final List<String> options = new ArrayList<String>();
+    private final List<String> options = new ArrayList<>();
 
     protected OptionException( List<String> options ) {
         this.options.addAll( options );
@@ -61,14 +61,14 @@ public abstract class OptionException extends RuntimeException {
     }
 
     private List<String> specsToStrings( Collection<? extends OptionSpec<?>> options ) {
-        List<String> strings = new ArrayList<String>();
+        List<String> strings = new ArrayList<>();
         for ( OptionSpec<?> each : options )
             strings.add( specToString( each ) );
         return strings;
     }
 
     private String specToString( OptionSpec<?> option ) {
-        return Strings.join( new ArrayList<String>( option.options() ), "/" );
+        return Strings.join( new ArrayList<>( option.options() ), "/" );
     }
 
     /**

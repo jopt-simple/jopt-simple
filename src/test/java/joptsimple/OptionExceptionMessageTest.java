@@ -53,13 +53,13 @@ public class OptionExceptionMessageTest {
         return asList(
             new Object[] { new IllegalOptionSpecificationException( "," ), ", is not a legal option character" },
             new Object[] { new MultipleArgumentsForOptionException(
-                new RequiredArgumentOptionSpec<Object>( asList( "b", "c" ), "d" ) ),
+                new RequiredArgumentOptionSpec<>( asList( "b", "c" ), "d" ) ),
                 "Found multiple arguments for option b/c, but you asked for only one" },
             new Object[] { new OptionArgumentConversionException(
-                new RequiredArgumentOptionSpec<Object>( asList( "c", "number" ), "x" ), "d", null ),
+                new RequiredArgumentOptionSpec<>( asList( "c", "number" ), "x" ), "d", null ),
                 "Cannot parse argument 'd' of option c/number" },
             new Object[] { new OptionMissingRequiredArgumentException(
-                new RequiredArgumentOptionSpec<Object>( asList( "e", "honest" ), "" ) ),
+                new RequiredArgumentOptionSpec<>( asList( "e", "honest" ), "" ) ),
                 "Option e/honest requires an argument" },
             new Object[] { new UnrecognizedOptionException( "f" ), "f is not a recognized option" },
             new Object[] { new MissingRequiredOptionsException(
@@ -68,8 +68,8 @@ public class OptionExceptionMessageTest {
                 "Missing required option(s) [g, h]" },
             new Object[] { new MissingRequiredOptionsException(
                     Arrays.<AbstractOptionSpec<?>> asList(
-                        new RequiredArgumentOptionSpec<Object>( asList( "p", "place" ), "spot" ),
-                        new RequiredArgumentOptionSpec<Object>( asList( "d", "data-dir" ), "dir" ) ) ),
+                        new RequiredArgumentOptionSpec<>( asList( "p", "place" ), "spot" ),
+                        new RequiredArgumentOptionSpec<>( asList( "d", "data-dir" ), "dir" ) ) ),
                     "Missing required option(s) [p/place, d/data-dir]" },
             new Object[] { new UnconfiguredOptionException( asList( "i", "j" ) ),
                 "Option(s) [i, j] not configured on this parser" }

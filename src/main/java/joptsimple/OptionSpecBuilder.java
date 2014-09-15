@@ -76,8 +76,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @return a specification for the option
      */
     public ArgumentAcceptingOptionSpec<String> withRequiredArg() {
-        ArgumentAcceptingOptionSpec<String> newSpec =
-            new RequiredArgumentOptionSpec<String>( options(), description() );
+        ArgumentAcceptingOptionSpec<String> newSpec = new RequiredArgumentOptionSpec<>( options(), description() );
         parser.recognize( newSpec );
 
         return newSpec;
@@ -180,7 +179,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
     }
 
     private List<String> validatedDependents( String dependent, String... otherDependents ) {
-        List<String> dependents = new ArrayList<String>();
+        List<String> dependents = new ArrayList<>();
         dependents.add( dependent );
         Collections.addAll( dependents, otherDependents );
 

@@ -108,7 +108,7 @@ public interface OptionDeclarer {
     void allowsUnrecognizedOptions();
 
     /**
-     * Tells the parser either to recognize or ignore <kbd>"-W"</kbd>-style long options.
+     * Tells the parser either to recognize or ignore {@code -W}-style long options.
      *
      * @param recognize {@code true} if the parser is to recognize the special style of long options
      */

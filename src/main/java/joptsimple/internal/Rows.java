@@ -38,7 +38,7 @@ import static joptsimple.internal.Strings.*;
 public class Rows {
     private final int overallWidth;
     private final int columnSeparatorWidth;
-    private final List<Row> rows = new ArrayList<Row>();
+    private final List<Row> rows = new ArrayList<>();
     private int widthOfWidestOption;
     private int widthOfWidestDescription;
 
@@ -66,7 +66,7 @@ public class Rows {
     public void fitToWidth() {
         Columns columns = new Columns( optionWidth(), descriptionWidth() );
 
-        List<Row> fitted = new ArrayList<Row>();
+        List<Row> fitted = new ArrayList<>();
         for ( Row each : rows )
             fitted.addAll( columns.fit( each ) );
 

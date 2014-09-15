@@ -14,7 +14,7 @@ import org.apache.tools.ant.filters.ChainableReader;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class HTMLEntitifier extends BaseFilterReader implements ChainableReader {
-    private static final Map<Integer, String> ENTITIES = new HashMap<Integer, String>();
+    private static final Map<Integer, String> ENTITIES = new HashMap<>();
 
     static {
         ENTITIES.put( (int) '<', "&lt;" );
