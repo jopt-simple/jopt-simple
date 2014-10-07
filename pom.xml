@@ -153,6 +153,7 @@
                         <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Vendor>${project.name}</Bundle-Vendor>
                         <Export-Package>joptsimple,joptsimple.util</Export-Package>
                         <Private-Package>joptsimple.internal</Private-Package>
                     </instructions>
