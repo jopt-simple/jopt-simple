@@ -195,7 +195,7 @@ import static joptsimple.ParserRules.*;
  */
 public class OptionParser implements OptionDeclarer {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
-    private final List<OptionSpec<?>> trainingOrder;
+    private final ArrayList<AbstractOptionSpec<?>> trainingOrder;
     private final Map<List<String>, Set<OptionSpec<?>>> requiredIf;
     private final Map<List<String>, Set<OptionSpec<?>>> requiredUnless;
     private OptionParserState state;
@@ -209,7 +209,7 @@ public class OptionParser implements OptionDeclarer {
      */
     public OptionParser() {
         recognizedOptions = new AbbreviationMap<AbstractOptionSpec<?>>();
-        trainingOrder = new ArrayList<OptionSpec<?>>();
+        trainingOrder = new ArrayList<AbstractOptionSpec<?>>();
         requiredIf = new HashMap<List<String>, Set<OptionSpec<?>>>();
         requiredUnless = new HashMap<List<String>, Set<OptionSpec<?>>>();
         state = moreOptions( false );
@@ -324,7 +324,7 @@ public class OptionParser implements OptionDeclarer {
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( helpFormatter.format( recognizedOptions.toJavaUtilMap() ) );
+        sink.write( helpFormatter.format( _recognizedOptions() ) );
         sink.flush();
     }
 
@@ -352,10 +352,15 @@ public class OptionParser implements OptionDeclarer {
      * @since 4.6
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
-        final Map<String, OptionSpec<?>> options = new LinkedHashMap<String, OptionSpec<?>>();
-        for ( final OptionSpec<?> spec : trainingOrder )
-            for ( final String option : spec.options() )
+        return new LinkedHashMap<String, OptionSpec<?>>( _recognizedOptions() );
+    }
+
+    private Map<String, AbstractOptionSpec<?>> _recognizedOptions() {
+        Map<String, AbstractOptionSpec<?>> options = new LinkedHashMap<String, AbstractOptionSpec<?>>();
+        for ( AbstractOptionSpec<?> spec : trainingOrder ) {
+            for ( String option : spec.options() )
                 options.put( option, spec );
+        }
         return options;
     }
 
