@@ -261,4 +261,12 @@ public class OptionParserTest extends AbstractOptionParserFixture {
 
         parser.parse( "-h" );
     }
+    
+    @Test
+    public void optionSpecsDefinedLaterOverrideThoseDefinedEarlier() {
+    	parser.accepts( "t" ).withRequiredArg();
+    	parser.accepts( "t" ).withOptionalArg();
+    	
+    	parser.parse( "-t" );
+    }
 }
