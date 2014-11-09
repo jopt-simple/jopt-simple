@@ -263,7 +263,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     }
     
     @Test
-    public void optionSpecsDefinedLaterOverrideThoseDefinedEarlier() {
+    public void configurationPerformedLaterOverrideThosePerformedEarlierForTheSameOption() {
     	parser.accepts( "t" ).withRequiredArg();
     	parser.accepts( "t" ).withOptionalArg();
     	
