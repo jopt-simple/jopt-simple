@@ -76,6 +76,20 @@ public class OptionParserTest extends AbstractOptionParserFixture {
         assertEquals( emptyList(), options.valuesOf( "quiet" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
+    
+    @Test
+    public void parsesLongOptionAsAbbreviatedShortOption() {
+    	parser.accepts( "queen" );
+    	
+    	parser.parse( "-que" );
+    }
+    
+    @Test
+    public void parsesLongOptionAsAbbreviatedLongOption() {
+    	parser.accepts( "queen" );
+    	
+    	parser.parse( "--que" );
+    }
 
     @Test
     public void longOptionLeadsWithSingleDashAmbiguous() {
@@ -260,5 +274,13 @@ public class OptionParserTest extends AbstractOptionParserFixture {
         parser.accepts( "h" ).forHelp();
 
         parser.parse( "-h" );
+    }
+    
+    @Test
+    public void configurationPerformedLaterOverrideThosePerformedEarlierForTheSameOption() {
+    	parser.accepts( "t" ).withRequiredArg();
+    	parser.accepts( "t" ).withOptionalArg();
+    	
+    	parser.parse( "-t" );
     }
 }
