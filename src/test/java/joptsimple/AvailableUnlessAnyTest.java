@@ -29,18 +29,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static java.util.Collections.emptyList;
+
 import static org.junit.Assert.assertEquals;
 
-
 public class AvailableUnlessAnyTest extends AbstractOptionParserFixture {
-
     @Before
     public void configureParser() {
         parser.accepts( "a" );
         parser.accepts( "b" );
         OptionSpec<Void> c = parser.accepts( "c" );
-        OptionSpec<Void> d = parser.accepts( "d" );
-        parser.accepts("n").availableUnless("a").availableUnless(c);
+        parser.accepts( "d" );
+        parser.accepts( "n" ).availableUnless( "a" ).availableUnless( c );
     }
 
     @Test
@@ -60,6 +59,7 @@ public class AvailableUnlessAnyTest extends AbstractOptionParserFixture {
     @Test
     public void rejectsCommandLineOnlyForbiddenOption() {
         OptionSet options = parser.parse( "-n" );
+
         assertOptionDetected( options, "n" );
     }
 
@@ -79,5 +79,4 @@ public class AvailableUnlessAnyTest extends AbstractOptionParserFixture {
         assertOptionDetected( options, "n" );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
-
 }

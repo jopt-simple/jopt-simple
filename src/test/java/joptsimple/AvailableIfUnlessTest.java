@@ -31,53 +31,56 @@ import org.junit.Test;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
+
 import static org.junit.Assert.assertEquals;
 
-
 public class AvailableIfUnlessTest extends AbstractOptionParserFixture {
-
     @Before
     public void configureParser() {
-
         parser.mutuallyExclusive(
-                parser.acceptsAll(asList( "ftp", "file-transfer" )),
-                parser.acceptsAll(asList("file")),
-                parser.acceptsAll(asList("http"))
+                parser.acceptsAll( asList( "ftp", "file-transfer" ) ),
+                parser.accepts( "file" ),
+                parser.accepts( "http" )
         );
 
-        parser.acceptsAll( asList( "username", "userid" ) ).availableIf("file-transfer").withRequiredArg();
-        parser.acceptsAll( asList( "password", "pwd" ) ).availableIf("ftp").withRequiredArg();
-        parser.acceptsAll( asList( "directory", "dir" ) ).availableIf("file").withRequiredArg();
+        parser.acceptsAll( asList( "username", "userid" ) ).availableIf( "file-transfer" ).withRequiredArg();
+        parser.acceptsAll( asList( "password", "pwd" ) ).availableIf( "ftp" ).withRequiredArg();
+        parser.acceptsAll( asList( "directory", "dir" ) ).availableIf( "file" ).withRequiredArg();
         parser.accepts( "?" ).forHelp();
     }
 
     @Test
     public void rejectsEmptyMutualExclusiveness() {
-        thrown.expect(NullPointerException.class);
-        parser.mutuallyExclusive(null);
+        thrown.expect( NullPointerException.class );
+
+        parser.mutuallyExclusive( (OptionSpecBuilder[]) null );
     }
 
     @Test
     public void rejectsConflictingCommandLineOptions1() {
         thrown.expect( UnavailableOptionException.class );
+
         parser.parse( "--ftp", "--file" );
     }
 
     @Test
     public void rejectsConflictingCommandLineOptions2() {
         thrown.expect( UnavailableOptionException.class );
+
         parser.parse( "--ftp", "--http" );
     }
 
     @Test
     public void rejectsIncompatibleOptions1() {
         thrown.expect( UnavailableOptionException.class );
+
         parser.parse( "--file", "--username", "joe" );
     }
 
     @Test
     public void rejectsIncompatibleOptions2() {
         thrown.expect( UnavailableOptionException.class );
+
         parser.parse( "--ftp", "--directory", "/tmp" );
     }
 
@@ -107,6 +110,7 @@ public class AvailableIfUnlessTest extends AbstractOptionParserFixture {
     @Test
     public void rejectsCommandLineOnlyContainingForbiddenOptionSynonym() {
         thrown.expect( UnavailableOptionException.class );
+
         parser.parse( "--pwd", "secret" );
     }
 
@@ -114,8 +118,8 @@ public class AvailableIfUnlessTest extends AbstractOptionParserFixture {
     public void rejectsOptionNotAlreadyConfigured() {
         thrown.expect( UnconfiguredOptionException.class );
 
-        parser.accepts( "foo" ).availableIf("bar");
-        parser.accepts( "foo" ).availableUnless("bar");
+        parser.accepts( "foo" ).availableIf( "bar" );
+        parser.accepts( "foo" ).availableUnless( "bar" );
     }
 
     @Test
@@ -124,7 +128,7 @@ public class AvailableIfUnlessTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "file" );
         assertOptionDetected( options, "?" );
-        assertEquals(emptyList(), options.nonOptionArguments());
+        assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
     @Test
@@ -134,6 +138,6 @@ public class AvailableIfUnlessTest extends AbstractOptionParserFixture {
         assertOptionDetected( options, "file" );
         assertOptionDetected( options, "file-transfer" );
         assertOptionDetected( options, "?" );
-        assertEquals(emptyList(), options.nonOptionArguments());
+        assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }

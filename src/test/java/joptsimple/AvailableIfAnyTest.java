@@ -29,11 +29,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static java.util.Collections.emptyList;
+
 import static org.junit.Assert.assertEquals;
 
-
 public class AvailableIfAnyTest extends AbstractOptionParserFixture {
-
     @Before
     public void configureParser() {
         OptionSpec<Void> a = parser.accepts( "a" );
@@ -80,5 +79,4 @@ public class AvailableIfAnyTest extends AbstractOptionParserFixture {
         assertOptionDetected( options, "n" );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
-
 }

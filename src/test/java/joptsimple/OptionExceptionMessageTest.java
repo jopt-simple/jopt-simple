@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
@@ -72,7 +73,12 @@ public class OptionExceptionMessageTest {
                         new RequiredArgumentOptionSpec<>( asList( "d", "data-dir" ), "dir" ) ) ),
                     "Missing required option(s) [p/place, d/data-dir]" },
             new Object[] { new UnconfiguredOptionException( asList( "i", "j" ) ),
-                "Option(s) [i, j] not configured on this parser" }
+                "Option(s) [i, j] not configured on this parser" },
+            new Object[] {
+                    new UnavailableOptionException(
+                            newArrayList( new NoArgumentOptionSpec( "a" ), new NoArgumentOptionSpec( "b" ) ) ),
+                    "Option(s) [a, b] are unavailable given other options on the command line"
+            }
         );
     }
 

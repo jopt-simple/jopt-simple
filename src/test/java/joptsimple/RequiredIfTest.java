@@ -107,6 +107,6 @@ public class RequiredIfTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "ftp" );
         assertOptionDetected( options, "?" );
-        assertEquals(emptyList(), options.nonOptionArguments());
+        assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }

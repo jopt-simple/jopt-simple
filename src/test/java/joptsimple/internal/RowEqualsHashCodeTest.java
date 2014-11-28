@@ -32,7 +32,7 @@ import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
  */
 public class RowEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport {
     @Override
-    protected Object equalButDifferentClass() throws Exception {
+    protected Object equalButDifferentClass() {
         return new Row( "o", "d" ) {
         };
     }

@@ -49,7 +49,7 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
     public void optionWithOptionalArgumentNotPresent() {
         OptionSet options = parser.parse( "-f" );
 
-        assertOptionDetected(options, "f");
+        assertOptionDetected( options, "f" );
         assertEquals( emptyList(), options.valuesOf( "f" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
@@ -58,8 +58,8 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
     public void optionWithOptionalArgumentPresent() {
         OptionSet options = parser.parse( "-f", "bar" );
 
-        assertOptionDetected(options, "f");
-        assertEquals( singletonList("bar"), options.valuesOf( "f" ) );
+        assertOptionDetected( options, "f" );
+        assertEquals( singletonList( "bar" ), options.valuesOf( "f" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -77,8 +77,8 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
 
         assertOptionDetected( options, "f" );
         assertOptionDetected( options, "bar" );
-        assertEquals(emptyList(), options.valuesOf("f"));
-        assertEquals(emptyList(), options.valuesOf("bar"));
+        assertEquals( emptyList(), options.valuesOf( "f" ) );
+        assertEquals( emptyList(), options.valuesOf( "bar" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -97,7 +97,7 @@ public class ShortOptionsOptionalArgumentTest extends AbstractOptionParserFixtur
     public void multipleOfSameOptionSomeWithArgsAndSomeWithout() {
         OptionSet options = parser.parse( "-f", "-f", "foo", "-f", "-f", "bar", "-f" );
 
-        assertEquals( asList( "foo", "bar" ), options.valuesOf("f") );
+        assertEquals( asList( "foo", "bar" ), options.valuesOf( "f" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }

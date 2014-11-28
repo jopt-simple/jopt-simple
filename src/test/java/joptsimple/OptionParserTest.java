@@ -79,16 +79,16 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     
     @Test
     public void parsesLongOptionAsAbbreviatedShortOption() {
-    	parser.accepts( "queen" );
-    	
-    	parser.parse( "-que" );
+        parser.accepts( "queen" );
+
+        parser.parse( "-que" );
     }
     
     @Test
     public void parsesLongOptionAsAbbreviatedLongOption() {
-    	parser.accepts( "queen" );
-    	
-    	parser.parse( "--que" );
+        parser.accepts( "queen" );
+
+        parser.parse( "--que" );
     }
 
     @Test
@@ -278,9 +278,9 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     
     @Test
     public void configurationPerformedLaterOverrideThosePerformedEarlierForTheSameOption() {
-    	parser.accepts( "t" ).withRequiredArg();
-    	parser.accepts( "t" ).withOptionalArg();
-    	
-    	parser.parse( "-t" );
+        parser.accepts( "t" ).withRequiredArg();
+        parser.accepts( "t" ).withOptionalArg();
+
+        parser.parse( "-t" );
     }
 }

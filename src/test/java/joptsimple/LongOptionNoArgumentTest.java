@@ -75,7 +75,7 @@ public class LongOptionNoArgumentTest extends AbstractOptionParserFixture {
     @Test
     public void ambiguousAbbreviation() {
         thrown.expect( UnrecognizedOptionException.class );
-        thrown.expect( withOption("ver") );
+        thrown.expect( withOption( "ver" ) );
 
         parser.parse( "--ver" );
     }

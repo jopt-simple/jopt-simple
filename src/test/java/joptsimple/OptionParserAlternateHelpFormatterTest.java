@@ -24,12 +24,12 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
 
         parser.accepts( "b", "boo" );
 
-        parser.formatHelpWith(new HelpFormatter() {
+        parser.formatHelpWith( new HelpFormatter() {
             public String format( Map<String, ? extends OptionDescriptor> options ) {
                 captured = options;
                 return "some help you are";
             }
-        });
+        } );
 
         sink = new StringWriter();
 

@@ -43,6 +43,7 @@ public class OptionSetAsMapTest extends AbstractOptionParserFixture {
                 put( h, emptyList() );
             }
         };
+
         assertThat( options.asMap(), is( equalTo( expected ) ) );
     }
 }

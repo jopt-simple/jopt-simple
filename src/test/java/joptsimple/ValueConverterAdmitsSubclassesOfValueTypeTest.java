@@ -59,6 +59,5 @@ public class ValueConverterAdmitsSubclassesOfValueTypeTest {
 
     static class ListOfStrings extends ArrayList<String> {
         private static final long serialVersionUID = 1L;
-
     }
 }

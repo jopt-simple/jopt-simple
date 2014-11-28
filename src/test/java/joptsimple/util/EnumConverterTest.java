@@ -26,6 +26,7 @@
 package joptsimple.util;
 
 import joptsimple.ValueConversionException;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -40,43 +41,45 @@ import static org.junit.rules.ExpectedException.none;
 public class EnumConverterTest {
     @Rule
     public final ExpectedException thrown = none();
+    private EnumConverter<TestEnum> converter;
 
+    @Before
+    public void setUp() {
+        converter = new TestEnumConverter();
+    }
 
     @Test
-    public void shouldConvertEnumValuesToEnum() {
-        EnumConverter<TestEnum> converter = new TestEnumConverter();
-        assertEquals(TestEnum.A, converter.convert("A"));
+    public void convertsEnumValuesToEnum() {
+        assertEquals( TestEnum.A, converter.convert( "A" ) );
     }
 
     @Test
     public void rejectsNonEnumeratedValues() {
-        thrown.expect(ValueConversionException.class);
-        EnumConverter<TestEnum> converter = new TestEnumConverter();
-        converter.convert("Z");
+        thrown.expect( ValueConversionException.class );
+
+        converter.convert( "Z" );
     }
 
     @Test
-    public void shouldAnswerCorrectValueType() {
-        EnumConverter<TestEnum> converter = new TestEnumConverter();
-        assertSame(TestEnum.class, converter.valueType());
+    public void answersCorrectValueType() {
+        assertSame( TestEnum.class, converter.valueType() );
     }
 
     @Test
-    public void shouldGiveDefaultValuePattern() {
-        EnumConverter<TestEnum> converter = new TestEnumConverter();
-        assertEquals("[A,B,C,D]", converter.valuePattern());
+    public void givesDefaultValuePattern() {
+        assertEquals( "[A,B,C,D]", converter.valuePattern() );
     }
 
     @Test
-    public void shouldGiveCustomValuePattern() {
-        EnumConverter<TestEnum> converter = new TestEnumConverter();
-        converter.setDelimiters("(|)");
-        assertEquals("(A|B|C|D)", converter.valuePattern());
+    public void givesCustomValuePattern() {
+        converter.setDelimiters( "(|)" );
+
+        assertEquals( "(A|B|C|D)", converter.valuePattern() );
     }
 
     private static class TestEnumConverter extends EnumConverter<TestEnum> {
-        public TestEnumConverter() {
-            super(TestEnum.class);
+        TestEnumConverter() {
+            super( TestEnum.class );
         }
     }
 
