@@ -89,7 +89,7 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      */
     public ArgumentAcceptingOptionSpec<String> withOptionalArg() {
         ArgumentAcceptingOptionSpec<String> newSpec =
-            new OptionalArgumentOptionSpec<String>( options(), description() );
+            new OptionalArgumentOptionSpec<>( options(), description() );
         parser.recognize( newSpec );
 
         return newSpec;
@@ -174,6 +174,89 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
         parser.requiredUnless( options(), dependent );
         for ( OptionSpec<?> each : otherDependents )
             parser.requiredUnless( options(), each );
+
+        return this;
+    }
+
+    /**
+     * <p>Informs an option parser that this builder's option is allowed if the given option is present on the command
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #availableUnless(String, String...)
+     * availableUnless} to avoid conflicts.</p>
+     *
+     * @param dependent an option whose presence on a command line makes this builder's option allowed
+     * @param otherDependents other options whose presence on a command line makes this builder's option allowed
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws OptionException if any of the dependent options haven't been configured in the parser yet
+     */
+    public OptionSpecBuilder availableIf(String dependent, String... otherDependents) {
+        List<String> dependents = validatedDependents( dependent, otherDependents );
+        for ( String each : dependents ) {
+            parser.availableIf(options(), each);
+        }
+
+        return this;
+    }
+
+    /**
+     * <p>Informs an option parser that this builder's option is allowed if the given option is present on the command
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #availableUnless(OptionSpec, OptionSpec[])
+     * requiredUnless} to avoid conflicts.</p>
+     *
+     * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
+     *
+     * @param dependent the option whose presence on a command line makes this builder's option allowed
+     * @param otherDependents other options whose presence on a command line makes this builder's option allowed
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     */
+    public OptionSpecBuilder availableIf(OptionSpec<?> dependent, OptionSpec<?>... otherDependents) {
+        parser.availableIf(options(), dependent);
+        for ( OptionSpec<?> each : otherDependents )
+            parser.availableIf(options(), each);
+
+        return this;
+    }
+
+    /**
+     * <p>Informs an option parser that this builder's option is required if the given option is absent on the command
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #availableIf(OptionSpec, OptionSpec[])
+     * requiredIf} to avoid conflicts.</p>
+     *
+     * @param dependent an option whose absence on a command line makes this builder's option allowed
+     * @param otherDependents other options whose absence on a command line makes this builder's option allowed
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws OptionException if any of the dependent options haven't been configured in the parser yet
+     */
+    public OptionSpecBuilder availableUnless(String dependent, String... otherDependents) {
+        List<String> dependents = validatedDependents( dependent, otherDependents );
+        for ( String each : dependents ) {
+            parser.availableUnless(options(), each);
+        }
+        return this;
+    }
+
+    /**
+     * <p>Informs an option parser that this builder's option is allowed if the given option is absent on the command
+     * line.</p>
+     *
+     * <p>For a given option, you <em>should not</em> mix this with {@link #availableIf(OptionSpec, OptionSpec[])
+     * requiredIf} to avoid conflicts.</p>
+     *
+     * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
+     *
+     * @param dependent the option whose absence on a command line makes this builder's option allowed
+     * @param otherDependents other options whose absence on a command line makes this builder's option allowed
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     */
+    public OptionSpecBuilder availableUnless(OptionSpec<?> dependent, OptionSpec<?>... otherDependents) {
+        parser.availableUnless(options(), dependent);
+        for ( OptionSpec<?> each : otherDependents )
+            parser.availableUnless(options(), each);
 
         return this;
     }
