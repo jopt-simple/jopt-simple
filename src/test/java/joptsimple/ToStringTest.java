@@ -27,6 +27,7 @@ package joptsimple;
 
 import java.util.Collection;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Arrays.*;
 
 import joptsimple.util.KeyValuePair;
@@ -56,6 +57,9 @@ public class ToStringTest {
             { KeyValuePair.valueOf( "key=value" ), new String[] { "key", "=", "value" } },
             { new UnrecognizedOptionException( "a" ), new String[] { "a" } },
             { new NoArgumentOptionSpec( asList( "a", "b" ), "" ), new String[] { "[a, b]" } },
+            { new UnavailableOptionException(
+                    newArrayList( new NoArgumentOptionSpec( "a" ), new NoArgumentOptionSpec( "b" ) ) ),
+              new String[] { "[a, b]" } },
         } );
     }
 

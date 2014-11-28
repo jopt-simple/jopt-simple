@@ -193,6 +193,7 @@ public class OptionParser implements OptionDeclarer {
     private final Map<List<String>, Set<OptionSpec<?>>> requiredUnless;
     private final Map<List<String>, Set<OptionSpec<?>>> availableIf;
     private final Map<List<String>, Set<OptionSpec<?>>> availableUnless;
+
     private OptionParserState state;
     private boolean posixlyCorrect;
     private boolean allowsUnrecognizedOptions;
@@ -381,7 +382,7 @@ public class OptionParser implements OptionDeclarer {
     }
 
     /**
-     * Mandates mutual exclusiveness for the options built by the specified builders
+     * Mandates mutual exclusiveness for the options built by the specified builders.
      *
      * @param specs OptionSpecBuilders
      * @throws java.lang.NullPointerException if specs is null

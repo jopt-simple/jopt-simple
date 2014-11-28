@@ -34,10 +34,9 @@ import java.util.List;
 class UnavailableOptionException extends OptionException {
     private static final long serialVersionUID = -1L;
 
-    protected UnavailableOptionException(List<? extends OptionSpec<?>> forbiddenOptions) {
+    UnavailableOptionException(List<? extends OptionSpec<?>> forbiddenOptions) {
         super( forbiddenOptions );
     }
-
 
     @Override
     Object[] messageArguments() {

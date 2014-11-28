@@ -32,15 +32,15 @@ import static java.util.Collections.emptyList;
 import static org.junit.Assert.assertEquals;
 
 
-public class AvailableIfAny extends AbstractOptionParserFixture {
+public class AvailableIfAnyTest extends AbstractOptionParserFixture {
 
     @Before
     public void configureParser() {
-        parser.accepts( "a" );
+        OptionSpec<Void> a = parser.accepts( "a" );
         parser.accepts( "b" );
         OptionSpec<Void> c = parser.accepts( "c" );
-        OptionSpec<Void> d = parser.accepts( "d" );
-        parser.accepts( "n" ).availableIf("a").availableIf(c);
+        parser.accepts( "d" );
+        parser.accepts( "n" ).availableIf( a, c );
     }
 
     @Test
