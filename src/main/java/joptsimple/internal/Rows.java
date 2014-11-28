@@ -39,6 +39,7 @@ public class Rows {
     private final int overallWidth;
     private final int columnSeparatorWidth;
     private final List<Row> rows = new ArrayList<>();
+
     private int widthOfWidestOption;
     private int widthOfWidestDescription;
 

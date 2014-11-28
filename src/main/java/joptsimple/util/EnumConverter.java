@@ -39,26 +39,25 @@ import joptsimple.ValueConverter;
  * @author <a href="mailto:christian.ohr@gmail.com">Christian Ohr</a>
  */
 public abstract class EnumConverter<E extends Enum<E>> implements ValueConverter<E> {
-
     private final Class<E> clazz;
+
     private String delimiters = "[,]";
 
     /**
-     * This constructor must be called by subclasses, providing the enum class
-     * as parameter
+     * This constructor must be called by subclasses, providing the enum class as the parameter.
      *
      * @param clazz enum class
      */
-    protected EnumConverter(Class<E> clazz) {
+    protected EnumConverter( Class<E> clazz ) {
         this.clazz = clazz;
     }
 
     @Override
-    public E convert(String value) {
+    public E convert( String value ) {
         try {
-            return Enum.valueOf(valueType(), value);
-        } catch (IllegalArgumentException e) {
-            throw new ValueConversionException(message(value), e);
+            return Enum.valueOf( valueType(), value );
+        } catch ( IllegalArgumentException e ) {
+            throw new ValueConversionException( message( value ), e );
         }
     }
 
@@ -74,28 +73,30 @@ public abstract class EnumConverter<E extends Enum<E>> implements ValueConverter
      *
      * @param delimiters delimiters for message string. Default is [,]
      */
-    public void setDelimiters(String delimiters) {
+    public void setDelimiters( String delimiters ) {
         this.delimiters = delimiters;
     }
 
     @Override
     public String valuePattern() {
-        EnumSet<E> values = EnumSet.allOf(valueType());
+        EnumSet<E> values = EnumSet.allOf( valueType() );
+
         StringBuilder builder = new StringBuilder();
-        builder.append(delimiters.charAt(0));
-        for (Iterator<E> i = values.iterator(); i.hasNext(); ) {
-            builder.append(i.next().toString());
-            if (i.hasNext()) builder.append(delimiters.charAt(1));
+        builder.append( delimiters.charAt(0) );
+        for ( Iterator<E> i = values.iterator(); i.hasNext(); ) {
+            builder.append( i.next().toString() );
+            if ( i.hasNext() )
+                builder.append( delimiters.charAt( 1 ) );
         }
-        builder.append(delimiters.charAt(2));
+        builder.append( delimiters.charAt( 2 ) );
+
         return builder.toString();
     }
 
-    private String message(String value) {
-        ResourceBundle bundle = ResourceBundle.getBundle("joptsimple.ExceptionMessages");
+    private String message( String value ) {
+        ResourceBundle bundle = ResourceBundle.getBundle( "joptsimple.ExceptionMessages" );
         Object[] arguments = new Object[] { value, valuePattern() };
-        String key = EnumConverter.class.getName() + ".message";
-        String template = bundle.getString(key);
-        return new MessageFormat(template).format(arguments);
+        String template = bundle.getString( EnumConverter.class.getName() + ".message" );
+        return new MessageFormat( template ).format( arguments );
     }
 }

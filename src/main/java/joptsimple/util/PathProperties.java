@@ -4,56 +4,57 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * Enum checking common conditions of files and directories
+ * Enum for checking common conditions of files and directories.
+ *
+ * @see joptsimple.util.PathConverter
  */
 public enum PathProperties {
-
-    FILE_EXISTING("file.existing") {
+    FILE_EXISTING( "file.existing" ) {
         @Override
-        boolean accept(Path path) {
-            return Files.isRegularFile(path);
+        boolean accept( Path path ) {
+            return Files.isRegularFile( path );
         }
     },
-    DIRECTORY_EXISTING("directory.existing") {
+    DIRECTORY_EXISTING( "directory.existing" ) {
         @Override
-        boolean accept(Path path) {
-            return Files.isDirectory(path);
+        boolean accept( Path path ) {
+            return Files.isDirectory( path );
         }
     },
-    NOT_EXISTING("file.not.existing") {
+    NOT_EXISTING( "file.not.existing" ) {
         @Override
-        boolean accept(Path path) {
-            return Files.notExists(path);
+        boolean accept( Path path ) {
+            return Files.notExists( path );
         }
     },
-    FILE_OVERWRITABLE("file.overwritable") {
+    FILE_OVERWRITABLE( "file.overwritable" ) {
         @Override
-        boolean accept(Path path) {
-            return FILE_EXISTING.accept(path) && WRITABLE.accept(path);
+        boolean accept( Path path ) {
+            return FILE_EXISTING.accept( path ) && WRITABLE.accept( path );
         }
     },
-    READABLE("file.readable") {
+    READABLE( "file.readable" ) {
         @Override
-        boolean accept(Path path) {
-            return Files.isReadable(path);
+        boolean accept( Path path ) {
+            return Files.isReadable( path );
         }
     },
-    WRITABLE("file.writable") {
+    WRITABLE( "file.writable" ) {
         @Override
-        boolean accept(Path path) {
-            return Files.isWritable(path);
+        boolean accept( Path path ) {
+            return Files.isWritable( path );
         }
     };
 
-    private String messageKey;
+    private final String messageKey;
 
-    private PathProperties(String messageKey) {
+    private PathProperties( String messageKey ) {
         this.messageKey = messageKey;
     }
 
-    abstract boolean accept(Path path);
+    abstract boolean accept( Path path );
 
-    public String getMessageKey() {
+    String getMessageKey() {
         return messageKey;
     }
 }

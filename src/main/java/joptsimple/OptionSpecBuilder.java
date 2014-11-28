@@ -109,9 +109,8 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      */
     public OptionSpecBuilder requiredIf( String dependent, String... otherDependents ) {
         List<String> dependents = validatedDependents( dependent, otherDependents );
-        for ( String each : dependents ) {
+        for ( String each : dependents )
             parser.requiredIf( options(), each );
-        }
 
         return this;
     }
@@ -190,11 +189,10 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @return self, so that the caller can add clauses to the fluent interface sentence
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
-    public OptionSpecBuilder availableIf(String dependent, String... otherDependents) {
+    public OptionSpecBuilder availableIf( String dependent, String... otherDependents ) {
         List<String> dependents = validatedDependents( dependent, otherDependents );
-        for ( String each : dependents ) {
-            parser.availableIf(options(), each);
-        }
+        for ( String each : dependents )
+            parser.availableIf( options(), each );
 
         return this;
     }
@@ -212,16 +210,17 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @param otherDependents other options whose presence on a command line makes this builder's option allowed
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
-    public OptionSpecBuilder availableIf(OptionSpec<?> dependent, OptionSpec<?>... otherDependents) {
-        parser.availableIf(options(), dependent);
+    public OptionSpecBuilder availableIf( OptionSpec<?> dependent, OptionSpec<?>... otherDependents ) {
+        parser.availableIf( options(), dependent );
+
         for ( OptionSpec<?> each : otherDependents )
-            parser.availableIf(options(), each);
+            parser.availableIf( options(), each );
 
         return this;
     }
 
     /**
-     * <p>Informs an option parser that this builder's option is required if the given option is absent on the command
+     * <p>Informs an option parser that this builder's option is allowed if the given option is absent on the command
      * line.</p>
      *
      * <p>For a given option, you <em>should not</em> mix this with {@link #availableIf(OptionSpec, OptionSpec[])
@@ -232,11 +231,11 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @return self, so that the caller can add clauses to the fluent interface sentence
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
-    public OptionSpecBuilder availableUnless(String dependent, String... otherDependents) {
+    public OptionSpecBuilder availableUnless( String dependent, String... otherDependents ) {
         List<String> dependents = validatedDependents( dependent, otherDependents );
-        for ( String each : dependents ) {
-            parser.availableUnless(options(), each);
-        }
+        for ( String each : dependents )
+            parser.availableUnless( options(), each );
+
         return this;
     }
 
@@ -253,8 +252,8 @@ public class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @param otherDependents other options whose absence on a command line makes this builder's option allowed
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
-    public OptionSpecBuilder availableUnless(OptionSpec<?> dependent, OptionSpec<?>... otherDependents) {
-        parser.availableUnless(options(), dependent);
+    public OptionSpecBuilder availableUnless( OptionSpec<?> dependent, OptionSpec<?>... otherDependents ) {
+        parser.availableUnless( options(), dependent );
         for ( OptionSpec<?> each : otherDependents )
             parser.availableUnless(options(), each);
 

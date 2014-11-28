@@ -245,9 +245,12 @@ public class OptionSet {
      */
     public Map<OptionSpec<?>, List<?>> asMap() {
         Map<OptionSpec<?>, List<?>> map = new HashMap<>();
-        for ( AbstractOptionSpec<?> spec : recognizedSpecs.values() )
+
+        for ( AbstractOptionSpec<?> spec : recognizedSpecs.values() ) {
             if ( !spec.representsNonOptions() )
                 map.put( spec, valuesOf( spec ) );
+        }
+
         return unmodifiableMap( map );
     }
 

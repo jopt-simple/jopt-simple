@@ -58,9 +58,10 @@ import java.util.TreeMap;
  * @see <a href="https://en.wikipedia.org/wiki/Radix_tree">Radix tree</a>
  */
 public class AbbreviationMap<V> {
+    private final Map<Character, AbbreviationMap<V>> children = new TreeMap<>();
+
     private String key;
     private V value;
-    private final Map<Character, AbbreviationMap<V>> children = new TreeMap<>();
     private int keysBeyond;
 
     /**

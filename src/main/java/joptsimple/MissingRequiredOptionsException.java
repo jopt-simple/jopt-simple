@@ -39,7 +39,6 @@ class MissingRequiredOptionsException extends OptionException {
         super( missingRequiredOptions );
     }
 
-
     @Override
     Object[] messageArguments() {
         return new Object[] { multipleOptionString() };

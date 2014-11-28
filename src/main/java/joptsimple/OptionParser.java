@@ -384,16 +384,14 @@ public class OptionParser implements OptionDeclarer {
     /**
      * Mandates mutual exclusiveness for the options built by the specified builders.
      *
-     * @param specs OptionSpecBuilders
-     * @throws java.lang.NullPointerException if specs is null
-     *
+     * @param specs descriptors for options that should be mutually exclusive on a command line.
+     * @throws NullPointerException if {@code specs} is {@code null}
      */
     public void mutuallyExclusive( OptionSpecBuilder... specs ) {
-        for (int i = 0; i < specs.length; i++) {
-            for (int j = 0; j < specs.length; j++) {
-                if (i != j) {
-                    specs[i].availableUnless(specs[j]);
-                }
+        for ( int i = 0; i < specs.length; i++ ) {
+            for ( int j = 0; j < specs.length; j++ ) {
+                if ( i != j )
+                    specs[i].availableUnless( specs[j] );
             }
         }
     }
@@ -407,14 +405,14 @@ public class OptionParser implements OptionDeclarer {
     }
 
     private void ensureAllowedOptions( OptionSet options ) {
-        List<AbstractOptionSpec<?>> forbiddenOptions = unavailableOptions(options);
+        List<AbstractOptionSpec<?>> forbiddenOptions = unavailableOptions( options );
         boolean helpOptionPresent = isHelpOptionPresent( options );
 
         if ( !forbiddenOptions.isEmpty() && !helpOptionPresent )
             throw new UnavailableOptionException( forbiddenOptions );
     }
 
-    private List<AbstractOptionSpec<?>> missingRequiredOptions(OptionSet options) {
+    private List<AbstractOptionSpec<?>> missingRequiredOptions( OptionSet options ) {
         List<AbstractOptionSpec<?>> missingRequiredOptions = new ArrayList<>();
 
         for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
@@ -422,20 +420,18 @@ public class OptionParser implements OptionDeclarer {
                 missingRequiredOptions.add(each);
         }
 
-        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> eachEntry : requiredIf.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> each : requiredIf.entrySet() ) {
+            AbstractOptionSpec<?> required = specFor( each.getKey().iterator().next() );
 
-            if ( optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
-                missingRequiredOptions.add(required);
-            }
+            if ( optionsHasAnyOf( options, each.getValue() ) && !options.has( required ) )
+                missingRequiredOptions.add( required );
         }
 
-        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> eachEntry : requiredUnless.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor( eachEntry.getKey().iterator().next() );
+        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> each : requiredUnless.entrySet() ) {
+            AbstractOptionSpec<?> required = specFor(each.getKey().iterator().next());
 
-            if ( !optionsHasAnyOf( options, eachEntry.getValue() ) && !options.has( required ) ) {
-                missingRequiredOptions.add(required);
-            }
+            if ( !optionsHasAnyOf( options, each.getValue() ) && !options.has( required ) )
+                missingRequiredOptions.add( required );
         }
 
         return missingRequiredOptions;
@@ -474,12 +470,14 @@ public class OptionParser implements OptionDeclarer {
 
     private boolean isHelpOptionPresent( OptionSet options ) {
         boolean helpOptionPresent = false;
+
         for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
             if ( each.isForHelp() && options.has( each ) ) {
                 helpOptionPresent = true;
                 break;
             }
         }
+
         return helpOptionPresent;
     }
 
@@ -541,7 +539,7 @@ public class OptionParser implements OptionDeclarer {
     }
 
     void requiredIf( List<String> precedentSynonyms, OptionSpec<?> required ) {
-        putDependentOption(precedentSynonyms, required, requiredIf);
+        putDependentOption( precedentSynonyms, required, requiredIf );
     }
 
     void requiredUnless( List<String> precedentSynonyms, String required ) {
@@ -549,27 +547,27 @@ public class OptionParser implements OptionDeclarer {
     }
 
     void requiredUnless( List<String> precedentSynonyms, OptionSpec<?> required ) {
-        putDependentOption(precedentSynonyms, required, requiredUnless);
+        putDependentOption( precedentSynonyms, required, requiredUnless );
     }
 
-    void availableIf(List<String> precedentSynonyms, String available) {
-        availableIf(precedentSynonyms, specFor(available));
+    void availableIf( List<String> precedentSynonyms, String available ) {
+        availableIf( precedentSynonyms, specFor( available ) );
     }
 
-    void availableIf(List<String> precedentSynonyms, OptionSpec<?> available) {
-        putDependentOption(precedentSynonyms, available, availableIf);
+    void availableIf( List<String> precedentSynonyms, OptionSpec<?> available) {
+        putDependentOption( precedentSynonyms, available, availableIf );
     }
 
-    void availableUnless(List<String> precedentSynonyms, String available) {
-        availableUnless(precedentSynonyms, specFor(available));
+    void availableUnless( List<String> precedentSynonyms, String available ) {
+        availableUnless( precedentSynonyms, specFor( available ) );
     }
 
-    void availableUnless(List<String> precedentSynonyms, OptionSpec<?> available) {
-        putDependentOption(precedentSynonyms, available, availableUnless);
+    void availableUnless( List<String> precedentSynonyms, OptionSpec<?> available ) {
+        putDependentOption( precedentSynonyms, available, availableUnless );
     }
 
     private void putDependentOption( List<String> precedentSynonyms, OptionSpec<?> required,
-                                    Map<List<String>, Set<OptionSpec<?>>> target ) {
+        Map<List<String>, Set<OptionSpec<?>>> target ) {
 
         for ( String each : precedentSynonyms ) {
             AbstractOptionSpec<?> spec = specFor( each );

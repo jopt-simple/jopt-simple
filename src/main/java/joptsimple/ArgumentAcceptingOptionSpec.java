@@ -57,12 +57,13 @@ import static joptsimple.internal.Strings.*;
 public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<V> {
     private static final char NIL_VALUE_SEPARATOR = '\u0000';
 
-    private boolean optionRequired;
     private final boolean argumentRequired;
+    private final List<V> defaultValues = new ArrayList<>();
+
+    private boolean optionRequired;
     private ValueConverter<V> converter;
     private String argumentDescription = "";
     private String valueSeparator = String.valueOf( NIL_VALUE_SEPARATOR );
-    private final List<V> defaultValues = new ArrayList<>();
 
     ArgumentAcceptingOptionSpec( String option, boolean argumentRequired ) {
         super( option );

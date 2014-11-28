@@ -57,7 +57,7 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
     private String argumentDescription = "";
 
     NonOptionArgumentSpec() {
-        this("");
+        this( "" );
     }
 
     NonOptionArgumentSpec( String description ) {
