@@ -303,6 +303,14 @@ Options
 @REQUIRED_UNLESS_OPTIONS_EXAMPLE@
 +----------------------------------------------------------------------------------------
 
+** "Available" Dependent Options
+
+    Similarly to <<<requiredIf()>>> and <<<requiredUnless()>>>, you can indicate that a
+    given option can be present on the command line only if/unless some other option is
+    present on the command line, via the <<<availableIf()>>> and <<<availableUnless()>>>
+    methods.
+
+
 ** Synonyms of Options
 
     Sometimes it is useful to allow many different options to share the same meaning in
