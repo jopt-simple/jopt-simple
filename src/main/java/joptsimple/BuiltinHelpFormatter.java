@@ -115,7 +115,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
         OptionDescriptor nonOptions = findAndRemoveNonOptionsSpec( options );
         if ( shouldShowNonOptionArgumentDisplay( nonOptions ) ) {
             nonOptionRows.add( "Non-option arguments:", "" );
-            nonOptionRows.add(createNonOptionArgumentsDisplay(nonOptions), "");
+            nonOptionRows.add( createNonOptionArgumentsDisplay(nonOptions), "" );
         }
     }
 
@@ -152,11 +152,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
 
     private void addHeaders( Collection<? extends OptionDescriptor> options ) {
         if ( hasRequiredOption( options ) ) {
-            optionRows.add("Option (* = required)", "Description");
-            optionRows.add("---------------------", "-----------");
+            optionRows.add( "Option (* = required)", "Description" );
+            optionRows.add( "---------------------", "-----------" );
         } else {
-            optionRows.add("Option", "Description");
-            optionRows.add("------", "-----------");
+            optionRows.add( "Option", "Description" );
+            optionRows.add( "------", "-----------" );
         }
     }
 
