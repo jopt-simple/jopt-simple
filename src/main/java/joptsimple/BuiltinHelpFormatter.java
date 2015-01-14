@@ -125,7 +125,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
             || !Strings.isNullOrEmpty( nonOptions.argumentDescription() );
     }
 
-    private String createNonOptionArgumentsDisplay(OptionDescriptor nonOptions) {
+    private String createNonOptionArgumentsDisplay( OptionDescriptor nonOptions ) {
         StringBuilder buffer = new StringBuilder();
         maybeAppendOptionInfo( buffer, nonOptions );
         maybeAppendNonOptionsDescription( buffer, nonOptions );
