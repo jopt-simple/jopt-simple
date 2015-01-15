@@ -233,7 +233,7 @@ public class OptionSet {
      */
     public List<OptionSpec<?>> specs() {
         List<OptionSpec<?>> specs = detectedSpecs;
-        specs.remove( detectedOptions.get( NonOptionArgumentSpec.NAME ) );
+        specs.removeAll( singletonList( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );
 
         return unmodifiableList( specs );
     }
