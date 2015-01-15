@@ -1,6 +1,11 @@
                                        ----------
                                        Change Log
                                        ----------
+Changes in version 4.9
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/73} gh-73}}
+      by correcting the behavior of <<<OptionSet.specs()>>> to remove all instances
+      of the non-option argument spec.
 
 Changes in version 5.0
 

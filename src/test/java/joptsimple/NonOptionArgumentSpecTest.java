@@ -29,7 +29,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -93,6 +93,16 @@ public class NonOptionArgumentSpecTest extends AbstractOptionParserFixture {
 
     @Test( expected = NullPointerException.class )
     public void convertingUsingNullConverter() {
-        parser.nonOptions().withValuesConvertedBy(null);
+        parser.nonOptions().withValuesConvertedBy( null );
+    }
+
+    @Test
+    public void noSpecsCorrespondingToNonOptions() {
+        OptionParser parser = new OptionParser();
+        parser.nonOptions();
+
+        OptionSet options = parser.parse( "one", "two" );
+
+        assertEquals( emptyList(), options.specs() );
     }
 }
