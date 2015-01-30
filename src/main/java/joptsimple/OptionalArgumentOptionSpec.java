@@ -47,7 +47,7 @@ class OptionalArgumentOptionSpec<V> extends ArgumentAcceptingOptionSpec<V> {
         if ( arguments.hasMore() ) {
             String nextArgument = arguments.peek();
 
-            if ( !parser.looksLikeAnOption( nextArgument ) )
+            if ( !parser.looksLikeAnOption( nextArgument ) && canConvertArgument( nextArgument ) )
                 handleOptionArgument( parser, detectedOptions, arguments );
             else if ( isArgumentOfNumberType() && canConvertArgument( nextArgument ) )
                 addArguments( detectedOptions, arguments.next() );

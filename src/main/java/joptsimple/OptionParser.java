@@ -188,7 +188,7 @@ import static joptsimple.ParserRules.*;
  */
 public class OptionParser implements OptionDeclarer {
     private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
-    private final List<OptionSpec<?>> trainingOrder;
+    private final ArrayList<AbstractOptionSpec<?>> trainingOrder;
     private final Map<List<String>, Set<OptionSpec<?>>> requiredIf;
     private final Map<List<String>, Set<OptionSpec<?>>> requiredUnless;
     private final Map<List<String>, Set<OptionSpec<?>>> availableIf;
@@ -322,7 +322,7 @@ public class OptionParser implements OptionDeclarer {
      * @see #printHelpOn(OutputStream)
      */
     public void printHelpOn( Writer sink ) throws IOException {
-        sink.write( helpFormatter.format( recognizedOptions.toJavaUtilMap() ) );
+        sink.write( helpFormatter.format( _recognizedOptions() ) );
         sink.flush();
     }
 
@@ -350,10 +350,15 @@ public class OptionParser implements OptionDeclarer {
      * @since 4.6
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
-        Map<String, OptionSpec<?>> options = new LinkedHashMap<>();
-        for ( OptionSpec<?> spec : trainingOrder )
+        return new LinkedHashMap<String, OptionSpec<?>>( _recognizedOptions() );
+    }
+
+    private Map<String, AbstractOptionSpec<?>> _recognizedOptions() {
+        Map<String, AbstractOptionSpec<?>> options = new LinkedHashMap<>();
+        for ( AbstractOptionSpec<?> spec : trainingOrder ) {
             for ( String option : spec.options() )
                 options.put( option, spec );
+        }
         return options;
     }
 
