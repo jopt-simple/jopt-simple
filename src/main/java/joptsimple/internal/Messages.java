@@ -23,45 +23,25 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package joptsimple.util;
+package joptsimple.internal;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.text.MessageFormat;
 import java.util.Locale;
-
-import joptsimple.ValueConversionException;
-import joptsimple.ValueConverter;
-import joptsimple.internal.Messages;
+import java.util.ResourceBundle;
 
 /**
- * Converts values to {@link java.net.InetAddress} using {@link InetAddress#getByName(String) getByName}.
- *
- * @author <a href="mailto:r@ymund.de">Raymund F\u00FCl\u00F6p</a>
+ * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-public class InetAddressConverter implements ValueConverter<InetAddress> {
-    public InetAddress convert( String value ) {
-        try {
-            return InetAddress.getByName( value );
-        }
-        catch ( UnknownHostException e ) {
-            throw new ValueConversionException( message( value ) );
-        }
+public class Messages {
+    private Messages() {
+        throw new UnsupportedOperationException();
     }
 
-    public Class<InetAddress> valueType() {
-        return InetAddress.class;
-    }
-
-    public String valuePattern() {
-        return null;
-    }
-
-    private String message( String value ) {
-        return Messages.message(
-            Locale.getDefault(),
-            "joptsimple.ExceptionMessages",
-            InetAddressConverter.class,
-            "message",
-            value );
+    public static String message( Locale locale, String bundleName, Class<?> type, String key, Object... args ) {
+        ResourceBundle bundle = ResourceBundle.getBundle( bundleName, locale );
+        String template = bundle.getString( type.getName() + '.' + key );
+        MessageFormat format = new MessageFormat( template );
+        format.setLocale( locale );
+        return format.format( args );
     }
 }

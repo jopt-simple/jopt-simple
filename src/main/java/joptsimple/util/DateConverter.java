@@ -26,14 +26,14 @@
 package joptsimple.util;
 
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.Locale;
 
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
+import joptsimple.internal.Messages;
 
 /**
  * Converts values to {@link Date}s using a {@link DateFormat} object.
@@ -93,19 +93,22 @@ public class DateConverter implements ValueConverter<Date> {
     }
 
     private String message( String value ) {
-        ResourceBundle bundle = ResourceBundle.getBundle( "joptsimple.ExceptionMessages" );
-
         String key;
         Object[] arguments;
+
         if ( formatter instanceof SimpleDateFormat ) {
-            key = getClass().getName() + ".with.pattern.message";
+            key = "with.pattern.message";
             arguments = new Object[] { value, ( (SimpleDateFormat) formatter ).toPattern() };
         } else {
-            key = getClass().getName() + ".without.pattern.message";
+            key = "without.pattern.message";
             arguments = new Object[] { value };
         }
 
-        String template = bundle.getString( key );
-        return new MessageFormat( template ).format( arguments );
+        return Messages.message(
+            Locale.getDefault(),
+            "joptsimple.ExceptionMessages",
+            DateConverter.class,
+            key,
+            arguments );
     }
 }

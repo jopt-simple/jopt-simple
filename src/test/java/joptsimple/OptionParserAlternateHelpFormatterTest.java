@@ -56,6 +56,6 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
         assertFalse( descriptor.requiresArgument() );
         assertEquals( "", descriptor.argumentDescription() );
         assertEquals( "", descriptor.argumentTypeIndicator() );
-        assertEquals( Collections.<Object> emptyList(), descriptor.defaultValues() );
+        assertEquals( Collections.emptyList(), descriptor.defaultValues() );
     }
 }

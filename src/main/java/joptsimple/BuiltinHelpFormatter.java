@@ -25,14 +25,9 @@
 
 package joptsimple;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
+import joptsimple.internal.Messages;
 import joptsimple.internal.Rows;
 import joptsimple.internal.Strings;
 
@@ -202,7 +197,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
         addNonOptionsDescription( options );
 
         if ( options.isEmpty() )
-            addOptionRow( "No options specified" );
+            addOptionRow( message( "no.options.specified" ) );
         else {
             addHeaders( options );
             addOptions( options );
@@ -230,8 +225,8 @@ public class BuiltinHelpFormatter implements HelpFormatter {
     protected void addNonOptionsDescription( Collection<? extends OptionDescriptor> options ) {
         OptionDescriptor nonOptions = findAndRemoveNonOptionsSpec( options );
         if ( shouldShowNonOptionArgumentDisplay(nonOptions) ) {
-            addNonOptionRow("Non-option arguments:");
-            addNonOptionRow(createNonOptionArgumentsDisplay(nonOptions));
+            addNonOptionRow( message( "non.option.arguments.header" ) );
+            addNonOptionRow( createNonOptionArgumentsDisplay( nonOptions ) );
         }
     }
 
@@ -314,11 +309,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      */
     protected void addHeaders( Collection<? extends OptionDescriptor> options ) {
         if ( hasRequiredOption( options ) ) {
-            addOptionRow( "Option (* = required)", "Description" );
-            addOptionRow( "---------------------", "-----------" );
+            addOptionRow( message( "option.header.with.required.indicator" ), message( "description.header" ) );
+            addOptionRow( message( "option.divider.with.required.indicator" ), message( "description.divider" ) );
         } else {
-            addOptionRow( "Option", "Description" );
-            addOptionRow( "------", "-----------" );
+            addOptionRow( message( "option.header" ), message( "description.header" ) );
+            addOptionRow( message( "option.divider" ), message( "description.divider" ) );
         }
     }
 
@@ -523,7 +518,10 @@ public class BuiltinHelpFormatter implements HelpFormatter {
             return descriptor.description();
 
         String defaultValuesDisplay = createDefaultValuesDisplay( defaultValues );
-        return ( descriptor.description() + ' ' + surround( "default: " + defaultValuesDisplay, '(', ')' ) ).trim();
+        return ( descriptor.description()
+            + ' '
+            + surround( message( "default.value.header" ) + ' ' + defaultValuesDisplay, '(', ')' )
+        ).trim();
     }
 
     /**
@@ -537,5 +535,26 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      */
     protected String createDefaultValuesDisplay( List<?> defaultValues ) {
         return defaultValues.size() == 1 ? defaultValues.get( 0 ).toString() : defaultValues.toString();
+    }
+
+    /**
+     * <p>Looks up and gives a resource bundle message.</p>
+     *
+     * <p>This implementation looks in the bundle {@code "joptsimple.HelpFormatterMessages"} in the default
+     * locale, using a key that is the concatenation of this class's fully qualified name, {@code '.'},
+     * and the given key suffix, formats the corresponding value using the given arguments, and returns
+     * the result.</p>
+     *
+     * @param keySuffix suffix to use when looking up the bundle message
+     * @param args arguments to fill in the message template with
+     * @return a formatted localized message
+     */
+    protected String message( String keySuffix, Object... args ) {
+        return Messages.message(
+            Locale.getDefault(),
+            "joptsimple.HelpFormatterMessages",
+            BuiltinHelpFormatter.class,
+            keySuffix,
+            args );
     }
 }
