@@ -46,7 +46,7 @@ import static joptsimple.internal.Strings.*;
  *
  * <p>The non-option arguments section is one column, occupying as much width as it can.</p>
  *
- * <p>Subclasses are free to override bits of this implementation as they see fit. Inspect the code and
+ * <p>Subclasses are free to override bits of this implementation as they see fit. Inspect the code
  * carefully to understand the flow of control that this implementation guarantees.</p>
  *
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
