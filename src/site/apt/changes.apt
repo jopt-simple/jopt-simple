@@ -3,6 +3,20 @@
                                        ----------
 Changes in version 4.9
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/72} gh-72}}
+      by externalizing some of the literal strings in <<<BuiltinHelpFormatter>>>
+      into resource bundles.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/76} gh-76}}
+      by modifying the behavior of <<<OptionalArgumentOptionSpec>>> so that if
+      the argument following the option does not "look like" an option but can
+      be converted to the option argument's type, treat the argument as the argument
+      of the option.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/68} gh-68}}
+      by modifying <<<BuiltinHelpFormatter>>> to be more extensible and documenting
+      the behavior of the newly accessible methods.
+
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/73} gh-73}}
       by correcting the behavior of <<<OptionSet.specs()>>> to remove all instances
       of the non-option argument spec.

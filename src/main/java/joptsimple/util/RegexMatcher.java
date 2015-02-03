@@ -25,11 +25,11 @@
 
 package joptsimple.util;
 
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.*;
+import static joptsimple.internal.Messages.message;
 
 import joptsimple.ValueConversionException;
 import joptsimple.ValueConverter;
@@ -83,9 +83,13 @@ public class RegexMatcher implements ValueConverter<String> {
     }
 
     private void raiseValueConversionFailure( String value ) {
-        ResourceBundle bundle = ResourceBundle.getBundle( "joptsimple.ExceptionMessages" );
-        String template = bundle.getString( getClass().getName() + ".message" );
-        String message = new MessageFormat( template ).format( new Object[] { value, pattern.pattern() } );
+        String message = message(
+            Locale.getDefault(),
+            "joptsimple.ExceptionMessages",
+            RegexMatcher.class,
+            "message",
+            value,
+            pattern.pattern() );
         throw new ValueConversionException( message );
     }
 }

@@ -25,17 +25,16 @@
 
 package joptsimple;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import joptsimple.internal.Strings;
 
 import static java.util.Collections.*;
+import static joptsimple.internal.Messages.*;
 
 /**
  * Thrown when a problem occurs during option parsing.
@@ -116,11 +115,7 @@ public abstract class OptionException extends RuntimeException {
     }
 
     private String formattedMessage( Locale locale ) {
-        ResourceBundle bundle = ResourceBundle.getBundle( "joptsimple.ExceptionMessages", locale );
-        String template = bundle.getString( getClass().getName() + ".message" );
-        MessageFormat format = new MessageFormat( template );
-        format.setLocale( locale );
-        return format.format( messageArguments() );
+        return message( locale, "joptsimple.ExceptionMessages", getClass(), "message", messageArguments() );
     }
 
     abstract Object[] messageArguments();
