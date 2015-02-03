@@ -54,13 +54,13 @@ public class OptionExceptionLocalizedMessageTest {
         return asList(
             new Object[] { new IllegalOptionSpecificationException( "," ), "illegal option specification exception" },
             new Object[] { new MultipleArgumentsForOptionException(
-                new RequiredArgumentOptionSpec<Object>( asList( "b", "c" ), "d" ) ),
+                new RequiredArgumentOptionSpec<>( asList( "b", "c" ), "d" ) ),
                 "multiple arguments for option exception" },
             new Object[] { new OptionArgumentConversionException(
-                new RequiredArgumentOptionSpec<Object>( asList( "c", "number" ), "x" ), "d", null ),
+                new RequiredArgumentOptionSpec<>( asList( "c", "number" ), "x" ), "d", null ),
                 "option argument conversion exception" },
             new Object[] { new OptionMissingRequiredArgumentException(
-                new RequiredArgumentOptionSpec<Object>( asList( "e", "honest" ), "" ) ),
+                new RequiredArgumentOptionSpec<>( asList( "e", "honest" ), "" ) ),
                 "option missing required argument exception" },
             new Object[] { new UnrecognizedOptionException( "f" ), "unrecognized option exception" },
             new Object[] { new MissingRequiredOptionsException(
@@ -69,8 +69,8 @@ public class OptionExceptionLocalizedMessageTest {
                 "missing required option exception" },
             new Object[] { new MissingRequiredOptionsException(
                     Arrays.<AbstractOptionSpec<?>> asList(
-                        new RequiredArgumentOptionSpec<Object>( asList( "p", "place" ), "spot" ),
-                        new RequiredArgumentOptionSpec<Object>( asList( "d", "data-dir" ), "dir" ) ) ),
+                        new RequiredArgumentOptionSpec<>( asList( "p", "place" ), "spot" ),
+                        new RequiredArgumentOptionSpec<>( asList( "d", "data-dir" ), "dir" ) ) ),
                     "missing required option exception" },
             new Object[] { new UnconfiguredOptionException( asList( "i", "j" ) ),
                 "unconfigured option exception" }
