@@ -25,6 +25,10 @@
 
 package joptsimple;
 
+import joptsimple.internal.Messages;
+
+import java.util.Locale;
+
 import static java.util.Collections.*;
 
 import static joptsimple.ParserRules.*;
@@ -36,9 +40,19 @@ import static joptsimple.ParserRules.*;
  */
 class AlternativeLongOptionSpec extends ArgumentAcceptingOptionSpec<String> {
     AlternativeLongOptionSpec() {
-        super( singletonList( RESERVED_FOR_EXTENSIONS ), true, "Alternative form of long options" );
+        super( singletonList( RESERVED_FOR_EXTENSIONS ),
+            true,
+            Messages.message(
+                Locale.getDefault(),
+                "joptsimple.HelpFormatterMessages",
+                AlternativeLongOptionSpec.class,
+                "description" ) );
 
-        describedAs( "opt=value" );
+        describedAs( Messages.message(
+            Locale.getDefault(),
+            "joptsimple.HelpFormatterMessages",
+            AlternativeLongOptionSpec.class,
+            "arg.description" ) );
     }
 
     @Override
