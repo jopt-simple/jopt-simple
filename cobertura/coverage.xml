@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 
-<coverage line-rate="0.9970414201183432" branch-rate="0.975609756097561" lines-covered="1011" lines-valid="1014" branches-covered="440" branches-valid="451" complexity="1.8794117647058823" version="1.9.4.1" timestamp="1423059712550">
+<coverage line-rate="0.9970414201183432" branch-rate="0.975609756097561" lines-covered="1011" lines-valid="1014" branches-covered="440" branches-valid="451" complexity="1.8794117647058823" version="1.9.4.1" timestamp="1423060007104">
 	<sources>
-		<source>/Users/prholser/java/jopt-simple/target/checkout/src/main/java</source>
+		<source>/Users/prholser/java/jopt-simple/src/main/java</source>
+		<source>/Users/prholser/java/jopt-simple/target/generated-sources/annotations</source>
 		<source>--source</source>
-		<source>/Users/prholser/java/jopt-simple/target/checkout/target/generated-sources/annotations</source>
 	</sources>
 	<packages>
 		<package name="joptsimple" line-rate="0.9971988795518207" branch-rate="0.9781931464174455" complexity="1.7751937984496124">

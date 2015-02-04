@@ -10,7 +10,6 @@
       @import url("./css/site.css");
     </style>
     <link rel="stylesheet" href="./css/print.css" type="text/css" media="print" />
-      <meta name="author" content="Changes in version 4.9" />
     <meta name="Date-Revision-yyyymmdd" content="20150204" />
     <meta http-equiv="Content-Language" content="en" />
         
@@ -84,11 +83,13 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <ul>
+        <div class="section">
+<h2>Changes in version 4.9<a name="Changes_in_version_4.9"></a></h2>
+<ul>
 <li>Resolved <a class="externalLink" href="https://github.com/pholser/jopt-simple/issues/72"> gh-72</a> by externalizing some of the literal strings in <tt>BuiltinHelpFormatter</tt> into resource bundles.</li>
 <li>Resolved <a class="externalLink" href="https://github.com/pholser/jopt-simple/issues/76"> gh-76</a> by modifying the behavior of <tt>OptionalArgumentOptionSpec</tt> so that if the argument following the option does not &quot;look like&quot; an option but can be converted to the option argument's type, treat the argument as the argument of the option.</li>
 <li>Resolved <a class="externalLink" href="https://github.com/pholser/jopt-simple/issues/68"> gh-68</a> by modifying <tt>BuiltinHelpFormatter</tt> to be more extensible and documenting the behavior of the newly accessible methods.</li>
-<li>Resolved <a class="externalLink" href="https://github.com/pholser/jopt-simple/issues/73"> gh-73</a> by correcting the behavior of <tt>OptionSet.specs()</tt> to remove all instances of the non-option argument spec.</li></ul>
+<li>Resolved <a class="externalLink" href="https://github.com/pholser/jopt-simple/issues/73"> gh-73</a> by correcting the behavior of <tt>OptionSet.specs()</tt> to remove all instances of the non-option argument spec.</li></ul></div>
 <div class="section">
 <h2>Changes in version 4.8<a name="Changes_in_version_4.8"></a></h2>
 <ul>
