@@ -1,6 +1,7 @@
                                        ----------
                                        Change Log
                                        ----------
+
 Changes in version 4.9
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/72} gh-72}}
