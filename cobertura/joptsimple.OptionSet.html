@@ -119,13 +119,13 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * Package-private because clients don't create these.</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;51</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;52</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;    OptionSet( Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;53</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;        detectedSpecs = <span class="keyword">new</span> ArrayList&lt;OptionSpec&lt;?&gt;&gt;();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;54</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;        detectedOptions = <span class="keyword">new</span> HashMap&lt;String, AbstractOptionSpec&lt;?&gt;&gt;();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;55</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;        optionsToArguments = <span class="keyword">new</span> IdentityHashMap&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt;();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;56</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;        defaultValues = defaultValues( recognizedSpecs );</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;57</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.recognizedSpecs = recognizedSpecs;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;58</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;52</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;    OptionSet( Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs ) {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;53</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;        detectedSpecs = <span class="keyword">new</span> ArrayList&lt;OptionSpec&lt;?&gt;&gt;();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;54</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;        detectedOptions = <span class="keyword">new</span> HashMap&lt;String, AbstractOptionSpec&lt;?&gt;&gt;();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;55</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;        optionsToArguments = <span class="keyword">new</span> IdentityHashMap&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt;();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;56</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;        defaultValues = defaultValues( recognizedSpecs );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;57</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.recognizedSpecs = recognizedSpecs;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;58</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;59</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;60</td>  <td class="nbHits">&nbsp;</td>
@@ -161,7 +161,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;76</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">boolean</span> has( String option ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;77</td>  <td class="nbHitsCovered">&nbsp;393</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> detectedOptions.containsKey( option );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;77</td>  <td class="nbHitsCovered">&nbsp;394</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> detectedOptions.containsKey( option );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;78</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;79</td>  <td class="nbHits">&nbsp;</td>
@@ -413,21 +413,21 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;213</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> &lt;V&gt; List&lt;V&gt; valuesOf( OptionSpec&lt;V&gt; option ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;214</td>  <td class="nbHitsCovered">&nbsp;538</td>  <td class="src"><pre class="src">&nbsp;        ensureNotNull( option );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;214</td>  <td class="nbHitsCovered">&nbsp;539</td>  <td class="src"><pre class="src">&nbsp;        ensureNotNull( option );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;215</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;216</td>  <td class="nbHitsCovered">&nbsp;537</td>  <td class="src"><pre class="src">&nbsp;        List&lt;String&gt; values = optionsToArguments.get( option );</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;217</td>  <td class="nbHitsCovered"><a title="Line 217: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;537</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 217: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> ( values == <span class="keyword">null</span> || values.isEmpty() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;216</td>  <td class="nbHitsCovered">&nbsp;538</td>  <td class="src"><pre class="src">&nbsp;        List&lt;String&gt; values = optionsToArguments.get( option );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;217</td>  <td class="nbHitsCovered"><a title="Line 217: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;538</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 217: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">if</span> ( values == <span class="keyword">null</span> || values.isEmpty() )</a></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;218</td>  <td class="nbHitsCovered">&nbsp;164</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> defaultValueFor( option );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;219</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;220</td>  <td class="nbHitsCovered">&nbsp;373</td>  <td class="src"><pre class="src">&nbsp;        AbstractOptionSpec&lt;V&gt; spec = (AbstractOptionSpec&lt;V&gt;) option;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;221</td>  <td class="nbHitsCovered">&nbsp;373</td>  <td class="src"><pre class="src">&nbsp;        List&lt;V&gt; convertedValues = <span class="keyword">new</span> ArrayList&lt;V&gt;();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;222</td>  <td class="nbHitsCovered"><a title="Line 222: Conditional coverage 100% (2/2).">&nbsp;373</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 222: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( String each : values )</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;223</td>  <td class="nbHitsCovered">&nbsp;632</td>  <td class="src"><pre class="src">&nbsp;            convertedValues.add( spec.convert( each ) );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;220</td>  <td class="nbHitsCovered">&nbsp;374</td>  <td class="src"><pre class="src">&nbsp;        AbstractOptionSpec&lt;V&gt; spec = (AbstractOptionSpec&lt;V&gt;) option;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;221</td>  <td class="nbHitsCovered">&nbsp;374</td>  <td class="src"><pre class="src">&nbsp;        List&lt;V&gt; convertedValues = <span class="keyword">new</span> ArrayList&lt;V&gt;();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;222</td>  <td class="nbHitsCovered"><a title="Line 222: Conditional coverage 100% (2/2).">&nbsp;374</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 222: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( String each : values )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;223</td>  <td class="nbHitsCovered">&nbsp;634</td>  <td class="src"><pre class="src">&nbsp;            convertedValues.add( spec.convert( each ) );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;224</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;225</td>  <td class="nbHitsCovered">&nbsp;370</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> unmodifiableList( convertedValues );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;225</td>  <td class="nbHitsCovered">&nbsp;371</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> unmodifiableList( convertedValues );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;226</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;227</td>  <td class="nbHits">&nbsp;</td>
@@ -446,11 +446,11 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;234</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> List&lt;OptionSpec&lt;?&gt;&gt; specs() {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;235</td>  <td class="nbHitsCovered">&nbsp;13</td>  <td class="src"><pre class="src">&nbsp;        List&lt;OptionSpec&lt;?&gt;&gt; specs = detectedSpecs;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;236</td>  <td class="nbHitsCovered">&nbsp;13</td>  <td class="src"><pre class="src">&nbsp;        specs.remove( detectedOptions.get( NonOptionArgumentSpec.NAME ) );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;235</td>  <td class="nbHitsCovered">&nbsp;14</td>  <td class="src"><pre class="src">&nbsp;        List&lt;OptionSpec&lt;?&gt;&gt; specs = detectedSpecs;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;236</td>  <td class="nbHitsCovered">&nbsp;14</td>  <td class="src"><pre class="src">&nbsp;        specs.removeAll( singletonList( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;237</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;238</td>  <td class="nbHitsCovered">&nbsp;13</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> unmodifiableList( specs );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;238</td>  <td class="nbHitsCovered">&nbsp;14</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> unmodifiableList( specs );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;239</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;240</td>  <td class="nbHits">&nbsp;</td>
@@ -491,32 +491,32 @@
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;261</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">void</span> add( AbstractOptionSpec&lt;?&gt; spec ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;262</td>  <td class="nbHitsCovered">&nbsp;450</td>  <td class="src"><pre class="src">&nbsp;        addWithArgument( spec, <span class="keyword">null</span> );</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;263</td>  <td class="nbHitsCovered">&nbsp;450</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;262</td>  <td class="nbHitsCovered">&nbsp;453</td>  <td class="src"><pre class="src">&nbsp;        addWithArgument( spec, <span class="keyword">null</span> );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;263</td>  <td class="nbHitsCovered">&nbsp;453</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;264</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;265</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">void</span> addWithArgument( AbstractOptionSpec&lt;?&gt; spec, String argument ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;266</td>  <td class="nbHitsCovered">&nbsp;1074</td>  <td class="src"><pre class="src">&nbsp;        detectedSpecs.add( spec );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;266</td>  <td class="nbHitsCovered">&nbsp;1081</td>  <td class="src"><pre class="src">&nbsp;        detectedSpecs.add( spec );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;267</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;268</td>  <td class="nbHitsCovered"><a title="Line 268: Conditional coverage 100% (2/2).">&nbsp;1074</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 268: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( String each : spec.options() )</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;269</td>  <td class="nbHitsCovered">&nbsp;1127</td>  <td class="src"><pre class="src">&nbsp;            detectedOptions.put( each, spec );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;268</td>  <td class="nbHitsCovered"><a title="Line 268: Conditional coverage 100% (2/2).">&nbsp;1081</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 268: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( String each : spec.options() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;269</td>  <td class="nbHitsCovered">&nbsp;1134</td>  <td class="src"><pre class="src">&nbsp;            detectedOptions.put( each, spec );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;270</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;271</td>  <td class="nbHitsCovered">&nbsp;1074</td>  <td class="src"><pre class="src">&nbsp;        List&lt;String&gt; optionArguments = optionsToArguments.get( spec );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;271</td>  <td class="nbHitsCovered">&nbsp;1081</td>  <td class="src"><pre class="src">&nbsp;        List&lt;String&gt; optionArguments = optionsToArguments.get( spec );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;272</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;273</td>  <td class="nbHitsCovered"><a title="Line 273: Conditional coverage 100% (2/2).">&nbsp;1074</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 273: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> ( optionArguments == <span class="keyword">null</span> ) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;274</td>  <td class="nbHitsCovered">&nbsp;766</td>  <td class="src"><pre class="src">&nbsp;            optionArguments = <span class="keyword">new</span> ArrayList&lt;String&gt;();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;275</td>  <td class="nbHitsCovered">&nbsp;766</td>  <td class="src"><pre class="src">&nbsp;            optionsToArguments.put( spec, optionArguments );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;273</td>  <td class="nbHitsCovered"><a title="Line 273: Conditional coverage 100% (2/2).">&nbsp;1081</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 273: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> ( optionArguments == <span class="keyword">null</span> ) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;274</td>  <td class="nbHitsCovered">&nbsp;769</td>  <td class="src"><pre class="src">&nbsp;            optionArguments = <span class="keyword">new</span> ArrayList&lt;String&gt;();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;275</td>  <td class="nbHitsCovered">&nbsp;769</td>  <td class="src"><pre class="src">&nbsp;            optionsToArguments.put( spec, optionArguments );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;276</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;277</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;278</td>  <td class="nbHitsCovered"><a title="Line 278: Conditional coverage 100% (2/2).">&nbsp;1074</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 278: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> ( argument != <span class="keyword">null</span> )</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;279</td>  <td class="nbHitsCovered">&nbsp;624</td>  <td class="src"><pre class="src">&nbsp;            optionArguments.add( argument );</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;280</td>  <td class="nbHitsCovered">&nbsp;1074</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;278</td>  <td class="nbHitsCovered"><a title="Line 278: Conditional coverage 100% (2/2).">&nbsp;1081</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 278: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> ( argument != <span class="keyword">null</span> )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;279</td>  <td class="nbHitsCovered">&nbsp;628</td>  <td class="src"><pre class="src">&nbsp;            optionArguments.add( argument );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;280</td>  <td class="nbHitsCovered">&nbsp;1081</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;281</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;282</td>  <td class="nbHits">&nbsp;</td>
@@ -579,16 +579,16 @@
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;318</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, List&lt;?&gt;&gt; defaultValues( Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;319</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;        Map&lt;String, List&lt;?&gt;&gt; defaults = <span class="keyword">new</span> HashMap&lt;String, List&lt;?&gt;&gt;();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;320</td>  <td class="nbHitsCovered"><a title="Line 320: Conditional coverage 100% (2/2).">&nbsp;429</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 320: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( Map.Entry&lt;String, AbstractOptionSpec&lt;?&gt;&gt; each : recognizedSpecs.entrySet() )</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;321</td>  <td class="nbHitsCovered">&nbsp;951</td>  <td class="src"><pre class="src">&nbsp;            defaults.put( each.getKey(), each.getValue().defaultValues() );</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;322</td>  <td class="nbHitsCovered">&nbsp;429</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> defaults;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;319</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;        Map&lt;String, List&lt;?&gt;&gt; defaults = <span class="keyword">new</span> HashMap&lt;String, List&lt;?&gt;&gt;();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;320</td>  <td class="nbHitsCovered"><a title="Line 320: Conditional coverage 100% (2/2).">&nbsp;431</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 320: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( Map.Entry&lt;String, AbstractOptionSpec&lt;?&gt;&gt; each : recognizedSpecs.entrySet() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;321</td>  <td class="nbHitsCovered">&nbsp;954</td>  <td class="src"><pre class="src">&nbsp;            defaults.put( each.getKey(), each.getValue().defaultValues() );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;322</td>  <td class="nbHitsCovered">&nbsp;431</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> defaults;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;323</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;324</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 10/29/14 10:44 AM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 2/4/15 8:21 AM.</div>
 </body>
 </html>

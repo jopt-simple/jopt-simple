@@ -144,7 +144,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;67</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> isNullOrEmpty( String target ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;68</td>  <td class="nbHitsCovered"><a title="Line 68: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;736</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 68: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">return</span> target == <span class="keyword">null</span> || EMPTY.equals( target );</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;68</td>  <td class="nbHitsCovered"><a title="Line 68: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;737</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 68: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        <span class="keyword">return</span> target == <span class="keyword">null</span> || EMPTY.equals( target );</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;69</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;70</td>  <td class="nbHits">&nbsp;</td>
@@ -215,26 +215,26 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;104</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> String join( List&lt;String&gt; pieces, String separator ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;105</td>  <td class="nbHitsCovered">&nbsp;103</td>  <td class="src"><pre class="src">&nbsp;        StringBuilder buffer = <span class="keyword">new</span> StringBuilder();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;105</td>  <td class="nbHitsCovered">&nbsp;111</td>  <td class="src"><pre class="src">&nbsp;        StringBuilder buffer = <span class="keyword">new</span> StringBuilder();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;106</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;107</td>  <td class="nbHitsCovered"><a title="Line 107: Conditional coverage 100% (2/2).">&nbsp;103</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 107: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( Iterator&lt;String&gt; iter = pieces.iterator(); iter.hasNext(); ) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;108</td>  <td class="nbHitsCovered">&nbsp;405</td>  <td class="src"><pre class="src">&nbsp;            buffer.append( iter.next() );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;107</td>  <td class="nbHitsCovered"><a title="Line 107: Conditional coverage 100% (2/2).">&nbsp;111</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 107: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> ( Iterator&lt;String&gt; iter = pieces.iterator(); iter.hasNext(); ) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;108</td>  <td class="nbHitsCovered">&nbsp;418</td>  <td class="src"><pre class="src">&nbsp;            buffer.append( iter.next() );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;109</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;110</td>  <td class="nbHitsCovered"><a title="Line 110: Conditional coverage 100% (2/2).">&nbsp;405</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 110: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> ( iter.hasNext() )</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;111</td>  <td class="nbHitsCovered">&nbsp;302</td>  <td class="src"><pre class="src">&nbsp;                buffer.append( separator );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;110</td>  <td class="nbHitsCovered"><a title="Line 110: Conditional coverage 100% (2/2).">&nbsp;418</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 110: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> ( iter.hasNext() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;111</td>  <td class="nbHitsCovered">&nbsp;307</td>  <td class="src"><pre class="src">&nbsp;                buffer.append( separator );</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;112</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;113</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;114</td>  <td class="nbHitsCovered">&nbsp;103</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> buffer.toString();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;114</td>  <td class="nbHitsCovered">&nbsp;111</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> buffer.toString();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;115</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;116</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 10/29/14 10:44 AM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 2/4/15 8:21 AM.</div>
 </body>
 </html>
