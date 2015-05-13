@@ -30,7 +30,6 @@ import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
 import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 
