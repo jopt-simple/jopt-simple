@@ -28,8 +28,10 @@ package joptsimple;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import joptsimple.internal.Strings;
 
@@ -90,7 +92,8 @@ public abstract class OptionException extends RuntimeException {
     protected final String multipleOptionString() {
         StringBuilder buffer = new StringBuilder( "[" );
 
-        for ( Iterator<String> iter = options.iterator(); iter.hasNext(); ) {
+        Set<String> asSet = new LinkedHashSet<String>( options );
+        for ( Iterator<String> iter = asSet.iterator(); iter.hasNext(); ) {
             buffer.append( singleOptionString(iter.next()) );
             if ( iter.hasNext() )
                 buffer.append( ", " );

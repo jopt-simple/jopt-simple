@@ -29,6 +29,9 @@ import static java.lang.Boolean.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 
 import static joptsimple.ExceptionMatchers.*;
@@ -275,12 +278,32 @@ public class OptionParserTest extends AbstractOptionParserFixture {
 
         parser.parse( "-h" );
     }
-    
+
     @Test
     public void configurationPerformedLaterOverrideThosePerformedEarlierForTheSameOption() {
         parser.accepts( "t" ).withRequiredArg();
         parser.accepts( "t" ).withOptionalArg();
 
         parser.parse( "-t" );
+    }
+
+    @Test
+    public void requiredOptionWithSynonymsMissing() {
+        parser.acceptsAll( asList( "h", "help", "?" ) );
+        parser.acceptsAll( asList( "f", "ff", "csv-file-name" ) ).withRequiredArg().required();
+
+        thrown.expect( MissingRequiredOptionsException.class );
+        thrown.expectMessage( new TypeSafeMatcher<String>() {
+            @Override
+            protected boolean matchesSafely( String item ) {
+                return "Missing required option(s) [f/csv-file-name/ff]".equals( item );
+            }
+
+            public void describeTo(Description description) {
+                // purposely doing nothing here
+            }
+        } );
+
+        parser.parse();
     }
 }

@@ -4,6 +4,10 @@
 
 Changes in version 4.9
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/72} gh-79}}
+      by correcting the behavior of <<<OptionException.multipleOptionString>>>
+      when handling options with synonyms.
+
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/72} gh-72}}
       by externalizing some of the literal strings in <<<BuiltinHelpFormatter>>>
       into resource bundles.
