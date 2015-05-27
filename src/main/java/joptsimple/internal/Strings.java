@@ -26,7 +26,6 @@
 package joptsimple.internal;
 
 import java.util.Iterator;
-import java.util.List;
 
 import static java.lang.System.*;
 import static java.util.Arrays.*;
@@ -101,7 +100,7 @@ public final class Strings {
      * @param separator the separator
      * @return the joined string
      */
-    public static String join( List<String> pieces, String separator ) {
+    public static String join( Iterable<String> pieces, String separator ) {
         StringBuilder buffer = new StringBuilder();
 
         for ( Iterator<String> iter = pieces.iterator(); iter.hasNext(); ) {
