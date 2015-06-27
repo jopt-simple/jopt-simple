@@ -2,6 +2,18 @@
                                        Change Log
                                        ----------
 
+Changes in version 5.0
+
+    * Abandoning JDKs prior to 7. All source is Java 7-compatible, and bytecode is compiled to 1.7
+      version.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/51} gh-51}} by adding
+      <<<OptionSpecBuilder.availableIf()>>> and <<<OptionSpecBuilder.availableUnless()>>>. Thanks
+      to Christian Ohr for this.
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/70} gh-70}} by adding
+      <<<EnumConverter>>> and <<<PathConverter>>>. Thanks to Christian Ohr for this.
+
 Changes in version 4.9
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/79} gh-79}}
@@ -25,18 +37,6 @@ Changes in version 4.9
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/73} gh-73}}
       by correcting the behavior of <<<OptionSet.specs()>>> to remove all instances
       of the non-option argument spec.
-
-Changes in version 5.0
-
-    * Abandoning JDKs prior to 7. All source is Java 7-compatible, and bytecode is compiled to 1.7
-      version.
-
-    * Resolved {{{https://github.com/pholser/jopt-simple/issues/51} gh-51}} by adding
-      <<<OptionSpecBuilder.availableIf()>>> and <<<OptionSpecBuilder.availableUnless()>>>. Thanks
-      to Christian Ohr for this.
-
-    * Resolved {{{https://github.com/pholser/jopt-simple/issues/70} gh-70}} by adding
-      <<<EnumConverter>>> and <<<PathConverter>>>. Thanks to Christian Ohr for this.
 
 Changes in version 4.8
 
