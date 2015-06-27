@@ -4,7 +4,7 @@
 
 Changes in version 4.9
 
-    * Resolved {{{https://github.com/pholser/jopt-simple/issues/72} gh-79}}
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/79} gh-79}}
       by correcting the behavior of <<<OptionException.multipleOptionString>>>
       when handling options with synonyms.
 
@@ -248,7 +248,7 @@ Changes in version 2.4
     * Method <<<ofType()>>> on class <<<ArgumentAcceptingOptionSpec>>> now returns self
     rather than <<<void>>>.
 
-    * Deprecated another "gets for gets' sake": <<<OptionParser.setPosixlyCorrect()>>>
+    * Deprecated another "get for get's sake": <<<OptionParser.setPosixlyCorrect()>>>
     It is replaced with a less Java-beany-looking method.
 
     * Cleaned up the help screens produced by <<<OptionParser.printHelpOn()>>> so they are
