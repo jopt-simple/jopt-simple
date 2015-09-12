@@ -26,6 +26,7 @@
 package joptsimple.util;
 
 import java.net.InetAddress;
+import java.util.Random;
 
 import joptsimple.ValueConversionException;
 import org.junit.Before;
@@ -54,6 +55,6 @@ public class InetAddressConverterTest {
 
     @Test( expected = ValueConversionException.class )
     public void unknownHost() {
-        converter.convert( "yer.mom" );
+        converter.convert( String.valueOf( new Random().nextDouble() ) );
     }
 }
