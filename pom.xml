@@ -10,7 +10,7 @@
     <version>5.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JOpt Simple</name>
-    <url>http://pholser.github.com/jopt-simple</url>
+    <url>http://pholser.github.io/jopt-simple</url>
     <description>A Java library for parsing command line options</description>
     <licenses>
         <license>
@@ -22,11 +22,11 @@
     <scm>
         <connection>scm:git:git://github.com/pholser/jopt-simple.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/pholser/jopt-simple.git</developerConnection>
-        <url>http://github.com/pholser/jopt-simple</url>
+        <url>https://github.com/pholser/jopt-simple</url>
     </scm>
     <issueManagement>
         <system>GitHub</system>
-        <url>http://github.com/pholser/jopt-simple/issues</url>
+        <url>https://github.com/pholser/jopt-simple/issues</url>
     </issueManagement>
     <developers>
         <developer>
@@ -254,6 +254,20 @@
                     </excludedClasses>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                       <id>attach-sources</id>
+                       <phase>package</phase>
+                       <goals>
+                         <goal>jar</goal>
+                       </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <reporting>
@@ -272,7 +286,7 @@
                     <show>public</show>
                     <excludePackageNames>joptsimple.examples:joptsimple.internal:joptsimple.internal.*</excludePackageNames>
                     <links>
-                        <link>http://download.oracle.com/javase/1.5.0/docs/api</link>
+                        <link>https://docs.oracle.com/javase/8/docs/api</link>
                     </links>
                     <bottom><![CDATA[<i>&copy; Copyright 2004-2015 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License. pholser@alumni.rice.edu</i>]]></bottom>
                 </configuration>
