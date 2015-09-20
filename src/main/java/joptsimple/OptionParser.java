@@ -156,7 +156,7 @@ import static joptsimple.ParserRules.*;
  * </ol>
  *
  * <p>Each of the options in a list of options given to {@link #acceptsAll(List) acceptsAll} is treated as a
- * synonym of the others.  For example:
+ * synonym of the others.  For example:</p>
  *   <pre>
  *     <code>
  *     OptionParser parser = new OptionParser();
@@ -164,7 +164,7 @@ import static joptsimple.ParserRules.*;
  *     OptionSet options = parser.parse( "-w" );
  *     </code>
  *   </pre>
- * In this case, <code>options.{@link OptionSet#has(String) has}</code> would answer {@code true} when given arguments
+ * <p>In this case, <code>options.{@link OptionSet#has(String) has}</code> would answer {@code true} when given arguments
  * {@code "w"}, {@code "interactive"}, and {@code "confirmation"}. The {@link OptionSet} would give the same
  * responses to these arguments for its other methods as well.</p>
  *

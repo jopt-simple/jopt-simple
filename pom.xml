@@ -205,13 +205,13 @@
                         <id>paste-examples</id>
                         <phase>post-site</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <property name="java.io.tmpdir" value="${java.io.tmpdir}" />
                                 <property name="example.src.dir" value="src/test/java" />
                                 <property name="example.class.path" refid="maven.test.classpath" />
                                 <property name="website.staging.dir" value="${project.build.directory}/site" />
                                 <ant antfile="paste-examples.xml" target="-paste-examples" />
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -258,6 +258,11 @@
     </build>
     <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.8</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
