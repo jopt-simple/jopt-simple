@@ -27,7 +27,6 @@ package joptsimple;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,14 +34,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static java.math.BigDecimal.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
-
 import joptsimple.util.InetAddressConverter;
 import org.junit.Before;
 import org.junit.Test;
 
+import static java.math.BigDecimal.*;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
 import static joptsimple.internal.Strings.*;
 import static joptsimple.util.DateConverter.*;
 import static org.junit.Assert.*;
@@ -375,55 +373,50 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option                        Description                           ",
-            "------                        -----------                           ",
-            "-?, -h                        Shows this help message               ",
-            "-B, --bootstrap-debug         Specify a text to be logged at the    ",
-            "                                beginning (e.g. used by Gradle's    ",
-            "                                bootstrap class.                    ",
-            "-D, --systemprop              Set system property of the JVM (e.g. -",
-            "                                Dmyprop=myvalue).                   ",
-            "-I, --no-imports              Disable usage of default imports for  ",
-            "                                build script files.                 ",
-            "-P, --projectprop             Set project property for the build    ",
-            "                                script (e.g. -Pmyprop=myvalue).     ",
-            "-S                            Don't trigger a System.exit(0) for    ",
-            "                                normal termination. Used for        ",
-            "                                Gradle's internal testing.          ",
-            "-b, --buildfile               Specifies the build file name (also   ",
-            "                                for subprojects). Defaults to build.",
-            "                                gradle.                             ",
-            "-d, --debug                   Log in debug mode (includes normal    ",
-            "                                stacktrace).                        ",
-            "-e, --embedded                Specify an embedded build script.     ",
-            "-f, --full-stacktrace         Print out the full (very verbose)     ",
-            "                                stacktrace for any exceptions.      ",
-            "-g, --gradle-user-home        Specifies the gradle user home dir.   ",
-            "-i, --ivy-quiet               Set Ivy log level to quiet.           ",
-            "-j, --ivy-debug               Set Ivy log level to debug (very      ",
-            "                                verbose).                           ",
-            "-l, --plugin-properties-file  Specifies the plugin.properties file. ",
-            "-n, --non-recursive           Do not execute primary tasks of child ",
-            "                                projects.                           ",
-            "-p, --project-dir             Specifies the start dir for Gradle.   ",
-            "                                Defaults to current dir.            ",
-            "-q, --quiet                   Log errors only.                      ",
-            "-r, --rebuild-cache           Rebuild the cache of compiled build   ",
-            "                                scripts.                            ",
-            "-s, --stacktrace              Print out the stacktrace also for user",
-            "                                exceptions (e.g. compile error).    ",
-            "-t, --tasks                   Show list of all available tasks and  ",
-            "                                their dependencies.                 ",
-            "-u, --no-search-upward        Don't search in parent folders for a  ",
-            "                                settings.gradle file.               ",
-            "-v, --version                 Print version info.                   ",
-            "-x, --cache-off               No caching of compiled build scripts. ",
+            "Option                        Description                                       ",
+            "------                        -----------                                       ",
+            "-?, -h                        Shows this help message                           ",
+            "-B, --bootstrap-debug         Specify a text to be logged at the beginning (e.  ",
+            "                                g. used by Gradle's bootstrap class.            ",
+            "-D, --systemprop              Set system property of the JVM (e.g. -            ",
+            "                                Dmyprop=myvalue).                               ",
+            "-I, --no-imports              Disable usage of default imports for build script ",
+            "                                files.                                          ",
+            "-P, --projectprop             Set project property for the build script (e.g. - ",
+            "                                Pmyprop=myvalue).                               ",
+            "-S                            Don't trigger a System.exit(0) for normal         ",
+            "                                termination. Used for Gradle's internal testing.",
+            "-b, --buildfile               Specifies the build file name (also for           ",
+            "                                subprojects). Defaults to build.gradle.         ",
+            "-d, --debug                   Log in debug mode (includes normal stacktrace).   ",
+            "-e, --embedded                Specify an embedded build script.                 ",
+            "-f, --full-stacktrace         Print out the full (very verbose) stacktrace for  ",
+            "                                any exceptions.                                 ",
+            "-g, --gradle-user-home        Specifies the gradle user home dir.               ",
+            "-i, --ivy-quiet               Set Ivy log level to quiet.                       ",
+            "-j, --ivy-debug               Set Ivy log level to debug (very verbose).        ",
+            "-l, --plugin-properties-file  Specifies the plugin.properties file.             ",
+            "-n, --non-recursive           Do not execute primary tasks of child projects.   ",
+            "-p, --project-dir             Specifies the start dir for Gradle. Defaults to   ",
+            "                                current dir.                                    ",
+            "-q, --quiet                   Log errors only.                                  ",
+            "-r, --rebuild-cache           Rebuild the cache of compiled build scripts.      ",
+            "-s, --stacktrace              Print out the stacktrace also for user exceptions ",
+            "                                (e.g. compile error).                           ",
+            "-t, --tasks                   Show list of all available tasks and their        ",
+            "                                dependencies.                                   ",
+            "-u, --no-search-upward        Don't search in parent folders for a settings.    ",
+            "                                gradle file.                                    ",
+            "-v, --version                 Print version info.                               ",
+            "-x, --cache-off               No caching of compiled build scripts.             ",
             EMPTY );
     }
 
     @Test
     public void dateConverterShowsDatePattern() throws Exception {
-        parser.accepts( "date", "a date" ).withRequiredArg().withValuesConvertedBy(datePattern("MM/dd/yy"));
+        parser.accepts( "date", "a date" )
+            .withRequiredArg()
+            .withValuesConvertedBy( datePattern( "MM/dd/yy" ) );
 
         parser.printHelpOn( sink );
 
@@ -452,8 +445,9 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
 
     @Test
     public void inetAddressConverterShowsType() throws Exception {
-        parser.accepts( "addr", "an internet address" ).withRequiredArg()
-                .withValuesConvertedBy(new InetAddressConverter());
+        parser.accepts( "addr", "an internet address" )
+            .withRequiredArg()
+            .withValuesConvertedBy( new InetAddressConverter() );
 
         parser.printHelpOn( sink );
 
@@ -659,22 +653,60 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     }
 
     @Test
-    public void fixForIssue56() throws IOException {
+    public void fixForIssue56() throws Exception {
         parser.accepts( "password", "Server Password" ).withRequiredArg().ofType( String.class );
         parser.accepts( "F", "Forward port mapping (ie: localhost:5900:localhost:5900)" ).withRequiredArg();
         parser.accepts( "R", "Reverse port mapping (ie: localhost:5900:localhost:5900)" ).withRequiredArg();
 
         parser.printHelpOn( sink );
 
+        assertHelpLines("" +
+            "Option      Description                                             ",
+            "------      -----------                                             ",
+            "-F          Forward port mapping (ie: localhost:5900:localhost:5900)",
+            "-R          Reverse port mapping (ie: localhost:5900:localhost:5900)",
+            "--password  Server Password                                         ",
+            EMPTY );
+    }
+
+    @Test
+    public void fixForIssue85() throws Exception {
+        parser.acceptsAll( asList( "?", "help" ), "Display this help text" ).forHelp();
+        parser.acceptsAll( asList( "c", "check-avail" ),
+            "Check Galileo homepage for available books, compare with known ones" );
+        parser.acceptsAll( asList( "d", "download-dir" ),
+            "Download directory for openbooks; must exist" )
+            .withRequiredArg().ofType( File.class ).defaultsTo( new File( "." ) );
+        parser.acceptsAll( asList( "l", "log-level" ),
+            "Log level (0=normal, 1=verbose, 2=debug, 3=trace" )
+            .withRequiredArg().ofType( int.class ).defaultsTo( 0 );
+        parser.acceptsAll( asList( "m", "check-md5" ),
+            "Download all known books without storing them, verifying their MD5 checksum (slow! >1 Gb download)" );
+        parser.acceptsAll( asList( "t", "threading" ),
+            "Threading mode (0=single, 1=multi); single is slower, but better for diagnostics)" )
+            .withRequiredArg().ofType( int.class ).defaultsTo( 1 );
+        parser.acceptsAll( asList( "w", "write-config" ),
+            "Write editable book list to config.xml, enabling you to update MD5 checksums or add new books" );
+
+        parser.printHelpOn( sink );
+
         assertHelpLines(
-                "Option      Description                         ",
-                "------      -----------                         ",
-                "-F          Forward port mapping (ie: localhost:",
-                "              5900:localhost:5900)              ",
-                "-R          Reverse port mapping (ie: localhost:",
-                "              5900:localhost:5900)              ",
-                "--password  Server Password                     ",
-                EMPTY );
+            "Option                     Description                                          ",
+            "------                     -----------                                          ",
+            "-?, --help                 Display this help text                               ",
+            "-c, --check-avail          Check Galileo homepage for available books, compare  ",
+            "                             with known ones                                    ",
+            "-d, --download-dir <File>  Download directory for openbooks; must exist         ",
+            "                             (default: .)                                       ",
+            "-l, --log-level <Integer>  Log level (0=normal, 1=verbose, 2=debug, 3=trace     ",
+            "                             (default: 0)                                       ",
+            "-m, --check-md5            Download all known books without storing them,       ",
+            "                             verifying their MD5 checksum (slow! >1 Gb download)",
+            "-t, --threading <Integer>  Threading mode (0=single, 1=multi); single is        ",
+            "                             slower, but better for diagnostics) (default: 1)   ",
+            "-w, --write-config         Write editable book list to config.xml, enabling you ",
+            "                             to update MD5 checksums or add new books           ",
+            EMPTY );
     }
 
     private void assertHelpLines( String... expectedLines ) {

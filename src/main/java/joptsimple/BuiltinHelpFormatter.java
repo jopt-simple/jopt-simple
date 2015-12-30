@@ -116,7 +116,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param right text to put in the right column
      */
     protected void addOptionRow( String left, String right ) {
-        optionRows.add(left, right);
+        optionRows.add( left, right );
     }
 
     /**
@@ -224,7 +224,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      */
     protected void addNonOptionsDescription( Collection<? extends OptionDescriptor> options ) {
         OptionDescriptor nonOptions = findAndRemoveNonOptionsSpec( options );
-        if ( shouldShowNonOptionArgumentDisplay(nonOptions) ) {
+        if ( shouldShowNonOptionArgumentDisplay( nonOptions ) ) {
             addNonOptionRow( message( "non.option.arguments.header" ) );
             addNonOptionRow( createNonOptionArgumentsDisplay( nonOptions ) );
         }
