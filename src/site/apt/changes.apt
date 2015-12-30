@@ -2,6 +2,12 @@
                                        Change Log
                                        ----------
 
+Changes in version 4.10
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/85} gh-85}}
+      by correcting the description column width consumption of the built-in
+      help formatter.
+
 Changes in version 4.9
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/79} gh-79}}

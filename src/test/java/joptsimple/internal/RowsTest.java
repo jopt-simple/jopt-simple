@@ -68,12 +68,11 @@ public class RowsTest {
         rows.add( "another left one", "another right one could be used here instead" );
 
         assertRows( rows,
-                "left one          right one for the",
-                "                    time we have   ",
-                "                    chosen         ",
-                "another left one  another right one",
-                "                    could be used  ",
-                "                    here instead   " );
+            "left one          right one for the    ",
+            "                    time we have chosen",
+            "another left one  another right one    ",
+            "                    could be used here ",
+            "                    instead            " );
     }
 
     private void assertRows( Rows rows, String... expected ) {
