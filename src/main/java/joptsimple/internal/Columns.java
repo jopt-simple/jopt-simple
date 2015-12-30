@@ -28,7 +28,6 @@ package joptsimple.internal;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static java.text.BreakIterator.*;
 
@@ -75,7 +74,7 @@ class Columns {
     private List<String> piecesOfEmbeddedLine( String line, int width ) {
         List<String> pieces = new ArrayList<>();
 
-        BreakIterator words = BreakIterator.getLineInstance( Locale.US );
+        BreakIterator words = BreakIterator.getLineInstance();
         words.setText( line );
 
         StringBuilder nextPiece = new StringBuilder();

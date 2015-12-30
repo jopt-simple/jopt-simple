@@ -116,7 +116,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param right text to put in the right column
      */
     protected void addOptionRow( String left, String right ) {
-        optionRows.add(left, right);
+        optionRows.add( left, right );
     }
 
     /**

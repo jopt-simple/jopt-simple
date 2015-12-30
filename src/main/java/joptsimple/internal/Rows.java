@@ -93,7 +93,7 @@ public class Rows {
     }
 
     private int descriptionWidth() {
-        return min( ( overallWidth - columnSeparatorWidth ) / 2, widthOfWidestDescription );
+        return min( overallWidth - optionWidth() - columnSeparatorWidth, widthOfWidestDescription );
     }
 
     private StringBuilder pad( StringBuilder buffer, String s, int length ) {
