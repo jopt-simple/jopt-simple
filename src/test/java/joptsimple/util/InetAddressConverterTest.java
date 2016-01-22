@@ -55,6 +55,6 @@ public class InetAddressConverterTest {
 
     @Test( expected = ValueConversionException.class )
     public void unknownHost() {
-        converter.convert( String.valueOf( new Random().nextDouble() ) );
+        converter.convert( "!(@&#()!*@&#" );
     }
 }
