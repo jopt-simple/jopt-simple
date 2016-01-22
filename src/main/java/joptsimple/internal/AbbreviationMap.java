@@ -68,27 +68,27 @@ public class AbbreviationMap<V> implements OptionNameMap<V> {
      * <p>Tells whether the given key is in the map, or whether the given key is a unique
      * abbreviation of a key that is in the map.</p>
      *
-     * @param aKey key to look up
+     * @param key key to look up
      * @return {@code true} if {@code key} is present in the map
      * @throws NullPointerException if {@code key} is {@code null}
      */
     @Override
-    public boolean contains(String aKey) {
-        return get( aKey ) != null;
+    public boolean contains(String key) {
+        return get(key) != null;
     }
 
     /**
      * <p>Answers the value associated with the given key.  The key can be a unique
      * abbreviation of a key that is in the map. </p>
      *
-     * @param aKey key to look up
+     * @param key key to look up
      * @return the value associated with {@code aKey}; or {@code null} if there is no
      * such value or {@code aKey} is not a unique abbreviation of a key in the map
      * @throws NullPointerException if {@code aKey} is {@code null}
      */
     @Override
-    public V get(String aKey) {
-        char[] chars = charsOf( aKey );
+    public V get( String key ) {
+        char[] chars = charsOf( key );
 
         AbbreviationMap<V> child = this;
         for ( char each : chars ) {
@@ -104,19 +104,19 @@ public class AbbreviationMap<V> implements OptionNameMap<V> {
      * <p>Associates a given value with a given key.  If there was a previous
      * association, the old value is replaced with the new one.</p>
      *
-     * @param aKey key to create in the map
+     * @param key key to create in the map
      * @param newValue value to associate with the key
      * @throws NullPointerException if {@code aKey} or {@code newValue} is {@code null}
      * @throws IllegalArgumentException if {@code aKey} is a zero-length string
      */
     @Override
-    public void put(String aKey, V newValue) {
+    public void put( String key, V newValue ) {
         if ( newValue == null )
             throw new NullPointerException();
-        if ( aKey.length() == 0 )
+        if ( key.length() == 0 )
             throw new IllegalArgumentException();
 
-        char[] chars = charsOf( aKey );
+        char[] chars = charsOf(key);
         add( chars, newValue, 0, chars.length );
     }
 
@@ -130,7 +130,7 @@ public class AbbreviationMap<V> implements OptionNameMap<V> {
      * @throws IllegalArgumentException if any of {@code keys} is a zero-length string
      */
     @Override
-    public void putAll(Iterable<String> keys, V newValue) {
+    public void putAll( Iterable<String> keys, V newValue ) {
         for ( String each : keys )
             put( each, newValue );
     }
@@ -164,16 +164,16 @@ public class AbbreviationMap<V> implements OptionNameMap<V> {
     /**
      * <p>If the map contains the given key, dissociates the key from its value.</p>
      *
-     * @param aKey key to remove
+     * @param key key to remove
      * @throws NullPointerException if {@code aKey} is {@code null}
      * @throws IllegalArgumentException if {@code aKey} is a zero-length string
      */
     @Override
-    public void remove(String aKey) {
-        if ( aKey.length() == 0 )
+    public void remove( String key ) {
+        if ( key.length() == 0 )
             throw new IllegalArgumentException();
 
-        char[] keyChars = charsOf( aKey );
+        char[] keyChars = charsOf(key);
         remove( keyChars, 0, keyChars.length );
     }
 

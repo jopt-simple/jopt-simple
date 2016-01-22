@@ -307,14 +307,12 @@ public class OptionParserTest extends AbstractOptionParserFixture {
     }
 
     @Test
-    public void abbreviationsCanBeDisallowed(){
+    public void abbreviationsCanBeDisallowed() {
         OptionParser parser = new OptionParser(false);
-        parser.accepts("abbreviatable");
+        parser.accepts( "abbreviatable" );
 
-        parser.parse("--abbreviatable");
+        thrown.expect( UnrecognizedOptionException.class );
 
-        thrown.expect(UnrecognizedOptionException.class);
-
-        parser.parse("--abb");
+        parser.parse( "--abb" );
     }
 }

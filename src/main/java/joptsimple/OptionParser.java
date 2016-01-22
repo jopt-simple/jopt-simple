@@ -79,7 +79,8 @@ import static joptsimple.ParserRules.*;
  *   hyphens, question marks, or dots. A hyphen cannot be the first character of a long option specification when
  *   configuring the parser.</li>
  *
- *   <li>You can abbreviate long options, so long as the abbreviation is unique.</li>
+ *   <li>You can abbreviate long options, so long as the abbreviation is unique. Suppress this behavior if
+ *   you wish using {@linkplain OptionParser#OptionParser(boolean) this constructor}.</li>
  *
  *   <li>Long options can accept single arguments.  The argument can be made required or optional.  The option's
  *   argument can occur:
@@ -211,11 +212,12 @@ public class OptionParser implements OptionDeclarer {
 
     /**
      * Creates an option parser that initially recognizes no options, and does not exhibit "POSIX-ly correct"
-     * behavior
-     * @param allowAbbreviations should unambiguous abbreviations of long options be recognized by the parser
+     * behavior.
+     *
+     * @param allowAbbreviations whether unambiguous abbreviations of long options should be recognized
+     * by the parser
      */
-    public OptionParser(boolean allowAbbreviations) {
-
+    public OptionParser( boolean allowAbbreviations ) {
         trainingOrder = new ArrayList<>();
         requiredIf = new HashMap<>();
         requiredUnless = new HashMap<>();
@@ -223,12 +225,12 @@ public class OptionParser implements OptionDeclarer {
         availableUnless = new HashMap<>();
         state = moreOptions( false );
 
-        recognizedOptions = allowAbbreviations ? new AbbreviationMap<AbstractOptionSpec<?>>()
-                : new SimpleOptionNameMap<AbstractOptionSpec<?>>();
+        recognizedOptions = allowAbbreviations
+            ? new AbbreviationMap<AbstractOptionSpec<?>>()
+            : new SimpleOptionNameMap<AbstractOptionSpec<?>>();
 
         recognize( new NonOptionArgumentSpec<String>() );
     }
-
 
     /**
      * Creates an option parser and configures it to recognize the short options specified in the given string.
@@ -308,7 +310,7 @@ public class OptionParser implements OptionDeclarer {
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
-        recognizedOptions.putAll(spec.options(), spec);
+        recognizedOptions.putAll( spec.options(), spec );
         trainingOrder.add( spec );
     }
 
