@@ -135,7 +135,8 @@ Options
     Notice in the example above that the command line uses abbreviations of command line
     options.  You can abbreviate options so long as the abbreviation is unambiguous.
     Even though you can abbreviate the options on the command line, you cannot address
-    the <<<OptionSet>>> using those abbreviations.
+    the <<<OptionSet>>> using those abbreviations. You can use a special constructor
+    for the <<<OptionParser>>> that turns off abbreviation matching.
 
 ** Using Single Hyphen on Long Options
 
