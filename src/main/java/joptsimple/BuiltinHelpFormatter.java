@@ -182,12 +182,10 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * <p>This implementation:</p>
      * <ul>
      *     <li>Calls {@link #addNonOptionsDescription(java.util.Collection)} with the options as the argument</li>
-     *     <ul>
-     *         <li>If there are no options, calls {@link #addOptionRow(String)} with an argument that indicates
-     *         that no options are specified.</li>
-     *         <li>Otherwise, calls {@link #addHeaders(java.util.Collection)} with the options as the argument,
-     *         followed by {@link #addOptions(java.util.Collection)} with the options as the argument.</li>
-     *     </ul>
+ *         <li>If there are no options, calls {@link #addOptionRow(String)} with an argument that indicates
+ *         that no options are specified.</li>
+ *         <li>Otherwise, calls {@link #addHeaders(java.util.Collection)} with the options as the argument,
+ *         followed by {@link #addOptions(java.util.Collection)} with the options as the argument.</li>
      *     <li>Calls {@link #fitRowsToWidth()}.</li>
      * </ul>
      *

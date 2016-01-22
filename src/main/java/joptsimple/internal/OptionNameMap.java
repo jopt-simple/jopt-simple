@@ -28,9 +28,9 @@ package joptsimple.internal;
 import java.util.Map;
 
 /**
- * Map-like interface for storing String -> V pairs.
+ * Map-like interface for storing String-value pairs.
  *
- * @param <V> type of values stored in the map.
+ * @param <V> type of values stored in the map
  */
 public interface OptionNameMap<V> {
     boolean contains( String key );
