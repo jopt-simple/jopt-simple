@@ -57,7 +57,7 @@ import java.util.TreeMap;
  * @see <a href="http://perldoc.perl.org/Text/Abbrev.html">Perl's Text::Abbrev module</a>
  * @see <a href="https://en.wikipedia.org/wiki/Radix_tree">Radix tree</a>
  */
-public class AbbreviationMap<V> {
+public class AbbreviationMap<V> implements OptionNameMap<V> {
     private final Map<Character, AbbreviationMap<V>> children = new TreeMap<>();
 
     private String key;
@@ -72,7 +72,8 @@ public class AbbreviationMap<V> {
      * @return {@code true} if {@code key} is present in the map
      * @throws NullPointerException if {@code key} is {@code null}
      */
-    public boolean contains( String aKey ) {
+    @Override
+    public boolean contains(String aKey) {
         return get( aKey ) != null;
     }
 
@@ -85,7 +86,8 @@ public class AbbreviationMap<V> {
      * such value or {@code aKey} is not a unique abbreviation of a key in the map
      * @throws NullPointerException if {@code aKey} is {@code null}
      */
-    public V get( String aKey ) {
+    @Override
+    public V get(String aKey) {
         char[] chars = charsOf( aKey );
 
         AbbreviationMap<V> child = this;
@@ -107,7 +109,8 @@ public class AbbreviationMap<V> {
      * @throws NullPointerException if {@code aKey} or {@code newValue} is {@code null}
      * @throws IllegalArgumentException if {@code aKey} is a zero-length string
      */
-    public void put( String aKey, V newValue ) {
+    @Override
+    public void put(String aKey, V newValue) {
         if ( newValue == null )
             throw new NullPointerException();
         if ( aKey.length() == 0 )
@@ -126,7 +129,8 @@ public class AbbreviationMap<V> {
      * @throws NullPointerException if {@code keys} or {@code newValue} is {@code null}
      * @throws IllegalArgumentException if any of {@code keys} is a zero-length string
      */
-    public void putAll( Iterable<String> keys, V newValue ) {
+    @Override
+    public void putAll(Iterable<String> keys, V newValue) {
         for ( String each : keys )
             put( each, newValue );
     }
@@ -164,7 +168,8 @@ public class AbbreviationMap<V> {
      * @throws NullPointerException if {@code aKey} is {@code null}
      * @throws IllegalArgumentException if {@code aKey} is a zero-length string
      */
-    public void remove( String aKey ) {
+    @Override
+    public void remove(String aKey) {
         if ( aKey.length() == 0 )
             throw new IllegalArgumentException();
 
@@ -214,6 +219,7 @@ public class AbbreviationMap<V> {
      *
      * @return a Java map corresponding to this abbreviation map
      */
+    @Override
     public Map<String, V> toJavaUtilMap() {
         Map<String, V> mappings = new TreeMap<>();
         addToMappings( mappings );

@@ -32,6 +32,8 @@ import java.io.Writer;
 import java.util.*;
 
 import joptsimple.internal.AbbreviationMap;
+import joptsimple.internal.SimpleOptionNameMap;
+import joptsimple.internal.OptionNameMap;
 import joptsimple.util.KeyValuePair;
 
 import static java.util.Collections.*;
@@ -187,7 +189,7 @@ import static joptsimple.ParserRules.*;
  * @see <a href="http://www.gnu.org/software/libc/manual">The GNU C Library</a>
  */
 public class OptionParser implements OptionDeclarer {
-    private final AbbreviationMap<AbstractOptionSpec<?>> recognizedOptions;
+    private final OptionNameMap<AbstractOptionSpec<?>> recognizedOptions;
     private final ArrayList<AbstractOptionSpec<?>> trainingOrder;
     private final Map<List<String>, Set<OptionSpec<?>>> requiredIf;
     private final Map<List<String>, Set<OptionSpec<?>>> requiredUnless;
@@ -204,7 +206,16 @@ public class OptionParser implements OptionDeclarer {
      * behavior.
      */
     public OptionParser() {
-        recognizedOptions = new AbbreviationMap<>();
+        this(true);
+    }
+
+    /**
+     * Creates an option parser that initially recognizes no options, and does not exhibit "POSIX-ly correct"
+     * behavior
+     * @param allowAbbreviations should unambiguous abbreviations of long options be recognized by the parser
+     */
+    public OptionParser(boolean allowAbbreviations) {
+
         trainingOrder = new ArrayList<>();
         requiredIf = new HashMap<>();
         requiredUnless = new HashMap<>();
@@ -212,8 +223,12 @@ public class OptionParser implements OptionDeclarer {
         availableUnless = new HashMap<>();
         state = moreOptions( false );
 
+        recognizedOptions = allowAbbreviations ? new AbbreviationMap<AbstractOptionSpec<?>>()
+                : new SimpleOptionNameMap<AbstractOptionSpec<?>>();
+
         recognize( new NonOptionArgumentSpec<String>() );
     }
+
 
     /**
      * Creates an option parser and configures it to recognize the short options specified in the given string.
