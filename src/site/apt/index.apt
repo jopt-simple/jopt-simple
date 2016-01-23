@@ -41,6 +41,8 @@
 
     * {{{http://jcommander.org} JCommander}}
 
+    * {{{http://types.cs.washington.edu/plume-lib/api/plume/Options.html} plume-lib Options}}
+
     []
 
     I hope you'll agree that JOpt Simple tops them all in ease of use and cleanliness of
