@@ -68,7 +68,7 @@ public final class Reflection {
 
     private static <V> ValueConverter<V> valueOfConverter( Class<V> clazz ) {
         try {
-            Method valueOf = clazz.getDeclaredMethod( "valueOf", String.class );
+            Method valueOf = clazz.getMethod( "valueOf", String.class );
             if ( meetsConverterRequirements( valueOf, clazz ) )
                 return new MethodInvokingValueConverter<>( valueOf, clazz );
 
