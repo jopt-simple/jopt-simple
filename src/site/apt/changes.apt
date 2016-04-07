@@ -2,6 +2,12 @@
                                        Change Log
                                        ----------
 
+Changes in version 5.0.1
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/92} gh-92}} so that
+      in the event that <<<printHelpOn()>>> is called more than once, the output
+      is not duplicated.
+
 Changes in version 5.0
 
     * Abandoning JDKs prior to 7. All source is Java 7-compatible, and bytecode is compiled to 1.7

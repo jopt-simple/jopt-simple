@@ -64,6 +64,23 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     }
 
     @Test
+    public void repeatedCalls() throws Exception {
+        parser.accepts( "apple" );
+
+        parser.printHelpOn( sink );
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Option   Description",
+            "------   -----------",
+            "--apple             ",
+            "Option   Description",
+            "------   -----------",
+            "--apple             ",
+            EMPTY );
+    }
+
+    @Test
     public void oneOptionNoArgNoDescription() throws Exception {
         parser.accepts( "apple" );
 

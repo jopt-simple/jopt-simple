@@ -85,6 +85,9 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * </ul>
      */
     public String format( Map<String, ? extends OptionDescriptor> options ) {
+        optionRows.reset();
+        nonOptionRows.reset();
+
         Comparator<OptionDescriptor> comparator =
             new Comparator<OptionDescriptor>() {
                 public int compare( OptionDescriptor first, OptionDescriptor second ) {

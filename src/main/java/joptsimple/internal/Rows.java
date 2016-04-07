@@ -58,7 +58,7 @@ public class Rows {
         widthOfWidestDescription = max( widthOfWidestDescription, row.description.length() );
     }
 
-    private void reset() {
+    public void reset() {
         rows.clear();
         widthOfWidestOption = 0;
         widthOfWidestDescription = 0;
