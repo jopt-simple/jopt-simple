@@ -1,0 +1,15 @@
+language: java
+sudo: no
+env: MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true"
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+install:
+  - "mvn -N -q io.takari:maven:wrapper -Dmaven=3.3.9"
+script: './mvnw --show-version --errors --batch-mode clean verify'
+cache:
+    directories:
+    - $HOME/.m2
+branches:
+    except:
+        - gh-pages
