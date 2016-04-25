@@ -13,3 +13,7 @@ cache:
 branches:
     except:
         - gh-pages
+notifications:
+    email:
+        recipients:
+        - pholser@alumni.rice.edu 
