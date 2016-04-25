@@ -39,16 +39,16 @@ import static joptsimple.internal.Strings.*;
  * @param <V> represents the type of the arguments this option accepts
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
-abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor {
+public abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDescriptor {
     private final List<String> options = new ArrayList<>();
     private final String description;
     private boolean forHelp;
 
-    protected AbstractOptionSpec( String option ) {
+    AbstractOptionSpec( String option ) {
         this( singletonList( option ), EMPTY );
     }
 
-    protected AbstractOptionSpec( List<String> options, String description ) {
+    AbstractOptionSpec( List<String> options, String description ) {
         arrangeOptions( options );
 
         this.description = description;
