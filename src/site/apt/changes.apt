@@ -2,6 +2,13 @@
                                        Change Log
                                        ----------
 
+Changes in version 5.0.2
+
+    * Made some package-private abstract classes become public classes
+      with package-private constructors. This makes it possible to call some methods
+      from Kotlin that were previously inaccessible. Thanks to Mirko Friedenhagen
+      for this.
+
 Changes in version 5.0.1
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/92} gh-92}} so that
