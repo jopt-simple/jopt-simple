@@ -12,7 +12,7 @@
 <div class="separator">&nbsp;</div>
 <table class="report">
 <thead><tr>  <td class="heading">Classes in this File</td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Line Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Branch Coverage</a></td>  <td class="heading"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">Complexity</a></td></tr></thead>
-  <tr><td><a href="joptsimple.BuiltinHelpFormatter.html">BuiltinHelpFormatter</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">99%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:99px"><span class="text">111/112</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">96%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:96px"><span class="text">56/58</span></div></div></td></tr></table></td><td class="value"><span class="hidden">2.1379310344827585;</span>2.138</td></tr>
+  <tr><td><a href="joptsimple.BuiltinHelpFormatter.html">BuiltinHelpFormatter</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">99%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:99px"><span class="text">117/118</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">96%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:96px"><span class="text">56/58</span></div></div></td></tr></table></td><td class="value"><span class="hidden">2.1379310344827585;</span>2.138</td></tr>
   <tr><td><a href="joptsimple.BuiltinHelpFormatter.html">BuiltinHelpFormatter$1</a></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40">100%</td><td class="percentgraph"><div class="percentgraph"><div class="greenbar" style="width:100px"><span class="text">2/2</span></div></div></td></tr></table></td><td><table cellpadding="0px" cellspacing="0px" class="percentgraph"><tr class="percentgraph"><td align="right" class="percentgraph" width="40"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">N/A</a></td><td class="percentgraph"><div class="percentgraph"><div class="na" style="width:100px"><span class="text"><a class="dfn" href="help.html" onclick="popupwindow('help.html'); return false;">N/A</a></span></div></div></td></tr></table></td><td class="value"><span class="hidden">2.1379310344827585;</span>2.138</td></tr>
 
 </table>
@@ -462,11 +462,9 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;244</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">protected</span> <span class="keyword">boolean</span> shouldShowNonOptionArgumentDisplay( OptionDescriptor nonOptionDescriptor ) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;245</td>  <td class="nbHitsCovered"><a title="Line 245: Conditional coverage 100% (6/6) [each condition: 100%, 100%, 100%].">&nbsp;67</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 245: Conditional coverage 100% (6/6) [each condition: 100%, 100%, 100%].">        <span class="keyword">return</span> !Strings.isNullOrEmpty( nonOptionDescriptor.description() )</a></pre></td></tr>
-<tr>  <td class="numLine">&nbsp;246</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentTypeIndicator() )</pre></td></tr>
-<tr>  <td class="numLine">&nbsp;247</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentDescription() );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;245</td>  <td class="nbHitsCovered"><a title="Line 245: Conditional coverage 100% (2/2).">&nbsp;67</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 245: Conditional coverage 100% (2/2).">        <span class="keyword">return</span> !Strings.isNullOrEmpty( nonOptionDescriptor.description() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;246</td>  <td class="nbHitsCovered"><a title="Line 246: Conditional coverage 100% (2/2).">&nbsp;64</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 246: Conditional coverage 100% (2/2).">            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentTypeIndicator() )</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;247</td>  <td class="nbHitsCovered"><a title="Line 247: Conditional coverage 100% (2/2).">&nbsp;62</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 247: Conditional coverage 100% (2/2).">            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentDescription() );</a></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;248</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;249</td>  <td class="nbHits">&nbsp;</td>
@@ -528,8 +526,7 @@
 <tr>  <td class="numLine">&nbsp;279</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">protected</span> <span class="keyword">void</span> maybeAppendNonOptionsDescription( StringBuilder buffer, OptionDescriptor nonOptions ) {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;280</td>  <td class="nbHitsCovered"><a title="Line 280: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">&nbsp;6</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 280: Conditional coverage 100% (4/4) [each condition: 100%, 100%].">        buffer.append( buffer.length() &gt; 0 &amp;&amp; !Strings.isNullOrEmpty( nonOptions.description() ) ? <span class="string">" -- "</span> : <span class="string">""</span> )</a></pre></td></tr>
-<tr>  <td class="numLine">&nbsp;281</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;            .append( nonOptions.description() );</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;281</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;            .append( nonOptions.description() );</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;282</td>  <td class="nbHitsCovered">&nbsp;6</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;283</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
@@ -952,10 +949,8 @@
 <tr>  <td class="numLineCover">&nbsp;522</td>  <td class="nbHitsCovered">&nbsp;11</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> ( descriptor.description()</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;523</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            + <span class="string">' '</span></pre></td></tr>
-<tr>  <td class="numLine">&nbsp;524</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;            + surround( message( <span class="string">"default.value.header"</span> ) + <span class="string">' '</span> + defaultValuesDisplay, <span class="string">'('</span>, <span class="string">')'</span> )</pre></td></tr>
-<tr>  <td class="numLine">&nbsp;525</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;        ).trim();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;524</td>  <td class="nbHitsCovered">&nbsp;11</td>  <td class="src"><pre class="src">&nbsp;            + surround( message( <span class="string">"default.value.header"</span> ) + <span class="string">' '</span> + defaultValuesDisplay, <span class="string">'('</span>, <span class="string">')'</span> )</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;525</td>  <td class="nbHitsCovered">&nbsp;11</td>  <td class="src"><pre class="src">&nbsp;        ).trim();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;526</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;527</td>  <td class="nbHits">&nbsp;</td>
@@ -1012,8 +1007,7 @@
 <tr>  <td class="numLine">&nbsp;553</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">protected</span> String message( String keySuffix, Object... args ) {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;554</td>  <td class="nbHitsCovered">&nbsp;255</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> Messages.message(</pre></td></tr>
-<tr>  <td class="numLine">&nbsp;555</td>  <td class="nbHits">&nbsp;</td>
-  <td class="src"><pre class="src">&nbsp;            Locale.getDefault(),</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;555</td>  <td class="nbHitsCovered">&nbsp;255</td>  <td class="src"><pre class="src">&nbsp;            Locale.getDefault(),</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;556</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            <span class="string">"joptsimple.HelpFormatterMessages"</span>,</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;557</td>  <td class="nbHits">&nbsp;</td>
@@ -1028,6 +1022,6 @@
   <td class="src"><pre class="src">&nbsp;}</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.0.3 on 4/6/16 9:10 PM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.0.3 on 6/8/16 1:10 PM.</div>
 </body>
 </html>
