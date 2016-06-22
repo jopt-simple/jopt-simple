@@ -2,6 +2,13 @@
                                        Change Log
                                        ----------
 
+Changes in version 5.0.3
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/96} gh-96}} so that
+      options that take an argument but don't change the argument type from
+      <<<String>>> still show a <<<String>>> type indicator in the default
+      option help.
+
 Changes in version 5.0.2
 
     * Made some package-private abstract classes become public classes
