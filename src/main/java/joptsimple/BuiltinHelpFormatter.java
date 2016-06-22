@@ -414,8 +414,12 @@ public class BuiltinHelpFormatter implements HelpFormatter {
     protected void maybeAppendOptionInfo( StringBuilder buffer, OptionDescriptor descriptor ) {
         String indicator = extractTypeIndicator( descriptor );
         String description = descriptor.argumentDescription();
-        if ( indicator != null || !isNullOrEmpty( description ) )
+        if ( descriptor.acceptsArguments()
+            || !isNullOrEmpty( description )
+            || descriptor.representsNonOptions() ) {
+
             appendOptionHelp( buffer, indicator, description, descriptor.requiresArgument() );
+        }
     }
 
     /**
@@ -424,7 +428,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      *
      * <p>This implementation asks for the {@link OptionDescriptor#argumentTypeIndicator()} of the given
      * descriptor, and if it is present and not {@code "java.lang.String"}, parses it as a fully qualified
-     * class name and returns the base name of that class; otherwise returns {@code null}.</p>
+     * class name and returns the base name of that class; otherwise returns {@code "String"}.</p>
      *
      * @param descriptor a descriptor for a configured option of a parser
      * @return type indicator text
@@ -435,7 +439,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
         if ( !isNullOrEmpty( indicator ) && !String.class.getName().equals( indicator ) )
             return shortNameOf( indicator );
 
-        return null;
+        return "String";
     }
 
     /**

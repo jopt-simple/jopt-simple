@@ -108,9 +108,9 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option   Description",
-            "------   -----------",
-            "-a                  ",
+            "Option        Description",
+            "------        -----------",
+            "-a <String>              ",
             EMPTY );
     }
 
@@ -134,9 +134,9 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option           Description        ",
-            "------           -----------        ",
-            "-a <numerical>   some value you need",
+            "Option                   Description        ",
+            "------                   -----------        ",
+            "-a <String: numerical>   some value you need",
             EMPTY );
     }
 
@@ -161,9 +161,9 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option        Description",
-            "------        -----------",
-            "--threshold              ",
+            "Option                 Description",
+            "------                 -----------",
+            "--threshold [String]              ",
             EMPTY );
     }
 
@@ -187,9 +187,9 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option                           Description        ",
-            "------                           -----------        ",
-            "--threshold [positive integer]   some value you need",
+            "Option                                   Description        ",
+            "------                                   -----------        ",
+            "--threshold [String: positive integer]   some value you need",
             EMPTY );
     }
 
@@ -214,9 +214,9 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option           Description                     ",
-            "------           -----------                     ",
-            "-W <opt=value>   Alternative form of long options",
+            "Option                   Description                     ",
+            "------                   -----------                     ",
+            "-W <String: opt=value>   Alternative form of long options",
             EMPTY );
     }
 
@@ -337,32 +337,33 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option                         Description                                                                          ",
-            "------                         -----------                                                                          ",
-            "-?, -h                         Shows this help message.                                                             ",
-            "-B, --bootstrap-debug          Specify a text to be logged at the beginning (e.g. used by Gradle's bootstrap class).",
-            "-D, --systemprop               Set system property of the JVM (e.g. -Dmyprop=myvalue).                              ",
-            "-I, --no-imports               Disable usage of default imports for build script files.                             ",
-            "-P, --projectprop              Set project property for the build script (e.g. -Pmyprop=myvalue).                   ",
-            "-S                             Don't trigger a System.exit(0) for normal termination. Used for Gradle's internal    ",
-            "                                 testing.                                                                           ",
-            "-b, --buildfile                Specifies the build file name (also for subprojects). Defaults to build.gradle.      ",
-            "-d, --debug                    Log in debug mode (includes normal stacktrace).                                      ",
-            "-e, --embedded                 Specify an embedded build script.                                                    ",
-            "-f, --full-stacktrace          Print out the full (very verbose) stacktrace for any exceptions.                     ",
-            "-g, --gradle-user-home         Specifies the gradle user home dir.                                                  ",
-            "-i, --ivy-quiet                Set Ivy log level to quiet.                                                          ",
-            "-j, --ivy-debug                Set Ivy log level to debug (very verbose).                                           ",
-            "-l, --plugin-properties-file   Specifies the plugin.properties file.                                                ",
-            "-n, --non-recursive            Do not execute primary tasks of child projects.                                      ",
-            "-p, --project-dir              Specifies the start dir for Gradle. Defaults to current dir.                         ",
-            "-q, --quiet                    Log errors only.                                                                     ",
-            "-r, --rebuild-cache            Rebuild the cache of compiled build scripts.                                         ",
-            "-s, --stacktrace               Print out the stacktrace also for user exceptions (e.g. compile error).              ",
-            "-t, --tasks                    Show list of all available tasks and their dependencies.                             ",
-            "-u, --no-search-upward         Don't search in parent folders for a settings.gradle file.                           ",
-            "-v, --version                  Print version info.                                                                  ",
-            "-x, --cache-off                No caching of compiled build scripts.                                                ",
+            "Option                                  Description                                                                    ",
+            "------                                  -----------                                                                    ",
+            "-?, -h                                  Shows this help message.                                                       ",
+            "-B, --bootstrap-debug <String>          Specify a text to be logged at the beginning (e.g. used by Gradle's bootstrap  ",
+            "                                          class).                                                                      ",
+            "-D, --systemprop <String>               Set system property of the JVM (e.g. -Dmyprop=myvalue).                        ",
+            "-I, --no-imports                        Disable usage of default imports for build script files.                       ",
+            "-P, --projectprop <String>              Set project property for the build script (e.g. -Pmyprop=myvalue).             ",
+            "-S                                      Don't trigger a System.exit(0) for normal termination. Used for Gradle's       ",
+            "                                          internal testing.                                                            ",
+            "-b, --buildfile <String>                Specifies the build file name (also for subprojects). Defaults to build.gradle.",
+            "-d, --debug                             Log in debug mode (includes normal stacktrace).                                ",
+            "-e, --embedded <String>                 Specify an embedded build script.                                              ",
+            "-f, --full-stacktrace                   Print out the full (very verbose) stacktrace for any exceptions.               ",
+            "-g, --gradle-user-home <String>         Specifies the gradle user home dir.                                            ",
+            "-i, --ivy-quiet                         Set Ivy log level to quiet.                                                    ",
+            "-j, --ivy-debug                         Set Ivy log level to debug (very verbose).                                     ",
+            "-l, --plugin-properties-file <String>   Specifies the plugin.properties file.                                          ",
+            "-n, --non-recursive                     Do not execute primary tasks of child projects.                                ",
+            "-p, --project-dir <String>              Specifies the start dir for Gradle. Defaults to current dir.                   ",
+            "-q, --quiet                             Log errors only.                                                               ",
+            "-r, --rebuild-cache                     Rebuild the cache of compiled build scripts.                                   ",
+            "-s, --stacktrace                        Print out the stacktrace also for user exceptions (e.g. compile error).        ",
+            "-t, --tasks                             Show list of all available tasks and their dependencies.                       ",
+            "-u, --no-search-upward                  Don't search in parent folders for a settings.gradle file.                     ",
+            "-v, --version                           Print version info.                                                            ",
+            "-x, --cache-off                         No caching of compiled build scripts.                                          ",
             EMPTY );
     }
 
@@ -417,9 +418,9 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         parser.printHelpOn( sink );
 
         assertHelpLines(
-            "Option   Description   ",
-            "------   -----------   ",
-            "-a       (default: boo)",
+            "Option        Description   ",
+            "------        -----------   ",
+            "-a <String>   (default: boo)",
             EMPTY );
     }
 
@@ -473,7 +474,7 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
         assertHelpLines(
             "Option (* = required)   Description",
             "---------------------   -----------",
-            "* -e                               ",
+            "* -e <String>                      ",
             EMPTY );
     }
 
