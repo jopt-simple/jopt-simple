@@ -41,6 +41,7 @@ import static org.junit.rules.ExpectedException.none;
 public class EnumConverterTest {
     @Rule
     public final ExpectedException thrown = none();
+
     private EnumConverter<TestEnum> converter;
 
     @Before

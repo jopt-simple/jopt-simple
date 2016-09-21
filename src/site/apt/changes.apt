@@ -9,6 +9,10 @@ Changes in version 5.0.3
       <<<String>>> still show a <<<String>>> type indicator in the default
       option help.
 
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/104} gh-104}} so
+      that <<<EnumConverter>>> performs case-insensitive matching against arguments
+      of options. Thanks to Martin Paljak for this.
+
 Changes in version 5.0.2
 
     * Made some package-private abstract classes become public classes
