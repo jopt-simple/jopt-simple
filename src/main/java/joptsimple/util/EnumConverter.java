@@ -54,11 +54,12 @@ public abstract class EnumConverter<E extends Enum<E>> implements ValueConverter
 
     @Override
     public E convert( String value ) {
-        try {
-            return Enum.valueOf( valueType(), value );
-        } catch ( IllegalArgumentException e ) {
-            throw new ValueConversionException( message( value ), e );
+        for ( E v: valueType().getEnumConstants() ) {
+            if ( v.name().equalsIgnoreCase( value ) ) {
+                return v;
+            }
         }
+        throw new ValueConversionException( message( value ) );
     }
 
     @Override
