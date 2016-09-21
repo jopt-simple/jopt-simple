@@ -77,6 +77,11 @@ public class EnumConverterTest {
         assertEquals( "(A|B|C|D)", converter.valuePattern() );
     }
 
+    @Test
+    public void ignoresCase() {
+        assertEquals( TestEnum.A, converter.convert( "a" ) );
+    }
+
     private static class TestEnumConverter extends EnumConverter<TestEnum> {
         TestEnumConverter() {
             super( TestEnum.class );
