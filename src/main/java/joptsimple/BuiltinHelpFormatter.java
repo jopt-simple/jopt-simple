@@ -84,6 +84,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      *     <li>Returns the result of {@link #formattedHelpOutput()}</li>
      * </ul>
      */
+    @Override
     public String format( Map<String, ? extends OptionDescriptor> options ) {
         optionRows.reset();
         nonOptionRows.reset();
@@ -185,10 +186,10 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * <p>This implementation:</p>
      * <ul>
      *     <li>Calls {@link #addNonOptionsDescription(java.util.Collection)} with the options as the argument</li>
- *         <li>If there are no options, calls {@link #addOptionRow(String)} with an argument that indicates
- *         that no options are specified.</li>
- *         <li>Otherwise, calls {@link #addHeaders(java.util.Collection)} with the options as the argument,
- *         followed by {@link #addOptions(java.util.Collection)} with the options as the argument.</li>
+     *         <li>If there are no options, calls {@link #addOptionRow(String)} with an argument that indicates
+     *         that no options are specified.</li>
+     *         <li>Otherwise, calls {@link #addHeaders(java.util.Collection)} with the options as the argument,
+     *         followed by {@link #addOptions(java.util.Collection)} with the options as the argument.</li>
      *     <li>Calls {@link #fitRowsToWidth()}.</li>
      * </ul>
      *

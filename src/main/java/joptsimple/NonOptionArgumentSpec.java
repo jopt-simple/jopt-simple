@@ -140,30 +140,37 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
         detectedOptions.addWithArgument( this, detectedArgument );
     }
 
+    @Override
     public List<?> defaultValues() {
         return emptyList();
     }
 
+    @Override
     public boolean isRequired() {
         return false;
     }
 
+    @Override
     public boolean acceptsArguments() {
         return false;
     }
 
+    @Override
     public boolean requiresArgument() {
         return false;
     }
 
+    @Override
     public String argumentDescription() {
         return argumentDescription;
     }
 
+    @Override
     public String argumentTypeIndicator() {
         return argumentTypeIndicatorFrom( converter );
     }
 
+    @Override
     public boolean representsNonOptions() {
         return true;
     }

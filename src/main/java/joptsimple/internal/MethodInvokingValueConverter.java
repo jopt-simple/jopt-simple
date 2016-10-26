@@ -44,14 +44,17 @@ class MethodInvokingValueConverter<V> implements ValueConverter<V> {
         this.clazz = clazz;
     }
 
+    @Override
     public V convert( String value ) {
         return clazz.cast( invoke( method, value ) );
     }
 
+    @Override
     public Class<V> valueType() {
         return clazz;
     }
 
+    @Override
     public String valuePattern() {
         return null;
     }

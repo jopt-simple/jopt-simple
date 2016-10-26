@@ -240,6 +240,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
         return this;
     }
 
+    @Override
     public boolean isRequired() {
         return optionRequired;
     }
@@ -293,22 +294,27 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
         return converter != null && Number.class.isAssignableFrom( converter.valueType() );
     }
 
+    @Override
     public boolean acceptsArguments() {
         return true;
     }
 
+    @Override
     public boolean requiresArgument() {
         return argumentRequired;
     }
 
+    @Override
     public String argumentDescription() {
         return argumentDescription;
     }
 
+    @Override
     public String argumentTypeIndicator() {
         return argumentTypeIndicatorFrom( converter );
     }
 
+    @Override
     public List<V> defaultValues() {
         return unmodifiableList( defaultValues );
     }

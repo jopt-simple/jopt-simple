@@ -42,14 +42,17 @@ class ConstructorInvokingValueConverter<V> implements ValueConverter<V> {
         this.ctor = ctor;
     }
 
+    @Override
     public V convert( String value ) {
         return instantiate( ctor, value );
     }
 
+    @Override
     public Class<V> valueType() {
         return ctor.getDeclaringClass();
     }
 
+    @Override
     public String valuePattern() {
         return null;
     }

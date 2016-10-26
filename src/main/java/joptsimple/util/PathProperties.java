@@ -48,7 +48,7 @@ public enum PathProperties {
 
     private final String messageKey;
 
-    private PathProperties( String messageKey ) {
+    PathProperties(String messageKey) {
         this.messageKey = messageKey;
     }
 

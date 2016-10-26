@@ -72,6 +72,7 @@ public class DateConverter implements ValueConverter<Date> {
         return new DateConverter( formatter );
     }
 
+    @Override
     public Date convert( String value ) {
         ParsePosition position = new ParsePosition( 0 );
 
@@ -82,10 +83,12 @@ public class DateConverter implements ValueConverter<Date> {
         return date;
     }
 
+    @Override
     public Class<Date> valueType() {
         return Date.class;
     }
 
+    @Override
     public String valuePattern() {
         return formatter instanceof SimpleDateFormat
             ? ( (SimpleDateFormat) formatter ).toPattern()

@@ -248,18 +248,22 @@ public class OptionParser implements OptionDeclarer {
         new OptionSpecTokenizer( optionSpecification ).configure( this );
     }
 
+    @Override
     public OptionSpecBuilder accepts( String option ) {
         return acceptsAll( singletonList( option ) );
     }
 
+    @Override
     public OptionSpecBuilder accepts( String option, String description ) {
         return acceptsAll( singletonList( option ), description );
     }
 
+    @Override
     public OptionSpecBuilder acceptsAll( List<String> options ) {
         return acceptsAll( options, "" );
     }
 
+    @Override
     public OptionSpecBuilder acceptsAll( List<String> options, String description ) {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
@@ -269,6 +273,7 @@ public class OptionParser implements OptionDeclarer {
         return new OptionSpecBuilder( this, options, description );
     }
 
+    @Override
     public NonOptionArgumentSpec<String> nonOptions() {
         NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<>();
 
@@ -277,6 +282,7 @@ public class OptionParser implements OptionDeclarer {
         return spec;
     }
 
+    @Override
     public NonOptionArgumentSpec<String> nonOptions( String description ) {
         NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<>( description );
 
@@ -285,6 +291,7 @@ public class OptionParser implements OptionDeclarer {
         return spec;
     }
 
+    @Override
     public void posixlyCorrect( boolean setting ) {
         posixlyCorrect = setting;
         state = moreOptions( setting );
@@ -294,6 +301,7 @@ public class OptionParser implements OptionDeclarer {
         return posixlyCorrect;
     }
 
+    @Override
     public void allowsUnrecognizedOptions() {
         allowsUnrecognizedOptions = true;
     }
@@ -302,6 +310,7 @@ public class OptionParser implements OptionDeclarer {
         return allowsUnrecognizedOptions;
     }
 
+    @Override
     public void recognizeAlternativeLongOptions( boolean recognize ) {
         if ( recognize )
             recognize( new AlternativeLongOptionSpec() );

@@ -50,22 +50,27 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
         detectedOptions.add( this );
     }
 
+    @Override
     public boolean acceptsArguments() {
         return false;
     }
 
+    @Override
     public boolean requiresArgument() {
         return false;
     }
 
+    @Override
     public boolean isRequired() {
         return false;
     }
 
+    @Override
     public String argumentDescription() {
         return "";
     }
 
+    @Override
     public String argumentTypeIndicator() {
         return "";
     }
@@ -75,6 +80,7 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
         return null;
     }
 
+    @Override
     public List<Void> defaultValues() {
         return emptyList();
     }

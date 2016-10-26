@@ -66,6 +66,7 @@ public class RegexMatcher implements ValueConverter<String> {
         return new RegexMatcher( pattern, 0 );
     }
 
+    @Override
     public String convert( String value ) {
         if ( !pattern.matcher( value ).matches() ) {
             raiseValueConversionFailure( value );
@@ -74,10 +75,12 @@ public class RegexMatcher implements ValueConverter<String> {
         return value;
     }
 
+    @Override
     public Class<String> valueType() {
         return String.class;
     }
 
+    @Override
     public String valuePattern() {
         return pattern.pattern();
     }
