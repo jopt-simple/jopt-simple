@@ -76,6 +76,11 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     }
 
     @Override
+    public ValueConverter<?> converter() {
+        return null;
+    }
+
+    @Override
     protected Void convert( String argument ) {
         return null;
     }

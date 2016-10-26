@@ -320,6 +320,11 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     @Override
+    public ValueConverter<?> converter() {
+        return converter;
+    }
+
+    @Override
     public boolean equals( Object that ) {
         if ( !super.equals( that ) )
             return false;

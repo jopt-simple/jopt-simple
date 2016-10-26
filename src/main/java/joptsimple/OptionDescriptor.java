@@ -97,4 +97,6 @@ public interface OptionDescriptor {
      * @return {@code true} if this represents non-option arguments
      */
     boolean representsNonOptions();
+
+    ValueConverter<?> converter();
 }

@@ -174,4 +174,9 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
     public boolean representsNonOptions() {
         return true;
     }
+
+    @Override
+    public ValueConverter<?> converter() {
+        return null;
+    }
 }
