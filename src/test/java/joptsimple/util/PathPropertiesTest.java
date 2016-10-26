@@ -12,7 +12,7 @@ import static joptsimple.util.PathProperties.*;
 public class PathPropertiesTest {
     @Test
     public void readableFile() throws Exception {
-        Path path = Files.createTempFile("prefix", null);
+        Path path = Files.createTempFile( "prefix", null );
 
         path.toFile().deleteOnExit();
 

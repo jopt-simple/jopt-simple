@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 import org.junit.Test;
 
@@ -48,6 +48,6 @@ public class OptionalArgumentOptionSpecTest extends AbstractOptionSpecFixture {
 
     @Test
     public void optionsContents() {
-        assertThat( createNotEqualOptionSpecInstance().options(), hasSameContentsAs( asList( "c" ) ) );
+        assertThat( createNotEqualOptionSpecInstance().options(), hasSameContentsAs( singletonList( "c" ) ) );
     }
 }

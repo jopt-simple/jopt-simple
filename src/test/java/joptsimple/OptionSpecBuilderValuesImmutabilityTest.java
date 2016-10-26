@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -33,7 +33,7 @@ import static java.util.Arrays.*;
 public class OptionSpecBuilderValuesImmutabilityTest extends AbstractOptionSpecValuesImmutabilityTestCase<Void> {
     @Override
     protected AbstractOptionSpec<Void> newOptionSpec() {
-        return new OptionSpecBuilder( new OptionParser(), asList( "a" ), "" );
+        return new OptionSpecBuilder( new OptionParser(), singletonList( "a" ), "" );
     }
 
     @Override

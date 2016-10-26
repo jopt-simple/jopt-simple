@@ -25,10 +25,11 @@
 
 package joptsimple;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.infinitest.toolkit.UnmodifiableListTestSupport;
+
+import static java.util.Collections.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -37,7 +38,7 @@ public class OptionSetNonOptionArgumentsImmutabilityTest extends UnmodifiableLis
     @SuppressWarnings( "unchecked" )
     @Override
     protected List<String> newList() {
-        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        OptionSet options = new OptionSet( emptyMap() );
         NonOptionArgumentSpec<String> nonOptions = new NonOptionArgumentSpec<>( null );
         options.addWithArgument( nonOptions, "1" );
         options.addWithArgument( nonOptions, "2" );

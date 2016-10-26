@@ -1,6 +1,5 @@
 package joptsimple.examples;
 
-import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
 import joptsimple.OptionParser;
@@ -21,7 +20,7 @@ public class ShortOptionsWithArgumentsTest {
         assertTrue( options.has( "c" ) );
         assertTrue( options.hasArgument( "c" ) );
         assertEquals( "foo", options.valueOf( "c" ) );
-        assertEquals( asList( "foo" ), options.valuesOf( "c" ) );
+        assertEquals( singletonList( "foo" ), options.valuesOf( "c" ) );
 
         assertTrue( options.has( "q" ) );
         assertFalse( options.hasArgument( "q" ) );

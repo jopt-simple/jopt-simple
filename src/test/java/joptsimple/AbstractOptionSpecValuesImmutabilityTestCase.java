@@ -25,10 +25,11 @@
 
 package joptsimple;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.infinitest.toolkit.UnmodifiableListTestSupport;
+
+import static java.util.Collections.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -37,7 +38,7 @@ public abstract class AbstractOptionSpecValuesImmutabilityTestCase<T> extends Un
     @Override
     protected List<T> newList() {
         AbstractOptionSpec<T> spec = newOptionSpec();
-        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        OptionSet options = new OptionSet( emptyMap() );
         options.addWithArgument( spec, firstArg() );
         options.addWithArgument( spec, secondArg() );
 

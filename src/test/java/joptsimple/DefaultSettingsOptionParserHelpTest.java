@@ -32,15 +32,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
+import static java.math.BigDecimal.*;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 import joptsimple.util.InetAddressConverter;
 import org.junit.Before;
 import org.junit.Test;
 
-import static java.math.BigDecimal.*;
-import static java.util.Arrays.*;
-import static java.util.Collections.*;
 import static joptsimple.internal.Strings.*;
 import static joptsimple.util.DateConverter.*;
 import static org.junit.Assert.*;
@@ -653,21 +653,21 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     public void canUseCustomHelpFormatter() {
         parser.accepts( "f" );
 
-        parser.formatHelpWith( new HelpFormatter() {
-            public String format( Map<String, ? extends OptionDescriptor> options ) {
-                assertEquals( 1, options.size() );
-                OptionDescriptor only = options.get( "f" );
-                assertEquals( asList( "f" ), new ArrayList<>( only.options() ) );
-                assertFalse( only.acceptsArguments() );
-                assertEquals( "", only.argumentDescription() );
-                assertEquals( "", only.argumentTypeIndicator() );
-                assertEquals( emptyList(), only.defaultValues() );
-                assertEquals( "", only.description() );
-                assertFalse( only.isRequired() );
-                assertFalse( only.requiresArgument() );
-                return null;
-            }
-        } );
+        parser.formatHelpWith(options -> {
+            assertEquals( 1, options.size() );
+
+            OptionDescriptor only = options.get( "f" );
+            assertEquals( singletonList( "f" ), new ArrayList<>( only.options() ) );
+            assertFalse( only.acceptsArguments() );
+            assertEquals( "", only.argumentDescription() );
+            assertEquals( "", only.argumentTypeIndicator() );
+            assertEquals( emptyList(), only.defaultValues() );
+            assertEquals( "", only.description() );
+            assertFalse( only.isRequired() );
+            assertFalse( only.requiresArgument() );
+
+            return null;
+        });
     }
 
     @Test( expected = NullPointerException.class )
@@ -736,7 +736,7 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
         assertEquals( join( expectedLines, LINE_SEPARATOR ), sink.toString() );
     }
 
-    static class FakeOutputStream extends ByteArrayOutputStream {
+    private static class FakeOutputStream extends ByteArrayOutputStream {
         boolean closed;
         boolean flushed;
 

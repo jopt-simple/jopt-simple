@@ -90,11 +90,8 @@ public class BuiltinHelpFormatter implements HelpFormatter {
         nonOptionRows.reset();
 
         Comparator<OptionDescriptor> comparator =
-            new Comparator<OptionDescriptor>() {
-                public int compare( OptionDescriptor first, OptionDescriptor second ) {
-                    return first.options().iterator().next().compareTo( second.options().iterator().next() );
-                }
-            };
+            (first, second) ->
+                first.options().iterator().next().compareTo( second.options().iterator().next() );
 
         Set<OptionDescriptor> sorted = new TreeSet<>( comparator );
         sorted.addAll( options.values() );

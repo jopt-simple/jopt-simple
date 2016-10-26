@@ -25,8 +25,6 @@
 
 package joptsimple;
 
-import java.util.Collections;
-
 import static java.util.Collections.*;
 
 import org.junit.Before;
@@ -42,7 +40,7 @@ public class PopulatedOptionSetTest {
 
     @Before
     public void setUp() {
-        populated = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        populated = new OptionSet( emptyMap() );
         populated.add( new NoArgumentOptionSpec( "a" ) );
         populated.addWithArgument( new RequiredArgumentOptionSpec<String>( "b" ), "arg-of-b" );
     }

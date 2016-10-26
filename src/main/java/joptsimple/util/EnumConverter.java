@@ -84,7 +84,7 @@ public abstract class EnumConverter<E extends Enum<E>> implements ValueConverter
         EnumSet<E> values = EnumSet.allOf( valueType() );
 
         StringBuilder builder = new StringBuilder();
-        builder.append( delimiters.charAt(0) );
+        builder.append( delimiters.charAt( 0 ) );
         for ( Iterator<E> i = values.iterator(); i.hasNext(); ) {
             builder.append( i.next().toString() );
             if ( i.hasNext() )

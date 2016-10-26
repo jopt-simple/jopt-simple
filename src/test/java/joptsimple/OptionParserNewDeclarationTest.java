@@ -30,7 +30,6 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import static java.lang.Boolean.*;
-import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
 import org.junit.Test;
@@ -88,9 +87,9 @@ public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture 
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );
         assertEquals( Double.valueOf( "3.1415926D" ), options.valueOf( "a" ) );
-        assertEquals( asList( Double.valueOf( "3.1415926D" ) ), options.valuesOf( "a" ) );
+        assertEquals( singletonList( Double.valueOf( "3.1415926D" ) ), options.valuesOf( "a" ) );
         assertEquals( Double.valueOf( "6.02E23" ), options.valueOf( "b" ) );
-        assertEquals( asList( Double.valueOf( "6.02E23" ) ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( Double.valueOf( "6.02E23" ) ), options.valuesOf( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -104,9 +103,9 @@ public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture 
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );
         assertEquals( Float.valueOf( "3.1415926F" ), options.valueOf( "a" ) );
-        assertEquals( asList( Float.valueOf( "3.1415926F" ) ), options.valuesOf( "a" ) );
+        assertEquals( singletonList( Float.valueOf( "3.1415926F" ) ), options.valuesOf( "a" ) );
         assertEquals( Float.valueOf( "6.02E23F" ), options.valueOf( "b" ) );
-        assertEquals( asList( Float.valueOf( "6.02E23F" ) ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( Float.valueOf( "6.02E23F" ) ), options.valuesOf( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -120,9 +119,9 @@ public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture 
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );
         assertEquals( Integer.valueOf( "12" ), options.valueOf( "a" ) );
-        assertEquals( asList( Integer.valueOf( "12" ) ), options.valuesOf( "a" ) );
+        assertEquals( singletonList( Integer.valueOf( "12" ) ), options.valuesOf( "a" ) );
         assertEquals( Integer.valueOf( "34" ), options.valueOf( "b" ) );
-        assertEquals( asList( Integer.valueOf( "34" ) ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( Integer.valueOf( "34" ) ), options.valuesOf( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -152,9 +151,9 @@ public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture 
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );
         assertEquals( Short.valueOf( "5675" ), options.valueOf( "a" ) );
-        assertEquals( asList( Short.valueOf( "5675" ) ), options.valuesOf( "a" ) );
+        assertEquals( singletonList( Short.valueOf( "5675" ) ), options.valuesOf( "a" ) );
         assertEquals( Short.valueOf( "345" ), options.valueOf( "b" ) );
-        assertEquals( asList( Short.valueOf( "345" ) ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( Short.valueOf( "345" ) ), options.valuesOf( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -184,9 +183,9 @@ public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture 
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );
         assertEquals( Time.valueOf( "08:57:39" ), options.valueOf( "a" ) );
-        assertEquals( asList( Time.valueOf( "08:57:39" ) ), options.valuesOf( "a" ) );
+        assertEquals( singletonList( Time.valueOf( "08:57:39" ) ), options.valuesOf( "a" ) );
         assertEquals( Time.valueOf( "23:59:59" ), options.valueOf( "b" ) );
-        assertEquals( asList( Time.valueOf( "23:59:59" ) ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( Time.valueOf( "23:59:59" ) ), options.valuesOf( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -236,9 +235,9 @@ public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture 
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );
         assertEquals( Integer.valueOf( "-1" ), options.valueOf( "a" ) );
-        assertEquals( asList( Integer.valueOf( "-1" ) ), options.valuesOf( "a" ) );
+        assertEquals( singletonList( Integer.valueOf( "-1" ) ), options.valuesOf( "a" ) );
         assertEquals( Integer.valueOf( "-2" ), options.valueOf( "b" ) );
-        assertEquals( asList( Integer.valueOf( "-2" ) ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( Integer.valueOf( "-2" ) ), options.valuesOf( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -284,7 +283,7 @@ public class OptionParserNewDeclarationTest extends AbstractOptionParserFixture 
         assertEquals( Integer.valueOf( "-2" ), options.valueOf( "b" ) );
         assertEquals( emptyList(), options.valuesOf( "1" ) );
         assertEquals( emptyList(), options.valuesOf( "a" ) );
-        assertEquals( asList( Integer.valueOf( "-2" ) ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( Integer.valueOf( "-2" ) ), options.valuesOf( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }

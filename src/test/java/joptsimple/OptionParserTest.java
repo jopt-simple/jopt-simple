@@ -298,7 +298,8 @@ public class OptionParserTest extends AbstractOptionParserFixture {
                 return "Missing required option(s) [f/csv-file-name/ff]".equals( item );
             }
 
-            public void describeTo(Description description) {
+            @Override
+            public void describeTo( Description description ) {
                 // purposely doing nothing here
             }
         } );

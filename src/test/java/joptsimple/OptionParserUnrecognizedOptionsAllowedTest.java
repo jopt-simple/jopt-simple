@@ -25,11 +25,11 @@
 
 package joptsimple;
 
-import static joptsimple.ExceptionMatchers.withOption;
-import static java.util.Arrays.asList;
+import static java.util.Collections.*;
 
 import org.junit.Test;
 
+import static joptsimple.ExceptionMatchers.withOption;
 import static org.junit.Assert.*;
 
 public class OptionParserUnrecognizedOptionsAllowedTest extends AbstractOptionParserFixture {
@@ -49,6 +49,6 @@ public class OptionParserUnrecognizedOptionsAllowedTest extends AbstractOptionPa
 
         OptionSet options = parser.parse( "-a" );
 
-        assertEquals( asList( "-a" ), options.nonOptionArguments() );
+        assertEquals( singletonList( "-a" ), options.nonOptionArguments() );
     }
 }

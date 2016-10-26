@@ -28,9 +28,9 @@ package joptsimple;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.*;
 
 import static org.junit.Assert.*;
 
@@ -41,20 +41,23 @@ public class ValueConverterAdmitsSubclassesOfValueTypeTest {
     @Test
     public void subclassOfValueType() {
         ValueConverter<List<String>> converter = new ValueConverter<List<String>>() {
+            @Override
             public List<String> convert( String value ) {
-                return Collections.singletonList( value );
+                return singletonList( value );
             }
 
+            @Override
             public Class<? extends List<String>> valueType() {
                 return ListOfStrings.class;
             }
 
+            @Override
             public String valuePattern() {
                 return null;
             }
         };
 
-        assertEquals( Arrays.asList( "foo" ), converter.convert( "foo" ) );
+        assertEquals( singletonList( "foo" ), converter.convert( "foo" ) );
     }
 
     static class ListOfStrings extends ArrayList<String> {

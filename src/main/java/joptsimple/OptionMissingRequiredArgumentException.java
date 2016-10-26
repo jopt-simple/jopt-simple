@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 /**
  * Thrown when the option parser discovers options that require an argument, but are missing an argument.
@@ -36,7 +36,7 @@ class OptionMissingRequiredArgumentException extends OptionException {
     private static final long serialVersionUID = -1L;
 
     OptionMissingRequiredArgumentException( OptionSpec<?> option ) {
-        super( asList( option ) );
+        super( singletonList( option ) );
     }
 
     @Override

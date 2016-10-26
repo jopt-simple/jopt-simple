@@ -8,6 +8,7 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.junit.Test;
 
+import static java.util.Collections.*;
 import static org.junit.Assert.*;
 
 public class OptionSynonymTest {
@@ -24,7 +25,7 @@ public class OptionSynonymTest {
             assertTrue( each, options.has( each ) );
             assertTrue( each, options.hasArgument( each ) );
             assertEquals( each, expectedMessage, options.valueOf( each ) );
-            assertEquals( each, asList( expectedMessage ), options.valuesOf( each ) );
+            assertEquals( each, singletonList( expectedMessage ), options.valuesOf( each ) );
         }
     }
 }

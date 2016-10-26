@@ -1,6 +1,7 @@
 package joptsimple.examples;
 
 import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -19,10 +20,10 @@ public class SignallingEndOfOptionsTest {
         assertFalse( options.hasArgument( "a" ) );
         assertTrue( options.has( "b" ) );
         assertTrue( options.hasArgument( "b" ) );
-        assertEquals( asList( "foo" ), options.valuesOf( "b" ) );
+        assertEquals( singletonList( "foo" ), options.valuesOf( "b" ) );
         assertTrue( options.has( "c" ) );
         assertTrue( options.hasArgument( "c" ) );
-        assertEquals( asList( "bar" ), options.valuesOf( "c" ) );
+        assertEquals( singletonList( "bar" ), options.valuesOf( "c" ) );
         assertFalse( options.has( "d" ) );
         assertFalse( options.has( "e" ) );
         assertFalse( options.has( "f" ) );

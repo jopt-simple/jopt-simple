@@ -9,6 +9,7 @@ import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import org.junit.Test;
 
+import static java.util.Collections.*;
 import static org.junit.Assert.*;
 
 public class TypesafeOptionArgumentRetrievalTest {
@@ -29,8 +30,8 @@ public class TypesafeOptionArgumentRetrievalTest {
         Integer expectedCount = 3;
         assertEquals( expectedCount, options.valueOf( count ) );
         assertEquals( expectedCount, count.value( options ) );
-        assertEquals( asList( expectedCount ), options.valuesOf( count ) );
-        assertEquals( asList( expectedCount ), count.values( options ) );
+        assertEquals( singletonList( expectedCount ), options.valuesOf( count ) );
+        assertEquals( singletonList( expectedCount ), count.values( options ) );
         assertEquals( asList( new File( "a.txt" ), new File( "b.txt" ) ), options.valuesOf( files ) );
 
         assertTrue( options.has( outputDir ) );
@@ -38,8 +39,8 @@ public class TypesafeOptionArgumentRetrievalTest {
         File expectedFile = new File( "/tmp" );
         assertEquals( expectedFile, options.valueOf( outputDir ) );
         assertEquals( expectedFile, outputDir.value( options ) );
-        assertEquals( asList( expectedFile ), options.valuesOf( outputDir ) );
-        assertEquals( asList( expectedFile ), outputDir.values( options ) );
+        assertEquals( singletonList( expectedFile ), options.valuesOf( outputDir ) );
+        assertEquals( singletonList( expectedFile ), outputDir.values( options ) );
         assertEquals( asList( new File( "a.txt" ), new File( "b.txt" ) ), files.values( options ) );
     }
 }

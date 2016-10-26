@@ -226,8 +226,8 @@ public class OptionParser implements OptionDeclarer {
         state = moreOptions( false );
 
         recognizedOptions = allowAbbreviations
-            ? new AbbreviationMap<AbstractOptionSpec<?>>()
-            : new SimpleOptionNameMap<AbstractOptionSpec<?>>();
+            ? new AbbreviationMap<>()
+            : new SimpleOptionNameMap<>();
 
         recognize( new NonOptionArgumentSpec<String>() );
     }
@@ -376,7 +376,7 @@ public class OptionParser implements OptionDeclarer {
      * @since 4.6
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
-        return new LinkedHashMap<String, OptionSpec<?>>( _recognizedOptions() );
+        return new LinkedHashMap<>( _recognizedOptions() );
     }
 
     private Map<String, AbstractOptionSpec<?>> _recognizedOptions() {

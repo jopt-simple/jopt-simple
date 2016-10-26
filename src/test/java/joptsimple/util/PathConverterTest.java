@@ -87,7 +87,7 @@ public class PathConverterTest {
         exception.expect( ValueConversionException.class );
         exception.expectMessage( "File [" + pathName );
 
-        new PathConverter( FILE_OVERWRITABLE).convert( pathName );
+        new PathConverter( FILE_OVERWRITABLE ).convert( pathName );
     }
 
     @Test

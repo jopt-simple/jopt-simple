@@ -1,6 +1,5 @@
 package joptsimple.examples;
 
-import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
 import joptsimple.OptionParser;
@@ -20,7 +19,7 @@ public class SpecialOptionalArgumentHandlingTest {
 
         assertTrue( options.has( "a" ) );
         assertFalse( options.has( "2" ) );
-        assertEquals( asList( -2 ), options.valuesOf( "a" ) );
+        assertEquals( singletonList( -2 ), options.valuesOf( "a" ) );
 
         options = parser.parse( "-2", "-a" );
 

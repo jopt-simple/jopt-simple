@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class OptionParserAlternateHelpFormatterTest extends AbstractOptionParser
         Map.Entry<String, ? extends OptionDescriptor> second = iterator.next();
         assertEquals("b", second.getKey());
         OptionDescriptor descriptor = second.getValue();
-        assertThat( descriptor.options(), hasSameContentsAs( asList( "b" ) ) );
+        assertThat( descriptor.options(), hasSameContentsAs( singletonList( "b" ) ) );
         assertEquals( "boo", descriptor.description() );
         assertFalse( descriptor.acceptsArguments() );
         assertFalse( descriptor.requiresArgument() );

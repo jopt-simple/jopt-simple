@@ -25,8 +25,6 @@
 
 package joptsimple;
 
-import java.util.Collections;
-
 import static java.util.Collections.*;
 
 import org.junit.Test;
@@ -62,12 +60,12 @@ public class OptionParserArgumentExceptionTest extends AbstractOptionParserFixtu
 
     @Test( expected = IllegalArgumentException.class )
     public void emptyOptionListToAcceptsAll() {
-        parser.acceptsAll( Collections.<String> emptyList() );
+        parser.acceptsAll( emptyList() );
     }
 
     @Test( expected = NullPointerException.class )
     public void optionListContainingNullToAcceptsAll() {
-        parser.acceptsAll( singletonList( (String) null ) );
+        parser.acceptsAll( singletonList( null ) );
     }
 
     @Test( expected = NullPointerException.class )
@@ -77,6 +75,6 @@ public class OptionParserArgumentExceptionTest extends AbstractOptionParserFixtu
 
     @Test( expected = NullPointerException.class )
     public void optionListContainingNullToAcceptsAllWithDescription() {
-        parser.acceptsAll( singletonList( (String) null ), "some weird options" );
+        parser.acceptsAll( singletonList( null ), "some weird options" );
     }
 }
