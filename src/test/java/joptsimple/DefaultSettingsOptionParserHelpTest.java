@@ -32,10 +32,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.math.BigDecimal.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+import static java.util.stream.Collectors.*;
 
 import joptsimple.util.InetAddressConverter;
 import org.junit.Before;
@@ -485,7 +487,9 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     public void leavesEmbeddedNewlinesInDescriptionsAlone() throws Exception {
         List<String> descriptionPieces =
             asList( "Specify the output type.", "'raw' = raw data.", "'java' = java class" );
-        parser.accepts( "type", join( descriptionPieces, LINE_SEPARATOR ) );
+        parser.accepts(
+            "type",
+            descriptionPieces.stream().collect( joining( LINE_SEPARATOR ) ) );
 
         parser.printHelpOn( sink );
 
@@ -733,7 +737,9 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     }
 
     private void assertHelpLines( String... expectedLines ) {
-        assertEquals( join( expectedLines, LINE_SEPARATOR ), sink.toString() );
+        assertEquals(
+            Stream.of( expectedLines ).collect( joining( LINE_SEPARATOR ) ),
+            sink.toString() );
     }
 
     private static class FakeOutputStream extends ByteArrayOutputStream {

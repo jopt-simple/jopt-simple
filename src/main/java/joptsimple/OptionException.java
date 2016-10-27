@@ -33,9 +33,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import joptsimple.internal.Strings;
-
 import static java.util.Collections.*;
+import static java.util.stream.Collectors.*;
+
 import static joptsimple.internal.Messages.*;
 
 /**
@@ -69,7 +69,7 @@ public abstract class OptionException extends RuntimeException {
     }
 
     private String specToString( OptionSpec<?> option ) {
-        return Strings.join( new ArrayList<>( option.options() ), "/" );
+        return option.options().stream().collect( joining( "/" ) );
     }
 
     /**

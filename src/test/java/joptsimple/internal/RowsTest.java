@@ -25,6 +25,10 @@
 
 package joptsimple.internal;
 
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.*;
+
 import org.junit.Test;
 
 import static joptsimple.internal.Strings.*;
@@ -78,6 +82,8 @@ public class RowsTest {
     private void assertRows( Rows rows, String... expected ) {
         rows.fitToWidth();
 
-        assertEquals( join( expected, LINE_SEPARATOR ) + LINE_SEPARATOR, rows.render() );
+        assertEquals(
+            Stream.of( expected ).collect( joining( LINE_SEPARATOR ) ) + LINE_SEPARATOR,
+            rows.render() );
     }
 }

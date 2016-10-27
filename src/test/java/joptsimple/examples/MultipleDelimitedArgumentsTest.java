@@ -6,12 +6,13 @@ import java.util.stream.Stream;
 import static java.io.File.*;
 import static java.util.Arrays.*;
 
+import static java.util.stream.Collectors.*;
+
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import org.junit.Test;
 
-import static java.util.stream.Collectors.*;
 import static org.junit.Assert.*;
 
 public class MultipleDelimitedArgumentsTest {
