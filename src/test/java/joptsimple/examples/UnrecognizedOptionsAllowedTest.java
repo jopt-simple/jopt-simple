@@ -4,7 +4,7 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import org.junit.Test;
 
-import static java.util.Arrays.*;
+import static java.util.Collections.*;
 import static org.junit.Assert.*;
 
 public class UnrecognizedOptionsAllowedTest {
@@ -18,6 +18,6 @@ public class UnrecognizedOptionsAllowedTest {
 
         assertTrue( options.has( "f" ) );
         assertFalse( options.has( "d" ) );
-        assertEquals( asList( "-d" ), options.nonOptionArguments() );
+        assertEquals( singletonList( "-d" ), options.nonOptionArguments() );
     }
 }

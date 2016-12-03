@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -298,7 +298,8 @@ public class OptionParserTest extends AbstractOptionParserFixture {
                 return "Missing required option(s) [f/csv-file-name/ff]".equals( item );
             }
 
-            public void describeTo(Description description) {
+            @Override
+            public void describeTo( Description description ) {
                 // purposely doing nothing here
             }
         } );

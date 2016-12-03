@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,10 +25,7 @@
 
 package joptsimple.internal;
 
-import java.util.Iterator;
-
 import static java.lang.System.*;
-import static java.util.Arrays.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -78,38 +75,5 @@ public final class Strings {
      */
     public static String surround( String target, char begin, char end ) {
         return begin + target + end;
-    }
-
-    /**
-     * Gives a string consisting of the elements of a given array of strings, each separated by a given separator
-     * string.
-     *
-     * @param pieces the strings to join
-     * @param separator the separator
-     * @return the joined string
-     */
-    public static String join( String[] pieces, String separator ) {
-        return join( asList( pieces ), separator );
-    }
-
-    /**
-     * Gives a string consisting of the string representations of the elements of a given array of objects,
-     * each separated by a given separator string.
-     *
-     * @param pieces the elements whose string representations are to be joined
-     * @param separator the separator
-     * @return the joined string
-     */
-    public static String join( Iterable<String> pieces, String separator ) {
-        StringBuilder buffer = new StringBuilder();
-
-        for ( Iterator<String> iter = pieces.iterator(); iter.hasNext(); ) {
-            buffer.append( iter.next() );
-
-            if ( iter.hasNext() )
-                buffer.append( separator );
-        }
-
-        return buffer.toString();
     }
 }

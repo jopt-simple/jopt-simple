@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -29,10 +29,12 @@ import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.math.BigDecimal.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+import static java.util.stream.Collectors.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -398,7 +400,9 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
     public void leavesEmbeddedNewlinesInDescriptionsAlone() throws Exception {
         List<String> descriptionPieces =
             asList( "Specify the output type.", "'raw' = raw data.", "'java' = java class" );
-        parser.accepts( "type", join( descriptionPieces, LINE_SEPARATOR ) );
+        parser.accepts(
+            "type",
+            descriptionPieces.stream().collect( joining( LINE_SEPARATOR ) ) );
 
         parser.printHelpOn( sink );
 
@@ -479,6 +483,8 @@ public class ConfigurableOptionParserHelpTest extends AbstractOptionParserFixtur
     }
 
     private void assertHelpLines( String... expectedLines ) {
-        assertEquals( join( expectedLines, LINE_SEPARATOR ), sink.toString() );
+        assertEquals(
+            Stream.of( expectedLines ).collect( joining( LINE_SEPARATOR ) ),
+            sink.toString() );
     }
 }

@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -226,8 +226,8 @@ public class OptionParser implements OptionDeclarer {
         state = moreOptions( false );
 
         recognizedOptions = allowAbbreviations
-            ? new AbbreviationMap<AbstractOptionSpec<?>>()
-            : new SimpleOptionNameMap<AbstractOptionSpec<?>>();
+            ? new AbbreviationMap<>()
+            : new SimpleOptionNameMap<>();
 
         recognize( new NonOptionArgumentSpec<String>() );
     }
@@ -248,18 +248,22 @@ public class OptionParser implements OptionDeclarer {
         new OptionSpecTokenizer( optionSpecification ).configure( this );
     }
 
+    @Override
     public OptionSpecBuilder accepts( String option ) {
         return acceptsAll( singletonList( option ) );
     }
 
+    @Override
     public OptionSpecBuilder accepts( String option, String description ) {
         return acceptsAll( singletonList( option ), description );
     }
 
+    @Override
     public OptionSpecBuilder acceptsAll( List<String> options ) {
         return acceptsAll( options, "" );
     }
 
+    @Override
     public OptionSpecBuilder acceptsAll( List<String> options, String description ) {
         if ( options.isEmpty() )
             throw new IllegalArgumentException( "need at least one option" );
@@ -269,6 +273,7 @@ public class OptionParser implements OptionDeclarer {
         return new OptionSpecBuilder( this, options, description );
     }
 
+    @Override
     public NonOptionArgumentSpec<String> nonOptions() {
         NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<>();
 
@@ -277,6 +282,7 @@ public class OptionParser implements OptionDeclarer {
         return spec;
     }
 
+    @Override
     public NonOptionArgumentSpec<String> nonOptions( String description ) {
         NonOptionArgumentSpec<String> spec = new NonOptionArgumentSpec<>( description );
 
@@ -285,6 +291,7 @@ public class OptionParser implements OptionDeclarer {
         return spec;
     }
 
+    @Override
     public void posixlyCorrect( boolean setting ) {
         posixlyCorrect = setting;
         state = moreOptions( setting );
@@ -294,6 +301,7 @@ public class OptionParser implements OptionDeclarer {
         return posixlyCorrect;
     }
 
+    @Override
     public void allowsUnrecognizedOptions() {
         allowsUnrecognizedOptions = true;
     }
@@ -302,6 +310,7 @@ public class OptionParser implements OptionDeclarer {
         return allowsUnrecognizedOptions;
     }
 
+    @Override
     public void recognizeAlternativeLongOptions( boolean recognize ) {
         if ( recognize )
             recognize( new AlternativeLongOptionSpec() );
@@ -367,7 +376,7 @@ public class OptionParser implements OptionDeclarer {
      * @since 4.6
      */
     public Map<String, OptionSpec<?>> recognizedOptions() {
-        return new LinkedHashMap<String, OptionSpec<?>>( _recognizedOptions() );
+        return new LinkedHashMap<>( _recognizedOptions() );
     }
 
     private Map<String, AbstractOptionSpec<?>> _recognizedOptions() {

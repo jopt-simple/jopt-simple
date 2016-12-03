@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 /**
  * Thrown when the option parser discovers options that require an argument, but are missing an argument.
@@ -36,7 +36,7 @@ class OptionMissingRequiredArgumentException extends OptionException {
     private static final long serialVersionUID = -1L;
 
     OptionMissingRequiredArgumentException( OptionSpec<?> option ) {
-        super( asList( option ) );
+        super( singletonList( option ) );
     }
 
     @Override

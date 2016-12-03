@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,11 +25,11 @@
 
 package joptsimple;
 
-import static joptsimple.ExceptionMatchers.withOption;
-import static java.util.Arrays.asList;
+import static java.util.Collections.*;
 
 import org.junit.Test;
 
+import static joptsimple.ExceptionMatchers.withOption;
 import static org.junit.Assert.*;
 
 public class OptionParserUnrecognizedOptionsAllowedTest extends AbstractOptionParserFixture {
@@ -49,6 +49,6 @@ public class OptionParserUnrecognizedOptionsAllowedTest extends AbstractOptionPa
 
         OptionSet options = parser.parse( "-a" );
 
-        assertEquals( asList( "-a" ), options.nonOptionArguments() );
+        assertEquals( singletonList( "-a" ), options.nonOptionArguments() );
     }
 }

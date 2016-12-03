@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -54,18 +54,22 @@ public abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDesc
         this.description = description;
     }
 
+    @Override
     public final List<String> options() {
         return unmodifiableList( options );
     }
 
+    @Override
     public final List<V> values( OptionSet detectedOptions ) {
         return detectedOptions.valuesOf( this );
     }
 
+    @Override
     public final V value( OptionSet detectedOptions ) {
         return detectedOptions.valueOf( this );
     }
 
+    @Override
     public String description() {
         return description;
     }
@@ -75,10 +79,12 @@ public abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDesc
         return this;
     }
 
+    @Override
     public final boolean isForHelp() {
         return forHelp;
     }
 
+    @Override
     public boolean representsNonOptions() {
         return false;
     }

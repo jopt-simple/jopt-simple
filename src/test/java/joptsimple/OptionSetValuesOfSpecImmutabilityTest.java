@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,10 +25,11 @@
 
 package joptsimple;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.infinitest.toolkit.UnmodifiableListTestSupport;
+
+import static java.util.Collections.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -37,7 +38,7 @@ public class OptionSetValuesOfSpecImmutabilityTest extends UnmodifiableListTestS
     @Override
     protected List<String> newList() {
         RequiredArgumentOptionSpec<String> optionA = new RequiredArgumentOptionSpec<>( "a" );
-        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        OptionSet options = new OptionSet( emptyMap() );
         options.addWithArgument( optionA, "anArgument" );
         options.addWithArgument( optionA, "anotherArgument" );
         return options.valuesOf( optionA );

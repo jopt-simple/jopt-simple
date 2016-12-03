@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -33,9 +33,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import joptsimple.internal.Strings;
-
 import static java.util.Collections.*;
+import static java.util.stream.Collectors.*;
+
 import static joptsimple.internal.Messages.*;
 
 /**
@@ -69,7 +69,7 @@ public abstract class OptionException extends RuntimeException {
     }
 
     private String specToString( OptionSpec<?> option ) {
-        return Strings.join( new ArrayList<>( option.options() ), "/" );
+        return option.options().stream().collect( joining( "/" ) );
     }
 
     /**

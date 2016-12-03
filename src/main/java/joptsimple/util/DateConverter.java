@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -72,6 +72,7 @@ public class DateConverter implements ValueConverter<Date> {
         return new DateConverter( formatter );
     }
 
+    @Override
     public Date convert( String value ) {
         ParsePosition position = new ParsePosition( 0 );
 
@@ -82,10 +83,12 @@ public class DateConverter implements ValueConverter<Date> {
         return date;
     }
 
+    @Override
     public Class<Date> valueType() {
         return Date.class;
     }
 
+    @Override
     public String valuePattern() {
         return formatter instanceof SimpleDateFormat
             ? ( (SimpleDateFormat) formatter ).toPattern()

@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,9 +25,9 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
-
 import org.junit.Test;
+
+import static java.util.Collections.*;
 
 import static org.infinitest.toolkit.CollectionMatchers.*;
 import static org.junit.Assert.*;
@@ -48,6 +48,6 @@ public class NoArgumentOptionSpecTest extends AbstractOptionSpecFixture {
 
     @Test
     public void optionsContents() {
-        assertThat( createNotEqualOptionSpecInstance().options(), hasSameContentsAs( asList( "b" ) ) );
+        assertThat( createNotEqualOptionSpecInstance().options(), hasSameContentsAs( singletonList( "b" ) ) );
     }
 }

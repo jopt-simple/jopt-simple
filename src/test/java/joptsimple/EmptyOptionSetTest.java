@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,7 +25,6 @@
 
 package joptsimple;
 
-import java.util.Collections;
 import static java.util.Collections.*;
 
 import org.junit.Before;
@@ -41,7 +40,7 @@ public class EmptyOptionSetTest {
 
     @Before
     public void setUp() {
-        empty = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        empty = new OptionSet( emptyMap() );
         empty.add( new NonOptionArgumentSpec<>() );
     }
 

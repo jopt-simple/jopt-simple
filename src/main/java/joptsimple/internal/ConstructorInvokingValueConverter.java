@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -42,14 +42,17 @@ class ConstructorInvokingValueConverter<V> implements ValueConverter<V> {
         this.ctor = ctor;
     }
 
+    @Override
     public V convert( String value ) {
         return instantiate( ctor, value );
     }
 
+    @Override
     public Class<V> valueType() {
         return ctor.getDeclaringClass();
     }
 
+    @Override
     public String valuePattern() {
         return null;
     }

@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -240,6 +240,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
         return this;
     }
 
+    @Override
     public boolean isRequired() {
         return optionRequired;
     }
@@ -293,22 +294,27 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
         return converter != null && Number.class.isAssignableFrom( converter.valueType() );
     }
 
+    @Override
     public boolean acceptsArguments() {
         return true;
     }
 
+    @Override
     public boolean requiresArgument() {
         return argumentRequired;
     }
 
+    @Override
     public String argumentDescription() {
         return argumentDescription;
     }
 
+    @Override
     public String argumentTypeIndicator() {
         return argumentTypeIndicatorFrom( converter );
     }
 
+    @Override
     public List<V> defaultValues() {
         return unmodifiableList( defaultValues );
     }

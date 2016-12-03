@@ -21,7 +21,7 @@ public class PosixlyCorrectTest {
         assertTrue( options.has( "j" ) );
         assertTrue( options.has( "k" ) );
         assertEquals( asList( "bar", "junk" ), options.valuesOf( "i" ) );
-        assertEquals( asList( "ixnay" ), options.valuesOf( "j" ) );
+        assertEquals( singletonList( "ixnay" ), options.valuesOf( "j" ) );
         assertEquals( asList( "xyz", "foo", "blah", "bah" ), options.nonOptionArguments() );
 
         parser.posixlyCorrect( true );

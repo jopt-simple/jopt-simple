@@ -14,7 +14,7 @@ import joptsimple.OptionParser;
 import static joptsimple.util.DateConverter.*;
 
 public class HelpFormatterExample {
-    static class MyFormatter implements HelpFormatter {
+    private static class MyFormatter implements HelpFormatter {
         public String format( Map<String, ? extends OptionDescriptor> options ) {
             StringBuilder buffer = new StringBuilder();
             for ( OptionDescriptor each : new HashSet<>( options.values() ) ) {

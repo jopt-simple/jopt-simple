@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,9 +25,9 @@
 
 package joptsimple;
 
-import java.util.Collections;
-
 import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
+
+import static java.util.Collections.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -35,14 +35,14 @@ import org.infinitest.toolkit.StrictEqualsHashCodeTestSupport;
 public class OptionSetEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport {
     @Override
     protected OptionSet equal() {
-        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        OptionSet options = new OptionSet( emptyMap() );
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "anArg" );
         return options;
     }
 
     @Override
     protected OptionSet notEqual() {
-        OptionSet options = new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() );
+        OptionSet options = new OptionSet( emptyMap() );
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "aDifferentArg" );
         return options;
     }
@@ -50,7 +50,7 @@ public class OptionSetEqualsHashCodeTest extends StrictEqualsHashCodeTestSupport
     @Override
     protected Object equalButDifferentClass() {
         OptionSet options =
-                new OptionSet( Collections.<String, AbstractOptionSpec<?>> emptyMap() ) {
+            new OptionSet( emptyMap() ) {
                 // anonymous subclass
             };
         options.addWithArgument( new RequiredArgumentOptionSpec<String>( "anOption" ), "anArg" );

@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,7 +25,7 @@
 
 package joptsimple;
 
-import static java.util.Arrays.*;
+import static java.util.Collections.*;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
@@ -33,6 +33,6 @@ import static java.util.Arrays.*;
 public class OptionSpecBuilderOptionsImmutabilityTest extends AbstractOptionSpecOptionsImmutabilityTestCase {
     @Override
     protected AbstractOptionSpec<?> newOptionSpec( String option ) {
-        return new OptionSpecBuilder( new OptionParser(), asList( option ), "" );
+        return new OptionSpecBuilder( new OptionParser(), singletonList( option ), "" );
     }
 }

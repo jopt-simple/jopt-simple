@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -24,6 +24,10 @@
 */
 
 package joptsimple.internal;
+
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.*;
 
 import org.junit.Test;
 
@@ -78,6 +82,8 @@ public class RowsTest {
     private void assertRows( Rows rows, String... expected ) {
         rows.fitToWidth();
 
-        assertEquals( join( expected, LINE_SEPARATOR ) + LINE_SEPARATOR, rows.render() );
+        assertEquals(
+            Stream.of( expected ).collect( joining( LINE_SEPARATOR ) ) + LINE_SEPARATOR,
+            rows.render() );
     }
 }

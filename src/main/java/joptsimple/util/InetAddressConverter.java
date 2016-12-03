@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -39,6 +39,7 @@ import joptsimple.internal.Messages;
  * @author <a href="mailto:r@ymund.de">Raymund F\u00FCl\u00F6p</a>
  */
 public class InetAddressConverter implements ValueConverter<InetAddress> {
+    @Override
     public InetAddress convert( String value ) {
         try {
             return InetAddress.getByName( value );
@@ -48,10 +49,12 @@ public class InetAddressConverter implements ValueConverter<InetAddress> {
         }
     }
 
+    @Override
     public Class<InetAddress> valueType() {
         return InetAddress.class;
     }
 
+    @Override
     public String valuePattern() {
         return null;
     }

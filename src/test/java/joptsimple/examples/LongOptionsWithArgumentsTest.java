@@ -1,6 +1,5 @@
 package joptsimple.examples;
 
-import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
 import joptsimple.OptionParser;
@@ -24,7 +23,7 @@ public class LongOptionsWithArgumentsTest {
         assertTrue( options.has( "count" ) );
         assertTrue( options.hasArgument( "count" ) );
         assertEquals( "3", options.valueOf( "count" ) );
-        assertEquals( asList( "3" ), options.valuesOf( "count" ) );
+        assertEquals( singletonList( "3" ), options.valuesOf( "count" ) );
 
         assertTrue( options.has( "level" ) );
         assertFalse( options.hasArgument( "level" ) );

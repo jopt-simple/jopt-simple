@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -25,7 +25,6 @@
 
 package joptsimple;
 
-import org.infinitest.toolkit.Block;
 import org.junit.Test;
 
 import static org.infinitest.toolkit.Assertions.*;
@@ -57,41 +56,31 @@ public class ArgumentAcceptingOptionSpecTest {
 
     @Test
     public void requiredArgOfValueTypeBasedOnValueOf() {
-        assertNoException( new Block() {
-            public void execute() {
-                new RequiredArgumentOptionSpec<Void>( "threshold" ).ofType( ValueOfHaver.class );
-            }
-        } );
+        assertNoException(
+            () -> new RequiredArgumentOptionSpec<Void>( "threshold" ).ofType( ValueOfHaver.class ));
     }
 
     @Test
     public void optionalArgOfValueTypeBasedOnValueOf() {
-        assertNoException( new Block() {
-            public void execute() {
-                new OptionalArgumentOptionSpec<Void>( "abc" ).ofType( ValueOfHaver.class );
-            }
-        } );
+        assertNoException(
+            () -> new OptionalArgumentOptionSpec<Void>( "abc" ).ofType( ValueOfHaver.class ));
     }
 
     @Test
     public void requiredArgOfValueTypeBasedOnCtor() {
-        assertNoException( new Block() {
-            public void execute() {
-                new RequiredArgumentOptionSpec<Void>( "threshold" ).ofType( Ctor.class );
-            }
-        } );
+        assertNoException(
+            () -> new RequiredArgumentOptionSpec<Void>( "threshold" ).ofType( Ctor.class ));
     }
 
     @Test
     public void optionalArgOfValueTypeBasedOnCtor() {
         final OptionalArgumentOptionSpec<Ctor> spec = new OptionalArgumentOptionSpec<>( "abc" );
 
-        assertNoException( new Block() {
-            public void execute() {
-                spec.ofType( Ctor.class );
-                assertEquals( "foo", spec.convert( "foo" ).getS() );
-            }
-        } );
+        assertNoException(() -> {
+            spec.ofType( Ctor.class );
+
+            assertEquals( "foo", spec.convert( "foo" ).getS() );
+        });
     }
 
     @Test( expected = IllegalArgumentException.class )

@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -52,7 +52,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         assertEquals( valueFromOption, valueFromOptionSet );
 
         List<Integer> valuesFromOption = optionA.values( options );
-        assertEquals( asList( 1 ), valuesFromOption );
+        assertEquals( singletonList( 1 ), valuesFromOption );
         List<Integer> valuesFromOptionSet = options.valuesOf( optionA );
         assertEquals( valuesFromOption, valuesFromOptionSet );
     }
@@ -65,7 +65,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
 
         assertTrue( options.has( optionB ) );
         assertEquals( Double.valueOf( 3.14D ), optionB.value( options ) );
-        assertEquals( asList( 3.14D ), optionB.values( options ) );
+        assertEquals( singletonList( 3.14D ), optionB.values( options ) );
     }
 
     @Test
@@ -108,7 +108,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         OptionSet options = parser.parse( "-a", "false" );
 
         assertTrue( options.has( optionA ) );
-        assertEquals( asList( false ), options.valuesOf( optionA ) );
+        assertEquals( singletonList( false ), options.valuesOf( optionA ) );
     }
 
     @Test
@@ -118,7 +118,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         OptionSet options = parser.parse( "-b", "3" );
 
         assertTrue( options.has( optionB ) );
-        assertEquals( asList( Byte.valueOf( "3" ) ), options.valuesOf( optionB ) );
+        assertEquals( singletonList( Byte.valueOf( "3" ) ), options.valuesOf( optionB ) );
     }
 
     @Test( expected = IllegalArgumentException.class )
@@ -133,7 +133,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         OptionSet options = parser.parse( "-d", "3.1" );
 
         assertTrue( options.has( optionD ) );
-        assertEquals( asList( 3.1D ), options.valuesOf( optionD ) );
+        assertEquals( singletonList( 3.1D ), options.valuesOf( optionD ) );
     }
 
     @Test
@@ -143,7 +143,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         OptionSet options = parser.parse( "-e", "2.09" );
 
         assertTrue( options.has( optionE ) );
-        assertEquals( asList( 2.09F ), options.valuesOf( optionE ) );
+        assertEquals( singletonList( 2.09F ), options.valuesOf( optionE ) );
     }
 
     @Test
@@ -153,7 +153,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         OptionSet options = parser.parse( "-F", "91" );
 
         assertTrue( options.has( optionF ) );
-        assertEquals( asList( 91 ), options.valuesOf( optionF ) );
+        assertEquals( singletonList( 91 ), options.valuesOf( optionF ) );
     }
 
     @Test
@@ -163,7 +163,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         OptionSet options = parser.parse("-g", "12");
 
         assertTrue( options.has( optionG ) );
-        assertEquals( asList( 12L ), options.valuesOf( optionG ) );
+        assertEquals( singletonList( 12L ), options.valuesOf( optionG ) );
     }
 
     @Test
@@ -173,7 +173,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
         OptionSet options = parser.parse( "-H", "8" );
 
         assertTrue( options.has( optionH ) );
-        assertEquals( asList( Short.valueOf( "8" ) ), options.valuesOf( optionH ) );
+        assertEquals( singletonList( Short.valueOf( "8" ) ), options.valuesOf( optionH ) );
     }
 
     @Test
@@ -248,14 +248,17 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
     public void usesConverterIfProvided() {
         OptionSpec<Short> optionL = parser.accepts( "L" ).withRequiredArg().withValuesConvertedBy(
             new ValueConverter<Short>() {
+                @Override
                 public Short convert( String value ) {
                     return parseShort( value );
                 }
 
+                @Override
                 public Class<Short> valueType() {
                     return Short.class;
                 }
 
+                @Override
                 public String valuePattern() {
                     return null;
                 }
@@ -270,14 +273,17 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
     public void wrapsValueConversionExceptionsRaisedByConverter() {
         OptionSpec<Character> optionM = parser.accepts( "m" ).withRequiredArg().withValuesConvertedBy(
             new ValueConverter<Character>() {
+                @Override
                 public Character convert( String value ) {
                     throw new ValueConversionException( value );
                 }
 
+                @Override
                 public Class<Character> valueType() {
                     return Character.class;
                 }
 
+                @Override
                 public String valuePattern() {
                     return null;
                 }
@@ -298,18 +304,22 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
             this.option = option;
         }
 
+        @Override
         public List<String> options() {
-            return asList( option );
+            return singletonList( option );
         }
 
+        @Override
         public V value( OptionSet detectedOptions ) {
             return detectedOptions.valueOf( this );
         }
 
+        @Override
         public List<V> values( OptionSet detectedOptions ) {
             return detectedOptions.valuesOf( this );
         }
 
+        @Override
         public boolean isForHelp() {
             return false;
         }

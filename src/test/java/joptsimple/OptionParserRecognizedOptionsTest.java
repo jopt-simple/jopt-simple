@@ -1,7 +1,7 @@
 /*
  The MIT License
 
- Copyright (c) 2004-2015 Paul R. Holser, Jr.
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
 
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
@@ -30,11 +30,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static java.util.Arrays.*;
+
+import static org.junit.Assert.*;
 
 public class OptionParserRecognizedOptionsTest extends AbstractOptionParserFixture {
     @Test
@@ -57,11 +55,12 @@ public class OptionParserRecognizedOptionsTest extends AbstractOptionParserFixtu
 
     @Test
     public void parserPreservesTrainingOrder() {
-        final OptionSpecBuilder z = parser.acceptsAll( asList( "zebra", "aardvark" ) );
-        final OptionSpecBuilder y = parser.accepts( "yak" );
-        final OptionSpecBuilder x = parser.acceptsAll( asList( "baboon", "xantus" ) );
+        parser.acceptsAll( asList( "zebra", "aardvark" ) );
+        parser.accepts( "yak" );
+        parser.acceptsAll( asList( "baboon", "xantus" ) );
 
-        assertEquals( asList( "[arguments]", "aardvark", "zebra", "yak", "baboon", "xantus" ), new ArrayList<String>(
-            parser.recognizedOptions().keySet() ) );
+        assertEquals(
+            asList( "[arguments]", "aardvark", "zebra", "yak", "baboon", "xantus" ),
+            new ArrayList<>( parser.recognizedOptions().keySet() ) );
     }
 }
