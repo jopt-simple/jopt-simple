@@ -23,53 +23,36 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package joptsimple.util;
+package joptsimple;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Locale;
-
-import joptsimple.ValueConversionException;
-import joptsimple.ValueConverter;
-import joptsimple.internal.Messages;
-
-/**
- * Converts values to {@link java.net.InetAddress} using {@link InetAddress#getByName(String) getByName}.
- *
- * @author <a href="mailto:r@ymund.de">Raymund F\u00FCl\u00F6p</a>
- */
-public class InetAddressConverter implements ValueConverter<InetAddress> {
+class SwitchConverter implements ValueConverter<Boolean> {
     @Override
-    public InetAddress convert( String value ) {
-        try {
-            return InetAddress.getByName( value );
-        }
-        catch ( UnknownHostException e ) {
-            throw new ValueConversionException( message( value ) );
-        }
+    public Boolean convert( String value ) {
+        if ( "on".equalsIgnoreCase( value ) )
+            return true;
+        if ( "off".equalsIgnoreCase( value ) )
+            return false;
+
+        throw new IllegalArgumentException(
+            String.format(
+                "String value '%s' must match '%s'.",
+                value,
+                valuePattern()));
     }
 
     @Override
     public String revert( Object value ) {
-        return valueType().cast( value ).getHostName();
+        boolean converted = valueType().cast( value );
+        return converted ? "on" : "off";
     }
 
     @Override
-    public Class<InetAddress> valueType() {
-        return InetAddress.class;
+    public Class<Boolean> valueType() {
+        return Boolean.class;
     }
 
     @Override
     public String valuePattern() {
-        return null;
-    }
-
-    private String message( String value ) {
-        return Messages.message(
-            Locale.getDefault(),
-            "joptsimple.ExceptionMessages",
-            InetAddressConverter.class,
-            "message",
-            value );
+        return "/(?:on|off)/i";
     }
 }

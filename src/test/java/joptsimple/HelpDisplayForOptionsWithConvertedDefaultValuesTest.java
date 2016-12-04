@@ -25,47 +25,32 @@
 
 package joptsimple;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Arrays;
+
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Collections.*;
-
+import static java.util.Arrays.*;
 import static org.junit.Assert.*;
 
-/**
- * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
- */
-public class ValueConverterAdmitsSubclassesOfValueTypeTest {
+public class HelpDisplayForOptionsWithConvertedDefaultValuesTest
+    extends AbstractOptionParserFixture {
+
     @Test
-    public void subclassOfValueType() {
-        ValueConverter<List<String>> converter = new ValueConverter<List<String>>() {
-            @Override
-            public List<String> convert( String value ) {
-                return singletonList( value );
-            }
+    public void respectsRevertedDefaultValues() throws Exception {
+        parser.acceptsAll(
+            asList( "t", "traceIncrements" ),
+            "Turns tracing of increment requests 'on' or 'off'." )
+            .withRequiredArg()
+            .describedAs( "trace" )
+            .withValuesConvertedBy( new SwitchConverter() )
+            .defaultsTo( false );
+        StringWriter sink = new StringWriter();
 
-            @Override
-            public String revert( Object value ) {
-                return valueType().cast( value ).get( 0 );
-            }
+        parser.printHelpOn( sink );
 
-            @Override
-            public Class<? extends List<String>> valueType() {
-                return ListOfStrings.class;
-            }
-
-            @Override
-            public String valuePattern() {
-                return null;
-            }
-        };
-
-        assertEquals( singletonList( "foo" ), converter.convert( "foo" ) );
-    }
-
-    static class ListOfStrings extends ArrayList<String> {
-        private static final long serialVersionUID = 1L;
+        String help = sink.toString();
+        assertFalse( help.contains( "false" ) );
     }
 }

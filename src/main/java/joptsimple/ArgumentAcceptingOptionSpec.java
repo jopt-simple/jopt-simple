@@ -27,6 +27,7 @@ package joptsimple;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 import static java.util.Collections.*;
@@ -320,8 +321,8 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     }
 
     @Override
-    public ValueConverter<?> converter() {
-        return converter;
+    public Optional<ValueConverter<?>> argumentConverter() {
+        return Optional.ofNullable( converter );
     }
 
     @Override

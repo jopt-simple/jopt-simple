@@ -26,6 +26,7 @@
 package joptsimple;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Collections.*;
 
@@ -76,8 +77,8 @@ class NoArgumentOptionSpec extends AbstractOptionSpec<Void> {
     }
 
     @Override
-    public ValueConverter<?> converter() {
-        return null;
+    public Optional<ValueConverter<?>> argumentConverter() {
+        return Optional.empty();
     }
 
     @Override

@@ -31,6 +31,8 @@ import joptsimple.internal.Messages;
 import joptsimple.internal.Rows;
 import joptsimple.internal.Strings;
 
+import static java.util.stream.Collectors.*;
+
 import static joptsimple.ParserRules.*;
 import static joptsimple.internal.Classes.*;
 import static joptsimple.internal.Strings.*;
@@ -520,7 +522,13 @@ public class BuiltinHelpFormatter implements HelpFormatter {
         if ( defaultValues.isEmpty() )
             return descriptor.description();
 
-        String defaultValuesDisplay = createDefaultValuesDisplay( defaultValues );
+        List<String> stringifiedDefaults =
+            defaultValues.stream()
+                .map( v -> descriptor.argumentConverter()
+                    .map( c -> c.revert( v ) )
+                    .orElse( String.valueOf( v ) ) )
+                .collect( toList() );
+        String defaultValuesDisplay = createDefaultValuesDisplay( stringifiedDefaults );
         return ( descriptor.description()
             + ' '
             + surround( message( "default.value.header" ) + ' ' + defaultValuesDisplay, '(', ')' )

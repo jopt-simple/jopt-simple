@@ -2,6 +2,18 @@
                                        Change Log
                                        ----------
 
+Changes in version 6.0
+
+    * Abandoning JDKs prior to 8. All source is Java 8-compatible, and bytecode
+      is compiled to 1.8 version.
+      {{{https://github.com/pholser/jopt-simple/issues/108} gh-108}}
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/96} gh-96}} so that
+      help formatter descriptions for options whose arguments have default values
+      can use <<<ValueConverter.revert()>>> on the result of
+      <<<OptionDescriptor.converter()>>> to display the default values in a manner
+      other than their <<<toString()>>> representations.
+
 Changes in version 5.0.3
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/96} gh-96}} so that

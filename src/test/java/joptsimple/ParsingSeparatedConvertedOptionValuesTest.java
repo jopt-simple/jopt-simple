@@ -60,14 +60,22 @@ public class ParsingSeparatedConvertedOptionValuesTest extends AbstractOptionPar
     private void assertCorrectParse( String option, char separator, String... args ) {
         parser.accepts( option ).withRequiredArg().withValuesSeparatedBy( separator )
             .withValuesConvertedBy( new ValueConverter<File>() {
+                @Override
                 public File convert( String value ) {
                     return new File( value );
                 }
 
+                @Override
+                public String revert( Object value ) {
+                    return valueType().cast( value ).getPath();
+                }
+
+                @Override
                 public Class<File> valueType() {
                     return File.class;
                 }
 
+                @Override
                 public String valuePattern() {
                     return null;
                 }

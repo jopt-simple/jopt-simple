@@ -42,6 +42,19 @@ public interface ValueConverter<V> {
     V convert( String value );
 
     /**
+     * <p>Reverts a value to a string representation.</p>
+     *
+     * <p>It is not strictly required that {@code revert(convert(v)).equals(v)},
+     * but it is recommended.</p>
+     *
+     * @param value a value
+     * @return a string representation of the value
+     */
+    default String revert( Object value ) {
+        return String.valueOf( value );
+    }
+
+    /**
      * Gives the class of the type of values this converter converts to.
      *
      * @return the target class for conversion

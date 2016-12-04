@@ -20,7 +20,7 @@ public class PathConverter implements ValueConverter<Path> {
 
     @Override
     public Path convert( String value ) {
-        Path path = Paths.get(value);
+        Path path = Paths.get( value );
 
         if ( pathProperties != null ) {
             for ( PathProperties each : pathProperties ) {
