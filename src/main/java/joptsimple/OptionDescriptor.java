@@ -26,6 +26,7 @@
 package joptsimple;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Describes options that an option parser recognizes, in ways that might be useful to {@linkplain HelpFormatter
@@ -97,4 +98,12 @@ public interface OptionDescriptor {
      * @return {@code true} if this represents non-option arguments
      */
     boolean representsNonOptions();
+
+    /**
+     * Gives an object that can convert raw string values into objects of the
+     * type of this option's argument
+     *
+     * @return a converter
+     */
+    Optional<ValueConverter<?>> argumentConverter();
 }

@@ -64,6 +64,11 @@ public abstract class EnumConverter<E extends Enum<E>> implements ValueConverter
     }
 
     @Override
+    public String revert( Object value ) {
+        return valueType().cast( value ).name();
+    }
+
+    @Override
     public Class<E> valueType() {
         return clazz;
     }

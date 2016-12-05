@@ -24,7 +24,7 @@ public class PathConverterTest {
 
         String pathName = path.toString();
 
-        assertEquals( path, new PathConverter( null ).convert( pathName ) );
+        assertEquals( path, new PathConverter( (PathProperties[]) null ).convert( pathName ) );
         assertEquals( path, new PathConverter().convert( pathName ) );
     }
 

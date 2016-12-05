@@ -26,9 +26,11 @@
 package joptsimple;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
+
 import static joptsimple.internal.Reflection.*;
 
 /**
@@ -173,5 +175,10 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
     @Override
     public boolean representsNonOptions() {
         return true;
+    }
+
+    @Override
+    public Optional<ValueConverter<?>> argumentConverter() {
+        return Optional.empty();
     }
 }
