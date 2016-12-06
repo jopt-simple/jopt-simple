@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.Collections.*;
 import static java.util.Objects.*;
@@ -154,6 +155,24 @@ public class OptionSet {
     }
 
     /**
+     * Gives the argument associated with the given option, as an {@link Optional}.
+     * If the option was given an argument type, the argument will take on that type;
+     * otherwise, it will be a {@link String}.
+     *
+     * <p>Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
+     * for an option will cause this method to return that default value even if the option was not detected on the
+     * command line, or if the option can take an optional argument but did not have one on the command line.</p>
+     *
+     * @param option the option to search for
+     * @return the argument of the given option as an {@code Optional}
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @throws OptionException if more than one argument was detected for the option
+     */
+    public Optional<Object> valueOfOptional( String option ) {
+        return Optional.ofNullable( valueOf( option ) );
+    }
+
+    /**
      * Gives the argument associated with the given option.
      *
      * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
@@ -178,6 +197,22 @@ public class OptionSet {
             default:
                 throw new MultipleArgumentsForOptionException( option );
         }
+    }
+
+    /**
+     * Gives the argument associated with the given option as an {@link Optional}.
+     *
+     * <p>This method recognizes only instances of options returned from the fluent interface methods.</p>
+     *
+     * @param <V> represents the type of the arguments the given option accepts
+     * @param option the option to search for
+     * @return the argument of the given option as an {@code Optional}
+     * @throws OptionException if more than one argument was detected for the option
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @throws ClassCastException if the arguments of this option are not of the expected type
+     */
+    public <V> Optional<V> valueOfOptional( OptionSpec<V> option ) {
+        return Optional.ofNullable( valueOf( option ) );
     }
 
     /**

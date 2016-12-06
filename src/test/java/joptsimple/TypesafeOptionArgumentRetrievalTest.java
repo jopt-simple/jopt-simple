@@ -26,6 +26,7 @@
 package joptsimple;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 
@@ -65,6 +66,7 @@ public class TypesafeOptionArgumentRetrievalTest extends AbstractOptionParserFix
 
         assertTrue( options.has( optionB ) );
         assertEquals( Double.valueOf( 3.14D ), optionB.value( options ) );
+        assertEquals( Optional.of( 3.14D ), optionB.valueOptional( options ) );
         assertEquals( singletonList( 3.14D ), optionB.values( options ) );
     }
 

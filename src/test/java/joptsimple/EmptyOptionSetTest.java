@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.util.Optional;
+
 import static java.util.Collections.*;
 
 import org.junit.Before;
@@ -50,6 +52,11 @@ public class EmptyOptionSetTest {
     }
 
     @Test
+    public void valueOfOptional() {
+        assertEquals( Optional.empty(), empty.valueOfOptional( "a" ) );
+    }
+
+    @Test
     public void valuesOf() {
         assertEquals( emptyList(), empty.valuesOf( "a" ) );
     }
@@ -67,6 +74,16 @@ public class EmptyOptionSetTest {
     @Test( expected = NullPointerException.class )
     public void valueOfWithNullString() {
         empty.valueOf( (String) null );
+    }
+
+    @Test( expected = NullPointerException.class )
+    public void valueOfOptionalWithNullString() {
+        empty.valueOfOptional( (String) null );
+    }
+
+    @Test( expected = NullPointerException.class )
+    public void valueOfOptionalWithNullOptionSpec() {
+        empty.valueOfOptional( (OptionSpec<?>) null );
     }
 
     @Test( expected = NullPointerException.class )

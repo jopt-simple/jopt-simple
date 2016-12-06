@@ -26,6 +26,7 @@
 package joptsimple;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Describes options that an option parser recognizes.
@@ -81,6 +82,25 @@ public interface OptionSpec<V> {
      * @see OptionSet#valueOf(OptionSpec)
      */
     V value( OptionSet detectedOptions );
+
+    /**
+     * Gives the argument associated with the given option in the given set of detected options
+     * as an {@link Optional}.
+     *
+     * <p>Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
+     * for this option will cause this method to return that default value even if this option was not detected on the
+     * command line, or if this option can take an optional argument but did not have one on the command line.</p>
+     *
+     * @param detectedOptions the detected options to search in
+     * @return the argument of the this option as an {@code Optional}
+     * @throws OptionException if more than one argument was detected for the option
+     * @throws NullPointerException if {@code detectedOptions} is {@code null}
+     * @throws ClassCastException if the arguments of this option are not of the expected type
+     * @see OptionSet#valueOf(OptionSpec)
+     */
+    default Optional<V> valueOptional( OptionSet detectedOptions ) {
+        return Optional.ofNullable( value( detectedOptions ) );
+    }
 
     /**
      * @return the string representations of this option

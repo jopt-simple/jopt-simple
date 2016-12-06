@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.util.Optional;
+
 import static java.lang.Boolean.*;
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -42,9 +44,9 @@ import static org.junit.Assert.*;
 public class OptionParserTest extends AbstractOptionParserFixture {
     @Test
     public void optionsAndNonOptionsInterspersed() {
-        parser.accepts( "i" ).withOptionalArg();
+        parser.accepts("i" ).withOptionalArg();
         parser.accepts( "j" ).withOptionalArg();
-        parser.accepts( "k" );
+        OptionSpec<Void> k = parser.accepts( "k" );
 
         OptionSet options =
             parser.parse( "-ibar", "-i", "junk", "xyz", "-jixnay", "foo", "-k", "blah", "--", "yermom" );
@@ -56,6 +58,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
         assertEquals( singletonList( "ixnay" ), options.valuesOf( "j" ) );
         assertEquals( emptyList(), options.valuesOf( "k" ) );
         assertEquals( asList( "xyz", "foo", "blah", "yermom" ), options.nonOptionArguments() );
+        assertEquals( Optional.empty(), k.valueOptional( options ) );
     }
 
     @Test
@@ -167,9 +170,11 @@ public class OptionParserTest extends AbstractOptionParserFixture {
         assertOptionDetected( options, "a" );
         assertOptionDetected( options, "b" );
         assertEquals( FALSE, options.valueOf( "a" ) );
-        assertEquals( singletonList( FALSE ), options.valuesOf( "a" ) );
+        assertEquals( Optional.of( false ), options.valueOfOptional( "a" ) );
+        assertEquals( singletonList( false ), options.valuesOf( "a" ) );
         assertEquals( Integer.valueOf( "3" ), options.valueOf( "b" ) );
-        assertEquals( singletonList( Integer.valueOf( "3" ) ), options.valuesOf( "b" ) );
+        assertEquals( Optional.of( 3 ), options.valueOfOptional( "b" ) );
+        assertEquals( singletonList( 3 ), options.valuesOf( "b" ) );
         assertEquals( singletonList( "extra" ), options.nonOptionArguments() );
     }
 
@@ -237,6 +242,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "i" );
         assertEquals( "", optionI.value( options ) );
+        assertEquals( Optional.of( "" ), optionI.valueOptional( options ) );
     }
 
     @Test
@@ -248,6 +254,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "j" );
         assertEquals( whitespace, optionJ.value( options ) );
+        assertEquals( Optional.of( whitespace ), optionJ.valueOptional( options ) );
     }
 
     @Test
@@ -259,6 +266,7 @@ public class OptionParserTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "j" );
         assertEquals( withEmbeddedWhitespace, optionJ.value( options ) );
+        assertEquals( Optional.of( withEmbeddedWhitespace ), optionJ.valueOptional( options ) );
     }
     
     @Test

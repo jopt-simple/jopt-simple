@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.util.Optional;
+
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
@@ -51,6 +53,7 @@ public class ShortOptionsNoArgumentTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "a" );
         assertNull( options.valueOf( "a" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "a" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -62,6 +65,8 @@ public class ShortOptionsNoArgumentTest extends AbstractOptionParserFixture {
         assertOptionDetected( options, "b" );
         assertNull( options.valueOf( "a" ) );
         assertNull( options.valueOf( "b" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "a" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -71,6 +76,7 @@ public class ShortOptionsNoArgumentTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "c" );
         assertNull( options.valueOf( "c" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "c" ) );
         assertEquals( singletonList( "foo" ), options.nonOptionArguments() );
     }
 
@@ -84,6 +90,9 @@ public class ShortOptionsNoArgumentTest extends AbstractOptionParserFixture {
         assertNull( options.valueOf( "a" ) );
         assertNull( options.valueOf( "b" ) );
         assertNull( options.valueOf( "c" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "a" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "b" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "c" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -93,6 +102,7 @@ public class ShortOptionsNoArgumentTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "a" );
         assertNull( options.valueOf( "a" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "a" ) );
         assertOptionNotDetected( options, "b" );
         assertEquals( asList( "-a", "-b" ), options.nonOptionArguments() );
     }
@@ -103,6 +113,7 @@ public class ShortOptionsNoArgumentTest extends AbstractOptionParserFixture {
 
         assertOptionDetected( options, "b" );
         assertNull( options.valueOf( "b" ) );
+        assertEquals( Optional.empty(), options.valueOfOptional( "b" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 }

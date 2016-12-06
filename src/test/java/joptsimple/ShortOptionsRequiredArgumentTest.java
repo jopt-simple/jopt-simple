@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.util.Optional;
+
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
 
@@ -60,6 +62,7 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
 
         assertOptionDetected( options, "d" );
         assertEquals( "foo", options.valueOf( "d" ) );
+        assertEquals( Optional.of( "foo" ), options.valueOfOptional( "d" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
@@ -78,6 +81,7 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
         assertOptionDetected( options, "f" );
         assertOptionDetected( options, "e" );
         assertEquals( "foo", options.valueOf( "d" ) );
+        assertEquals( Optional.of( "foo" ), options.valueOfOptional( "d" ) );
     }
     
     @Test
@@ -89,6 +93,7 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
         assertOptionNotDetected( options, "e" );
         
         assertEquals( "e", options.valueOf( "d" ) );
+        assertEquals( Optional.of( "e" ), options.valueOfOptional( "d" ) );
     }
 
     @Test
@@ -98,6 +103,7 @@ public class ShortOptionsRequiredArgumentTest extends AbstractOptionParserFixtur
         assertOptionDetected( options, "d" );
         assertOptionNotDetected( options, "infile" );
         assertEquals( "--infile", options.valueOf( "d" ) );
+        assertEquals( Optional.of( "--infile" ), options.valueOfOptional( "d" ) );
         assertEquals( emptyList(), options.nonOptionArguments() );
     }
 
