@@ -27,6 +27,7 @@ package joptsimple;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Collections.*;
 
@@ -67,6 +68,11 @@ public abstract class AbstractOptionSpec<V> implements OptionSpec<V>, OptionDesc
     @Override
     public final V value( OptionSet detectedOptions ) {
         return detectedOptions.valueOf( this );
+    }
+
+    @Override
+    public final Optional<V> valueOptional( OptionSet detectedOptions ) {
+        return Optional.ofNullable( value( detectedOptions ) );
     }
 
     @Override

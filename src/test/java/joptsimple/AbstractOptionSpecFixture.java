@@ -47,12 +47,17 @@ public abstract class AbstractOptionSpecFixture extends EqualsHashCodeTestSuppor
     protected abstract AbstractOptionSpec<?> createNotEqualOptionSpecInstance();
 
     @Test( expected = NullPointerException.class )
-    public final void testValuesWithNullOptionSet() {
+    public final void valuesWithNullOptionSet() {
         createEqualOptionSpecInstance().values( null );
     }
 
     @Test( expected = NullPointerException.class )
-    public final void testValueWithNullOptionSet() {
+    public final void valueWithNullOptionSet() {
         createNotEqualOptionSpecInstance().value( null );
+    }
+
+    @Test( expected = NullPointerException.class )
+    public final void valueOptionalWithNullOptionSet() {
+        createNotEqualOptionSpecInstance().valueOptional( null );
     }
 }

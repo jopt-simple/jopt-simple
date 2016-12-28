@@ -25,6 +25,8 @@
 
 package joptsimple;
 
+import java.util.Optional;
+
 import static java.util.Collections.*;
 
 import org.junit.Before;
@@ -55,6 +57,12 @@ public class PopulatedOptionSetTest {
     public void valueOf() {
         assertNull( populated.valueOf( "a" ) );
         assertEquals( "arg-of-b", populated.valueOf( "b" ) );
+    }
+
+    @Test
+    public void valueOfOptional() {
+        assertEquals( Optional.empty(), populated.valueOfOptional( "a" ) );
+        assertEquals( Optional.of( "arg-of-b" ), populated.valueOfOptional( "b" ) );
     }
 
     @Test

@@ -27,6 +27,7 @@ package joptsimple;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import static java.math.BigDecimal.*;
 import static java.util.Arrays.*;
@@ -54,7 +55,10 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
         Integer expectedArgument = 1;
         assertEquals( expectedArgument, options.valueOf( "a" ) );
         assertEquals( expectedArgument, options.valueOf( optionA ) );
+        assertEquals( Optional.of( expectedArgument ), options.valueOfOptional( "a" ) );
+        assertEquals( Optional.of( expectedArgument ), options.valueOfOptional( optionA ) );
         assertEquals( expectedArgument, optionA.value( options ) );
+        assertEquals( Optional.of( expectedArgument ), optionA.valueOptional( options ) );
         assertEquals( singletonList( expectedArgument ), options.valuesOf( "a" ) );
         assertEquals( singletonList( expectedArgument ), options.valuesOf( optionA ) );
         assertEquals( singletonList( expectedArgument ), optionA.values( options ) );
@@ -81,7 +85,10 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
         Long expectedArgument = -1L;
         assertEquals( expectedArgument, options.valueOf( "a" ) );
         assertEquals( expectedArgument, options.valueOf( optionA ) );
+        assertEquals( Optional.of( expectedArgument ), options.valueOfOptional( "a" ) );
+        assertEquals( Optional.of( expectedArgument ), options.valueOfOptional( optionA ) );
         assertEquals( expectedArgument, optionA.value( options ) );
+        assertEquals( Optional.of( expectedArgument ), optionA.valueOptional( options ) );
         assertEquals( singletonList( expectedArgument ), options.valuesOf( "a" ) );
         assertEquals( singletonList( expectedArgument ), options.valuesOf( optionA ) );
         assertEquals( singletonList( expectedArgument ), optionA.values( options ) );
@@ -101,7 +108,10 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
         Long expectedArgument = 2L;
         assertEquals( expectedArgument, options.valueOf( "a" ) );
         assertEquals( expectedArgument, options.valueOf( optionA ) );
+        assertEquals( Optional.of( expectedArgument ), options.valueOfOptional( "a" ) );
+        assertEquals( Optional.of( expectedArgument ), options.valueOfOptional( optionA ) );
         assertEquals( expectedArgument, optionA.value( options ) );
+        assertEquals( Optional.of( expectedArgument ), optionA.valueOptional( options ) );
         assertEquals( singletonList( expectedArgument ), options.valuesOf( "a" ) );
         assertEquals( singletonList( expectedArgument ), options.valuesOf( optionA ) );
         assertEquals( singletonList( expectedArgument ), optionA.values( options ) );
@@ -120,7 +130,10 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
         assertFalse( options.hasArgument( optionA ) );
         assertEquals( TEN, options.valueOf( "a" ) );
         assertEquals( TEN, options.valueOf( optionA ) );
+        assertEquals( Optional.of( TEN ), options.valueOfOptional( "a" ) );
+        assertEquals( Optional.of( TEN ), options.valueOfOptional( optionA ) );
         assertEquals( TEN, optionA.value( options ) );
+        assertEquals( Optional.of( TEN ), optionA.valueOptional( options ) );
         assertEquals( singletonList( TEN ), options.valuesOf( "a" ) );
         assertEquals( singletonList( TEN ), options.valuesOf( optionA ) );
         assertEquals( singletonList( TEN ), optionA.values( options ) );
@@ -139,7 +152,10 @@ public class HandlingDefaultValuesForOptionArgumentsTest extends AbstractOptionP
         assertFalse( options.hasArgument( optionA ) );
         assertEquals( TEN, options.valueOf( "a" ) );
         assertEquals( TEN, options.valueOf( optionA ) );
+        assertEquals( Optional.of( TEN ), options.valueOfOptional( "a" ) );
+        assertEquals( Optional.of( TEN ), options.valueOfOptional( optionA ) );
         assertEquals( TEN, optionA.value( options ) );
+        assertEquals( Optional.of( TEN ), optionA.valueOptional( options ) );
         assertEquals( singletonList( TEN ), options.valuesOf( "a" ) );
         assertEquals( singletonList( TEN ), options.valuesOf( optionA ) );
         assertEquals( singletonList( TEN ), optionA.values( options ) );
