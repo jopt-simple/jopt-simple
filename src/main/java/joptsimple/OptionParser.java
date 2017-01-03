@@ -379,7 +379,7 @@ public class OptionParser implements OptionDeclarer {
         return options;
     }
 
-   /**
+    /**
      * Parses the given command line arguments according to the option specifications given to the parser.
      *
      * @param arguments arguments to parse
@@ -399,6 +399,7 @@ public class OptionParser implements OptionDeclarer {
 
         ensureRequiredOptions( detected );
         ensureAllowedOptions( detected );
+        ensureDesiredRangeOfNonOptionArguments( detected );
 
         return detected;
     }
@@ -459,7 +460,7 @@ public class OptionParser implements OptionDeclarer {
         return missingRequiredOptions;
     }
 
-    private List<AbstractOptionSpec<?>> unavailableOptions(OptionSet options) {
+    private List<AbstractOptionSpec<?>> unavailableOptions( OptionSet options ) {
         List<AbstractOptionSpec<?>> unavailableOptions = new ArrayList<>();
 
         for ( Map.Entry<List<String>, Set<OptionSpec<?>>> eachEntry : availableIf.entrySet() ) {
@@ -479,6 +480,12 @@ public class OptionParser implements OptionDeclarer {
         }
 
         return unavailableOptions;
+    }
+
+    private void ensureDesiredRangeOfNonOptionArguments( OptionSet detected ) {
+        NonOptionArgumentSpec<?> spec =
+            (NonOptionArgumentSpec<?>) recognizedOptions.get( NonOptionArgumentSpec.NAME );
+        spec.validateNumberOfArguments( detected.nonOptionArguments() );
     }
 
     private boolean optionsHasAnyOf( OptionSet options, Collection<OptionSpec<?>> specs ) {

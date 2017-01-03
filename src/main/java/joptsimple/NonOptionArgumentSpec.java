@@ -55,6 +55,8 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
 
     private ValueConverter<V> converter;
     private String argumentDescription = "";
+    private int minCount = 0;
+    private int maxCount = Integer.MAX_VALUE;
 
     NonOptionArgumentSpec() {
         this( "" );
@@ -128,6 +130,36 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
         return this;
     }
 
+    public NonOptionArgumentSpec<V> atLeast( int minimum ) {
+        if ( minimum < 0 ) {
+            throw new IllegalArgumentException(
+                "Negative minimum for non-option arg count: " + minimum );
+        }
+        if ( minimum > maxCount ) {
+            throw new IllegalArgumentException(
+                "Minimum for non-option arg count " + minimum
+                    + " < set maximum: " + maxCount );
+        }
+
+        minCount = minimum;
+        return this;
+    }
+
+    public NonOptionArgumentSpec<V> atMost( int maximum ) {
+        if ( maximum < 0 ) {
+            throw new IllegalArgumentException(
+                "Negative maximum for non-option arg count: " + maximum );
+        }
+        if ( maximum < minCount ) {
+            throw new IllegalArgumentException(
+                "Maximum for non-option arg count " + maximum
+                    + " < set minimum: " + minCount );
+        }
+
+        maxCount = maximum;
+        return this;
+    }
+
     @Override
     protected final V convert( String argument ) {
         return convertWith( converter, argument );
@@ -138,6 +170,21 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
         String detectedArgument ) {
 
         detectedOptions.addWithArgument( this, detectedArgument );
+    }
+
+    @Override
+    public String description() {
+        StringBuilder description = new StringBuilder( super.description() );
+
+        if ( minSet() )
+            description.append( " (min " ).append( minCount );
+        if ( maxSet() )
+            description.append( minSet() ? ", " : " (" ).append( "max " ).append( maxCount );
+
+        if ( minSet() || maxSet() )
+            description.append( ')' );
+
+        return description.toString();
     }
 
     public List<?> defaultValues() {
@@ -166,5 +213,20 @@ public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
 
     public boolean representsNonOptions() {
         return true;
+    }
+
+    void validateNumberOfArguments( List<?> nonOptions ) {
+        if ( nonOptions.size() < minCount || nonOptions.size() > maxCount ) {
+            throw new UnacceptableNumberOfNonOptionsException(
+                minCount, maxCount, nonOptions.size() );
+        }
+    }
+
+    private boolean minSet() {
+        return minCount != 0;
+    }
+
+    private boolean maxSet() {
+        return maxCount != Integer.MAX_VALUE;
     }
 }

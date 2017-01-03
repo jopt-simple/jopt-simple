@@ -2,6 +2,11 @@
                                        Change Log
                                        ----------
 
+Changes in version 5.1
+
+    * Resolve {{{https://github.com/pholser/jopt-simple/issues/103} gh-103}} by adding
+      <<<NoArgumentOptionSpec.atLeast()>>> and <<<NoArgumentOptionSpec.atMost()>>>.
+
 Changes in version 5.0.3
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/96} gh-96}} so that

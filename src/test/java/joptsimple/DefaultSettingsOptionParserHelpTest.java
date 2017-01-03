@@ -566,6 +566,48 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     }
 
     @Test
+    public void showsNonOptionArgumentMin() throws Exception {
+        parser.nonOptions( "stuff" ).atLeast( 2 );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:    ",
+            "[String] -- stuff (min 2)",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentMax() throws Exception {
+        parser.nonOptions( "stuff" ).atMost( 3 );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:    ",
+            "[String] -- stuff (max 3)",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentMinAndMax() throws Exception {
+        parser.nonOptions( "stuff" ).atLeast( 5 ).atMost( 7 );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:           ",
+            "[String] -- stuff (min 5, max 7)",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
     public void showsNonOptionArgumentDescription() throws Exception {
         parser.nonOptions( "stuff" );
 
@@ -622,6 +664,20 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
     }
 
     @Test
+    public void showsNonOptionArgumentTypeAndArgumentDescriptionAndMinMax() throws Exception {
+        parser.nonOptions().ofType( File.class ).describedAs( "files" ).atLeast( 1 ).atMost( 2 );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:           ",
+            "[File: files] --  (min 1, max 2)",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
     public void showsNonOptionArgumentTypeAndDescription() throws Exception {
         parser.nonOptions( "some files to operate on" ).ofType( File.class );
 
@@ -644,6 +700,23 @@ public class DefaultSettingsOptionParserHelpTest extends AbstractOptionParserFix
         assertHelpLines(
             "Non-option arguments:                    ",
             "[File: files] -- some files to operate on",
+            EMPTY,
+            "No options specified  ",
+            EMPTY );
+    }
+
+    @Test
+    public void showsNonOptionArgumentTypeAndDescriptionAndArgumentDescriptionAndMinMax() throws Exception {
+        parser.nonOptions( "some files to operate on" )
+            .ofType( File.class )
+            .describedAs( "files" )
+            .atLeast( 2 ).atMost( 10 );
+
+        parser.printHelpOn( sink );
+
+        assertHelpLines(
+            "Non-option arguments:                                    ",
+            "[File: files] -- some files to operate on (min 2, max 10)",
             EMPTY,
             "No options specified  ",
             EMPTY );

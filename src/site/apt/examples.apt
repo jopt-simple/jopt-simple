@@ -347,6 +347,9 @@ Options
     method <<<nonOptionArguments()>>> on <<<OptionSet>>>.  If the double hyphen is an
     argument, it is ignored and is not a non-option argument.
 
+    You may constrain the number of allowed non-option arguments using <<<atLeast()>>>
+    and <<<atMost()>>>.
+
 +----------------------------------------------------------------------------------------
 @SIGNALLING_END_OF_OPTIONS_EXAMPLE@
 +----------------------------------------------------------------------------------------
