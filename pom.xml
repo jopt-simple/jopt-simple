@@ -20,15 +20,20 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git://github.com/pholser/jopt-simple.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/pholser/jopt-simple.git</developerConnection>
-        <url>https://github.com/pholser/jopt-simple</url>
+        <connection>scm:git:git://github.com/jopt-simple/jopt-simple.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jopt-simple/jopt-simple.git</developerConnection>
+        <url>https://github.com/jopt-simple/jopt-simple</url>
     </scm>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/pholser/jopt-simple/issues</url>
+        <url>https://github.com/jopt-simple/jopt-simple/issues</url>
     </issueManagement>
     <developers>
+        <developer>
+            <id>twoqubed</id>
+            <name>Ryan Breidenbach</name>
+            <email>ryan.breidenbach+jopt-simple@gmail.com</email>
+        </developer>
         <developer>
             <id>pholser</id>
             <name>Paul Holser</name>
@@ -260,7 +265,7 @@
                     <links>
                         <link>https://docs.oracle.com/javase/8/docs/api</link>
                     </links>
-                    <bottom><![CDATA[<i>&copy; Copyright 2004-2016 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License. pholser@alumni.rice.edu</i>]]></bottom>
+                    <bottom><![CDATA[<i>&copy; Copyright 2004-2016 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License.</i>]]></bottom>
                 </configuration>
                 <reportSets>
                     <reportSet>
@@ -308,7 +313,7 @@
     <distributionManagement>
         <site>
             <id>github-project-site</id>
-            <url>gitsite:git@github.com/pholser/jopt-simple.git</url>
+            <url>gitsite:git@github.com/jopt-simple/jopt-simple.git</url>
         </site>
     </distributionManagement>
 </project>
