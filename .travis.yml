@@ -16,3 +16,4 @@ notifications:
     email:
         recipients:
         - pholser@alumni.rice.edu 
+        - ryan.breidenbach@gmail.com
