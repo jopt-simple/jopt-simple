@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/jopt-simple/jopt-simple.svg?branch=master)](https://travis-ci.org/jopt-simple/jopt-simple)
 
-Please see http://jopt-simple.github.com/jopt-simple for more information.
+Please see http://jopt-simple.github.io/jopt-simple for more information.
 
 ### Discussing
 
