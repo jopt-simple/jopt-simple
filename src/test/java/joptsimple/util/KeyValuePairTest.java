@@ -43,7 +43,7 @@ public class KeyValuePairTest {
         KeyValuePair pair = KeyValuePair.valueOf( "" );
 
         assertEquals( "", pair.key );
-        assertEquals( "", pair.value );
+        assertNull( pair.value );
     }
 
     @Test
@@ -51,7 +51,7 @@ public class KeyValuePairTest {
         KeyValuePair pair = KeyValuePair.valueOf( "aString" );
 
         assertEquals( "aString", pair.key );
-        assertEquals( "", pair.value );
+        assertNull( pair.value );
     }
 
     @Test

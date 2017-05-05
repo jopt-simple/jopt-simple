@@ -253,7 +253,7 @@ public abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOptionSpec<
     final void handleOption( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions,
         String detectedArgument ) {
 
-        if ( isNullOrEmpty( detectedArgument ) )
+        if ( detectedArgument == null )
             detectOptionArgument( parser, arguments, detectedOptions );
         else
             addArguments( detectedOptions, detectedArgument );
