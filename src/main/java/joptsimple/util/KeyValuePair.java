@@ -49,7 +49,7 @@ public final class KeyValuePair {
      *
      * @param asString key-value string
      * @return a key-value pair
-     * @throws NullPointerException if {@code stringRepresentation} is {@code null}
+     * @throws NullPointerException if {@code asString} is {@code null}
      */
     public static KeyValuePair valueOf( String asString ) {
         int equalsIndex = asString.indexOf( '=' );
