@@ -54,7 +54,7 @@ public final class KeyValuePair {
     public static KeyValuePair valueOf( String asString ) {
         int equalsIndex = asString.indexOf( '=' );
         if ( equalsIndex == -1 )
-            return new KeyValuePair( asString, EMPTY );
+            return new KeyValuePair( asString, null );
 
         String aKey = asString.substring( 0, equalsIndex );
         String aValue = equalsIndex == asString.length() - 1 ? EMPTY : asString.substring( equalsIndex + 1 );
