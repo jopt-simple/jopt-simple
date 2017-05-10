@@ -30,4 +30,32 @@ public class LongOptionsWithArgumentsTest {
         assertNull( options.valueOf( "level" ) );
         assertEquals( emptyList(), options.valuesOf( "level" ) );
     }
+
+    @Test
+    public void supportsLongOptionsWithEmptyArguments() {
+        OptionParser parser = new OptionParser();
+        parser.accepts( "verbose" );
+        parser.accepts( "brief" );
+        parser.accepts( "add" );
+        parser.accepts( "append" );
+        parser.accepts( "delete" ).withRequiredArg();
+        parser.accepts( "create" ).withRequiredArg();
+        parser.accepts( "file" ).withRequiredArg();
+
+        OptionSet options = parser.parse( "--delete", "", "--add" );
+
+        assertTrue( options.has( "delete" ) );
+        assertTrue( options.hasArgument( "delete" ) );
+        assertEquals( "", options.valueOf( "delete" ) );
+
+        assertTrue( options.has( "add" ) );
+
+        options = parser.parse( "--delete=", "--add" );
+
+        assertTrue( options.has( "delete" ) );
+        assertTrue( options.hasArgument( "delete" ) );
+        assertEquals( "", options.valueOf( "delete" ) );
+
+        assertTrue( options.has( "add" ) );
+    }
 }
