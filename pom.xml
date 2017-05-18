@@ -20,9 +20,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git://github.com/pholser/jopt-simple.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/pholser/jopt-simple.git</developerConnection>
-        <url>https://github.com/pholser/jopt-simple</url>
+        <connection>scm:git:git://github.com/jopt-simple/jopt-simple.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jopt-simple/jopt-simple.git</developerConnection>
+        <url>https://github.com/jopt-simple/jopt-simple</url>
     </scm>
     <issueManagement>
         <system>GitHub</system>
