@@ -7,7 +7,7 @@
     </parent>
     <groupId>net.sf.jopt-simple</groupId>
     <artifactId>jopt-simple</artifactId>
-    <version>5.0.4</version>
+    <version>5.0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JOpt Simple</name>
     <url>http://pholser.github.io/jopt-simple</url>
