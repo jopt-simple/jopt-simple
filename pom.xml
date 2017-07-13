@@ -10,7 +10,7 @@
     <version>5.0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JOpt Simple</name>
-    <url>http://pholser.github.io/jopt-simple</url>
+    <url>http://jopt-simple.github.io/jopt-simple</url>
     <description>A Java library for parsing command line options</description>
     <licenses>
         <license>
@@ -26,7 +26,7 @@
     </scm>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/pholser/jopt-simple/issues</url>
+        <url>https://github.com/jopt-simple/jopt-simple/issues</url>
     </issueManagement>
     <developers>
         <developer>
@@ -336,7 +336,7 @@
     <distributionManagement>
         <site>
             <id>github-project-site</id>
-            <url>gitsite:git@github.com/pholser/jopt-simple.git</url>
+            <url>gitsite:git@github.com/jopt-simple/jopt-simple.git</url>
         </site>
     </distributionManagement>
 </project>
