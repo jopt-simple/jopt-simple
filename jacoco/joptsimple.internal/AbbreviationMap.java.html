@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AbbreviationMap.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple.internal</a> &gt; <span class="el_source">AbbreviationMap.java</span></div><h1>AbbreviationMap.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple.internal;
+
+import java.util.Map;
+import java.util.TreeMap;
+
+/**
+ * &lt;p&gt;A map whose keys are strings; when a key/value pair is added to the map, the longest unique abbreviations of that
+ * key are added as well, and associated with the value. Thus:&lt;/p&gt;
+ *
+ * &lt;pre&gt;
+ *   &lt;code&gt;
+ *   abbreviations.put( &quot;good&quot;, &quot;bye&quot; );
+ *   &lt;/code&gt;
+ * &lt;/pre&gt;
+ *
+ * &lt;p&gt;would make it such that you could retrieve the value {@code &quot;bye&quot;} from the map using the keys {@code &quot;good&quot;},
+ * {@code &quot;goo&quot;}, {@code &quot;go&quot;}, and {@code &quot;g&quot;}. A subsequent invocation of:&lt;/p&gt;
+ * &lt;pre&gt;
+ *   &lt;code&gt;
+ *   abbreviations.put( &quot;go&quot;, &quot;fish&quot; );
+ *   &lt;/code&gt;
+ * &lt;/pre&gt;
+ *
+ * &lt;p&gt;would make it such that you could retrieve the value {@code &quot;bye&quot;} using the keys {@code &quot;good&quot;} and
+ * {@code &quot;goo&quot;}, and the value {@code &quot;fish&quot;} using the key {@code &quot;go&quot;}.  The key {@code &quot;g&quot;} would yield
+ * {@code null}, since it would no longer be a unique abbreviation.&lt;/p&gt;
+ *
+ * &lt;p&gt;The data structure is much like a &quot;trie&quot;.&lt;/p&gt;
+ *
+ * @param &lt;V&gt; a constraint on the types of the values in the map
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ * @see &lt;a href=&quot;http://perldoc.perl.org/Text/Abbrev.html&quot;&gt;Perl's Text::Abbrev module&lt;/a&gt;
+ * @see &lt;a href=&quot;https://en.wikipedia.org/wiki/Radix_tree&quot;&gt;Radix tree&lt;/a&gt;
+ */
+<span class="fc" id="L60">public class AbbreviationMap&lt;V&gt; implements OptionNameMap&lt;V&gt; {</span>
+<span class="fc" id="L61">    private final Map&lt;Character, AbbreviationMap&lt;V&gt;&gt; children = new TreeMap&lt;&gt;();</span>
+
+    private String key;
+    private V value;
+    private int keysBeyond;
+
+    /**
+     * &lt;p&gt;Tells whether the given key is in the map, or whether the given key is a unique
+     * abbreviation of a key that is in the map.&lt;/p&gt;
+     *
+     * @param key key to look up
+     * @return {@code true} if {@code key} is present in the map
+     * @throws NullPointerException if {@code key} is {@code null}
+     */
+    @Override
+    public boolean contains(String key) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return get(key) != null;</span>
+    }
+
+    /**
+     * &lt;p&gt;Answers the value associated with the given key.  The key can be a unique
+     * abbreviation of a key that is in the map. &lt;/p&gt;
+     *
+     * @param key key to look up
+     * @return the value associated with {@code aKey}; or {@code null} if there is no
+     * such value or {@code aKey} is not a unique abbreviation of a key in the map
+     * @throws NullPointerException if {@code aKey} is {@code null}
+     */
+    @Override
+    public V get( String key ) {
+<span class="fc" id="L91">        char[] chars = charsOf( key );</span>
+
+<span class="fc" id="L93">        AbbreviationMap&lt;V&gt; child = this;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for ( char each : chars ) {</span>
+<span class="fc" id="L95">            child = child.children.get( each );</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if ( child == null )</span>
+<span class="fc" id="L97">                return null;</span>
+        }
+
+<span class="fc" id="L100">        return child.value;</span>
+    }
+
+    /**
+     * &lt;p&gt;Associates a given value with a given key.  If there was a previous
+     * association, the old value is replaced with the new one.&lt;/p&gt;
+     *
+     * @param key key to create in the map
+     * @param newValue value to associate with the key
+     * @throws NullPointerException if {@code aKey} or {@code newValue} is {@code null}
+     * @throws IllegalArgumentException if {@code aKey} is a zero-length string
+     */
+    @Override
+    public void put( String key, V newValue ) {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if ( newValue == null )</span>
+<span class="fc" id="L115">            throw new NullPointerException();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if ( key.length() == 0 )</span>
+<span class="fc" id="L117">            throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L119">        char[] chars = charsOf(key);</span>
+<span class="fc" id="L120">        add( chars, newValue, 0, chars.length );</span>
+<span class="fc" id="L121">    }</span>
+
+    /**
+     * &lt;p&gt;Associates a given value with a given set of keys.  If there was a previous
+     * association, the old value is replaced with the new one.&lt;/p&gt;
+     *
+     * @param keys keys to create in the map
+     * @param newValue value to associate with the key
+     * @throws NullPointerException if {@code keys} or {@code newValue} is {@code null}
+     * @throws IllegalArgumentException if any of {@code keys} is a zero-length string
+     */
+    @Override
+    public void putAll( Iterable&lt;String&gt; keys, V newValue ) {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        for ( String each : keys )</span>
+<span class="fc" id="L135">            put( each, newValue );</span>
+<span class="fc" id="L136">    }</span>
+
+    private boolean add( char[] chars, V newValue, int offset, int length ) {
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        if ( offset == length ) {</span>
+<span class="fc" id="L140">            value = newValue;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            boolean wasAlreadyAKey = key != null;</span>
+<span class="fc" id="L142">            key = new String( chars );</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            return !wasAlreadyAKey;</span>
+        }
+
+<span class="fc" id="L146">        char nextChar = chars[ offset ];</span>
+<span class="fc" id="L147">        AbbreviationMap&lt;V&gt; child = children.get( nextChar );</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if ( child == null ) {</span>
+<span class="fc" id="L149">            child = new AbbreviationMap&lt;&gt;();</span>
+<span class="fc" id="L150">            children.put( nextChar, child );</span>
+        }
+
+<span class="fc" id="L153">        boolean newKeyAdded = child.add( chars, newValue, offset + 1, length );</span>
+
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if ( newKeyAdded )</span>
+<span class="fc" id="L156">            ++keysBeyond;</span>
+
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if ( key == null )</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            value = keysBeyond &gt; 1 ? null : newValue;</span>
+
+<span class="fc" id="L161">        return newKeyAdded;</span>
+    }
+
+    /**
+     * &lt;p&gt;If the map contains the given key, dissociates the key from its value.&lt;/p&gt;
+     *
+     * @param key key to remove
+     * @throws NullPointerException if {@code aKey} is {@code null}
+     * @throws IllegalArgumentException if {@code aKey} is a zero-length string
+     */
+    @Override
+    public void remove( String key ) {
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if ( key.length() == 0 )</span>
+<span class="fc" id="L174">            throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L176">        char[] keyChars = charsOf(key);</span>
+<span class="fc" id="L177">        remove( keyChars, 0, keyChars.length );</span>
+<span class="fc" id="L178">    }</span>
+
+    private boolean remove( char[] aKey, int offset, int length ) {
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if ( offset == length )</span>
+<span class="fc" id="L182">            return removeAtEndOfKey();</span>
+
+<span class="fc" id="L184">        char nextChar = aKey[ offset ];</span>
+<span class="fc" id="L185">        AbbreviationMap&lt;V&gt; child = children.get( nextChar );</span>
+<span class="fc bfc" id="L186" title="All 4 branches covered.">        if ( child == null || !child.remove( aKey, offset + 1, length ) )</span>
+<span class="fc" id="L187">            return false;</span>
+
+<span class="fc" id="L189">        --keysBeyond;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if ( child.keysBeyond == 0 )</span>
+<span class="fc" id="L191">            children.remove( nextChar );</span>
+<span class="fc bfc" id="L192" title="All 4 branches covered.">        if ( keysBeyond == 1 &amp;&amp; key == null )</span>
+<span class="fc" id="L193">            setValueToThatOfOnlyChild();</span>
+
+<span class="fc" id="L195">        return true;</span>
+    }
+
+    private void setValueToThatOfOnlyChild() {
+<span class="fc" id="L199">        Map.Entry&lt;Character, AbbreviationMap&lt;V&gt;&gt; entry = children.entrySet().iterator().next();</span>
+<span class="fc" id="L200">        AbbreviationMap&lt;V&gt; onlyChild = entry.getValue();</span>
+<span class="fc" id="L201">        value = onlyChild.value;</span>
+<span class="fc" id="L202">    }</span>
+
+    private boolean removeAtEndOfKey() {
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        if ( key == null )</span>
+<span class="fc" id="L206">            return false;</span>
+
+<span class="fc" id="L208">        key = null;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        if ( keysBeyond == 1 )</span>
+<span class="fc" id="L210">            setValueToThatOfOnlyChild();</span>
+        else
+<span class="fc" id="L212">            value = null;</span>
+
+<span class="fc" id="L214">        return true;</span>
+    }
+
+    /**
+     * Gives a Java map representation of this abbreviation map.
+     *
+     * @return a Java map corresponding to this abbreviation map
+     */
+    @Override
+    public Map&lt;String, V&gt; toJavaUtilMap() {
+<span class="fc" id="L224">        Map&lt;String, V&gt; mappings = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L225">        addToMappings( mappings );</span>
+<span class="fc" id="L226">        return mappings;</span>
+    }
+
+    private void addToMappings( Map&lt;String, V&gt; mappings ) {
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if ( key != null )</span>
+<span class="fc" id="L231">            mappings.put( key, value );</span>
+
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        for ( AbbreviationMap&lt;V&gt; each : children.values() )</span>
+<span class="fc" id="L234">            each.addToMappings( mappings );</span>
+<span class="fc" id="L235">    }</span>
+
+    private static char[] charsOf( String aKey ) {
+<span class="fc" id="L238">        char[] chars = new char[ aKey.length() ];</span>
+<span class="fc" id="L239">        aKey.getChars( 0, aKey.length(), chars, 0 );</span>
+<span class="fc" id="L240">        return chars;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

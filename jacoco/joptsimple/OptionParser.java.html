@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OptionParser.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple</a> &gt; <span class="el_source">OptionParser.java</span></div><h1>OptionParser.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.*;
+
+import joptsimple.internal.AbbreviationMap;
+import joptsimple.internal.SimpleOptionNameMap;
+import joptsimple.internal.OptionNameMap;
+import joptsimple.util.KeyValuePair;
+
+import static java.util.Collections.*;
+import static joptsimple.OptionException.*;
+import static joptsimple.OptionParserState.*;
+import static joptsimple.ParserRules.*;
+
+/**
+ * &lt;p&gt;Parses command line arguments, using a syntax that attempts to take from the best of POSIX {@code getopt()}
+ * and GNU {@code getopt_long()}.&lt;/p&gt;
+ *
+ * &lt;p&gt;This parser supports short options and long options.&lt;/p&gt;
+ *
+ * &lt;ul&gt;
+ *   &lt;li&gt;&lt;dfn&gt;Short options&lt;/dfn&gt; begin with a single hyphen (&quot;{@code -}&quot;) followed by a single letter or digit,
+ *   or question mark (&quot;{@code ?}&quot;), or dot (&quot;{@code .}&quot;), or underscore (&quot;{@code _}&quot;).&lt;/li&gt;
+ *
+ *   &lt;li&gt;Short options can accept single arguments. The argument can be made required or optional. The option's
+ *   argument can occur:
+ *     &lt;ul&gt;
+ *       &lt;li&gt;in the slot after the option, as in {@code -d /tmp}&lt;/li&gt;
+ *       &lt;li&gt;right up against the option, as in {@code -d/tmp}&lt;/li&gt;
+ *       &lt;li&gt;right up against the option separated by an equals sign ({@code &quot;=&quot;}), as in {@code -d=/tmp}&lt;/li&gt;
+ *     &lt;/ul&gt;
+ *   To specify &lt;em&gt;n&lt;/em&gt; arguments for an option, specify the option &lt;em&gt;n&lt;/em&gt; times, once for each argument,
+ *   as in {@code -d /tmp -d /var -d /opt}; or, when using the
+ *   {@linkplain ArgumentAcceptingOptionSpec#withValuesSeparatedBy(char) &quot;separated values&quot;} clause of the &quot;fluent
+ *   interface&quot; (see below), give multiple values separated by a given character as a single argument to the
+ *   option.&lt;/li&gt;
+ *
+ *   &lt;li&gt;Short options can be clustered, so that {@code -abc} is treated as {@code -a -b -c}. If a short option
+ *   in the cluster can accept an argument, the remaining characters are interpreted as the argument for that
+ *   option.&lt;/li&gt;
+ *
+ *   &lt;li&gt;An argument consisting only of two hyphens ({@code &quot;--&quot;}) signals that the remaining arguments are to be
+ *   treated as non-options.&lt;/li&gt;
+ *
+ *   &lt;li&gt;An argument consisting only of a single hyphen is considered a non-option argument (though it can be an
+ *   argument of an option). Many Unix programs treat single hyphens as stand-ins for the standard input or standard
+ *   output streams.&lt;/li&gt;
+ *
+ *   &lt;li&gt;&lt;dfn&gt;Long options&lt;/dfn&gt; begin with two hyphens ({@code &quot;--&quot;}), followed by multiple letters, digits,
+ *   hyphens, question marks, or dots. A hyphen cannot be the first character of a long option specification when
+ *   configuring the parser.&lt;/li&gt;
+ *
+ *   &lt;li&gt;You can abbreviate long options, so long as the abbreviation is unique. Suppress this behavior if
+ *   you wish using {@linkplain OptionParser#OptionParser(boolean) this constructor}.&lt;/li&gt;
+ *
+ *   &lt;li&gt;Long options can accept single arguments.  The argument can be made required or optional.  The option's
+ *   argument can occur:
+ *     &lt;ul&gt;
+ *       &lt;li&gt;in the slot after the option, as in {@code --directory /tmp}&lt;/li&gt;
+ *       &lt;li&gt;right up against the option separated by an equals sign ({@code &quot;=&quot;}), as in
+ *       {@code --directory=/tmp}
+ *     &lt;/ul&gt;
+ *   Specify multiple arguments for a long option in the same manner as for short options (see above).&lt;/li&gt;
+ *
+ *   &lt;li&gt;You can use a single hyphen ({@code &quot;-&quot;}) instead of a double hyphen ({@code &quot;--&quot;}) for a long
+ *   option.&lt;/li&gt;
+ *
+ *   &lt;li&gt;The option {@code -W} is reserved.  If you tell the parser to {@linkplain
+ *   #recognizeAlternativeLongOptions(boolean) recognize alternative long options}, then it will treat, for example,
+ *   {@code -W foo=bar} as the long option {@code foo} with argument {@code bar}, as though you had written
+ *   {@code --foo=bar}.&lt;/li&gt;
+ *
+ *   &lt;li&gt;You can specify {@code -W} as a valid short option, or use it as an abbreviation for a long option, but
+ *   {@linkplain #recognizeAlternativeLongOptions(boolean) recognizing alternative long options} will always supersede
+ *   this behavior.&lt;/li&gt;
+ *
+ *   &lt;li&gt;You can specify a given short or long option multiple times on a single command line. The parser collects
+ *   any arguments specified for those options as a list.&lt;/li&gt;
+ *
+ *   &lt;li&gt;If the parser detects an option whose argument is optional, and the next argument &quot;looks like&quot; an option,
+ *   that argument is not treated as the argument to the option, but as a potentially valid option. If, on the other
+ *   hand, the optional argument is typed as a derivative of {@link Number}, then that argument is treated as the
+ *   negative number argument of the option, even if the parser recognizes the corresponding numeric option.
+ *   For example:
+ *   &lt;pre&gt;&lt;code&gt;
+ *     OptionParser parser = new OptionParser();
+ *     parser.accepts( &quot;a&quot; ).withOptionalArg().ofType( Integer.class );
+ *     parser.accepts( &quot;2&quot; );
+ *     OptionSet options = parser.parse( &quot;-a&quot;, &quot;-2&quot; );
+ *   &lt;/code&gt;&lt;/pre&gt;
+ *   In this case, the option set contains {@code &quot;a&quot;} with argument {@code -2}, not both {@code &quot;a&quot;} and
+ *   {@code &quot;2&quot;}. Swapping the elements in the &lt;em&gt;args&lt;/em&gt; array gives the latter.&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;There are two ways to tell the parser what options to recognize:&lt;/p&gt;
+ *
+ * &lt;ol&gt;
+ *   &lt;li&gt;A &quot;fluent interface&quot;-style API for specifying options, available since version 2. Sentences in this fluent
+ *   interface language begin with a call to {@link #accepts(String) accepts} or {@link #acceptsAll(List)
+ *   acceptsAll} methods; calls on the ensuing chain of objects describe whether the options can take an argument,
+ *   whether the argument is required or optional, to what type arguments of the options should be converted if any,
+ *   etc. Since version 3, these calls return an instance of {@link OptionSpec}, which can subsequently be used to
+ *   retrieve the arguments of the associated option in a type-safe manner.&lt;/li&gt;
+ *
+ *   &lt;li&gt;Since version 1, a more concise way of specifying short options has been to use the special {@linkplain
+ *   #OptionParser(String) constructor}. Arguments of options specified in this manner will be of type {@link String}.
+ *   Here are the rules for the format of the specification strings this constructor accepts:
+ *
+ *     &lt;ul&gt;
+ *       &lt;li&gt;Any letter or digit is treated as an option character.&lt;/li&gt;
+ *
+ *       &lt;li&gt;An option character can be immediately followed by an asterisk ({@code *)} to indicate that
+ *       the option is a &quot;help&quot; option.&lt;/li&gt;
+ *
+ *       &lt;li&gt;If an option character (with possible trailing asterisk) is followed by a single colon ({@code &quot;:&quot;}),
+ *       then the option requires an argument.&lt;/li&gt;
+ *
+ *       &lt;li&gt;If an option character (with possible trailing asterisk) is followed by two colons ({@code &quot;::&quot;}),
+ *       then the option accepts an optional argument.&lt;/li&gt;
+ *
+ *       &lt;li&gt;Otherwise, the option character accepts no argument.&lt;/li&gt;
+ *
+ *       &lt;li&gt;If the option specification string begins with a plus sign ({@code &quot;+&quot; }), the parser will behave
+ *       &quot;POSIX-ly correct&quot;.&lt;/li&gt;
+ *
+ *       &lt;li&gt;If the option specification string contains the sequence {@code &quot;W;&quot;} (capital W followed by a
+ *       semicolon), the parser will recognize the alternative form of long options.&lt;/li&gt;
+ *     &lt;/ul&gt;
+ *   &lt;/li&gt;
+ * &lt;/ol&gt;
+ *
+ * &lt;p&gt;Each of the options in a list of options given to {@link #acceptsAll(List) acceptsAll} is treated as a
+ * synonym of the others.  For example:&lt;/p&gt;
+ *   &lt;pre&gt;
+ *     &lt;code&gt;
+ *     OptionParser parser = new OptionParser();
+ *     parser.acceptsAll( asList( &quot;w&quot;, &quot;interactive&quot;, &quot;confirmation&quot; ) );
+ *     OptionSet options = parser.parse( &quot;-w&quot; );
+ *     &lt;/code&gt;
+ *   &lt;/pre&gt;
+ * &lt;p&gt;In this case, &lt;code&gt;options.{@link OptionSet#has(String) has}&lt;/code&gt; would answer {@code true} when given arguments
+ * {@code &quot;w&quot;}, {@code &quot;interactive&quot;}, and {@code &quot;confirmation&quot;}. The {@link OptionSet} would give the same
+ * responses to these arguments for its other methods as well.&lt;/p&gt;
+ *
+ * &lt;p&gt;By default, as with GNU {@code getopt()}, the parser allows intermixing of options and non-options. If, however,
+ * the parser has been created to be &quot;POSIX-ly correct&quot;, then the first argument that does not look lexically like an
+ * option, and is not a required argument of a preceding option, signals the end of options. You can still bind
+ * optional arguments to their options using the abutting (for short options) or {@code =} syntax.&lt;/p&gt;
+ *
+ * &lt;p&gt;Unlike GNU {@code getopt()}, this parser does not honor the environment variable {@code POSIXLY_CORRECT}.
+ * &quot;POSIX-ly correct&quot; parsers are configured by either:&lt;/p&gt;
+ *
+ * &lt;ol&gt;
+ *   &lt;li&gt;using the method {@link #posixlyCorrect(boolean)}, or&lt;/li&gt;
+ *
+ *   &lt;li&gt;using the {@linkplain #OptionParser(String) constructor} with an argument whose first character is a plus sign
+ *   ({@code &quot;+&quot;})&lt;/li&gt;
+ * &lt;/ol&gt;
+ *
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ * @see &lt;a href=&quot;http://www.gnu.org/software/libc/manual&quot;&gt;The GNU C Library&lt;/a&gt;
+ */
+public class OptionParser implements OptionDeclarer {
+    private final OptionNameMap&lt;AbstractOptionSpec&lt;?&gt;&gt; recognizedOptions;
+    private final ArrayList&lt;AbstractOptionSpec&lt;?&gt;&gt; trainingOrder;
+    private final Map&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; requiredIf;
+    private final Map&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; requiredUnless;
+    private final Map&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; availableIf;
+    private final Map&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; availableUnless;
+
+    private OptionParserState state;
+    private boolean posixlyCorrect;
+    private boolean allowsUnrecognizedOptions;
+<span class="fc" id="L203">    private HelpFormatter helpFormatter = new BuiltinHelpFormatter();</span>
+
+    /**
+     * Creates an option parser that initially recognizes no options, and does not exhibit &quot;POSIX-ly correct&quot;
+     * behavior.
+     */
+    public OptionParser() {
+<span class="fc" id="L210">        this(true);</span>
+<span class="fc" id="L211">    }</span>
+
+    /**
+     * Creates an option parser that initially recognizes no options, and does not exhibit &quot;POSIX-ly correct&quot;
+     * behavior.
+     *
+     * @param allowAbbreviations whether unambiguous abbreviations of long options should be recognized
+     * by the parser
+     */
+<span class="fc" id="L220">    public OptionParser( boolean allowAbbreviations ) {</span>
+<span class="fc" id="L221">        trainingOrder = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L222">        requiredIf = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L223">        requiredUnless = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L224">        availableIf = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L225">        availableUnless = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L226">        state = moreOptions( false );</span>
+
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        recognizedOptions = allowAbbreviations</span>
+            ? new AbbreviationMap&lt;&gt;()
+            : new SimpleOptionNameMap&lt;&gt;();
+
+<span class="fc" id="L232">        recognize( new NonOptionArgumentSpec&lt;String&gt;() );</span>
+<span class="fc" id="L233">    }</span>
+
+    /**
+     * Creates an option parser and configures it to recognize the short options specified in the given string.
+     *
+     * Arguments of options specified this way will be of type {@link String}.
+     *
+     * @param optionSpecification an option specification
+     * @throws NullPointerException if {@code optionSpecification} is {@code null}
+     * @throws OptionException if the option specification contains illegal characters or otherwise cannot be
+     * recognized
+     */
+    public OptionParser( String optionSpecification ) {
+<span class="fc" id="L246">        this();</span>
+
+<span class="fc" id="L248">        new OptionSpecTokenizer( optionSpecification ).configure( this );</span>
+<span class="fc" id="L249">    }</span>
+
+    @Override
+    public OptionSpecBuilder accepts( String option ) {
+<span class="fc" id="L253">        return acceptsAll( singletonList( option ) );</span>
+    }
+
+    @Override
+    public OptionSpecBuilder accepts( String option, String description ) {
+<span class="fc" id="L258">        return acceptsAll( singletonList( option ), description );</span>
+    }
+
+    @Override
+    public OptionSpecBuilder acceptsAll( List&lt;String&gt; options ) {
+<span class="fc" id="L263">        return acceptsAll( options, &quot;&quot; );</span>
+    }
+
+    @Override
+    public OptionSpecBuilder acceptsAll( List&lt;String&gt; options, String description ) {
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if ( options.isEmpty() )</span>
+<span class="fc" id="L269">            throw new IllegalArgumentException( &quot;need at least one option&quot; );</span>
+
+<span class="fc" id="L271">        ensureLegalOptions( options );</span>
+
+<span class="fc" id="L273">        return new OptionSpecBuilder( this, options, description );</span>
+    }
+
+    @Override
+    public NonOptionArgumentSpec&lt;String&gt; nonOptions() {
+<span class="fc" id="L278">        NonOptionArgumentSpec&lt;String&gt; spec = new NonOptionArgumentSpec&lt;&gt;();</span>
+
+<span class="fc" id="L280">        recognize( spec );</span>
+
+<span class="fc" id="L282">        return spec;</span>
+    }
+
+    @Override
+    public NonOptionArgumentSpec&lt;String&gt; nonOptions( String description ) {
+<span class="fc" id="L287">        NonOptionArgumentSpec&lt;String&gt; spec = new NonOptionArgumentSpec&lt;&gt;( description );</span>
+
+<span class="fc" id="L289">        recognize( spec );</span>
+
+<span class="fc" id="L291">        return spec;</span>
+    }
+
+    @Override
+    public void posixlyCorrect( boolean setting ) {
+<span class="fc" id="L296">        posixlyCorrect = setting;</span>
+<span class="fc" id="L297">        state = moreOptions( setting );</span>
+<span class="fc" id="L298">    }</span>
+
+    boolean posixlyCorrect() {
+<span class="fc" id="L301">        return posixlyCorrect;</span>
+    }
+
+    @Override
+    public void allowsUnrecognizedOptions() {
+<span class="fc" id="L306">        allowsUnrecognizedOptions = true;</span>
+<span class="fc" id="L307">    }</span>
+
+    boolean doesAllowsUnrecognizedOptions() {
+<span class="fc" id="L310">        return allowsUnrecognizedOptions;</span>
+    }
+
+    @Override
+    public void recognizeAlternativeLongOptions( boolean recognize ) {
+<span class="fc bfc" id="L315" title="All 2 branches covered.">        if ( recognize )</span>
+<span class="fc" id="L316">            recognize( new AlternativeLongOptionSpec() );</span>
+        else
+<span class="fc" id="L318">            recognizedOptions.remove( String.valueOf( RESERVED_FOR_EXTENSIONS ) );</span>
+<span class="fc" id="L319">    }</span>
+
+    void recognize( AbstractOptionSpec&lt;?&gt; spec ) {
+<span class="fc" id="L322">        recognizedOptions.putAll( spec.options(), spec );</span>
+<span class="fc" id="L323">        trainingOrder.add( spec );</span>
+<span class="fc" id="L324">    }</span>
+
+    /**
+     * Writes information about the options this parser recognizes to the given output sink.
+     *
+     * The output sink is flushed, but not closed.
+     *
+     * @param sink the sink to write information to
+     * @throws IOException if there is a problem writing to the sink
+     * @throws NullPointerException if {@code sink} is {@code null}
+     * @see #printHelpOn(Writer)
+     */
+    public void printHelpOn( OutputStream sink ) throws IOException {
+<span class="fc" id="L337">        printHelpOn( new OutputStreamWriter( sink ) );</span>
+<span class="fc" id="L338">    }</span>
+
+    /**
+     * Writes information about the options this parser recognizes to the given output sink.
+     *
+     * The output sink is flushed, but not closed.
+     *
+     * @param sink the sink to write information to
+     * @throws IOException if there is a problem writing to the sink
+     * @throws NullPointerException if {@code sink} is {@code null}
+     * @see #printHelpOn(OutputStream)
+     */
+    public void printHelpOn( Writer sink ) throws IOException {
+<span class="fc" id="L351">        sink.write( helpFormatter.format( _recognizedOptions() ) );</span>
+<span class="fc" id="L352">        sink.flush();</span>
+<span class="fc" id="L353">    }</span>
+
+    /**
+     * Tells the parser to use the given formatter when asked to {@linkplain #printHelpOn(java.io.Writer) print help}.
+     *
+     * @param formatter the formatter to use for printing help
+     * @throws NullPointerException if the formatter is {@code null}
+     */
+    public void formatHelpWith( HelpFormatter formatter ) {
+<span class="fc bfc" id="L362" title="All 2 branches covered.">        if ( formatter == null )</span>
+<span class="fc" id="L363">            throw new NullPointerException();</span>
+
+<span class="fc" id="L365">        helpFormatter = formatter;</span>
+<span class="fc" id="L366">    }</span>
+
+    /**
+     * Retrieves all options-spec pairings which have been configured for the parser in the same order as declared
+     * during training. Option flags for specs are alphabetized by {@link OptionSpec#options()}; only the order of the
+     * specs is preserved.
+     *
+     * (Note: prior to 4.7 the order was alphabetical across all options regardless of spec.)
+     *
+     * @return a map containing all the configured options and their corresponding {@link OptionSpec}
+     * @since 4.6
+     */
+    public Map&lt;String, OptionSpec&lt;?&gt;&gt; recognizedOptions() {
+<span class="fc" id="L379">        return new LinkedHashMap&lt;&gt;( _recognizedOptions() );</span>
+    }
+
+    private Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; _recognizedOptions() {
+<span class="fc" id="L383">        Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; options = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">        for ( AbstractOptionSpec&lt;?&gt; spec : trainingOrder ) {</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">            for ( String option : spec.options() )</span>
+<span class="fc" id="L386">                options.put( option, spec );</span>
+<span class="fc" id="L387">        }</span>
+<span class="fc" id="L388">        return options;</span>
+    }
+
+   /**
+     * Parses the given command line arguments according to the option specifications given to the parser.
+     *
+     * @param arguments arguments to parse
+     * @return an {@link OptionSet} describing the parsed options, their arguments, and any non-option arguments found
+     * @throws OptionException if problems are detected while parsing
+     * @throws NullPointerException if the argument list is {@code null}
+     */
+    public OptionSet parse( String... arguments ) {
+<span class="fc" id="L400">        ArgumentList argumentList = new ArgumentList( arguments );</span>
+<span class="fc" id="L401">        OptionSet detected = new OptionSet( recognizedOptions.toJavaUtilMap() );</span>
+<span class="fc" id="L402">        detected.add( recognizedOptions.get( NonOptionArgumentSpec.NAME ) );</span>
+
+<span class="fc bfc" id="L404" title="All 2 branches covered.">        while ( argumentList.hasMore() )</span>
+<span class="fc" id="L405">            state.handleArgument( this, argumentList, detected );</span>
+
+<span class="fc" id="L407">        reset();</span>
+
+<span class="fc" id="L409">        ensureRequiredOptions( detected );</span>
+<span class="fc" id="L410">        ensureAllowedOptions( detected );</span>
+
+<span class="fc" id="L412">        return detected;</span>
+    }
+
+    /**
+     * Mandates mutual exclusiveness for the options built by the specified builders.
+     *
+     * @param specs descriptors for options that should be mutually exclusive on a command line.
+     * @throws NullPointerException if {@code specs} is {@code null}
+     */
+    public void mutuallyExclusive( OptionSpecBuilder... specs ) {
+<span class="fc bfc" id="L422" title="All 2 branches covered.">        for ( int i = 0; i &lt; specs.length; i++ ) {</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">            for ( int j = 0; j &lt; specs.length; j++ ) {</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">                if ( i != j )</span>
+<span class="fc" id="L425">                    specs[i].availableUnless( specs[j] );</span>
+            }
+        }
+<span class="fc" id="L428">    }</span>
+
+    private void ensureRequiredOptions( OptionSet options ) {
+<span class="fc" id="L431">        List&lt;AbstractOptionSpec&lt;?&gt;&gt; missingRequiredOptions = missingRequiredOptions(options);</span>
+<span class="fc" id="L432">        boolean helpOptionPresent = isHelpOptionPresent( options );</span>
+
+<span class="fc bfc" id="L434" title="All 4 branches covered.">        if ( !missingRequiredOptions.isEmpty() &amp;&amp; !helpOptionPresent )</span>
+<span class="fc" id="L435">            throw new MissingRequiredOptionsException( missingRequiredOptions );</span>
+<span class="fc" id="L436">    }</span>
+
+    private void ensureAllowedOptions( OptionSet options ) {
+<span class="fc" id="L439">        List&lt;AbstractOptionSpec&lt;?&gt;&gt; forbiddenOptions = unavailableOptions( options );</span>
+<span class="fc" id="L440">        boolean helpOptionPresent = isHelpOptionPresent( options );</span>
+
+<span class="fc bfc" id="L442" title="All 4 branches covered.">        if ( !forbiddenOptions.isEmpty() &amp;&amp; !helpOptionPresent )</span>
+<span class="fc" id="L443">            throw new UnavailableOptionException( forbiddenOptions );</span>
+<span class="fc" id="L444">    }</span>
+
+    private List&lt;AbstractOptionSpec&lt;?&gt;&gt; missingRequiredOptions( OptionSet options ) {
+<span class="fc" id="L447">        List&lt;AbstractOptionSpec&lt;?&gt;&gt; missingRequiredOptions = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L449" title="All 2 branches covered.">        for ( AbstractOptionSpec&lt;?&gt; each : recognizedOptions.toJavaUtilMap().values() ) {</span>
+<span class="fc bfc" id="L450" title="All 4 branches covered.">            if ( each.isRequired() &amp;&amp; !options.has( each ) )</span>
+<span class="fc" id="L451">                missingRequiredOptions.add(each);</span>
+<span class="fc" id="L452">        }</span>
+
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        for ( Map.Entry&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; each : requiredIf.entrySet() ) {</span>
+<span class="fc" id="L455">            AbstractOptionSpec&lt;?&gt; required = specFor( each.getKey().iterator().next() );</span>
+
+<span class="fc bfc" id="L457" title="All 4 branches covered.">            if ( optionsHasAnyOf( options, each.getValue() ) &amp;&amp; !options.has( required ) )</span>
+<span class="fc" id="L458">                missingRequiredOptions.add( required );</span>
+<span class="fc" id="L459">        }</span>
+
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        for ( Map.Entry&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; each : requiredUnless.entrySet() ) {</span>
+<span class="fc" id="L462">            AbstractOptionSpec&lt;?&gt; required = specFor(each.getKey().iterator().next());</span>
+
+<span class="fc bfc" id="L464" title="All 4 branches covered.">            if ( !optionsHasAnyOf( options, each.getValue() ) &amp;&amp; !options.has( required ) )</span>
+<span class="fc" id="L465">                missingRequiredOptions.add( required );</span>
+<span class="fc" id="L466">        }</span>
+
+<span class="fc" id="L468">        return missingRequiredOptions;</span>
+    }
+
+    private List&lt;AbstractOptionSpec&lt;?&gt;&gt; unavailableOptions(OptionSet options) {
+<span class="fc" id="L472">        List&lt;AbstractOptionSpec&lt;?&gt;&gt; unavailableOptions = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L474" title="All 2 branches covered.">        for ( Map.Entry&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; eachEntry : availableIf.entrySet() ) {</span>
+<span class="fc" id="L475">            AbstractOptionSpec&lt;?&gt; forbidden = specFor( eachEntry.getKey().iterator().next() );</span>
+
+<span class="fc bfc" id="L477" title="All 4 branches covered.">            if ( !optionsHasAnyOf( options, eachEntry.getValue() ) &amp;&amp; options.has( forbidden ) ) {</span>
+<span class="fc" id="L478">                unavailableOptions.add(forbidden);</span>
+            }
+<span class="fc" id="L480">        }</span>
+
+<span class="fc bfc" id="L482" title="All 2 branches covered.">        for ( Map.Entry&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; eachEntry : availableUnless.entrySet() ) {</span>
+<span class="fc" id="L483">            AbstractOptionSpec&lt;?&gt; forbidden = specFor( eachEntry.getKey().iterator().next() );</span>
+
+<span class="fc bfc" id="L485" title="All 4 branches covered.">            if ( optionsHasAnyOf( options, eachEntry.getValue() ) &amp;&amp; options.has( forbidden ) ) {</span>
+<span class="fc" id="L486">                unavailableOptions.add(forbidden);</span>
+            }
+<span class="fc" id="L488">        }</span>
+
+<span class="fc" id="L490">        return unavailableOptions;</span>
+    }
+
+    private boolean optionsHasAnyOf( OptionSet options, Collection&lt;OptionSpec&lt;?&gt;&gt; specs ) {
+<span class="fc bfc" id="L494" title="All 2 branches covered.">        for ( OptionSpec&lt;?&gt; each : specs ) {</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">            if ( options.has( each ) )</span>
+<span class="fc" id="L496">                return true;</span>
+<span class="fc" id="L497">        }</span>
+
+<span class="fc" id="L499">        return false;</span>
+    }
+
+    private boolean isHelpOptionPresent( OptionSet options ) {
+<span class="fc" id="L503">        boolean helpOptionPresent = false;</span>
+
+<span class="fc bfc" id="L505" title="All 2 branches covered.">        for ( AbstractOptionSpec&lt;?&gt; each : recognizedOptions.toJavaUtilMap().values() ) {</span>
+<span class="fc bfc" id="L506" title="All 4 branches covered.">            if ( each.isForHelp() &amp;&amp; options.has( each ) ) {</span>
+<span class="fc" id="L507">                helpOptionPresent = true;</span>
+<span class="fc" id="L508">                break;</span>
+            }
+<span class="fc" id="L510">        }</span>
+
+<span class="fc" id="L512">        return helpOptionPresent;</span>
+    }
+
+    void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
+<span class="fc" id="L516">        KeyValuePair optionAndArgument = parseLongOptionWithArgument( candidate );</span>
+
+<span class="fc bfc" id="L518" title="All 2 branches covered.">        if ( !isRecognized( optionAndArgument.key ) )</span>
+<span class="fc" id="L519">            throw unrecognizedOption( optionAndArgument.key );</span>
+
+<span class="fc" id="L521">        AbstractOptionSpec&lt;?&gt; optionSpec = specFor( optionAndArgument.key );</span>
+<span class="fc" id="L522">        optionSpec.handleOption( this, arguments, detected, optionAndArgument.value );</span>
+<span class="fc" id="L523">    }</span>
+
+    void handleShortOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
+<span class="fc" id="L526">        KeyValuePair optionAndArgument = parseShortOptionWithArgument( candidate );</span>
+
+<span class="fc bfc" id="L528" title="All 2 branches covered.">        if ( isRecognized( optionAndArgument.key ) ) {</span>
+<span class="fc" id="L529">            specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );</span>
+        }
+        else
+<span class="fc" id="L532">            handleShortOptionCluster( candidate, arguments, detected );</span>
+<span class="fc" id="L533">    }</span>
+
+    private void handleShortOptionCluster( String candidate, ArgumentList arguments, OptionSet detected ) {
+<span class="fc" id="L536">        char[] options = extractShortOptionsFrom( candidate );</span>
+<span class="fc" id="L537">        validateOptionCharacters( options );</span>
+
+<span class="fc bfc" id="L539" title="All 2 branches covered.">        for ( int i = 0; i &lt; options.length; i++ ) {</span>
+<span class="fc" id="L540">            AbstractOptionSpec&lt;?&gt; optionSpec = specFor( options[ i ] );</span>
+
+<span class="fc bfc" id="L542" title="All 4 branches covered.">            if ( optionSpec.acceptsArguments() &amp;&amp; options.length &gt; i + 1 ) {</span>
+<span class="fc" id="L543">                String detectedArgument = String.valueOf( options, i + 1, options.length - 1 - i );</span>
+<span class="fc" id="L544">                optionSpec.handleOption( this, arguments, detected, detectedArgument );</span>
+<span class="fc" id="L545">                break;</span>
+            }
+
+<span class="fc" id="L548">            optionSpec.handleOption( this, arguments, detected, null );</span>
+        }
+<span class="fc" id="L550">    }</span>
+
+    void handleNonOptionArgument( String candidate, ArgumentList arguments, OptionSet detectedOptions ) {
+<span class="fc" id="L553">        specFor( NonOptionArgumentSpec.NAME ).handleOption( this, arguments, detectedOptions, candidate );</span>
+<span class="fc" id="L554">    }</span>
+
+    void noMoreOptions() {
+<span class="fc" id="L557">        state = OptionParserState.noMoreOptions();</span>
+<span class="fc" id="L558">    }</span>
+
+    boolean looksLikeAnOption( String argument ) {
+<span class="fc bfc" id="L561" title="All 4 branches covered.">        return isShortOptionToken( argument ) || isLongOptionToken( argument );</span>
+    }
+
+    boolean isRecognized( String option ) {
+<span class="fc" id="L565">        return recognizedOptions.contains( option );</span>
+    }
+
+    void requiredIf( List&lt;String&gt; precedentSynonyms, String required ) {
+<span class="fc" id="L569">        requiredIf( precedentSynonyms, specFor( required ) );</span>
+<span class="fc" id="L570">    }</span>
+
+    void requiredIf( List&lt;String&gt; precedentSynonyms, OptionSpec&lt;?&gt; required ) {
+<span class="fc" id="L573">        putDependentOption( precedentSynonyms, required, requiredIf );</span>
+<span class="fc" id="L574">    }</span>
+
+    void requiredUnless( List&lt;String&gt; precedentSynonyms, String required ) {
+<span class="fc" id="L577">        requiredUnless( precedentSynonyms, specFor( required ) );</span>
+<span class="fc" id="L578">    }</span>
+
+    void requiredUnless( List&lt;String&gt; precedentSynonyms, OptionSpec&lt;?&gt; required ) {
+<span class="fc" id="L581">        putDependentOption( precedentSynonyms, required, requiredUnless );</span>
+<span class="fc" id="L582">    }</span>
+
+    void availableIf( List&lt;String&gt; precedentSynonyms, String available ) {
+<span class="fc" id="L585">        availableIf( precedentSynonyms, specFor( available ) );</span>
+<span class="fc" id="L586">    }</span>
+
+    void availableIf( List&lt;String&gt; precedentSynonyms, OptionSpec&lt;?&gt; available) {
+<span class="fc" id="L589">        putDependentOption( precedentSynonyms, available, availableIf );</span>
+<span class="fc" id="L590">    }</span>
+
+    void availableUnless( List&lt;String&gt; precedentSynonyms, String available ) {
+<span class="fc" id="L593">        availableUnless( precedentSynonyms, specFor( available ) );</span>
+<span class="fc" id="L594">    }</span>
+
+    void availableUnless( List&lt;String&gt; precedentSynonyms, OptionSpec&lt;?&gt; available ) {
+<span class="fc" id="L597">        putDependentOption( precedentSynonyms, available, availableUnless );</span>
+<span class="fc" id="L598">    }</span>
+
+    private void putDependentOption( List&lt;String&gt; precedentSynonyms, OptionSpec&lt;?&gt; required,
+        Map&lt;List&lt;String&gt;, Set&lt;OptionSpec&lt;?&gt;&gt;&gt; target ) {
+
+<span class="fc bfc" id="L603" title="All 2 branches covered.">        for ( String each : precedentSynonyms ) {</span>
+<span class="fc" id="L604">            AbstractOptionSpec&lt;?&gt; spec = specFor( each );</span>
+<span class="pc bpc" id="L605" title="1 of 2 branches missed.">            if ( spec == null )</span>
+<span class="nc" id="L606">                throw new UnconfiguredOptionException( precedentSynonyms );</span>
+<span class="fc" id="L607">        }</span>
+
+<span class="fc" id="L609">        Set&lt;OptionSpec&lt;?&gt;&gt; associated = target.get( precedentSynonyms );</span>
+<span class="fc bfc" id="L610" title="All 2 branches covered.">        if ( associated == null ) {</span>
+<span class="fc" id="L611">            associated = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L612">            target.put( precedentSynonyms, associated );</span>
+        }
+
+<span class="fc" id="L615">        associated.add( required );</span>
+<span class="fc" id="L616">    }</span>
+
+    private AbstractOptionSpec&lt;?&gt; specFor( char option ) {
+<span class="fc" id="L619">        return specFor( String.valueOf( option ) );</span>
+    }
+
+    private AbstractOptionSpec&lt;?&gt; specFor( String option ) {
+<span class="fc" id="L623">        return recognizedOptions.get( option );</span>
+    }
+
+    private void reset() {
+<span class="fc" id="L627">        state = moreOptions( posixlyCorrect );</span>
+<span class="fc" id="L628">    }</span>
+
+    private static char[] extractShortOptionsFrom( String argument ) {
+<span class="fc" id="L631">        char[] options = new char[ argument.length() - 1 ];</span>
+<span class="fc" id="L632">        argument.getChars( 1, argument.length(), options, 0 );</span>
+
+<span class="fc" id="L634">        return options;</span>
+    }
+
+    private void validateOptionCharacters( char[] options ) {
+<span class="fc bfc" id="L638" title="All 2 branches covered.">        for ( char each : options ) {</span>
+<span class="fc" id="L639">            String option = String.valueOf( each );</span>
+
+<span class="fc bfc" id="L641" title="All 2 branches covered.">            if ( !isRecognized( option ) )</span>
+<span class="fc" id="L642">                throw unrecognizedOption( option );</span>
+
+<span class="fc bfc" id="L644" title="All 2 branches covered.">            if ( specFor( option ).acceptsArguments() )</span>
+<span class="fc" id="L645">                return;</span>
+        }
+<span class="fc" id="L647">    }</span>
+
+    private static KeyValuePair parseLongOptionWithArgument( String argument ) {
+<span class="fc" id="L650">        return KeyValuePair.valueOf( argument.substring( 2 ) );</span>
+    }
+
+    private static KeyValuePair parseShortOptionWithArgument( String argument ) {
+<span class="fc" id="L654">        return KeyValuePair.valueOf( argument.substring( 1 ) );</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

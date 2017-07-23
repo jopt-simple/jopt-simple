@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Strings.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple.internal</a> &gt; <span class="el_source">Strings.java</span></div><h1>Strings.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple.internal;
+
+import static java.lang.System.*;
+
+/**
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ */
+public final class Strings {
+    public static final String EMPTY = &quot;&quot;;
+<span class="fc" id="L35">    public static final String LINE_SEPARATOR = getProperty( &quot;line.separator&quot; );</span>
+
+<span class="fc" id="L37">    private Strings() {</span>
+<span class="fc" id="L38">        throw new UnsupportedOperationException();</span>
+    }
+
+    /**
+     * Gives a string consisting of the given character repeated the given number of times.
+     *
+     * @param ch the character to repeat
+     * @param count how many times to repeat the character
+     * @return the resultant string
+     */
+    public static String repeat( char ch, int count ) {
+<span class="fc" id="L49">        StringBuilder buffer = new StringBuilder();</span>
+
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        for ( int i = 0; i &lt; count; ++i )</span>
+<span class="fc" id="L52">            buffer.append( ch );</span>
+
+<span class="fc" id="L54">        return buffer.toString();</span>
+    }
+
+    /**
+     * Tells whether the given string is either {@code} or consists solely of whitespace characters.
+     *
+     * @param target string to check
+     * @return {@code true} if the target string is null or empty
+     */
+    public static boolean isNullOrEmpty( String target ) {
+<span class="fc bfc" id="L64" title="All 4 branches covered.">        return target == null || target.isEmpty();</span>
+    }
+
+
+    /**
+     * Gives a string consisting of a given string prepended and appended with surrounding characters.
+     *
+     * @param target a string
+     * @param begin character to prepend
+     * @param end character to append
+     * @return the surrounded string
+     */
+    public static String surround( String target, char begin, char end ) {
+<span class="fc" id="L77">        return begin + target + end;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

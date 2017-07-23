@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Reflection.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple.internal</a> &gt; <span class="el_source">Reflection.java</span></div><h1>Reflection.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple.internal;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import static java.lang.reflect.Modifier.*;
+
+import joptsimple.ValueConverter;
+
+import static joptsimple.internal.Classes.*;
+
+/**
+ * Helper methods for reflection.
+ *
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ */
+public final class Reflection {
+<span class="fc" id="L44">    private Reflection() {</span>
+<span class="fc" id="L45">        throw new UnsupportedOperationException();</span>
+    }
+
+    /**
+     * Finds an appropriate value converter for the given class.
+     *
+     * @param &lt;V&gt; a constraint on the class object to introspect
+     * @param clazz class to introspect on
+     * @return a converter method or constructor
+     */
+    public static &lt;V&gt; ValueConverter&lt;V&gt; findConverter( Class&lt;V&gt; clazz ) {
+<span class="fc" id="L56">        Class&lt;V&gt; maybeWrapper = wrapperOf( clazz );</span>
+
+<span class="fc" id="L58">        ValueConverter&lt;V&gt; valueOf = valueOfConverter( maybeWrapper );</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if ( valueOf != null )</span>
+<span class="fc" id="L60">            return valueOf;</span>
+
+<span class="fc" id="L62">        ValueConverter&lt;V&gt; constructor = constructorConverter( maybeWrapper );</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if ( constructor != null )</span>
+<span class="fc" id="L64">            return constructor;</span>
+
+<span class="fc" id="L66">        throw new IllegalArgumentException( clazz + &quot; is not a value type&quot; );</span>
+    }
+
+    private static &lt;V&gt; ValueConverter&lt;V&gt; valueOfConverter( Class&lt;V&gt; clazz ) {
+        try {
+<span class="fc" id="L71">            Method valueOf = clazz.getMethod( &quot;valueOf&quot;, String.class );</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">            if ( meetsConverterRequirements( valueOf, clazz ) )</span>
+<span class="fc" id="L73">                return new MethodInvokingValueConverter&lt;&gt;( valueOf, clazz );</span>
+
+<span class="nc" id="L75">            return null;</span>
+<span class="fc" id="L76">        } catch ( NoSuchMethodException ignored ) {</span>
+<span class="fc" id="L77">            return null;</span>
+        }
+    }
+
+    private static &lt;V&gt; ValueConverter&lt;V&gt; constructorConverter( Class&lt;V&gt; clazz ) {
+        try {
+<span class="fc" id="L83">            return new ConstructorInvokingValueConverter&lt;&gt;( clazz.getConstructor( String.class ) );</span>
+<span class="fc" id="L84">        } catch ( NoSuchMethodException ignored ) {</span>
+<span class="fc" id="L85">            return null;</span>
+        }
+    }
+
+    /**
+     * Invokes the given constructor with the given arguments.
+     *
+     * @param &lt;T&gt; constraint on the type of the objects yielded by the constructor
+     * @param constructor constructor to invoke
+     * @param args arguments to hand to the constructor
+     * @return the result of invoking the constructor
+     * @throws ReflectionException in lieu of the gaggle of reflection-related exceptions
+     */
+    public static &lt;T&gt; T instantiate( Constructor&lt;T&gt; constructor, Object... args ) {
+        try {
+<span class="fc" id="L100">            return constructor.newInstance( args );</span>
+<span class="fc" id="L101">        } catch ( Exception ex ) {</span>
+<span class="fc" id="L102">            throw reflectionException( ex );</span>
+        }
+    }
+
+    /**
+     * Invokes the given static method with the given arguments.
+     *
+     * @param method method to invoke
+     * @param args arguments to hand to the method
+     * @return the result of invoking the method
+     * @throws ReflectionException in lieu of the gaggle of reflection-related exceptions
+     */
+    public static Object invoke( Method method, Object... args ) {
+        try {
+<span class="fc" id="L116">            return method.invoke( null, args );</span>
+<span class="fc" id="L117">        } catch ( Exception ex ) {</span>
+<span class="fc" id="L118">            throw reflectionException( ex );</span>
+        }
+    }
+
+    @SuppressWarnings( &quot;unchecked&quot; )
+    public static &lt;V&gt; V convertWith( ValueConverter&lt;V&gt; converter, String raw ) {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        return converter == null ? (V) raw : converter.convert( raw );</span>
+    }
+
+    private static boolean meetsConverterRequirements( Method method, Class&lt;?&gt; expectedReturnType ) {
+<span class="fc" id="L128">        int modifiers = method.getModifiers();</span>
+<span class="pc bpc" id="L129" title="3 of 6 branches missed.">        return isPublic( modifiers ) &amp;&amp; isStatic( modifiers ) &amp;&amp; expectedReturnType.equals( method.getReturnType() );</span>
+    }
+
+    private static RuntimeException reflectionException( Exception ex ) {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if ( ex instanceof IllegalArgumentException )</span>
+<span class="fc" id="L134">            return new ReflectionException( ex );</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if ( ex instanceof InvocationTargetException )</span>
+<span class="fc" id="L136">            return new ReflectionException( ex.getCause() );</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if ( ex instanceof RuntimeException )</span>
+<span class="nc" id="L138">            return (RuntimeException) ex;</span>
+
+<span class="fc" id="L140">        return new ReflectionException( ex );</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

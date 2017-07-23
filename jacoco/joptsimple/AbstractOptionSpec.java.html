@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AbstractOptionSpec.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple</a> &gt; <span class="el_source">AbstractOptionSpec.java</span></div><h1>AbstractOptionSpec.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.Collections.*;
+
+import joptsimple.internal.Reflection;
+import joptsimple.internal.ReflectionException;
+
+import static joptsimple.internal.Strings.*;
+
+/**
+ * @param &lt;V&gt; represents the type of the arguments this option accepts
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ */
+public abstract class AbstractOptionSpec&lt;V&gt; implements OptionSpec&lt;V&gt;, OptionDescriptor {
+<span class="fc" id="L44">    private final List&lt;String&gt; options = new ArrayList&lt;&gt;();</span>
+    private final String description;
+    private boolean forHelp;
+
+    AbstractOptionSpec( String option ) {
+<span class="fc" id="L49">        this( singletonList( option ), EMPTY );</span>
+<span class="fc" id="L50">    }</span>
+
+<span class="fc" id="L52">    AbstractOptionSpec( List&lt;String&gt; options, String description ) {</span>
+<span class="fc" id="L53">        arrangeOptions( options );</span>
+
+<span class="fc" id="L55">        this.description = description;</span>
+<span class="fc" id="L56">    }</span>
+
+    @Override
+    public final List&lt;String&gt; options() {
+<span class="fc" id="L60">        return unmodifiableList( options );</span>
+    }
+
+    @Override
+    public final List&lt;V&gt; values( OptionSet detectedOptions ) {
+<span class="fc" id="L65">        return detectedOptions.valuesOf( this );</span>
+    }
+
+    @Override
+    public final V value( OptionSet detectedOptions ) {
+<span class="fc" id="L70">        return detectedOptions.valueOf( this );</span>
+    }
+
+    @Override
+    public final Optional&lt;V&gt; valueOptional( OptionSet detectedOptions ) {
+<span class="fc" id="L75">        return Optional.ofNullable( value( detectedOptions ) );</span>
+    }
+
+    @Override
+    public String description() {
+<span class="fc" id="L80">        return description;</span>
+    }
+
+    public final AbstractOptionSpec&lt;V&gt; forHelp() {
+<span class="fc" id="L84">        forHelp = true;</span>
+<span class="fc" id="L85">        return this;</span>
+    }
+
+    @Override
+    public final boolean isForHelp() {
+<span class="fc" id="L90">        return forHelp;</span>
+    }
+
+    @Override
+    public boolean representsNonOptions() {
+<span class="fc" id="L95">        return false;</span>
+    }
+
+    protected abstract V convert( String argument );
+
+    protected V convertWith( ValueConverter&lt;V&gt; converter, String argument ) {
+        try {
+<span class="fc" id="L102">            return Reflection.convertWith( converter, argument );</span>
+<span class="fc" id="L103">        } catch ( ReflectionException | ValueConversionException ex ) {</span>
+<span class="fc" id="L104">            throw new OptionArgumentConversionException( this, argument, ex );</span>
+        }
+    }
+
+    protected String argumentTypeIndicatorFrom( ValueConverter&lt;V&gt; converter ) {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if ( converter == null )</span>
+<span class="fc" id="L110">            return null;</span>
+
+<span class="fc" id="L112">        String pattern = converter.valuePattern();</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        return pattern == null ? converter.valueType().getName() : pattern;</span>
+    }
+
+    abstract void handleOption( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions,
+        String detectedArgument );
+
+    private void arrangeOptions( List&lt;String&gt; unarranged ) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if ( unarranged.size() == 1 ) {</span>
+<span class="fc" id="L121">            options.addAll( unarranged );</span>
+<span class="fc" id="L122">            return;</span>
+        }
+
+<span class="fc" id="L125">        List&lt;String&gt; shortOptions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L126">        List&lt;String&gt; longOptions = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        for ( String each : unarranged ) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            if ( each.length() == 1 )</span>
+<span class="fc" id="L130">                shortOptions.add( each );</span>
+            else
+<span class="fc" id="L132">                longOptions.add( each );</span>
+<span class="fc" id="L133">        }</span>
+
+<span class="fc" id="L135">        sort( shortOptions );</span>
+<span class="fc" id="L136">        sort( longOptions );</span>
+
+<span class="fc" id="L138">        options.addAll( shortOptions );</span>
+<span class="fc" id="L139">        options.addAll( longOptions );</span>
+<span class="fc" id="L140">    }</span>
+
+    @Override
+    public boolean equals( Object that ) {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if ( !( that instanceof AbstractOptionSpec&lt;?&gt; ) )</span>
+<span class="fc" id="L145">            return false;</span>
+
+<span class="fc" id="L147">        AbstractOptionSpec&lt;?&gt; other = (AbstractOptionSpec&lt;?&gt;) that;</span>
+<span class="fc" id="L148">        return options.equals( other.options );</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L153">        return options.hashCode();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L158">        return options.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

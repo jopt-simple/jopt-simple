@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ArgumentAcceptingOptionSpec.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple</a> &gt; <span class="el_source">ArgumentAcceptingOptionSpec.java</span></div><h1>ArgumentAcceptingOptionSpec.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.StringTokenizer;
+
+import static java.util.Collections.*;
+import static java.util.Objects.*;
+
+import static joptsimple.internal.Reflection.*;
+import static joptsimple.internal.Strings.*;
+
+/**
+ * &lt;p&gt;Specification of an option that accepts an argument.&lt;/p&gt;
+ *
+ * &lt;p&gt;Instances are returned from {@link OptionSpecBuilder} methods to allow the formation of parser directives as
+ * sentences in a &quot;fluent interface&quot; language. For example:&lt;/p&gt;
+ *
+ * &lt;pre&gt;
+ *   &lt;code&gt;
+ *   OptionParser parser = new OptionParser();
+ *   parser.accepts( &quot;c&quot; ).withRequiredArg().&lt;strong&gt;ofType( Integer.class )&lt;/strong&gt;;
+ *   &lt;/code&gt;
+ * &lt;/pre&gt;
+ *
+ * &lt;p&gt;If no methods are invoked on an instance of this class, then that instance's option will treat its argument as
+ * a {@link String}.&lt;/p&gt;
+ *
+ * @param &lt;V&gt; represents the type of the arguments this option accepts
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ */
+public abstract class ArgumentAcceptingOptionSpec&lt;V&gt; extends AbstractOptionSpec&lt;V&gt; {
+    private static final char NIL_VALUE_SEPARATOR = '\u0000';
+
+    private final boolean argumentRequired;
+<span class="fc" id="L62">    private final List&lt;V&gt; defaultValues = new ArrayList&lt;&gt;();</span>
+
+    private boolean optionRequired;
+    private ValueConverter&lt;V&gt; converter;
+<span class="fc" id="L66">    private String argumentDescription = &quot;&quot;;</span>
+<span class="fc" id="L67">    private String valueSeparator = String.valueOf( NIL_VALUE_SEPARATOR );</span>
+
+    ArgumentAcceptingOptionSpec( String option, boolean argumentRequired ) {
+<span class="fc" id="L70">        super( option );</span>
+
+<span class="fc" id="L72">        this.argumentRequired = argumentRequired;</span>
+<span class="fc" id="L73">    }</span>
+
+    ArgumentAcceptingOptionSpec( List&lt;String&gt; options, boolean argumentRequired, String description ) {
+<span class="fc" id="L76">        super( options, description );</span>
+
+<span class="fc" id="L78">        this.argumentRequired = argumentRequired;</span>
+<span class="fc" id="L79">    }</span>
+
+    /**
+     * &lt;p&gt;Specifies a type to which arguments of this spec's option are to be converted.&lt;/p&gt;
+     *
+     * &lt;p&gt;JOpt Simple accepts types that have either:&lt;/p&gt;
+     *
+     * &lt;ol&gt;
+     *   &lt;li&gt;a public static method called {@code valueOf} which accepts a single argument of type {@link String}
+     *   and whose return type is the same as the class on which the method is declared.  The {@code java.lang}
+     *   primitive wrapper classes have such methods.&lt;/li&gt;
+     *
+     *   &lt;li&gt;a public constructor which accepts a single argument of type {@link String}.&lt;/li&gt;
+     * &lt;/ol&gt;
+     *
+     * &lt;p&gt;This class converts arguments using those methods in that order; that is, {@code valueOf} would be invoked
+     * before a one-{@link String}-arg constructor would.&lt;/p&gt;
+     *
+     * &lt;p&gt;Invoking this method will trump any previous calls to this method or to
+     * {@link #withValuesConvertedBy(ValueConverter)}.&lt;/p&gt;
+     *
+     * @param &lt;T&gt; represents the runtime class of the desired option argument type
+     * @param argumentType desired type of arguments to this spec's option
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws NullPointerException if the type is {@code null}
+     * @throws IllegalArgumentException if the type does not have the standard conversion methods
+     */
+    public final &lt;T&gt; ArgumentAcceptingOptionSpec&lt;T&gt; ofType( Class&lt;T&gt; argumentType ) {
+<span class="fc" id="L107">        return withValuesConvertedBy( findConverter( argumentType ) );</span>
+    }
+
+    /**
+     * &lt;p&gt;Specifies a converter to use to translate arguments of this spec's option into Java objects.  This is useful
+     * when converting to types that do not have the requisite factory method or constructor for
+     * {@link #ofType(Class)}.&lt;/p&gt;
+     *
+     * &lt;p&gt;Invoking this method will trump any previous calls to this method or to {@link #ofType(Class)}.
+     *
+     * @param &lt;T&gt; represents the runtime class of the desired option argument type
+     * @param aConverter the converter to use
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws NullPointerException if the converter is {@code null}
+     */
+    @SuppressWarnings( &quot;unchecked&quot; )
+    public final &lt;T&gt; ArgumentAcceptingOptionSpec&lt;T&gt; withValuesConvertedBy( ValueConverter&lt;T&gt; aConverter ) {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        if ( aConverter == null )</span>
+<span class="fc" id="L125">            throw new NullPointerException( &quot;illegal null converter&quot; );</span>
+
+<span class="fc" id="L127">        converter = (ValueConverter&lt;V&gt;) aConverter;</span>
+<span class="fc" id="L128">        return (ArgumentAcceptingOptionSpec&lt;T&gt;) this;</span>
+    }
+
+    /**
+     * &lt;p&gt;Specifies a description for the argument of the option that this spec represents.  This description is used
+     * when generating help information about the parser.&lt;/p&gt;
+     *
+     * @param description describes the nature of the argument of this spec's option
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     */
+    public final ArgumentAcceptingOptionSpec&lt;V&gt; describedAs( String description ) {
+<span class="fc" id="L139">        argumentDescription = description;</span>
+<span class="fc" id="L140">        return this;</span>
+    }
+
+    /**
+     * &lt;p&gt;Specifies a value separator for the argument of the option that this spec represents.  This allows a single
+     * option argument to represent multiple values for the option.  For example:&lt;/p&gt;
+     *
+     * &lt;pre&gt;
+     *   &lt;code&gt;
+     *   parser.accepts( &quot;z&quot; ).withRequiredArg()
+     *       .&lt;strong&gt;withValuesSeparatedBy( ',' )&lt;/strong&gt;;
+     *   OptionSet options = parser.parse( new String[] { &quot;-z&quot;, &quot;foo,bar,baz&quot;, &quot;-z&quot;,
+     *       &quot;fizz&quot;, &quot;-z&quot;, &quot;buzz&quot; } );
+     *   &lt;/code&gt;
+     * &lt;/pre&gt;
+     *
+     * &lt;p&gt;Then &lt;code&gt;options.valuesOf( &quot;z&quot; )&lt;/code&gt; would yield the list {@code [foo, bar, baz, fizz, buzz]}.&lt;/p&gt;
+     *
+     * &lt;p&gt;You cannot use Unicode U+0000 as the separator.&lt;/p&gt;
+     *
+     * @param separator a character separator
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws IllegalArgumentException if the separator is Unicode U+0000
+     */
+    public final ArgumentAcceptingOptionSpec&lt;V&gt; withValuesSeparatedBy( char separator ) {
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if ( separator == NIL_VALUE_SEPARATOR )</span>
+<span class="fc" id="L166">            throw new IllegalArgumentException( &quot;cannot use U+0000 as separator&quot; );</span>
+
+<span class="fc" id="L168">        valueSeparator = String.valueOf( separator );</span>
+<span class="fc" id="L169">        return this;</span>
+    }
+
+    /**
+     * &lt;p&gt;Specifies a value separator for the argument of the option that this spec represents.  This allows a single
+     * option argument to represent multiple values for the option.  For example:&lt;/p&gt;
+     *
+     * &lt;pre&gt;
+     *   &lt;code&gt;
+     *   parser.accepts( &quot;z&quot; ).withRequiredArg()
+     *       .&lt;strong&gt;withValuesSeparatedBy( &quot;:::&quot; )&lt;/strong&gt;;
+     *   OptionSet options = parser.parse( new String[] { &quot;-z&quot;, &quot;foo:::bar:::baz&quot;, &quot;-z&quot;,
+     *       &quot;fizz&quot;, &quot;-z&quot;, &quot;buzz&quot; } );
+     *   &lt;/code&gt;
+     * &lt;/pre&gt;
+     *
+     * &lt;p&gt;Then &lt;code&gt;options.valuesOf( &quot;z&quot; )&lt;/code&gt; would yield the list {@code [foo, bar, baz, fizz, buzz]}.&lt;/p&gt;
+     *
+     * &lt;p&gt;You cannot use Unicode U+0000 in the separator.&lt;/p&gt;
+     *
+     * @param separator a string separator
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws IllegalArgumentException if the separator contains Unicode U+0000
+     */
+    public final ArgumentAcceptingOptionSpec&lt;V&gt; withValuesSeparatedBy( String separator ) {
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if ( separator.indexOf( NIL_VALUE_SEPARATOR ) != -1 )</span>
+<span class="fc" id="L195">            throw new IllegalArgumentException( &quot;cannot use U+0000 in separator&quot; );</span>
+
+<span class="fc" id="L197">        valueSeparator = separator;</span>
+<span class="fc" id="L198">        return this;</span>
+    }
+
+    /**
+     * Specifies a set of default values for the argument of the option that this spec represents.
+     *
+     * @param value the first in the set of default argument values for this spec's option
+     * @param values the (optional) remainder of the set of default argument values for this spec's option
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws NullPointerException if {@code value}, {@code values}, or any elements of {@code values} are
+     * {@code null}
+     */
+    @SafeVarargs
+    public final ArgumentAcceptingOptionSpec&lt;V&gt; defaultsTo( V value, V... values ) {
+<span class="fc" id="L212">        addDefaultValue( value );</span>
+<span class="fc" id="L213">        defaultsTo( values );</span>
+
+<span class="fc" id="L215">        return this;</span>
+    }
+
+    /**
+     * Specifies a set of default values for the argument of the option that this spec represents.
+     *
+     * @param values the set of default argument values for this spec's option
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     * @throws NullPointerException if {@code values} or any elements of {@code values} are {@code null}
+     */
+    public ArgumentAcceptingOptionSpec&lt;V&gt; defaultsTo( V[] values ) {
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        for ( V each : values )</span>
+<span class="fc" id="L227">            addDefaultValue( each );</span>
+
+<span class="fc" id="L229">        return this;</span>
+    }
+
+    /**
+     * Marks this option as required. An {@link OptionException} will be thrown when
+     * {@link OptionParser#parse(java.lang.String...)} is called, if an option is marked as required and not specified
+     * on the command line.
+     *
+     * @return self, so that the caller can add clauses to the fluent interface sentence
+     */
+    public ArgumentAcceptingOptionSpec&lt;V&gt; required() {
+<span class="fc" id="L240">        optionRequired = true;</span>
+<span class="fc" id="L241">        return this;</span>
+    }
+
+    @Override
+    public boolean isRequired() {
+<span class="fc" id="L246">        return optionRequired;</span>
+    }
+
+    private void addDefaultValue( V value ) {
+<span class="fc" id="L250">        requireNonNull( value );</span>
+<span class="fc" id="L251">        defaultValues.add( value );</span>
+<span class="fc" id="L252">    }</span>
+
+    @Override
+    final void handleOption( OptionParser parser, ArgumentList arguments, OptionSet detectedOptions,
+        String detectedArgument ) {
+
+<span class="fc bfc" id="L258" title="All 2 branches covered.">        if ( detectedArgument == null )</span>
+<span class="fc" id="L259">            detectOptionArgument( parser, arguments, detectedOptions );</span>
+        else
+<span class="fc" id="L261">            addArguments( detectedOptions, detectedArgument );</span>
+<span class="fc" id="L262">    }</span>
+
+    protected void addArguments( OptionSet detectedOptions, String detectedArgument ) {
+<span class="fc" id="L265">        StringTokenizer lexer = new StringTokenizer( detectedArgument, valueSeparator );</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        if ( !lexer.hasMoreTokens() )</span>
+<span class="fc" id="L267">            detectedOptions.addWithArgument( this, detectedArgument );</span>
+        else {
+<span class="fc bfc" id="L269" title="All 2 branches covered.">            while ( lexer.hasMoreTokens() )</span>
+<span class="fc" id="L270">                detectedOptions.addWithArgument( this, lexer.nextToken() );</span>
+        }
+<span class="fc" id="L272">    }</span>
+
+    protected abstract void detectOptionArgument( OptionParser parser, ArgumentList arguments,
+        OptionSet detectedOptions );
+
+    @Override
+    protected final V convert( String argument ) {
+<span class="fc" id="L279">        return convertWith( converter, argument );</span>
+    }
+
+    protected boolean canConvertArgument( String argument ) {
+<span class="fc" id="L283">        StringTokenizer lexer = new StringTokenizer( argument, valueSeparator );</span>
+
+        try {
+<span class="fc bfc" id="L286" title="All 2 branches covered.">            while ( lexer.hasMoreTokens() )</span>
+<span class="fc" id="L287">                convert( lexer.nextToken() );</span>
+<span class="fc" id="L288">            return true;</span>
+<span class="fc" id="L289">        } catch ( OptionException ignored ) {</span>
+<span class="fc" id="L290">            return false;</span>
+        }
+    }
+
+    protected boolean isArgumentOfNumberType() {
+<span class="fc bfc" id="L295" title="All 4 branches covered.">        return converter != null &amp;&amp; Number.class.isAssignableFrom( converter.valueType() );</span>
+    }
+
+    @Override
+    public boolean acceptsArguments() {
+<span class="fc" id="L300">        return true;</span>
+    }
+
+    @Override
+    public boolean requiresArgument() {
+<span class="fc" id="L305">        return argumentRequired;</span>
+    }
+
+    @Override
+    public String argumentDescription() {
+<span class="fc" id="L310">        return argumentDescription;</span>
+    }
+
+    @Override
+    public String argumentTypeIndicator() {
+<span class="fc" id="L315">        return argumentTypeIndicatorFrom( converter );</span>
+    }
+
+    @Override
+    public List&lt;V&gt; defaultValues() {
+<span class="fc" id="L320">        return unmodifiableList( defaultValues );</span>
+    }
+
+    @Override
+    public Optional&lt;ValueConverter&lt;?&gt;&gt; argumentConverter() {
+<span class="fc" id="L325">        return Optional.ofNullable( converter );</span>
+    }
+
+    @Override
+    public boolean equals( Object that ) {
+<span class="fc bfc" id="L330" title="All 2 branches covered.">        if ( !super.equals( that ) )</span>
+<span class="fc" id="L331">            return false;</span>
+
+<span class="fc" id="L333">        ArgumentAcceptingOptionSpec&lt;?&gt; other = (ArgumentAcceptingOptionSpec&lt;?&gt;) that;</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">        return requiresArgument() == other.requiresArgument();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        return super.hashCode() ^ ( argumentRequired ? 0 : 1 );</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

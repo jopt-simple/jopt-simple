@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PathConverter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple.util</a> &gt; <span class="el_source">PathConverter.java</span></div><h1>PathConverter.java</h1><pre class="source lang-java linenums">package joptsimple.util;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
+import joptsimple.ValueConversionException;
+import joptsimple.ValueConverter;
+
+/**
+ * Converts command line options to {@link Path} objects and checks the status of the underlying file.
+ */
+public class PathConverter implements ValueConverter&lt;Path&gt; {
+    private final PathProperties[] pathProperties;
+
+<span class="fc" id="L17">    public PathConverter( PathProperties... pathProperties ) {</span>
+<span class="fc" id="L18">        this.pathProperties = pathProperties;</span>
+<span class="fc" id="L19">    }</span>
+
+    @Override
+    public Path convert( String value ) {
+<span class="fc" id="L23">        Path path = Paths.get( value );</span>
+
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if ( pathProperties != null ) {</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">            for ( PathProperties each : pathProperties ) {</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">                if ( !each.accept( path ) )</span>
+<span class="fc" id="L28">                    throw new ValueConversionException( message( each.getMessageKey(), path.toString() ) );</span>
+            }
+        }
+
+<span class="fc" id="L32">        return path;</span>
+    }
+
+    @Override
+    public Class&lt;Path&gt; valueType() {
+<span class="fc" id="L37">        return Path.class;</span>
+    }
+
+    @Override
+    public String valuePattern() {
+<span class="fc" id="L42">        return null;</span>
+    }
+
+    private String message( String errorKey, String value ) {
+<span class="fc" id="L46">        ResourceBundle bundle = ResourceBundle.getBundle( &quot;joptsimple.ExceptionMessages&quot; );</span>
+<span class="fc" id="L47">        Object[] arguments = new Object[] { value, valuePattern() };</span>
+<span class="fc" id="L48">        String template = bundle.getString( PathConverter.class.getName() + &quot;.&quot; + errorKey + &quot;.message&quot; );</span>
+<span class="fc" id="L49">        return new MessageFormat( template ).format( arguments );</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

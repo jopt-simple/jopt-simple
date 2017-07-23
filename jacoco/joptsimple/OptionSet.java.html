@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OptionSet.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple</a> &gt; <span class="el_source">OptionSet.java</span></div><h1>OptionSet.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static java.util.Collections.*;
+import static java.util.Objects.*;
+
+/**
+ * Representation of a group of detected command line options, their arguments, and non-option arguments.
+ *
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ */
+public class OptionSet {
+    private final List&lt;OptionSpec&lt;?&gt;&gt; detectedSpecs;
+    private final Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; detectedOptions;
+    private final Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; optionsToArguments;
+    private final Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs;
+    private final Map&lt;String, List&lt;?&gt;&gt; defaultValues;
+
+    /*
+     * Package-private because clients don't create these.
+     */
+<span class="fc" id="L53">    OptionSet( Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs ) {</span>
+<span class="fc" id="L54">        detectedSpecs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">        detectedOptions = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L56">        optionsToArguments = new IdentityHashMap&lt;&gt;();</span>
+<span class="fc" id="L57">        defaultValues = defaultValues( recognizedSpecs );</span>
+<span class="fc" id="L58">        this.recognizedSpecs = recognizedSpecs;</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Tells whether any options were detected.
+     *
+     * @return {@code true} if any options were detected
+     */
+    public boolean hasOptions() {
+<span class="pc bpc" id="L67" title="1 of 4 branches missed.">        return !( detectedOptions.size() == 1 &amp;&amp; detectedOptions.values().iterator().next().representsNonOptions() );</span>
+    }
+
+    /**
+     * Tells whether the given option was detected.
+     *
+     * @param option the option to search for
+     * @return {@code true} if the option was detected
+     * @see #has(OptionSpec)
+     */
+    public boolean has( String option ) {
+<span class="fc" id="L78">        return detectedOptions.containsKey( option );</span>
+    }
+
+    /**
+     * Tells whether the given option was detected.
+     *
+     * &lt;p&gt;This method recognizes only instances of options returned from the fluent interface methods.&lt;/p&gt;
+     *
+     * &lt;p&gt;Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[])} default argument value}
+     * for an option does not cause this method to return {@code true} if the option was not detected on the command
+     * line.&lt;/p&gt;
+     *
+     * @param option the option to search for
+     * @return {@code true} if the option was detected
+     * @see #has(String)
+     */
+    public boolean has( OptionSpec&lt;?&gt; option ) {
+<span class="fc" id="L95">        return optionsToArguments.containsKey( option );</span>
+    }
+
+    /**
+     * Tells whether there are any arguments associated with the given option.
+     *
+     * @param option the option to search for
+     * @return {@code true} if the option was detected and at least one argument was detected for the option
+     * @see #hasArgument(OptionSpec)
+     */
+    public boolean hasArgument( String option ) {
+<span class="fc" id="L106">        AbstractOptionSpec&lt;?&gt; spec = detectedOptions.get( option );</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">        return spec != null &amp;&amp; hasArgument( spec );</span>
+    }
+
+    /**
+     * Tells whether there are any arguments associated with the given option.
+     *
+     * &lt;p&gt;This method recognizes only instances of options returned from the fluent interface methods.&lt;/p&gt;
+     *
+     * &lt;p&gt;Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
+     * for an option does not cause this method to return {@code true} if the option was not detected on the command
+     * line, or if the option can take an optional argument but did not have one on the command line.&lt;/p&gt;
+     *
+     * @param option the option to search for
+     * @return {@code true} if the option was detected and at least one argument was detected for the option
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @see #hasArgument(String)
+     */
+    public boolean hasArgument( OptionSpec&lt;?&gt; option ) {
+<span class="fc" id="L125">        requireNonNull( option );</span>
+
+<span class="fc" id="L127">        List&lt;String&gt; values = optionsToArguments.get( option );</span>
+<span class="fc bfc" id="L128" title="All 4 branches covered.">        return values != null &amp;&amp; !values.isEmpty();</span>
+    }
+
+    /**
+     * Gives the argument associated with the given option.  If the option was given an argument type, the argument
+     * will take on that type; otherwise, it will be a {@link String}.
+     *
+     * &lt;p&gt;Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
+     * for an option will cause this method to return that default value even if the option was not detected on the
+     * command line, or if the option can take an optional argument but did not have one on the command line.&lt;/p&gt;
+     *
+     * @param option the option to search for
+     * @return the argument of the given option; {@code null} if no argument is present, or that option was not
+     * detected
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @throws OptionException if more than one argument was detected for the option
+     */
+    public Object valueOf( String option ) {
+<span class="fc" id="L146">        requireNonNull( option );</span>
+
+<span class="fc" id="L148">        AbstractOptionSpec&lt;?&gt; spec = detectedOptions.get( option );</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if ( spec == null ) {</span>
+<span class="fc" id="L150">            List&lt;?&gt; defaults = defaultValuesFor( option );</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            return defaults.isEmpty() ? null : defaults.get( 0 );</span>
+        }
+
+<span class="fc" id="L154">        return valueOf( spec );</span>
+    }
+
+    /**
+     * Gives the argument associated with the given option, as an {@link Optional}.
+     * If the option was given an argument type, the argument will take on that type;
+     * otherwise, it will be a {@link String}.
+     *
+     * &lt;p&gt;Specifying a {@linkplain ArgumentAcceptingOptionSpec#defaultsTo(Object, Object[]) default argument value}
+     * for an option will cause this method to return that default value even if the option was not detected on the
+     * command line, or if the option can take an optional argument but did not have one on the command line.&lt;/p&gt;
+     *
+     * @param option the option to search for
+     * @return the argument of the given option as an {@code Optional}
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @throws OptionException if more than one argument was detected for the option
+     */
+    public Optional&lt;Object&gt; valueOfOptional( String option ) {
+<span class="fc" id="L172">        return Optional.ofNullable( valueOf( option ) );</span>
+    }
+
+    /**
+     * Gives the argument associated with the given option.
+     *
+     * &lt;p&gt;This method recognizes only instances of options returned from the fluent interface methods.&lt;/p&gt;
+     *
+     * @param &lt;V&gt; represents the type of the arguments the given option accepts
+     * @param option the option to search for
+     * @return the argument of the given option; {@code null} if no argument is present, or that option was not
+     * detected
+     * @throws OptionException if more than one argument was detected for the option
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @throws ClassCastException if the arguments of this option are not of the expected type
+     */
+    public &lt;V&gt; V valueOf( OptionSpec&lt;V&gt; option ) {
+<span class="fc" id="L189">        requireNonNull( option );</span>
+
+<span class="fc" id="L191">        List&lt;V&gt; values = valuesOf( option );</span>
+<span class="fc bfc" id="L192" title="All 3 branches covered.">        switch ( values.size() ) {</span>
+            case 0:
+<span class="fc" id="L194">                return null;</span>
+            case 1:
+<span class="fc" id="L196">                return values.get( 0 );</span>
+            default:
+<span class="fc" id="L198">                throw new MultipleArgumentsForOptionException( option );</span>
+        }
+    }
+
+    /**
+     * Gives the argument associated with the given option as an {@link Optional}.
+     *
+     * &lt;p&gt;This method recognizes only instances of options returned from the fluent interface methods.&lt;/p&gt;
+     *
+     * @param &lt;V&gt; represents the type of the arguments the given option accepts
+     * @param option the option to search for
+     * @return the argument of the given option as an {@code Optional}
+     * @throws OptionException if more than one argument was detected for the option
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @throws ClassCastException if the arguments of this option are not of the expected type
+     */
+    public &lt;V&gt; Optional&lt;V&gt; valueOfOptional( OptionSpec&lt;V&gt; option ) {
+<span class="fc" id="L215">        return Optional.ofNullable( valueOf( option ) );</span>
+    }
+
+    /**
+     * &lt;p&gt;Gives any arguments associated with the given option.  If the option was given an argument type, the
+     * arguments will take on that type; otherwise, they will be {@link String}s.&lt;/p&gt;
+     *
+     * @param option the option to search for
+     * @return the arguments associated with the option, as a list of objects of the type given to the arguments; an
+     * empty list if no such arguments are present, or if the option was not detected
+     * @throws NullPointerException if {@code option} is {@code null}
+     */
+    public List&lt;?&gt; valuesOf( String option ) {
+<span class="fc" id="L228">        requireNonNull( option );</span>
+
+<span class="fc" id="L230">        AbstractOptionSpec&lt;?&gt; spec = detectedOptions.get( option );</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        return spec == null ? defaultValuesFor( option ) : valuesOf( spec );</span>
+    }
+
+    /**
+     * &lt;p&gt;Gives any arguments associated with the given option.  If the option was given an argument type, the
+     * arguments will take on that type; otherwise, they will be {@link String}s.&lt;/p&gt;
+     *
+     * &lt;p&gt;This method recognizes only instances of options returned from the fluent interface methods.&lt;/p&gt;
+     *
+     * @param &lt;V&gt; represents the type of the arguments the given option accepts
+     * @param option the option to search for
+     * @return the arguments associated with the option; an empty list if no such arguments are present, or if the
+     * option was not detected
+     * @throws NullPointerException if {@code option} is {@code null}
+     * @throws OptionException if there is a problem converting the option's arguments to the desired type; for
+     * example, if the type does not implement a correct conversion constructor or method
+     */
+    public &lt;V&gt; List&lt;V&gt; valuesOf( OptionSpec&lt;V&gt; option ) {
+<span class="fc" id="L249">        requireNonNull( option );</span>
+
+<span class="fc" id="L251">        List&lt;String&gt; values = optionsToArguments.get( option );</span>
+<span class="fc bfc" id="L252" title="All 4 branches covered.">        if ( values == null || values.isEmpty() )</span>
+<span class="fc" id="L253">            return defaultValueFor( option );</span>
+
+<span class="fc" id="L255">        AbstractOptionSpec&lt;V&gt; spec = (AbstractOptionSpec&lt;V&gt;) option;</span>
+<span class="fc" id="L256">        List&lt;V&gt; convertedValues = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        for ( String each : values )</span>
+<span class="fc" id="L258">            convertedValues.add( spec.convert( each ) );</span>
+
+<span class="fc" id="L260">        return unmodifiableList( convertedValues );</span>
+    }
+
+    /**
+     * Gives the set of options that were detected, in the form of {@linkplain OptionSpec}s, in the order in which the
+     * options were found on the command line.
+     *
+     * @return the set of detected command line options
+     */
+    public List&lt;OptionSpec&lt;?&gt;&gt; specs() {
+<span class="fc" id="L270">        List&lt;OptionSpec&lt;?&gt;&gt; specs = detectedSpecs;</span>
+<span class="fc" id="L271">        specs.removeAll( singletonList( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );</span>
+
+<span class="fc" id="L273">        return unmodifiableList( specs );</span>
+    }
+
+    /**
+     * Gives all declared options as a map of string to {@linkplain OptionSpec}.
+     *
+     * @return the declared options as a map
+     */
+    public Map&lt;OptionSpec&lt;?&gt;, List&lt;?&gt;&gt; asMap() {
+<span class="fc" id="L282">        Map&lt;OptionSpec&lt;?&gt;, List&lt;?&gt;&gt; map = new HashMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        for ( AbstractOptionSpec&lt;?&gt; spec : recognizedSpecs.values() ) {</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">            if ( !spec.representsNonOptions() )</span>
+<span class="fc" id="L286">                map.put( spec, valuesOf( spec ) );</span>
+<span class="fc" id="L287">        }</span>
+
+<span class="fc" id="L289">        return unmodifiableMap( map );</span>
+    }
+
+    /**
+     * @return the detected non-option arguments
+     */
+    public List&lt;?&gt; nonOptionArguments() {
+<span class="fc" id="L296">        AbstractOptionSpec&lt;?&gt; spec = detectedOptions.get( NonOptionArgumentSpec.NAME );</span>
+<span class="fc" id="L297">        return valuesOf( spec );</span>
+    }
+
+    void add( AbstractOptionSpec&lt;?&gt; spec ) {
+<span class="fc" id="L301">        addWithArgument( spec, null );</span>
+<span class="fc" id="L302">    }</span>
+
+    void addWithArgument( AbstractOptionSpec&lt;?&gt; spec, String argument ) {
+<span class="fc" id="L305">        detectedSpecs.add( spec );</span>
+
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        for ( String each : spec.options() )</span>
+<span class="fc" id="L308">            detectedOptions.put( each, spec );</span>
+
+<span class="fc" id="L310">        List&lt;String&gt; optionArguments = optionsToArguments.get( spec );</span>
+
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        if ( optionArguments == null ) {</span>
+<span class="fc" id="L313">            optionArguments = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L314">            optionsToArguments.put( spec, optionArguments );</span>
+        }
+
+<span class="fc bfc" id="L317" title="All 2 branches covered.">        if ( argument != null )</span>
+<span class="fc" id="L318">            optionArguments.add( argument );</span>
+<span class="fc" id="L319">    }</span>
+
+    @Override
+    public boolean equals( Object that ) {
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        if ( this == that )</span>
+<span class="fc" id="L324">            return true;</span>
+
+<span class="fc bfc" id="L326" title="All 4 branches covered.">        if ( that == null || !getClass().equals( that.getClass() ) )</span>
+<span class="fc" id="L327">            return false;</span>
+
+<span class="fc" id="L329">        OptionSet other = (OptionSet) that;</span>
+<span class="fc" id="L330">        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; thisOptionsToArguments = new HashMap&lt;&gt;( optionsToArguments );</span>
+<span class="fc" id="L331">        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; otherOptionsToArguments = new HashMap&lt;&gt;( other.optionsToArguments );</span>
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">        return detectedOptions.equals( other.detectedOptions )</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            &amp;&amp; thisOptionsToArguments.equals( otherOptionsToArguments );</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L338">        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; thisOptionsToArguments = new HashMap&lt;&gt;( optionsToArguments );</span>
+<span class="fc" id="L339">        return detectedOptions.hashCode() ^ thisOptionsToArguments.hashCode();</span>
+    }
+
+    @SuppressWarnings( &quot;unchecked&quot; )
+    private &lt;V&gt; List&lt;V&gt; defaultValuesFor( String option ) {
+<span class="fc bfc" id="L344" title="All 2 branches covered.">        if ( defaultValues.containsKey( option ) )</span>
+<span class="fc" id="L345">            return unmodifiableList( (List&lt;V&gt;) defaultValues.get( option ) );</span>
+
+<span class="fc" id="L347">        return emptyList();</span>
+    }
+
+    private &lt;V&gt; List&lt;V&gt; defaultValueFor( OptionSpec&lt;V&gt; option ) {
+<span class="fc" id="L351">        return defaultValuesFor( option.options().iterator().next() );</span>
+    }
+
+    private static Map&lt;String, List&lt;?&gt;&gt; defaultValues( Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs ) {
+<span class="fc" id="L355">        Map&lt;String, List&lt;?&gt;&gt; defaults = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">        for ( Map.Entry&lt;String, AbstractOptionSpec&lt;?&gt;&gt; each : recognizedSpecs.entrySet() )</span>
+<span class="fc" id="L357">            defaults.put( each.getKey(), each.getValue().defaultValues() );</span>
+<span class="fc" id="L358">        return defaults;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

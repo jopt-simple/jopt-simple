@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DateConverter.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple.util</a> &gt; <span class="el_source">DateConverter.java</span></div><h1>DateConverter.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple.util;
+
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import joptsimple.ValueConversionException;
+import joptsimple.ValueConverter;
+import joptsimple.internal.Messages;
+
+/**
+ * Converts values to {@link Date}s using a {@link DateFormat} object.
+ *
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ */
+public class DateConverter implements ValueConverter&lt;Date&gt; {
+    private final DateFormat formatter;
+
+    /**
+     * Creates a converter that uses the given date formatter/parser.
+     *
+     * @param formatter the formatter/parser to use
+     * @throws NullPointerException if {@code formatter} is {@code null}
+     */
+<span class="fc" id="L52">    public DateConverter( DateFormat formatter ) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if ( formatter == null )</span>
+<span class="fc" id="L54">            throw new NullPointerException( &quot;illegal null formatter&quot; );</span>
+
+<span class="fc" id="L56">        this.formatter = formatter;</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Creates a converter that uses a {@link SimpleDateFormat} with the given date/time pattern.  The date formatter
+     * created is not {@link SimpleDateFormat#setLenient(boolean) lenient}.
+     *
+     * @param pattern expected date/time pattern
+     * @return the new converter
+     * @throws NullPointerException if {@code pattern} is {@code null}
+     * @throws IllegalArgumentException if {@code pattern} is invalid
+     */
+    public static DateConverter datePattern( String pattern ) {
+<span class="fc" id="L69">        SimpleDateFormat formatter = new SimpleDateFormat( pattern );</span>
+<span class="fc" id="L70">        formatter.setLenient( false );</span>
+
+<span class="fc" id="L72">        return new DateConverter( formatter );</span>
+    }
+
+    @Override
+    public Date convert( String value ) {
+<span class="fc" id="L77">        ParsePosition position = new ParsePosition( 0 );</span>
+
+<span class="fc" id="L79">        Date date = formatter.parse( value, position );</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if ( position.getIndex() != value.length() )</span>
+<span class="fc" id="L81">            throw new ValueConversionException( message( value ) );</span>
+
+<span class="fc" id="L83">        return date;</span>
+    }
+
+    @Override
+    public String revert( Object value ) {
+<span class="nc" id="L88">        return formatter.format( valueType().cast( value ) );</span>
+    }
+
+    @Override
+    public Class&lt;Date&gt; valueType() {
+<span class="fc" id="L93">        return Date.class;</span>
+    }
+
+    @Override
+    public String valuePattern() {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        return formatter instanceof SimpleDateFormat</span>
+<span class="fc" id="L99">            ? ( (SimpleDateFormat) formatter ).toPattern()</span>
+            : &quot;&quot;;
+    }
+
+    private String message( String value ) {
+        String key;
+        Object[] arguments;
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if ( formatter instanceof SimpleDateFormat ) {</span>
+<span class="fc" id="L108">            key = &quot;with.pattern.message&quot;;</span>
+<span class="fc" id="L109">            arguments = new Object[] { value, ( (SimpleDateFormat) formatter ).toPattern() };</span>
+        } else {
+<span class="fc" id="L111">            key = &quot;without.pattern.message&quot;;</span>
+<span class="fc" id="L112">            arguments = new Object[] { value };</span>
+        }
+
+<span class="fc" id="L115">        return Messages.message(</span>
+<span class="fc" id="L116">            Locale.getDefault(),</span>
+            &quot;joptsimple.ExceptionMessages&quot;,
+            DateConverter.class,
+            key,
+            arguments );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>OptionException.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JOpt Simple</a> &gt; <a href="index.source.html" class="el_package">joptsimple</a> &gt; <span class="el_source">OptionException.java</span></div><h1>OptionException.java</h1><pre class="source lang-java linenums">/*
+ The MIT License
+
+ Copyright (c) 2004-2016 Paul R. Holser, Jr.
+
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ &quot;Software&quot;), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+package joptsimple;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import static java.util.Collections.*;
+import static java.util.stream.Collectors.*;
+
+import static joptsimple.internal.Messages.*;
+
+/**
+ * Thrown when a problem occurs during option parsing.
+ *
+ * @author &lt;a href=&quot;mailto:pholser@alumni.rice.edu&quot;&gt;Paul Holser&lt;/a&gt;
+ */
+public abstract class OptionException extends RuntimeException {
+    private static final long serialVersionUID = -1L;
+
+<span class="fc" id="L49">    private final List&lt;String&gt; options = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L51">    protected OptionException( List&lt;String&gt; options ) {</span>
+<span class="fc" id="L52">        this.options.addAll( options );</span>
+<span class="fc" id="L53">    }</span>
+
+<span class="fc" id="L55">    protected OptionException( Collection&lt;? extends OptionSpec&lt;?&gt;&gt; options ) {</span>
+<span class="fc" id="L56">        this.options.addAll( specsToStrings( options ) );</span>
+<span class="fc" id="L57">    }</span>
+
+    protected OptionException( Collection&lt;? extends OptionSpec&lt;?&gt;&gt; options, Throwable cause ) {
+<span class="fc" id="L60">        super( cause );</span>
+<span class="fc" id="L61">        this.options.addAll( specsToStrings( options ) );</span>
+<span class="fc" id="L62">    }</span>
+
+    private List&lt;String&gt; specsToStrings( Collection&lt;? extends OptionSpec&lt;?&gt;&gt; options ) {
+<span class="fc" id="L65">        List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        for ( OptionSpec&lt;?&gt; each : options )</span>
+<span class="fc" id="L67">            strings.add( specToString( each ) );</span>
+<span class="fc" id="L68">        return strings;</span>
+    }
+
+    private String specToString( OptionSpec&lt;?&gt; option ) {
+<span class="fc" id="L72">        return option.options().stream().collect( joining( &quot;/&quot; ) );</span>
+    }
+
+    /**
+     * Gives the option being considered when the exception was created.
+     *
+     * @return the option being considered when the exception was created
+     */
+    public List&lt;String&gt; options() {
+<span class="fc" id="L81">        return unmodifiableList( options );</span>
+    }
+
+    protected final String singleOptionString() {
+<span class="fc" id="L85">        return singleOptionString( options.get( 0 ) );</span>
+    }
+
+    protected final String singleOptionString( String option ) {
+<span class="fc" id="L89">        return option;</span>
+    }
+
+    protected final String multipleOptionString() {
+<span class="fc" id="L93">        StringBuilder buffer = new StringBuilder( &quot;[&quot; );</span>
+
+<span class="fc" id="L95">        Set&lt;String&gt; asSet = new LinkedHashSet&lt;String&gt;( options );</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        for ( Iterator&lt;String&gt; iter = asSet.iterator(); iter.hasNext(); ) {</span>
+<span class="fc" id="L97">            buffer.append( singleOptionString(iter.next()) );</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            if ( iter.hasNext() )</span>
+<span class="fc" id="L99">                buffer.append( &quot;, &quot; );</span>
+        }
+
+<span class="fc" id="L102">        buffer.append( ']' );</span>
+
+<span class="fc" id="L104">        return buffer.toString();</span>
+    }
+
+    static OptionException unrecognizedOption( String option ) {
+<span class="fc" id="L108">        return new UnrecognizedOptionException( option );</span>
+    }
+
+    @Override
+    public final String getMessage() {
+<span class="fc" id="L113">        return localizedMessage( Locale.getDefault() );</span>
+    }
+
+    final String localizedMessage( Locale locale ) {
+<span class="fc" id="L117">        return formattedMessage( locale );</span>
+    }
+
+    private String formattedMessage( Locale locale ) {
+<span class="fc" id="L121">        return message( locale, &quot;joptsimple.ExceptionMessages&quot;, getClass(), &quot;message&quot;, messageArguments() );</span>
+    }
+
+    abstract Object[] messageArguments();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
