@@ -17,6 +17,11 @@ Changes in version 6.0
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/101} gh-101}} by
       adding <<<OptionSet.valueOfOptional()>>> and <<<OptionSpec.valueOptional()>>>.
 
+Changes in version 5.0.4
+
+    * Resolved {{{https://github.com/pholser/jopt-simple/issues/122} gh-122}} so that
+      long options ending with an equals will have an empty value.
+
 Changes in version 5.0.3
 
     * Resolved {{{https://github.com/pholser/jopt-simple/issues/96} gh-96}} so that
