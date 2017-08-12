@@ -42,7 +42,9 @@
     * {{{http://jcommander.org} JCommander}}
 
     * {{{http://types.cs.washington.edu/plume-lib/api/plume/Options.html} plume-lib Options}}
-
+    
+    * {{{https://github.com/remkop/picocli} picocli}}
+    
     []
 
     I hope you'll agree that JOpt Simple tops them all in ease of use and cleanliness of
