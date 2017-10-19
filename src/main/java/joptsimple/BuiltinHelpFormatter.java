@@ -30,6 +30,7 @@ import java.util.*;
 import joptsimple.internal.Messages;
 import joptsimple.internal.Rows;
 import joptsimple.internal.Strings;
+import joptsimple.util.DateConverter;
 
 import static java.util.stream.Collectors.*;
 
@@ -427,8 +428,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * for use in help.</p>
      *
      * <p>This implementation asks for the {@link OptionDescriptor#argumentTypeIndicator()} of the given
-     * descriptor, and if it is present and not {@code "java.lang.String"}, parses it as a fully qualified
+     * descriptor.<br>
+     * If the descriptor describes a date option it returns the date's pattern if present.<br>
+     * Otherwise if the indicator is present and not {@code "java.lang.String"}, parses it as a fully qualified
      * class name and returns the base name of that class; otherwise returns {@code "String"}.</p>
+     *
      *
      * @param descriptor a descriptor for a configured option of a parser
      * @return type indicator text
@@ -436,10 +440,35 @@ public class BuiltinHelpFormatter implements HelpFormatter {
     protected String extractTypeIndicator( OptionDescriptor descriptor ) {
         String indicator = descriptor.argumentTypeIndicator();
 
+        if ( isDateOption( descriptor ) && !isNullOrEmpty( indicator ) ) {
+            return indicator;
+        }
+
         if ( !isNullOrEmpty( indicator ) && !String.class.getName().equals( indicator ) )
             return shortNameOf( indicator );
 
         return "String";
+    }
+
+    /**
+     * Check if a given OptionDescriptor describes a date option. That is the case if
+     * the descriptors argument converter is of type DateConverter.
+     *
+     * @param descriptor the descriptor to check
+     * @return true if the discriptor describes a date option, false otherwise
+     */
+    private boolean isDateOption( OptionDescriptor descriptor ) {
+        boolean isDateOption = false;
+
+        Optional<ValueConverter<?>> valueConverterOptional = descriptor.argumentConverter();
+        if ( valueConverterOptional.isPresent() ) {
+            ValueConverter<?> valueConverter = valueConverterOptional.get();
+            if ( DateConverter.class.isInstance( valueConverter ) ) {
+                isDateOption = true;
+            }
+        }
+
+        return isDateOption;
     }
 
     /**
