@@ -45,6 +45,8 @@
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.project.outputEncoding>UTF-8</project.project.outputEncoding>
+
+        <jopt.simple.module.name>jopt.simple</jopt.simple.module.name>
     </properties>
     <dependencies>
         <dependency>
@@ -110,6 +112,24 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive combine.children="append">
+                        <manifestEntries>
+                            <Automatic-Module-Name>${jopt.simple.module.name}</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
