@@ -110,6 +110,11 @@ public abstract class OptionException extends RuntimeException {
 
     @Override
     public final String getMessage() {
+        return localizedMessage( Locale.ENGLISH );
+    }
+
+    @Override
+    public final String getLocalizedMessage() {
         return localizedMessage( Locale.getDefault() );
     }
 

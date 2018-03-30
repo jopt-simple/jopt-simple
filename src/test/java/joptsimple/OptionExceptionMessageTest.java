@@ -27,6 +27,7 @@ package joptsimple;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,8 +85,18 @@ public class OptionExceptionMessageTest {
 
     @Test
     public void givesCorrectExceptionMessage() {
-        assertEquals( expectedMessage, subject.getLocalizedMessage() );
         assertEquals( expectedMessage, subject.getMessage() );
         assertEquals( subject.getClass().getName() + ": " + expectedMessage, subject.toString() );
+    }
+
+    @Test
+    public void givesEnglishMessageWhenLocaleIsNotEnglish() {
+        Locale defaultLocale = Locale.getDefault();
+        try {
+            Locale.setDefault( new Locale( "xx", "YY" ) );
+            assertEquals( expectedMessage, subject.getMessage() );
+        } finally {
+            Locale.setDefault( defaultLocale );
+        }
     }
 }
