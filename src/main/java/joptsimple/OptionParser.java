@@ -200,6 +200,7 @@ public class OptionParser implements OptionDeclarer {
     private OptionParserState state;
     private boolean posixlyCorrect;
     private boolean allowsUnrecognizedOptions;
+    private boolean allowsOptionClustering = true;
     private HelpFormatter helpFormatter = new BuiltinHelpFormatter();
 
     /**
@@ -299,6 +300,14 @@ public class OptionParser implements OptionDeclarer {
 
     boolean posixlyCorrect() {
         return posixlyCorrect;
+    }
+
+    public void allowsOptionClustering(boolean allowClustering) {
+        allowsOptionClustering = allowClustering;
+    }
+
+    boolean doesAllowsOptionClustering() {
+        return allowsOptionClustering;
     }
 
     @Override
@@ -528,8 +537,9 @@ public class OptionParser implements OptionDeclarer {
         if ( isRecognized( optionAndArgument.key ) ) {
             specFor( optionAndArgument.key ).handleOption( this, arguments, detected, optionAndArgument.value );
         }
-        else
-            handleShortOptionCluster( candidate, arguments, detected );
+        else if (allowsOptionClustering) {
+            handleShortOptionCluster(candidate, arguments, detected);
+        }
     }
 
     private void handleShortOptionCluster( String candidate, ArgumentList arguments, OptionSet detected ) {
