@@ -25,11 +25,11 @@
 
 package joptsimple;
 
-import org.junit.Test;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+
+import org.junit.Test;
 
 import static java.util.Arrays.*;
 import static java.util.Collections.*;
@@ -104,5 +104,20 @@ public class NonOptionArgumentSpecTest extends AbstractOptionParserFixture {
         OptionSet options = parser.parse( "one", "two" );
 
         assertEquals( emptyList(), options.specs() );
+    }
+
+    @Test
+    public void specsCorrespondingToNonOptions() {
+        OptionParser parser = new OptionParser();
+        parser.nonOptions();
+
+        OptionSet options = parser.parse( "one", "two" );
+
+        assertEquals(
+            asList(
+                new NonOptionArgumentSpec( NonOptionArgumentSpec.NAME ),
+                new NonOptionArgumentSpec( NonOptionArgumentSpec.NAME )
+            ),
+            options.specsWithNonOptions() );
     }
 }
