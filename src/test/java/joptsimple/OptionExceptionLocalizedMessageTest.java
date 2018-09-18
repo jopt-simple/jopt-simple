@@ -79,6 +79,6 @@ public class OptionExceptionLocalizedMessageTest {
 
     @Test
     public void givesCorrectExceptionMessage() {
-        assertEquals( expectedMessage, subject.localizedMessage( new Locale( "xx", "YY" ) ) );
+        assertEquals( expectedMessage, subject.localizedMessage( new Locale( "aa", "BB" ) ) );
     }
 }
