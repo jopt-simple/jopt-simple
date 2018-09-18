@@ -388,7 +388,7 @@ public class OptionParser implements OptionDeclarer {
         return options;
     }
 
-   /**
+    /**
      * Parses the given command line arguments according to the option specifications given to the parser.
      *
      * @param arguments arguments to parse

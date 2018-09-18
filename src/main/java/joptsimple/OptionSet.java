@@ -261,14 +261,29 @@ public class OptionSet {
     }
 
     /**
-     * Gives the set of options that were detected, in the form of {@linkplain OptionSpec}s, in the order in which the
-     * options were found on the command line.
+     * Gives the set of options that were detected, in the form of
+     * {@linkplain OptionSpec}s, in the order in which the options were found
+     * on the command line.
      *
      * @return the set of detected command line options
      */
     public List<OptionSpec<?>> specs() {
-        List<OptionSpec<?>> specs = detectedSpecs;
+        List<OptionSpec<?>> specs = new ArrayList<>( detectedSpecs );
         specs.removeAll( singletonList( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );
+
+        return unmodifiableList( specs );
+    }
+
+    /**
+     * Gives the set of options and non-option arguments that were detected,
+     * in the form of {@linkplain OptionSpec}s, in the order in which they
+     * were found on the command line.
+     *
+     * @return the set of detected command line options and non-option args
+     */
+    public List<OptionSpec<?>> specsWithNonOptions() {
+        List<OptionSpec<?>> specs = new ArrayList<>( detectedSpecs );
+        specs.remove( detectedOptions.get( NonOptionArgumentSpec.NAME ) );
 
         return unmodifiableList( specs );
     }
