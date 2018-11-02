@@ -30,6 +30,7 @@ import java.util.*;
 import joptsimple.internal.Messages;
 import joptsimple.internal.Rows;
 import joptsimple.internal.Strings;
+import joptsimple.util.DateConverter;
 
 import static java.util.stream.Collectors.*;
 
@@ -61,8 +62,8 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * Makes a formatter with a pre-configured overall row width and column separator width.
      */
     BuiltinHelpFormatter() {
-<span class="fc" id="L64">        this( 80, 2 );</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L65">        this( 80, 2 );</span>
+<span class="fc" id="L66">    }</span>
 
     /**
      * Makes a formatter with a given overall row width and column separator width.
@@ -71,10 +72,10 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param desiredColumnSeparatorWidth how many characters wide to make the separation between option column and
      * description column
      */
-<span class="fc" id="L74">    public BuiltinHelpFormatter( int desiredOverallWidth, int desiredColumnSeparatorWidth ) {</span>
-<span class="fc" id="L75">        nonOptionRows = new Rows( desiredOverallWidth * 2, 0 );</span>
-<span class="fc" id="L76">        optionRows = new Rows( desiredOverallWidth, desiredColumnSeparatorWidth );</span>
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L75">    public BuiltinHelpFormatter( int desiredOverallWidth, int desiredColumnSeparatorWidth ) {</span>
+<span class="fc" id="L76">        nonOptionRows = new Rows( desiredOverallWidth * 2, 0 );</span>
+<span class="fc" id="L77">        optionRows = new Rows( desiredOverallWidth, desiredColumnSeparatorWidth );</span>
+<span class="fc" id="L78">    }</span>
 
     /**
      * {@inheritDoc}
@@ -88,19 +89,19 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      */
     @Override
     public String format( Map&lt;String, ? extends OptionDescriptor&gt; options ) {
-<span class="fc" id="L91">        optionRows.reset();</span>
-<span class="fc" id="L92">        nonOptionRows.reset();</span>
+<span class="fc" id="L92">        optionRows.reset();</span>
+<span class="fc" id="L93">        nonOptionRows.reset();</span>
 
-<span class="fc" id="L94">        Comparator&lt;OptionDescriptor&gt; comparator =</span>
+<span class="fc" id="L95">        Comparator&lt;OptionDescriptor&gt; comparator =</span>
             (first, second) -&gt;
-<span class="fc" id="L96">                first.options().iterator().next().compareTo( second.options().iterator().next() );</span>
+<span class="fc" id="L97">                first.options().iterator().next().compareTo( second.options().iterator().next() );</span>
 
-<span class="fc" id="L98">        Set&lt;OptionDescriptor&gt; sorted = new TreeSet&lt;&gt;( comparator );</span>
-<span class="fc" id="L99">        sorted.addAll( options.values() );</span>
+<span class="fc" id="L99">        Set&lt;OptionDescriptor&gt; sorted = new TreeSet&lt;&gt;( comparator );</span>
+<span class="fc" id="L100">        sorted.addAll( options.values() );</span>
 
-<span class="fc" id="L101">        addRows( sorted );</span>
+<span class="fc" id="L102">        addRows( sorted );</span>
 
-<span class="fc" id="L103">        return formattedHelpOutput();</span>
+<span class="fc" id="L104">        return formattedHelpOutput();</span>
     }
 
     /**
@@ -109,8 +110,8 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param single text to put in the left column
      */
     protected void addOptionRow( String single ) {
-<span class="fc" id="L112">        addOptionRow( single, &quot;&quot; );</span>
-<span class="fc" id="L113">    }</span>
+<span class="fc" id="L113">        addOptionRow( single, &quot;&quot; );</span>
+<span class="fc" id="L114">    }</span>
 
     /**
      * Adds a row of option help output in the left and right columns.
@@ -119,8 +120,8 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param right text to put in the right column
      */
     protected void addOptionRow( String left, String right ) {
-<span class="fc" id="L122">        optionRows.add( left, right );</span>
-<span class="fc" id="L123">    }</span>
+<span class="fc" id="L123">        optionRows.add( left, right );</span>
+<span class="fc" id="L124">    }</span>
 
     /**
      * Adds a single row of non-option argument help.
@@ -128,16 +129,16 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param single single row of non-option argument help text
      */
     protected void addNonOptionRow( String single ) {
-<span class="fc" id="L131">        nonOptionRows.add( single, &quot;&quot; );</span>
-<span class="fc" id="L132">    }</span>
+<span class="fc" id="L132">        nonOptionRows.add( single, &quot;&quot; );</span>
+<span class="fc" id="L133">    }</span>
 
     /**
      * Resizes the columns of all the rows to be no wider than the widest element in that column.
      */
     protected void fitRowsToWidth() {
-<span class="fc" id="L138">        nonOptionRows.fitToWidth();</span>
-<span class="fc" id="L139">        optionRows.fitToWidth();</span>
-<span class="fc" id="L140">    }</span>
+<span class="fc" id="L139">        nonOptionRows.fitToWidth();</span>
+<span class="fc" id="L140">        optionRows.fitToWidth();</span>
+<span class="fc" id="L141">    }</span>
 
     /**
      * Produces non-option argument help.
@@ -145,7 +146,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return non-option argument help
      */
     protected String nonOptionOutput() {
-<span class="fc" id="L148">        return nonOptionRows.render();</span>
+<span class="fc" id="L149">        return nonOptionRows.render();</span>
     }
 
     /**
@@ -154,7 +155,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return option help
      */
     protected String optionOutput() {
-<span class="fc" id="L157">        return optionRows.render();</span>
+<span class="fc" id="L158">        return optionRows.render();</span>
     }
 
     /**
@@ -170,13 +171,13 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return help output for entire set of options and non-option arguments
      */
     protected String formattedHelpOutput() {
-<span class="fc" id="L173">        StringBuilder formatted = new StringBuilder();</span>
-<span class="fc" id="L174">        String nonOptionDisplay = nonOptionOutput();</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">        if ( !Strings.isNullOrEmpty( nonOptionDisplay ) )</span>
-<span class="fc" id="L176">            formatted.append( nonOptionDisplay ).append( LINE_SEPARATOR );</span>
-<span class="fc" id="L177">        formatted.append( optionOutput() );</span>
+<span class="fc" id="L174">        StringBuilder formatted = new StringBuilder();</span>
+<span class="fc" id="L175">        String nonOptionDisplay = nonOptionOutput();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if ( !Strings.isNullOrEmpty( nonOptionDisplay ) )</span>
+<span class="fc" id="L177">            formatted.append( nonOptionDisplay ).append( LINE_SEPARATOR );</span>
+<span class="fc" id="L178">        formatted.append( optionOutput() );</span>
 
-<span class="fc" id="L179">        return formatted.toString();</span>
+<span class="fc" id="L180">        return formatted.toString();</span>
     }
 
     /**
@@ -195,17 +196,17 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param options descriptors for the configured options of a parser
      */
     protected void addRows( Collection&lt;? extends OptionDescriptor&gt; options ) {
-<span class="fc" id="L198">        addNonOptionsDescription( options );</span>
+<span class="fc" id="L199">        addNonOptionsDescription( options );</span>
 
-<span class="fc bfc" id="L200" title="All 2 branches covered.">        if ( options.isEmpty() )</span>
-<span class="fc" id="L201">            addOptionRow( message( &quot;no.options.specified&quot; ) );</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        if ( options.isEmpty() )</span>
+<span class="fc" id="L202">            addOptionRow( message( &quot;no.options.specified&quot; ) );</span>
         else {
-<span class="fc" id="L203">            addHeaders( options );</span>
-<span class="fc" id="L204">            addOptions( options );</span>
+<span class="fc" id="L204">            addHeaders( options );</span>
+<span class="fc" id="L205">            addOptions( options );</span>
         }
 
-<span class="fc" id="L207">        fitRowsToWidth();</span>
-<span class="fc" id="L208">    }</span>
+<span class="fc" id="L208">        fitRowsToWidth();</span>
+<span class="fc" id="L209">    }</span>
 
     /**
      * &lt;p&gt;Adds non-option arguments descriptions to the help output.&lt;/p&gt;
@@ -224,12 +225,12 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param options descriptors for the configured options of a parser
      */
     protected void addNonOptionsDescription( Collection&lt;? extends OptionDescriptor&gt; options ) {
-<span class="fc" id="L227">        OptionDescriptor nonOptions = findAndRemoveNonOptionsSpec( options );</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">        if ( shouldShowNonOptionArgumentDisplay( nonOptions ) ) {</span>
-<span class="fc" id="L229">            addNonOptionRow( message( &quot;non.option.arguments.header&quot; ) );</span>
-<span class="fc" id="L230">            addNonOptionRow( createNonOptionArgumentsDisplay( nonOptions ) );</span>
+<span class="fc" id="L228">        OptionDescriptor nonOptions = findAndRemoveNonOptionsSpec( options );</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        if ( shouldShowNonOptionArgumentDisplay( nonOptions ) ) {</span>
+<span class="fc" id="L230">            addNonOptionRow( message( &quot;non.option.arguments.header&quot; ) );</span>
+<span class="fc" id="L231">            addNonOptionRow( createNonOptionArgumentsDisplay( nonOptions ) );</span>
         }
-<span class="fc" id="L232">    }</span>
+<span class="fc" id="L233">    }</span>
 
     /**
      * &lt;p&gt;Decides whether or not to show a non-option arguments help.&lt;/p&gt;
@@ -242,9 +243,9 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return {@code true} if non-options argument help should be shown
      */
     protected boolean shouldShowNonOptionArgumentDisplay( OptionDescriptor nonOptionDescriptor ) {
-<span class="fc bfc" id="L245" title="All 2 branches covered.">        return !Strings.isNullOrEmpty( nonOptionDescriptor.description() )</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentTypeIndicator() )</span>
-<span class="fc bfc" id="L247" title="All 2 branches covered.">            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentDescription() );</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        return !Strings.isNullOrEmpty( nonOptionDescriptor.description() )</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentTypeIndicator() )</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">            || !Strings.isNullOrEmpty( nonOptionDescriptor.argumentDescription() );</span>
     }
 
     /**
@@ -259,11 +260,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return help string for non-options
      */
     protected String createNonOptionArgumentsDisplay( OptionDescriptor nonOptionDescriptor ) {
-<span class="fc" id="L262">        StringBuilder buffer = new StringBuilder();</span>
-<span class="fc" id="L263">        maybeAppendOptionInfo( buffer, nonOptionDescriptor );</span>
-<span class="fc" id="L264">        maybeAppendNonOptionsDescription( buffer, nonOptionDescriptor );</span>
+<span class="fc" id="L263">        StringBuilder buffer = new StringBuilder();</span>
+<span class="fc" id="L264">        maybeAppendOptionInfo( buffer, nonOptionDescriptor );</span>
+<span class="fc" id="L265">        maybeAppendNonOptionsDescription( buffer, nonOptionDescriptor );</span>
 
-<span class="fc" id="L266">        return buffer.toString();</span>
+<span class="fc" id="L267">        return buffer.toString();</span>
     }
 
     /**
@@ -277,9 +278,9 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param nonOptions non-option arguments descriptor
      */
     protected void maybeAppendNonOptionsDescription( StringBuilder buffer, OptionDescriptor nonOptions ) {
-<span class="pc bpc" id="L280" title="1 of 4 branches missed.">        buffer.append( buffer.length() &gt; 0 &amp;&amp; !Strings.isNullOrEmpty( nonOptions.description() ) ? &quot; -- &quot; : &quot;&quot; )</span>
-<span class="fc" id="L281">            .append( nonOptions.description() );</span>
-<span class="fc" id="L282">    }</span>
+<span class="pc bpc" id="L281" title="1 of 4 branches missed.">        buffer.append( buffer.length() &gt; 0 &amp;&amp; !Strings.isNullOrEmpty( nonOptions.description() ) ? &quot; -- &quot; : &quot;&quot; )</span>
+<span class="fc" id="L282">            .append( nonOptions.description() );</span>
+<span class="fc" id="L283">    }</span>
 
     /**
      * Finds the non-option arguments descriptor in the given collection, removes it, and returns it.
@@ -288,15 +289,15 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return the non-option arguments descriptor
      */
     protected OptionDescriptor findAndRemoveNonOptionsSpec( Collection&lt;? extends OptionDescriptor&gt; options ) {
-<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        for ( Iterator&lt;? extends OptionDescriptor&gt; it = options.iterator(); it.hasNext(); ) {</span>
-<span class="fc" id="L292">            OptionDescriptor next = it.next();</span>
-<span class="fc bfc" id="L293" title="All 2 branches covered.">            if ( next.representsNonOptions() ) {</span>
-<span class="fc" id="L294">                it.remove();</span>
-<span class="fc" id="L295">                return next;</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">        for ( Iterator&lt;? extends OptionDescriptor&gt; it = options.iterator(); it.hasNext(); ) {</span>
+<span class="fc" id="L293">            OptionDescriptor next = it.next();</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">            if ( next.representsNonOptions() ) {</span>
+<span class="fc" id="L295">                it.remove();</span>
+<span class="fc" id="L296">                return next;</span>
             }
-<span class="fc" id="L297">        }</span>
+<span class="fc" id="L298">        }</span>
 
-<span class="nc" id="L299">        throw new AssertionError( &quot;no non-options argument spec&quot; );</span>
+<span class="nc" id="L300">        throw new AssertionError( &quot;no non-options argument spec&quot; );</span>
     }
 
     /**
@@ -309,14 +310,14 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param options descriptors for the configured options of a parser
      */
     protected void addHeaders( Collection&lt;? extends OptionDescriptor&gt; options ) {
-<span class="fc bfc" id="L312" title="All 2 branches covered.">        if ( hasRequiredOption( options ) ) {</span>
-<span class="fc" id="L313">            addOptionRow( message( &quot;option.header.with.required.indicator&quot; ), message( &quot;description.header&quot; ) );</span>
-<span class="fc" id="L314">            addOptionRow( message( &quot;option.divider.with.required.indicator&quot; ), message( &quot;description.divider&quot; ) );</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">        if ( hasRequiredOption( options ) ) {</span>
+<span class="fc" id="L314">            addOptionRow( message( &quot;option.header.with.required.indicator&quot; ), message( &quot;description.header&quot; ) );</span>
+<span class="fc" id="L315">            addOptionRow( message( &quot;option.divider.with.required.indicator&quot; ), message( &quot;description.divider&quot; ) );</span>
         } else {
-<span class="fc" id="L316">            addOptionRow( message( &quot;option.header&quot; ), message( &quot;description.header&quot; ) );</span>
-<span class="fc" id="L317">            addOptionRow( message( &quot;option.divider&quot; ), message( &quot;description.divider&quot; ) );</span>
+<span class="fc" id="L317">            addOptionRow( message( &quot;option.header&quot; ), message( &quot;description.header&quot; ) );</span>
+<span class="fc" id="L318">            addOptionRow( message( &quot;option.divider&quot; ), message( &quot;description.divider&quot; ) );</span>
         }
-<span class="fc" id="L319">    }</span>
+<span class="fc" id="L320">    }</span>
 
     /**
      * Tells whether the given option descriptors contain a &quot;required&quot; option.
@@ -325,12 +326,12 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return {@code true} if at least one of the options is &quot;required&quot;
      */
     protected final boolean hasRequiredOption( Collection&lt;? extends OptionDescriptor&gt; options ) {
-<span class="fc bfc" id="L328" title="All 2 branches covered.">        for ( OptionDescriptor each : options ) {</span>
-<span class="fc bfc" id="L329" title="All 2 branches covered.">            if ( each.isRequired() )</span>
-<span class="fc" id="L330">                return true;</span>
-<span class="fc" id="L331">        }</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        for ( OptionDescriptor each : options ) {</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">            if ( each.isRequired() )</span>
+<span class="fc" id="L331">                return true;</span>
+<span class="fc" id="L332">        }</span>
 
-<span class="fc" id="L333">        return false;</span>
+<span class="fc" id="L334">        return false;</span>
     }
 
     /**
@@ -343,11 +344,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param options descriptors for the configured options of a parser
      */
     protected void addOptions( Collection&lt;? extends OptionDescriptor&gt; options ) {
-<span class="fc bfc" id="L346" title="All 2 branches covered.">        for ( OptionDescriptor each : options ) {</span>
-<span class="pc bpc" id="L347" title="1 of 2 branches missed.">            if ( !each.representsNonOptions() )</span>
-<span class="fc" id="L348">                addOptionRow( createOptionDisplay( each ), createDescriptionDisplay( each ) );</span>
-<span class="fc" id="L349">        }</span>
-<span class="fc" id="L350">    }</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">        for ( OptionDescriptor each : options ) {</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">            if ( !each.representsNonOptions() )</span>
+<span class="fc" id="L349">                addOptionRow( createOptionDisplay( each ), createDescriptionDisplay( each ) );</span>
+<span class="fc" id="L350">        }</span>
+<span class="fc" id="L351">    }</span>
 
     /**
      * &lt;p&gt;Creates a string for how the given option descriptor is to be represented in help.&lt;/p&gt;
@@ -368,20 +369,20 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return help string
      */
     protected String createOptionDisplay( OptionDescriptor descriptor ) {
-<span class="fc bfc" id="L371" title="All 2 branches covered.">        StringBuilder buffer = new StringBuilder( descriptor.isRequired() ? &quot;* &quot; : &quot;&quot; );</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">        StringBuilder buffer = new StringBuilder( descriptor.isRequired() ? &quot;* &quot; : &quot;&quot; );</span>
 
-<span class="fc bfc" id="L373" title="All 2 branches covered.">        for ( Iterator&lt;String&gt; i = descriptor.options().iterator(); i.hasNext(); ) {</span>
-<span class="fc" id="L374">            String option = i.next();</span>
-<span class="fc" id="L375">            buffer.append( optionLeader( option ) );</span>
-<span class="fc" id="L376">            buffer.append( option );</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">        for ( Iterator&lt;String&gt; i = descriptor.options().iterator(); i.hasNext(); ) {</span>
+<span class="fc" id="L375">            String option = i.next();</span>
+<span class="fc" id="L376">            buffer.append( optionLeader( option ) );</span>
+<span class="fc" id="L377">            buffer.append( option );</span>
 
-<span class="fc bfc" id="L378" title="All 2 branches covered.">            if ( i.hasNext() )</span>
-<span class="fc" id="L379">                buffer.append( &quot;, &quot; );</span>
-<span class="fc" id="L380">        }</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">            if ( i.hasNext() )</span>
+<span class="fc" id="L380">                buffer.append( &quot;, &quot; );</span>
+<span class="fc" id="L381">        }</span>
 
-<span class="fc" id="L382">        maybeAppendOptionInfo( buffer, descriptor );</span>
+<span class="fc" id="L383">        maybeAppendOptionInfo( buffer, descriptor );</span>
 
-<span class="fc" id="L384">        return buffer.toString();</span>
+<span class="fc" id="L385">        return buffer.toString();</span>
     }
 
     /**
@@ -394,7 +395,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return an &quot;option leader&quot; string
      */
     protected String optionLeader( String option ) {
-<span class="fc bfc" id="L397" title="All 2 branches covered.">        return option.length() &gt; 1 ? DOUBLE_HYPHEN : HYPHEN;</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">        return option.length() &gt; 1 ? DOUBLE_HYPHEN : HYPHEN;</span>
     }
 
     /**
@@ -412,34 +413,62 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param descriptor a descriptor for a configured option of a parser
      */
     protected void maybeAppendOptionInfo( StringBuilder buffer, OptionDescriptor descriptor ) {
-<span class="fc" id="L415">        String indicator = extractTypeIndicator( descriptor );</span>
-<span class="fc" id="L416">        String description = descriptor.argumentDescription();</span>
-<span class="fc bfc" id="L417" title="All 2 branches covered.">        if ( descriptor.acceptsArguments()</span>
-<span class="fc bfc" id="L418" title="All 2 branches covered.">            || !isNullOrEmpty( description )</span>
-<span class="fc bfc" id="L419" title="All 2 branches covered.">            || descriptor.representsNonOptions() ) {</span>
+<span class="fc" id="L416">        String indicator = extractTypeIndicator( descriptor );</span>
+<span class="fc" id="L417">        String description = descriptor.argumentDescription();</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">        if ( descriptor.acceptsArguments()</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">            || !isNullOrEmpty( description )</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">            || descriptor.representsNonOptions() ) {</span>
 
-<span class="fc" id="L421">            appendOptionHelp( buffer, indicator, description, descriptor.requiresArgument() );</span>
+<span class="fc" id="L422">            appendOptionHelp( buffer, indicator, description, descriptor.requiresArgument() );</span>
         }
-<span class="fc" id="L423">    }</span>
+<span class="fc" id="L424">    }</span>
 
     /**
      * &lt;p&gt;Gives an indicator of the type of arguments of the option described by the given descriptor,
      * for use in help.&lt;/p&gt;
      *
      * &lt;p&gt;This implementation asks for the {@link OptionDescriptor#argumentTypeIndicator()} of the given
-     * descriptor, and if it is present and not {@code &quot;java.lang.String&quot;}, parses it as a fully qualified
+     * descriptor.&lt;br&gt;
+     * If the descriptor describes a date option it returns the date's pattern if present.&lt;br&gt;
+     * Otherwise if the indicator is present and not {@code &quot;java.lang.String&quot;}, parses it as a fully qualified
      * class name and returns the base name of that class; otherwise returns {@code &quot;String&quot;}.&lt;/p&gt;
+     *
      *
      * @param descriptor a descriptor for a configured option of a parser
      * @return type indicator text
      */
     protected String extractTypeIndicator( OptionDescriptor descriptor ) {
-<span class="fc" id="L437">        String indicator = descriptor.argumentTypeIndicator();</span>
+<span class="fc" id="L441">        String indicator = descriptor.argumentTypeIndicator();</span>
 
-<span class="fc bfc" id="L439" title="All 4 branches covered.">        if ( !isNullOrEmpty( indicator ) &amp;&amp; !String.class.getName().equals( indicator ) )</span>
-<span class="fc" id="L440">            return shortNameOf( indicator );</span>
+<span class="pc bpc" id="L443" title="1 of 4 branches missed.">        if ( isDateOption( descriptor ) &amp;&amp; !isNullOrEmpty( indicator ) ) {</span>
+<span class="fc" id="L444">            return indicator;</span>
+        }
 
-<span class="fc" id="L442">        return &quot;String&quot;;</span>
+<span class="fc bfc" id="L447" title="All 4 branches covered.">        if ( !isNullOrEmpty( indicator ) &amp;&amp; !String.class.getName().equals( indicator ) )</span>
+<span class="fc" id="L448">            return shortNameOf( indicator );</span>
+
+<span class="fc" id="L450">        return &quot;String&quot;;</span>
+    }
+
+    /**
+     * Check if a given OptionDescriptor describes a date option. That is the case if
+     * the descriptors argument converter is of type DateConverter.
+     *
+     * @param descriptor the descriptor to check
+     * @return true if the discriptor describes a date option, false otherwise
+     */
+    private boolean isDateOption( OptionDescriptor descriptor ) {
+<span class="fc" id="L461">        boolean isDateOption = false;</span>
+
+<span class="fc" id="L463">        Optional&lt;ValueConverter&lt;?&gt;&gt; valueConverterOptional = descriptor.argumentConverter();</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        if ( valueConverterOptional.isPresent() ) {</span>
+<span class="fc" id="L465">            ValueConverter&lt;?&gt; valueConverter = valueConverterOptional.get();</span>
+<span class="fc bfc" id="L466" title="All 2 branches covered.">            if ( DateConverter.class.isInstance( valueConverter ) ) {</span>
+<span class="fc" id="L467">                isDateOption = true;</span>
+            }
+        }
+
+<span class="fc" id="L471">        return isDateOption;</span>
     }
 
     /**
@@ -456,11 +485,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      */
     protected void appendOptionHelp( StringBuilder buffer, String typeIndicator, String description,
                                      boolean required ) {
-<span class="fc bfc" id="L459" title="All 2 branches covered.">        if ( required )</span>
-<span class="fc" id="L460">            appendTypeIndicator( buffer, typeIndicator, description, '&lt;', '&gt;' );</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">        if ( required )</span>
+<span class="fc" id="L489">            appendTypeIndicator( buffer, typeIndicator, description, '&lt;', '&gt;' );</span>
         else
-<span class="fc" id="L462">            appendTypeIndicator( buffer, typeIndicator, description, '[', ']' );</span>
-<span class="fc" id="L463">    }</span>
+<span class="fc" id="L491">            appendTypeIndicator( buffer, typeIndicator, description, '[', ']' );</span>
+<span class="fc" id="L492">    }</span>
 
     /**
      * &lt;p&gt;Appends a type indicator for an option's argument to the given buffer.&lt;/p&gt;
@@ -483,19 +512,19 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      */
     protected void appendTypeIndicator( StringBuilder buffer, String typeIndicator, String description,
                                         char start, char end ) {
-<span class="fc" id="L486">        buffer.append( ' ' ).append( start );</span>
-<span class="pc bpc" id="L487" title="1 of 2 branches missed.">        if ( typeIndicator != null )</span>
-<span class="fc" id="L488">            buffer.append( typeIndicator );</span>
+<span class="fc" id="L515">        buffer.append( ' ' ).append( start );</span>
+<span class="pc bpc" id="L516" title="1 of 2 branches missed.">        if ( typeIndicator != null )</span>
+<span class="fc" id="L517">            buffer.append( typeIndicator );</span>
 
-<span class="fc bfc" id="L490" title="All 2 branches covered.">        if ( !Strings.isNullOrEmpty( description ) ) {</span>
-<span class="pc bpc" id="L491" title="1 of 2 branches missed.">            if ( typeIndicator != null )</span>
-<span class="fc" id="L492">                buffer.append( &quot;: &quot; );</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">        if ( !Strings.isNullOrEmpty( description ) ) {</span>
+<span class="pc bpc" id="L520" title="1 of 2 branches missed.">            if ( typeIndicator != null )</span>
+<span class="fc" id="L521">                buffer.append( &quot;: &quot; );</span>
 
-<span class="fc" id="L494">            buffer.append( description );</span>
+<span class="fc" id="L523">            buffer.append( description );</span>
         }
 
-<span class="fc" id="L497">        buffer.append( end );</span>
-<span class="fc" id="L498">    }</span>
+<span class="fc" id="L526">        buffer.append( end );</span>
+<span class="fc" id="L527">    }</span>
 
     /**
      * &lt;p&gt;Gives a string representing a description of the option with the given descriptor.&lt;/p&gt;
@@ -518,21 +547,21 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return display text for the option's description
      */
     protected String createDescriptionDisplay( OptionDescriptor descriptor ) {
-<span class="fc" id="L521">        List&lt;?&gt; defaultValues = descriptor.defaultValues();</span>
-<span class="fc bfc" id="L522" title="All 2 branches covered.">        if ( defaultValues.isEmpty() )</span>
-<span class="fc" id="L523">            return descriptor.description();</span>
+<span class="fc" id="L550">        List&lt;?&gt; defaultValues = descriptor.defaultValues();</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">        if ( defaultValues.isEmpty() )</span>
+<span class="fc" id="L552">            return descriptor.description();</span>
 
-<span class="fc" id="L525">        List&lt;String&gt; stringifiedDefaults =</span>
-<span class="fc" id="L526">            defaultValues.stream()</span>
-<span class="fc" id="L527">                .map( v -&gt; descriptor.argumentConverter()</span>
-<span class="fc" id="L528">                    .map( c -&gt; c.revert( v ) )</span>
-<span class="fc" id="L529">                    .orElse( String.valueOf( v ) ) )</span>
-<span class="fc" id="L530">                .collect( toList() );</span>
-<span class="fc" id="L531">        String defaultValuesDisplay = createDefaultValuesDisplay( stringifiedDefaults );</span>
-<span class="fc" id="L532">        return ( descriptor.description()</span>
+<span class="fc" id="L554">        List&lt;String&gt; stringifiedDefaults =</span>
+<span class="fc" id="L555">            defaultValues.stream()</span>
+<span class="fc" id="L556">                .map( v -&gt; descriptor.argumentConverter()</span>
+<span class="fc" id="L557">                    .map( c -&gt; c.revert( v ) )</span>
+<span class="fc" id="L558">                    .orElse( String.valueOf( v ) ) )</span>
+<span class="fc" id="L559">                .collect( toList() );</span>
+<span class="fc" id="L560">        String defaultValuesDisplay = createDefaultValuesDisplay( stringifiedDefaults );</span>
+<span class="fc" id="L561">        return ( descriptor.description()</span>
             + ' '
-<span class="fc" id="L534">            + surround( message( &quot;default.value.header&quot; ) + ' ' + defaultValuesDisplay, '(', ')' )</span>
-<span class="fc" id="L535">        ).trim();</span>
+<span class="fc" id="L563">            + surround( message( &quot;default.value.header&quot; ) + ' ' + defaultValuesDisplay, '(', ')' )</span>
+<span class="fc" id="L564">        ).trim();</span>
     }
 
     /**
@@ -545,7 +574,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return a display string for those default values
      */
     protected String createDefaultValuesDisplay( List&lt;?&gt; defaultValues ) {
-<span class="fc bfc" id="L548" title="All 2 branches covered.">        return defaultValues.size() == 1 ? defaultValues.get( 0 ).toString() : defaultValues.toString();</span>
+<span class="fc bfc" id="L577" title="All 2 branches covered.">        return defaultValues.size() == 1 ? defaultValues.get( 0 ).toString() : defaultValues.toString();</span>
     }
 
     /**
@@ -561,8 +590,8 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return a formatted localized message
      */
     protected String message( String keySuffix, Object... args ) {
-<span class="fc" id="L564">        return Messages.message(</span>
-<span class="fc" id="L565">            Locale.getDefault(),</span>
+<span class="fc" id="L593">        return Messages.message(</span>
+<span class="fc" id="L594">            Locale.getDefault(),</span>
             &quot;joptsimple.HelpFormatterMessages&quot;,
             BuiltinHelpFormatter.class,
             keySuffix,

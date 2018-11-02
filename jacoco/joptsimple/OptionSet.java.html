@@ -267,11 +267,11 @@ public class OptionSet {
      * @return the set of detected command line options
      */
     public List&lt;OptionSpec&lt;?&gt;&gt; specs() {
-<span class="fc" id="L270">        List&lt;OptionSpec&lt;?&gt;&gt; specs = detectedSpecs;</span>
+        List&lt;OptionSpec&lt;?&gt;&gt; specs = detectedSpecs;
 <span class="fc" id="L271">        specs.removeAll( singletonList( detectedOptions.get( NonOptionArgumentSpec.NAME ) ) );</span>
-
-<span class="fc" id="L273">        return unmodifiableList( specs );</span>
-    }
+<span class="fc" id="L272"></span>
+        return unmodifiableList( specs );
+<span class="fc" id="L274">    }</span>
 
     /**
      * Gives all declared options as a map of string to {@linkplain OptionSpec}.
@@ -279,83 +279,83 @@ public class OptionSet {
      * @return the declared options as a map
      */
     public Map&lt;OptionSpec&lt;?&gt;, List&lt;?&gt;&gt; asMap() {
-<span class="fc" id="L282">        Map&lt;OptionSpec&lt;?&gt;, List&lt;?&gt;&gt; map = new HashMap&lt;&gt;();</span>
+        Map&lt;OptionSpec&lt;?&gt;, List&lt;?&gt;&gt; map = new HashMap&lt;&gt;();
 
-<span class="fc bfc" id="L284" title="All 2 branches covered.">        for ( AbstractOptionSpec&lt;?&gt; spec : recognizedSpecs.values() ) {</span>
-<span class="fc bfc" id="L285" title="All 2 branches covered.">            if ( !spec.representsNonOptions() )</span>
+        for ( AbstractOptionSpec&lt;?&gt; spec : recognizedSpecs.values() ) {
+<span class="fc" id="L285">            if ( !spec.representsNonOptions() )</span>
 <span class="fc" id="L286">                map.put( spec, valuesOf( spec ) );</span>
-<span class="fc" id="L287">        }</span>
-
-<span class="fc" id="L289">        return unmodifiableMap( map );</span>
+        }
+<span class="fc" id="L288"></span>
+        return unmodifiableMap( map );
     }
 
     /**
      * @return the detected non-option arguments
      */
     public List&lt;?&gt; nonOptionArguments() {
-<span class="fc" id="L296">        AbstractOptionSpec&lt;?&gt; spec = detectedOptions.get( NonOptionArgumentSpec.NAME );</span>
+        AbstractOptionSpec&lt;?&gt; spec = detectedOptions.get( NonOptionArgumentSpec.NAME );
 <span class="fc" id="L297">        return valuesOf( spec );</span>
     }
-
-    void add( AbstractOptionSpec&lt;?&gt; spec ) {
+<span class="fc bfc" id="L299" title="All 2 branches covered."></span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">    void add( AbstractOptionSpec&lt;?&gt; spec ) {</span>
 <span class="fc" id="L301">        addWithArgument( spec, null );</span>
 <span class="fc" id="L302">    }</span>
 
-    void addWithArgument( AbstractOptionSpec&lt;?&gt; spec, String argument ) {
-<span class="fc" id="L305">        detectedSpecs.add( spec );</span>
+<span class="fc" id="L304">    void addWithArgument( AbstractOptionSpec&lt;?&gt; spec, String argument ) {</span>
+        detectedSpecs.add( spec );
 
-<span class="fc bfc" id="L307" title="All 2 branches covered.">        for ( String each : spec.options() )</span>
-<span class="fc" id="L308">            detectedOptions.put( each, spec );</span>
+        for ( String each : spec.options() )
+            detectedOptions.put( each, spec );
 
-<span class="fc" id="L310">        List&lt;String&gt; optionArguments = optionsToArguments.get( spec );</span>
-
-<span class="fc bfc" id="L312" title="All 2 branches covered.">        if ( optionArguments == null ) {</span>
-<span class="fc" id="L313">            optionArguments = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L314">            optionsToArguments.put( spec, optionArguments );</span>
+        List&lt;String&gt; optionArguments = optionsToArguments.get( spec );
+<span class="fc" id="L311"></span>
+<span class="fc" id="L312">        if ( optionArguments == null ) {</span>
+            optionArguments = new ArrayList&lt;&gt;();
+            optionsToArguments.put( spec, optionArguments );
         }
-
-<span class="fc bfc" id="L317" title="All 2 branches covered.">        if ( argument != null )</span>
-<span class="fc" id="L318">            optionArguments.add( argument );</span>
-<span class="fc" id="L319">    }</span>
-
-    @Override
-    public boolean equals( Object that ) {
-<span class="fc bfc" id="L323" title="All 2 branches covered.">        if ( this == that )</span>
-<span class="fc" id="L324">            return true;</span>
-
-<span class="fc bfc" id="L326" title="All 4 branches covered.">        if ( that == null || !getClass().equals( that.getClass() ) )</span>
-<span class="fc" id="L327">            return false;</span>
-
-<span class="fc" id="L329">        OptionSet other = (OptionSet) that;</span>
-<span class="fc" id="L330">        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; thisOptionsToArguments = new HashMap&lt;&gt;( optionsToArguments );</span>
-<span class="fc" id="L331">        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; otherOptionsToArguments = new HashMap&lt;&gt;( other.optionsToArguments );</span>
-<span class="pc bpc" id="L332" title="1 of 2 branches missed.">        return detectedOptions.equals( other.detectedOptions )</span>
-<span class="fc bfc" id="L333" title="All 2 branches covered.">            &amp;&amp; thisOptionsToArguments.equals( otherOptionsToArguments );</span>
+<span class="fc" id="L316"></span>
+<span class="fc" id="L317">        if ( argument != null )</span>
+            optionArguments.add( argument );
     }
+<span class="fc" id="L320"></span>
+    @Override
+<span class="fc bfc" id="L322" title="All 2 branches covered.">    public boolean equals( Object that ) {</span>
+<span class="fc" id="L323">        if ( this == that )</span>
+            return true;
+<span class="fc" id="L325"></span>
+        if ( that == null || !getClass().equals( that.getClass() ) )
+<span class="fc bfc" id="L327" title="All 2 branches covered.">            return false;</span>
+<span class="fc" id="L328"></span>
+<span class="fc" id="L329">        OptionSet other = (OptionSet) that;</span>
+        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; thisOptionsToArguments = new HashMap&lt;&gt;( optionsToArguments );
+        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; otherOptionsToArguments = new HashMap&lt;&gt;( other.optionsToArguments );
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        return detectedOptions.equals( other.detectedOptions )</span>
+<span class="fc" id="L333">            &amp;&amp; thisOptionsToArguments.equals( otherOptionsToArguments );</span>
+<span class="fc" id="L334">    }</span>
 
     @Override
     public int hashCode() {
-<span class="fc" id="L338">        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; thisOptionsToArguments = new HashMap&lt;&gt;( optionsToArguments );</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        Map&lt;AbstractOptionSpec&lt;?&gt;, List&lt;String&gt;&gt; thisOptionsToArguments = new HashMap&lt;&gt;( optionsToArguments );</span>
 <span class="fc" id="L339">        return detectedOptions.hashCode() ^ thisOptionsToArguments.hashCode();</span>
     }
-
-    @SuppressWarnings( &quot;unchecked&quot; )
+<span class="fc bfc" id="L341" title="All 4 branches covered."></span>
+<span class="fc" id="L342">    @SuppressWarnings( &quot;unchecked&quot; )</span>
     private &lt;V&gt; List&lt;V&gt; defaultValuesFor( String option ) {
-<span class="fc bfc" id="L344" title="All 2 branches covered.">        if ( defaultValues.containsKey( option ) )</span>
+<span class="fc" id="L344">        if ( defaultValues.containsKey( option ) )</span>
 <span class="fc" id="L345">            return unmodifiableList( (List&lt;V&gt;) defaultValues.get( option ) );</span>
-
-<span class="fc" id="L347">        return emptyList();</span>
-    }
+<span class="fc" id="L346"></span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">        return emptyList();</span>
+<span class="fc bfc" id="L348" title="All 2 branches covered.">    }</span>
 
     private &lt;V&gt; List&lt;V&gt; defaultValueFor( OptionSpec&lt;V&gt; option ) {
-<span class="fc" id="L351">        return defaultValuesFor( option.options().iterator().next() );</span>
+        return defaultValuesFor( option.options().iterator().next() );
     }
-
-    private static Map&lt;String, List&lt;?&gt;&gt; defaultValues( Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs ) {
-<span class="fc" id="L355">        Map&lt;String, List&lt;?&gt;&gt; defaults = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L356" title="All 2 branches covered.">        for ( Map.Entry&lt;String, AbstractOptionSpec&lt;?&gt;&gt; each : recognizedSpecs.entrySet() )</span>
-<span class="fc" id="L357">            defaults.put( each.getKey(), each.getValue().defaultValues() );</span>
-<span class="fc" id="L358">        return defaults;</span>
-    }
-}
+<span class="fc" id="L353"></span>
+<span class="fc" id="L354">    private static Map&lt;String, List&lt;?&gt;&gt; defaultValues( Map&lt;String, AbstractOptionSpec&lt;?&gt;&gt; recognizedSpecs ) {</span>
+        Map&lt;String, List&lt;?&gt;&gt; defaults = new HashMap&lt;&gt;();
+        for ( Map.Entry&lt;String, AbstractOptionSpec&lt;?&gt;&gt; each : recognizedSpecs.entrySet() )
+            defaults.put( each.getKey(), each.getValue().defaultValues() );
+        return defaults;
+<span class="fc bfc" id="L359" title="All 2 branches covered.">    }</span>
+<span class="fc" id="L360">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

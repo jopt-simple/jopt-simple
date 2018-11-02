@@ -114,12 +114,12 @@ public abstract class OptionException extends RuntimeException {
     }
 
     final String localizedMessage( Locale locale ) {
-<span class="fc" id="L117">        return formattedMessage( locale );</span>
-    }
+        return formattedMessage( locale );
+<span class="fc" id="L118">    }</span>
 
     private String formattedMessage( Locale locale ) {
-<span class="fc" id="L121">        return message( locale, &quot;joptsimple.ExceptionMessages&quot;, getClass(), &quot;message&quot;, messageArguments() );</span>
-    }
+        return message( locale, &quot;joptsimple.ExceptionMessages&quot;, getClass(), &quot;message&quot;, messageArguments() );
+<span class="fc" id="L122">    }</span>
 
     abstract Object[] messageArguments();
 }
