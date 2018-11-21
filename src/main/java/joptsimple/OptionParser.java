@@ -318,6 +318,11 @@ public class OptionParser implements OptionDeclarer {
             recognizedOptions.remove( String.valueOf( RESERVED_FOR_EXTENSIONS ) );
     }
 
+    @Override
+    public OptionDeclarer acceptsSubcommand(String name) {
+        return new OptionParser();
+    }
+
     void recognize( AbstractOptionSpec<?> spec ) {
         recognizedOptions.putAll( spec.options(), spec );
         trainingOrder.add( spec );

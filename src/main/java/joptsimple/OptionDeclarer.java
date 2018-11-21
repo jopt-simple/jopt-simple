@@ -113,4 +113,6 @@ public interface OptionDeclarer {
      * @param recognize {@code true} if the parser is to recognize the special style of long options
      */
     void recognizeAlternativeLongOptions( boolean recognize );
+
+    OptionDeclarer acceptsSubcommand(String name);
 }

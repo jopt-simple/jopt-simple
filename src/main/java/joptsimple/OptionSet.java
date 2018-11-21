@@ -372,4 +372,12 @@ public class OptionSet {
             defaults.put( each.getKey(), each.getValue().defaultValues() );
         return defaults;
     }
+
+    public String name() {
+        return null;
+    }
+
+    public OptionSet subcommand() {
+        return null;
+    }
 }
