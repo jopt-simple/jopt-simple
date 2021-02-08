@@ -18,4 +18,20 @@ public class ShortOptionsClusteringTest {
         assertTrue( options.has( "c" ) );
         assertTrue( options.has( "d" ) );
     }
+
+    @Test
+    public void rejectsClusteringShortOptions() {
+        OptionParser parser = new OptionParser();
+        parser.allowsOptionClustering(false);
+        parser.accepts( "a" );
+        parser.accepts( "b" );
+        parser.accepts( "c" );
+
+        OptionSet options = parser.parse( "-abcd" );
+        assertFalse(options.has("a"));
+        assertFalse(options.has("b"));
+        assertFalse(options.has("c"));
+        assertFalse(options.has("abcd"));
+    }
+
 }
