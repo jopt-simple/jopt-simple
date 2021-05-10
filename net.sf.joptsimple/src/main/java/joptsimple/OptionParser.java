@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import joptsimple.internal.AbbreviationMap;
@@ -334,7 +335,7 @@ public class OptionParser implements OptionDeclarer {
      * @see #printHelpOn(Writer)
      */
     public void printHelpOn( OutputStream sink ) throws IOException {
-        printHelpOn( new OutputStreamWriter( sink ) );
+        printHelpOn( new OutputStreamWriter( sink, StandardCharsets.UTF_8 ) );
     }
 
     /**

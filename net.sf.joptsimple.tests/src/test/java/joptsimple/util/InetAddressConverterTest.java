@@ -26,7 +26,6 @@
 package joptsimple.util;
 
 import java.net.InetAddress;
-import java.util.Random;
 
 import joptsimple.ValueConversionException;
 import org.junit.Before;
