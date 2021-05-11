@@ -15,58 +15,32 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>animal-sniffer-maven-plugin</artifactId>
-                <configuration>
-                    <signature>
-                        <groupId>org.codehaus.mojo.signature</groupId>
-                        <artifactId>java18</artifactId>
-                        <version>1.0</version>
-                    </signature>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>animal-sniffer</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.moditect</groupId>
-                <artifactId>moditect-maven-plugin</artifactId>
-                <version>1.0.0.Beta2</version>
-                <executions>
-                    <execution>
-                        <id>add-module-infos</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>add-module-info</goal>
-                        </goals>
+                        <id>default-compile</id>
                         <configuration>
-                            <jvmVersion>9</jvmVersion>
-                            <module>
-                                <moduleInfo>
-                                    <name>net.sf.joptsimple</name>
-                                    <exports>
-                                        joptsimple;
-                                        joptsimple.util;
-                                    </exports>
-                                </moduleInfo>
-                            </module>
+                            <!-- compile everything to ensure module-info contains right entries -->
+                            <!-- required when JAVA_HOME is JDK 8 or below -->
+                            <release>11</release>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>base-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <!-- recompile everything for target VM except the module-info.java -->
+                        <configuration>
+                            <excludes>
+                                <exclude>module-info.java</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
+                <!-- defaults for compile and testCompile -->
+                <configuration>
+                    <release>8</release>
+                </configuration>
             </plugin>
 
             <plugin>

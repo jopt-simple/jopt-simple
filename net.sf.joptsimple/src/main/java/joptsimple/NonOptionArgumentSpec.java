@@ -53,7 +53,7 @@ import static joptsimple.internal.Reflection.*;
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
 public class NonOptionArgumentSpec<V> extends AbstractOptionSpec<V> {
-    static final String NAME = "[arguments]";
+    public static final String NAME = "[arguments]";
 
     private ValueConverter<V> converter;
     private String argumentDescription = "";

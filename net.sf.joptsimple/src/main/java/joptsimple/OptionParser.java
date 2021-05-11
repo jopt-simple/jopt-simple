@@ -376,7 +376,7 @@ public class OptionParser implements OptionDeclarer {
      * @return a map containing all the configured options and their corresponding {@link OptionSpec}
      * @since 4.6
      */
-    public Map<String, OptionSpec<?>> recognizedOptions() {
+    public Map<String, AbstractOptionSpec<?>> recognizedOptions() {
         return new LinkedHashMap<>( _recognizedOptions() );
     }
 

@@ -61,7 +61,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
     /**
      * Makes a formatter with a pre-configured overall row width and column separator width.
      */
-    BuiltinHelpFormatter() {
+    public BuiltinHelpFormatter() {
         this( 80, 2 );
     }
 
