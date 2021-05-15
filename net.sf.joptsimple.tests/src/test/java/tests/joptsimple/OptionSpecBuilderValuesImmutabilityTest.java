@@ -26,10 +26,12 @@
 package tests.joptsimple;
 
 import joptsimple.OptionParser;
+import org.junit.Ignore;
 
 /**
  * @author <a href="mailto:pholser@alumni.rice.edu">Paul Holser</a>
  */
+@Ignore("there will be no values associated with a no-arg option")
 public class OptionSpecBuilderValuesImmutabilityTest extends AbstractOptionSpecValuesImmutabilityTestCase<Void> {
     @Override
     protected OptionParser trainedParser() {

@@ -47,7 +47,7 @@ public abstract class AbstractOptionSpecValuesImmutabilityTestCase<T>
             (OptionSpec<T>) parser.recognizedOptions().get( option() );
 
         OptionSet options =
-            parser.parse(option(), firstArg(), option(), secondArg());
+            parser.parse( "--" + option(), firstArg(), "--" + option(), secondArg() );
 
         return spec.values( options );
     }
