@@ -2,18 +2,18 @@ language: java
 sudo: no
 env: MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true"
 jdk:
-  - oraclejdk8
+  - openjdk11
 install:
-  - "mvn -N -q io.takari:maven:wrapper -Dmaven=3.3.9"
+  - "mvn -N -q io.takari:maven:wrapper -Dmaven=3.8.1"
 script: './mvnw --show-version --errors --batch-mode clean verify'
 cache:
-    directories:
+  directories:
     - $HOME/.m2
 branches:
-    except:
-        - gh-pages
+  except:
+    - gh-pages
 notifications:
-    email:
-        recipients:
-        - pholser@alumni.rice.edu 
-        - ryan.breidenbach@gmail.com
+  email:
+    recipients:
+      - pholser@alumni.rice.edu 
+      - ryan.breidenbach@gmail.com
