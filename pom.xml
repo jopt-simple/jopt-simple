@@ -232,7 +232,7 @@
                     <links>
                         <link>https://docs.oracle.com/javase/8/docs/api</link>
                     </links>
-                    <bottom><![CDATA[<i>&copy; Copyright 2004-2016 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License.</i>]]></bottom>
+                    <bottom><![CDATA[<i>&copy; Copyright 2004-2021 Paul R. Holser, Jr.  All rights reserved. Licensed under The MIT License.</i>]]></bottom>
                 </configuration>
                 <reportSets>
                     <reportSet>
