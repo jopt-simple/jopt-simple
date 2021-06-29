@@ -4,7 +4,7 @@
     <parent>
         <groupId>net.sf.jopt-simple</groupId>
         <artifactId>jopt-simple</artifactId>
-        <version>6.0-alpha-4-SNAPSHOT</version>
+        <version>6.0-rc-1</version>
     </parent>
 
     <artifactId>net-sf-joptsimple-tests</artifactId>
@@ -14,7 +14,7 @@
         <dependency>
             <groupId>net.sf.jopt-simple</groupId>
             <artifactId>net-sf-joptsimple</artifactId>
-            <version>6.0-alpha-4-SNAPSHOT</version>
+            <version>6.0-rc-1</version>
         </dependency>
 
         <dependency>
