@@ -9,7 +9,7 @@
 
     <groupId>net.sf.jopt-simple</groupId>
     <artifactId>jopt-simple</artifactId>
-    <version>6.0-rc-1</version>
+    <version>6.0-rc-2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>JOpt Simple</name>
     <url>http://jopt-simple.github.io/jopt-simple</url>
