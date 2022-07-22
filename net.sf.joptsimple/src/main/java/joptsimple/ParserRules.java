@@ -61,7 +61,7 @@ final class ParserRules {
 
     static void ensureLegalOption( String option ) {
         if ( option.startsWith( HYPHEN ) )
-            throw new IllegalOptionSpecificationException( String.valueOf( option ) );
+            throw new IllegalOptionSpecificationException( option );
 
         for ( int i = 0; i < option.length(); ++i )
             ensureLegalOptionCharacter( option.charAt( i ) );
