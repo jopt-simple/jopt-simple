@@ -50,7 +50,7 @@ public interface ValueConverter<V> {
      * @param value a value
      * @return a string representation of the value
      */
-    default String revert( Object value ) {
+    default String revert( V value ) {
         return String.valueOf( value );
     }
 

@@ -43,9 +43,8 @@ class SwitchConverter implements ValueConverter<Boolean> {
     }
 
     @Override
-    public String revert( Object value ) {
-        boolean converted = valueType().cast( value );
-        return converted ? "on" : "off";
+    public String revert( Boolean value ) {
+        return value ? "on" : "off";
     }
 
     @Override

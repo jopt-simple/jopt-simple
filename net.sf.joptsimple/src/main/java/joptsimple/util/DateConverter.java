@@ -84,8 +84,8 @@ public class DateConverter implements ValueConverter<Date> {
     }
 
     @Override
-    public String revert( Object value ) {
-        return formatter.format( valueType().cast( value ) );
+    public String revert( Date value ) {
+        return formatter.format( value );
     }
 
     @Override
