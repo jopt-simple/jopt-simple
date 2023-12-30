@@ -68,8 +68,8 @@ public class ParsingSeparatedConvertedOptionValuesTest extends AbstractOptionPar
                 }
 
                 @Override
-                public String revert( Object value ) {
-                    return valueType().cast( value ).getPath();
+                public String revert( File value ) {
+                    return value.getPath();
                 }
 
                 @Override

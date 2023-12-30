@@ -48,8 +48,8 @@ public class ValueConverterAdmitsSubclassesOfValueTypeTest {
             }
 
             @Override
-            public String revert( Object value ) {
-                return valueType().cast( value ).get( 0 );
+            public String revert( List<String> value ) {
+                return value.get( 0 );
             }
 
             @Override

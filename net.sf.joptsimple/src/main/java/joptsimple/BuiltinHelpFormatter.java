@@ -554,7 +554,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
         List<String> stringifiedDefaults =
             defaultValues.stream()
                 .map( v -> descriptor.argumentConverter()
-                    .map( c -> c.revert( v ) )
+                    .map( c -> revert( c, v ) )
                     .orElse( String.valueOf( v ) ) )
                 .collect( toList() );
         String defaultValuesDisplay = createDefaultValuesDisplay( stringifiedDefaults );
@@ -562,6 +562,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
             + ' '
             + surround( message( "default.value.header" ) + ' ' + defaultValuesDisplay, '(', ')' )
         ).trim();
+    }
+
+    // This method is separate in order to capture the generic type <T>
+    private <T> String revert(ValueConverter<T> c, Object v) {
+        return c.revert( c.valueType().cast( v ) );
     }
 
     /**

@@ -50,8 +50,8 @@ public class InetAddressConverter implements ValueConverter<InetAddress> {
     }
 
     @Override
-    public String revert( Object value ) {
-        return valueType().cast( value ).getHostName();
+    public String revert( InetAddress value ) {
+        return value.getHostName();
     }
 
     @Override
