@@ -316,7 +316,7 @@ public class OptionParser implements OptionDeclarer {
         if ( recognize )
             recognize( new AlternativeLongOptionSpec() );
         else
-            recognizedOptions.remove( String.valueOf( RESERVED_FOR_EXTENSIONS ) );
+            recognizedOptions.remove( RESERVED_FOR_EXTENSIONS );
     }
 
     void recognize( AbstractOptionSpec<?> spec ) {
