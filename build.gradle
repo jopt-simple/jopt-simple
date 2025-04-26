@@ -1,14 +1,19 @@
 plugins {
     id 'java'
     id("com.github.spotbugs") version "6.1.6"
+    id 'maven-publish'
+    id 'signing'
 }
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+    withSourcesJar()
+    withJavadocJar()
 }
 
+group = 'net.sf.jopt-simple'
 version = '6.0-alpha-4-SNAPSHOT'
 
 dependencies {
@@ -23,4 +28,74 @@ spotbugs {
 
 tasks.named('test', Test) {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'jopt-simple'
+            from components.java
+            pom {
+                name = 'JOpt Simple'
+                description = 'A Java library for parsing command line options'
+                url = 'https://jopt-simple.github.io/jopt-simple'
+                licenses {
+                    license {
+                        name = 'The MIT License'
+                        url = 'https://opensource.org/license/mit'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'Sm0keySa1m0n'
+                        name = 'Joseph Tarbit'
+                        email = 'joetarbit+jopt-simple@gmail.com'
+                    }
+                    developer {
+                        id = 'twoqubed'
+                        name = 'Ryan Breidenbach'
+                        email = 'ryan.breidenbach+jopt-simple@gmail.com'
+                    }
+                    developer {
+                        id = 'pholser'
+                        name = 'Paul Holser'
+                        email = 'pholser@alumni.rice.edu'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/jopt-simple/jopt-simple.git'
+                    developerConnection = 'scm:git:ssh://git@github.com/jopt-simple/jopt-simple.git'
+                    url = 'https://github.com/jopt-simple/jopt-simple'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'OSSRH'
+            def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
+        maven {
+            name = 'GitHubPackages'
+            url = 'https://maven.pkg.github.com/jopt-simple/jopt-simple'
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
+signing {
+    def signingKeyId = System.getenv("SIGNING_KEY_ID")
+    def signingKey = System.getenv("SIGNING_KEY")
+    def signingPassword = System.getenv("SIGNING_PASSWORD")
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    sign publishing.publications.mavenJava
 }
