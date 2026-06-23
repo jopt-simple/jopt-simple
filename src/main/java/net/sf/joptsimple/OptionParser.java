@@ -405,8 +405,13 @@ public class OptionParser implements OptionDeclarer {
 
         reset();
 
-        ensureRequiredOptions( detected );
-        ensureAllowedOptions( detected );
+        new OptionConstraintChecker(
+            recognizedOptions.toJavaUtilMap(),
+            requiredIf,
+            requiredUnless,
+            availableIf,
+            availableUnless,
+            this::specFor ).validate( detected );
 
         return detected;
     }
@@ -418,97 +423,12 @@ public class OptionParser implements OptionDeclarer {
      * @throws NullPointerException if {@code specs} is {@code null}
      */
     public void mutuallyExclusive( OptionSpecBuilder... specs ) {
-        for ( int i = 0; i < specs.length; i++ ) {
-            for ( int j = 0; j < specs.length; j++ ) {
-                if ( i != j )
-                    specs[i].availableUnless( specs[j] );
+        for ( OptionSpecBuilder spec : specs ) {
+            for ( OptionSpecBuilder other : specs ) {
+                if ( spec != other )
+                    spec.availableUnless( other );
             }
         }
-    }
-
-    private void ensureRequiredOptions( OptionSet options ) {
-        List<AbstractOptionSpec<?>> missingRequiredOptions = missingRequiredOptions(options);
-        boolean helpOptionPresent = isHelpOptionPresent( options );
-
-        if ( !missingRequiredOptions.isEmpty() && !helpOptionPresent )
-            throw new MissingRequiredOptionsException( missingRequiredOptions );
-    }
-
-    private void ensureAllowedOptions( OptionSet options ) {
-        List<AbstractOptionSpec<?>> forbiddenOptions = unavailableOptions( options );
-        boolean helpOptionPresent = isHelpOptionPresent( options );
-
-        if ( !forbiddenOptions.isEmpty() && !helpOptionPresent )
-            throw new UnavailableOptionException( forbiddenOptions );
-    }
-
-    private List<AbstractOptionSpec<?>> missingRequiredOptions( OptionSet options ) {
-        List<AbstractOptionSpec<?>> missingRequiredOptions = new ArrayList<>();
-
-        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
-            if ( each.isRequired() && !options.has( each ) )
-                missingRequiredOptions.add(each);
-        }
-
-        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> each : requiredIf.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor( each.getKey().iterator().next() );
-
-            if ( optionsHasAnyOf( options, each.getValue() ) && !options.has( required ) )
-                missingRequiredOptions.add( required );
-        }
-
-        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> each : requiredUnless.entrySet() ) {
-            AbstractOptionSpec<?> required = specFor(each.getKey().iterator().next());
-
-            if ( !optionsHasAnyOf( options, each.getValue() ) && !options.has( required ) )
-                missingRequiredOptions.add( required );
-        }
-
-        return missingRequiredOptions;
-    }
-
-    private List<AbstractOptionSpec<?>> unavailableOptions(OptionSet options) {
-        List<AbstractOptionSpec<?>> unavailableOptions = new ArrayList<>();
-
-        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> eachEntry : availableIf.entrySet() ) {
-            AbstractOptionSpec<?> forbidden = specFor( eachEntry.getKey().iterator().next() );
-
-            if ( !optionsHasAnyOf( options, eachEntry.getValue() ) && options.has( forbidden ) ) {
-                unavailableOptions.add(forbidden);
-            }
-        }
-
-        for ( Map.Entry<List<String>, Set<OptionSpec<?>>> eachEntry : availableUnless.entrySet() ) {
-            AbstractOptionSpec<?> forbidden = specFor( eachEntry.getKey().iterator().next() );
-
-            if ( optionsHasAnyOf( options, eachEntry.getValue() ) && options.has( forbidden ) ) {
-                unavailableOptions.add(forbidden);
-            }
-        }
-
-        return unavailableOptions;
-    }
-
-    private boolean optionsHasAnyOf( OptionSet options, Collection<OptionSpec<?>> specs ) {
-        for ( OptionSpec<?> each : specs ) {
-            if ( options.has( each ) )
-                return true;
-        }
-
-        return false;
-    }
-
-    private boolean isHelpOptionPresent( OptionSet options ) {
-        boolean helpOptionPresent = false;
-
-        for ( AbstractOptionSpec<?> each : recognizedOptions.toJavaUtilMap().values() ) {
-            if ( each.isForHelp() && options.has( each ) ) {
-                helpOptionPresent = true;
-                break;
-            }
-        }
-
-        return helpOptionPresent;
     }
 
     void handleLongOptionToken( String candidate, ArgumentList arguments, OptionSet detected ) {
