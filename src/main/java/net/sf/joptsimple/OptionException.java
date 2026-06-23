@@ -27,11 +27,9 @@ package net.sf.joptsimple;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import static java.util.Collections.*;
 import static java.util.stream.Collectors.*;
@@ -90,18 +88,9 @@ public abstract class OptionException extends RuntimeException {
     }
 
     protected final String multipleOptionString() {
-        StringBuilder buffer = new StringBuilder( "[" );
-
-        Set<String> asSet = new LinkedHashSet<String>( options );
-        for ( Iterator<String> iter = asSet.iterator(); iter.hasNext(); ) {
-            buffer.append( singleOptionString(iter.next()) );
-            if ( iter.hasNext() )
-                buffer.append( ", " );
-        }
-
-        buffer.append( ']' );
-
-        return buffer.toString();
+        return new LinkedHashSet<>( options ).stream()
+            .map( this::singleOptionString )
+            .collect( joining( ", ", "[", "]" ) );
     }
 
     static OptionException unrecognizedOption( String option ) {

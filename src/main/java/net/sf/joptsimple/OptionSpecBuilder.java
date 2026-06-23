@@ -28,6 +28,7 @@ package net.sf.joptsimple;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * Allows callers to specify whether a given option accepts arguments (required or optional).
@@ -104,10 +105,7 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
     public OptionSpecBuilder requiredIf( String dependent, String... otherDependents ) {
-        List<String> dependents = validatedDependents( dependent, otherDependents );
-        for ( String each : dependents )
-            parser.requiredIf( options(), each );
-
+        applyToDependents( validatedDependents( dependent, otherDependents ), parser::requiredIf );
         return this;
     }
 
@@ -125,10 +123,7 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
     public OptionSpecBuilder requiredIf( OptionSpec<?> dependent, OptionSpec<?>... otherDependents ) {
-        parser.requiredIf( options(), dependent );
-        for ( OptionSpec<?> each : otherDependents )
-            parser.requiredIf( options(), each );
-
+        applyToDependents( dependent, otherDependents, parser::requiredIf );
         return this;
     }
 
@@ -145,10 +140,7 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
     public OptionSpecBuilder requiredUnless( String dependent, String... otherDependents ) {
-        List<String> dependents = validatedDependents( dependent, otherDependents );
-        for ( String each : dependents ) {
-            parser.requiredUnless( options(), each );
-        }
+        applyToDependents( validatedDependents( dependent, otherDependents ), parser::requiredUnless );
         return this;
     }
 
@@ -166,10 +158,7 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
     public OptionSpecBuilder requiredUnless( OptionSpec<?> dependent, OptionSpec<?>... otherDependents ) {
-        parser.requiredUnless( options(), dependent );
-        for ( OptionSpec<?> each : otherDependents )
-            parser.requiredUnless( options(), each );
-
+        applyToDependents( dependent, otherDependents, parser::requiredUnless );
         return this;
     }
 
@@ -186,10 +175,7 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
     public OptionSpecBuilder availableIf( String dependent, String... otherDependents ) {
-        List<String> dependents = validatedDependents( dependent, otherDependents );
-        for ( String each : dependents )
-            parser.availableIf( options(), each );
-
+        applyToDependents( validatedDependents( dependent, otherDependents ), parser::availableIf );
         return this;
     }
 
@@ -207,11 +193,7 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
     public OptionSpecBuilder availableIf( OptionSpec<?> dependent, OptionSpec<?>... otherDependents ) {
-        parser.availableIf( options(), dependent );
-
-        for ( OptionSpec<?> each : otherDependents )
-            parser.availableIf( options(), each );
-
+        applyToDependents( dependent, otherDependents, parser::availableIf );
         return this;
     }
 
@@ -228,10 +210,7 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @throws OptionException if any of the dependent options haven't been configured in the parser yet
      */
     public OptionSpecBuilder availableUnless( String dependent, String... otherDependents ) {
-        List<String> dependents = validatedDependents( dependent, otherDependents );
-        for ( String each : dependents )
-            parser.availableUnless( options(), each );
-
+        applyToDependents( validatedDependents( dependent, otherDependents ), parser::availableUnless );
         return this;
     }
 
@@ -249,11 +228,23 @@ public final class OptionSpecBuilder extends NoArgumentOptionSpec {
      * @return self, so that the caller can add clauses to the fluent interface sentence
      */
     public OptionSpecBuilder availableUnless( OptionSpec<?> dependent, OptionSpec<?>... otherDependents ) {
-        parser.availableUnless( options(), dependent );
-        for ( OptionSpec<?> each : otherDependents )
-            parser.availableUnless(options(), each);
-
+        applyToDependents( dependent, otherDependents, parser::availableUnless );
         return this;
+    }
+
+    private void applyToDependents( List<String> dependents, BiConsumer<List<String>, String> action ) {
+        for ( String each : dependents )
+            action.accept( options(), each );
+    }
+
+    private void applyToDependents(
+        OptionSpec<?> dependent,
+        OptionSpec<?>[] otherDependents,
+        BiConsumer<List<String>, OptionSpec<?>> action ) {
+
+        action.accept( options(), dependent );
+        for ( OptionSpec<?> each : otherDependents )
+            action.accept( options(), each );
     }
 
     private List<String> validatedDependents( String dependent, String... otherDependents ) {

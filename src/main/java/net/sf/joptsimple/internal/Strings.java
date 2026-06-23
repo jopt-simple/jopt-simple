@@ -46,12 +46,7 @@ public final class Strings {
      * @return the resultant string
      */
     public static String repeat( char ch, int count ) {
-        StringBuilder buffer = new StringBuilder();
-
-        for ( int i = 0; i < count; ++i )
-            buffer.append( ch );
-
-        return buffer.toString();
+        return String.valueOf( ch ).repeat( count );
     }
 
     /**
