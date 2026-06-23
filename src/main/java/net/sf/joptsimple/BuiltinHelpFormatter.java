@@ -310,13 +310,11 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @param options descriptors for the configured options of a parser
      */
     protected void addHeaders( Collection<? extends OptionDescriptor> options ) {
-        if ( hasRequiredOption( options ) ) {
-            addOptionRow( message( "option.header.with.required.indicator" ), message( "description.header" ) );
-            addOptionRow( message( "option.divider.with.required.indicator" ), message( "description.divider" ) );
-        } else {
-            addOptionRow( message( "option.header" ), message( "description.header" ) );
-            addOptionRow( message( "option.divider" ), message( "description.divider" ) );
-        }
+        boolean requiredPresent = hasRequiredOption( options );
+        String optionHeaderKey = requiredPresent ? "option.header.with.required.indicator" : "option.header";
+        String optionDividerKey = requiredPresent ? "option.divider.with.required.indicator" : "option.divider";
+        addOptionRow( message( optionHeaderKey ), message( "description.header" ) );
+        addOptionRow( message( optionDividerKey ), message( "description.divider" ) );
     }
 
     /**
@@ -326,12 +324,7 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return {@code true} if at least one of the options is "required"
      */
     protected final boolean hasRequiredOption( Collection<? extends OptionDescriptor> options ) {
-        for ( OptionDescriptor each : options ) {
-            if ( each.isRequired() )
-                return true;
-        }
-
-        return false;
+        return options.stream().anyMatch( OptionDescriptor::isRequired );
     }
 
     /**
@@ -458,17 +451,9 @@ public class BuiltinHelpFormatter implements HelpFormatter {
      * @return true if the discriptor describes a date option, false otherwise
      */
     private boolean isDateOption( OptionDescriptor descriptor ) {
-        boolean isDateOption = false;
-
-        Optional<ValueConverter<?>> valueConverterOptional = descriptor.argumentConverter();
-        if ( valueConverterOptional.isPresent() ) {
-            ValueConverter<?> valueConverter = valueConverterOptional.get();
-            if ( DateTimeConverter.class.isInstance( valueConverter ) ) {
-                isDateOption = true;
-            }
-        }
-
-        return isDateOption;
+        return descriptor.argumentConverter()
+            .map( DateTimeConverter.class::isInstance )
+            .orElse( false );
     }
 
     /**
