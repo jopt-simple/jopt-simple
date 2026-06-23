@@ -261,13 +261,8 @@ public sealed abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOpti
     }
 
     protected void addArguments( OptionSet detectedOptions, String detectedArgument ) {
-        StringTokenizer lexer = new StringTokenizer( detectedArgument, valueSeparator );
-        if ( !lexer.hasMoreTokens() )
-            detectedOptions.addWithArgument( this, detectedArgument );
-        else {
-            while ( lexer.hasMoreTokens() )
-                detectedOptions.addWithArgument( this, lexer.nextToken() );
-        }
+        for ( String token : tokenizeArgument( detectedArgument ) )
+            detectedOptions.addWithArgument( this, token );
     }
 
     protected abstract void detectOptionArgument( OptionParser parser, ArgumentList arguments,
@@ -279,15 +274,24 @@ public sealed abstract class ArgumentAcceptingOptionSpec<V> extends AbstractOpti
     }
 
     protected boolean canConvertArgument( String argument ) {
-        StringTokenizer lexer = new StringTokenizer( argument, valueSeparator );
-
         try {
-            while ( lexer.hasMoreTokens() )
-                convert( lexer.nextToken() );
+            for ( String token : tokenizeArgument( argument ) )
+                convert( token );
             return true;
         } catch ( OptionException ignored ) {
             return false;
         }
+    }
+
+    private List<String> tokenizeArgument( String argument ) {
+        StringTokenizer lexer = new StringTokenizer( argument, valueSeparator );
+        if ( !lexer.hasMoreTokens() )
+            return List.of( argument );
+
+        List<String> tokens = new ArrayList<>();
+        while ( lexer.hasMoreTokens() )
+            tokens.add( lexer.nextToken() );
+        return tokens;
     }
 
     protected boolean isArgumentOfNumberType() {
