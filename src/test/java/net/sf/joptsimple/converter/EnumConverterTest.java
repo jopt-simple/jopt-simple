@@ -77,6 +77,36 @@ public class EnumConverterTest {
         assertEquals( TestEnum.A, converter.convert( "a" ) );
     }
 
+    @Test
+    public void customNameMapper() {
+        converter.setNameMapper( e -> switch (e) {
+            case A -> "Alpha";
+            case B -> "Beta";
+            case C -> "Gamma";
+            case D -> "Delta";
+        } );
+
+        assertEquals( TestEnum.A, converter.convert( "Alpha" ) );
+        assertEquals( TestEnum.B, converter.convert( "Beta" ) );
+
+        assertEquals( "Gamma", converter.revert( TestEnum.C ) );
+
+        assertEquals( "[Alpha,Beta,Gamma,Delta]", converter.valuePattern() );
+    }
+
+    @Test
+    public void restoreNameMapper() {
+        // override once to ensure default logic is from reset instead of no-op
+        converter.setNameMapper( e -> e.name().toLowerCase() );
+        converter.setNameMapper(null);
+
+        assertEquals( TestEnum.A, converter.convert( "A") );
+
+        assertEquals( "A", converter.revert( TestEnum.A) );
+
+        assertEquals( "[A,B,C,D]", converter.valuePattern() );
+    }
+
     private static enum TestEnum {
         A, B, C, D
     }

@@ -29,6 +29,7 @@ import java.text.MessageFormat;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import net.sf.joptsimple.ValueConversionException;
 import net.sf.joptsimple.ValueConverter;
@@ -42,6 +43,7 @@ public final class EnumConverter<E extends Enum<E>> implements ValueConverter<E>
     private final Class<E> clazz;
 
     private String delimiters = "[,]";
+    private Function<E, String> nameMapper = Enum::name;
 
     private EnumConverter(Class<E> clazz) {
         this.clazz = clazz;
@@ -50,7 +52,7 @@ public final class EnumConverter<E extends Enum<E>> implements ValueConverter<E>
     @Override
     public E convert( String value ) {
         for ( E each : valueType().getEnumConstants() ) {
-            if ( each.name().equalsIgnoreCase( value ) ) {
+            if ( nameMapper.apply( each ).equalsIgnoreCase( value ) ) {
                 return each;
             }
         }
@@ -60,7 +62,7 @@ public final class EnumConverter<E extends Enum<E>> implements ValueConverter<E>
 
     @Override
     public String revert( E value ) {
-        return value.name();
+        return nameMapper.apply( value );
     }
 
     @Override
@@ -79,6 +81,20 @@ public final class EnumConverter<E extends Enum<E>> implements ValueConverter<E>
         this.delimiters = delimiters;
     }
 
+    /**
+     * Sets the mapper that maps enum constant to its string representation.
+     * {@code null} resets name mapper to {@link Enum#name() the default mapper}
+     *
+     * @param nameMapper mapper for obtaining an enum's string representation.
+     *                   Default is {@link Enum#name()}
+     */
+    public void setNameMapper( Function<E, String> nameMapper ) {
+        if (nameMapper == null) {
+            nameMapper = Enum::name;
+        }
+        this.nameMapper = nameMapper;
+    }
+
     @Override
     public String valuePattern() {
         EnumSet<E> values = EnumSet.allOf( valueType() );
@@ -86,7 +102,7 @@ public final class EnumConverter<E extends Enum<E>> implements ValueConverter<E>
         StringBuilder builder = new StringBuilder();
         builder.append( delimiters.charAt( 0 ) );
         for ( Iterator<E> i = values.iterator(); i.hasNext(); ) {
-            builder.append( i.next().toString() );
+            builder.append( nameMapper.apply( i.next() ) );
             if ( i.hasNext() )
                 builder.append( delimiters.charAt( 1 ) );
         }
