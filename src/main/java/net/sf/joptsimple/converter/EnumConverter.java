@@ -102,7 +102,7 @@ public final class EnumConverter<E extends Enum<E>> implements ValueConverter<E>
         StringBuilder builder = new StringBuilder();
         builder.append( delimiters.charAt( 0 ) );
         for ( Iterator<E> i = values.iterator(); i.hasNext(); ) {
-            builder.append( i.next().toString() );
+            builder.append( nameMapper.apply( i.next() ) );
             if ( i.hasNext() )
                 builder.append( delimiters.charAt( 1 ) );
         }
