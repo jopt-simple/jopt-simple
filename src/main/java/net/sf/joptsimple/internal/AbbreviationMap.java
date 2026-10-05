@@ -187,7 +187,7 @@ public class AbbreviationMap<V> implements OptionNameMap<V> {
             return false;
 
         --keysBeyond;
-        if ( child.keysBeyond == 0 )
+        if ( child.keysBeyond == 0 && child.key == null )
             children.remove( nextChar );
         if ( keysBeyond == 1 && key == null )
             setValueToThatOfOnlyChild();
