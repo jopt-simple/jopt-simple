@@ -491,8 +491,10 @@ public class OptionParser implements OptionDeclarer {
 
     private boolean optionsHasAnyOf( OptionSet options, Collection<OptionSpec<?>> specs ) {
         for ( OptionSpec<?> each : specs ) {
-            if ( options.has( each ) )
-                return true;
+            for ( String option : each.options() ) {
+                if ( options.has( specFor( option ) ) )
+                    return true;
+            }
         }
 
         return false;
